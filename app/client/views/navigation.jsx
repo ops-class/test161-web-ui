@@ -72,18 +72,14 @@ AsstLinkComponent = React.createClass({
 
 LoginOutComponent = React.createClass({
   render() {
+    let [text, callback] = ["Login", login];
     if (this.props.user) {
-      return (
-        <li onClick={logout}>
-          <a href="#" title="Logout">Logout</a>
-        </li>
-      );
-    } else {
-      return (
-        <li onClick={login}>
-          <a href="#" title="Login">Login</a>
-        </li>
-      );
+      [text, callback] = ["Logout", logout];
     }
+    return (
+      <li onClick={callback}>
+        <a href="#" title={text}>{text}</a>
+      </li>
+    );
   }
 });
