@@ -23,14 +23,27 @@ NavigationComponent = React.createClass({
 											title="Lecture slides, notes, and videos."
 											href="/lectures/">lectures</a>
 									</li>
-									<li><a id="menu-courses"
-											title="Exams to test your knowledge of OS concepts."
-											href="/exams/">exams</a></li>
 									*/}
+                    <li>
+                      <a id="menu-exams" title="Exams to test your knowledge of OS concepts." href="/exams/">exams</a>
+                    </li>
                     <li className="dropdown">
                       <a href="#" className="dropdown-toggle" id="menu-courses" title="Courses that have used ops-class.org" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">courses</a>
                       <ul className="dropdown-menu">
                         <li><a href="/courses/buffalo/CSE421_Spring2016">UB CSE 421/521 Spring 2016</a></li>
+                        <li role="separator" className="divider" />
+                        <li>
+                          <a href="/courses/buffalo/CSE421_Spring2015.pdf" target="_blank">UB CSE 421/521 Spring 2015 (PDF)</a>
+                        </li>
+                        <li>
+                          <a href="/courses/buffalo/CSE421_Spring2014.pdf" target="_blank">UB CSE 421/521 Spring 2014 (PDF)</a>
+                        </li>
+                        <li>
+                          <a href="/courses/buffalo/CSE421_Spring2013.pdf" target="_blank">UB CSE 421/521 Spring 2013 (PDF)</a>
+                        </li>
+                        <li>
+                          <a href="/courses/buffalo/CSE421_Spring2012.pdf" target="_blank">UB CSE 421/521 Spring 2012 (PDF)</a>
+                        </li>
                       </ul>
                     </li>
                   </ul>
