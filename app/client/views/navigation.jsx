@@ -17,8 +17,8 @@ NavigationComponent = React.createClass({
             <div id="navbar" className="navbar-collapse collapse">
               <div className="row">
                 <div className="col-sm-6">
-                  {/*
-								<ul class="nav navbar-nav left">
+                  <ul className="nav navbar-nav left">
+                    {/*
 									<li><a id="menu-lectures"
 											title="Lecture slides, notes, and videos."
 											href="/lectures/">lectures</a>
@@ -26,10 +26,14 @@ NavigationComponent = React.createClass({
 									<li><a id="menu-courses"
 											title="Exams to test your knowledge of OS concepts."
 											href="/exams/">exams</a></li>
-									<li><a title="Links to information about specific courses using ops-class.org."
-											href="/courses/">courses</a></li>
-								</ul>
-								*/}
+									*/}
+                    <li className="dropdown">
+                      <a href="#" className="dropdown-toggle" id="menu-courses" title="Courses that have used ops-class.org" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">courses</a>
+                      <ul className="dropdown-menu">
+                        <li><a href="/courses/buffalo/CSE421_Spring2016">UB CSE 421/521 Spring 2016</a></li>
+                      </ul>
+                    </li>
+                  </ul>
                 </div>
                 <div className="col-sm-6">
                   <ul className="nav navbar-nav right">
