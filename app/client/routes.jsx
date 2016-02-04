@@ -7,11 +7,9 @@ FlowRouter.route("/", {
   }
 });
 
-FlowRouter.route("/asst/:id", {
-  name: "asst",
+FlowRouter.notFound = {
   action: function(params, queryParams) {
-    ReactLayout.render(MainLayout, {
-      content: (<div>content</div>)
-    });
+    const {path} = FlowRouter.current();
+    window.location = "https://www.ops-class.org" + path;
   }
-});
+};
