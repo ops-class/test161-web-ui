@@ -10,6 +10,7 @@ FlowRouter.route("/", {
 FlowRouter.notFound = {
   action: function(params, queryParams) {
     const {path} = FlowRouter.current();
-    window.location = "https://www.ops-class.org" + path;
+    const url = "https://www.ops-class.org" + path;
+    window.open(url, '_blank');
   }
 };
