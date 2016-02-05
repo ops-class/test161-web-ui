@@ -50,6 +50,7 @@ NavigationComponent = React.createClass({
                       <a href="#" className="dropdown-toggle" id="menu-asst" title="Hack the kernel! OS/161-based operating system assignments." data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">assignments</a>
                       <ul className="dropdown-menu">
                         <li><a href="/asst/0/">ASST0</a></li>
+                        <li><a href="/asst/1/">ASST1</a></li>
                       </ul>
                     </li>
                     <li><a id="menu-discuss" title="Discourse-based course discussion forum." target="_blank" href="https://discourse.ops-class.org" className="external">discuss</a></li>
