@@ -18,12 +18,8 @@ NavigationComponent = React.createClass({
               <div className="row">
                 <div className="col-sm-6">
                   <ul className="nav navbar-nav left">
-                    {/*
-									<li><a id="menu-lectures"
-											title="Lecture slides, notes, and videos."
-											href="/lectures/">lectures</a>
-									</li>
-									*/}
+                    <li><a id="menu-slides" title="Lecture slides, notes, and videos." href="/slides/">lectures</a>
+                    </li>
                     <li>
                       <a id="menu-exams" title="Exams to test your knowledge of OS concepts." href="/exams/">exams</a>
                     </li>

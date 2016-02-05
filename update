@@ -3,7 +3,7 @@ ROOT=${PWD}
 update() {
     set -x
     cd $1
-    git fetch origin master
+    git pull origin
     npm install
     node index.js
     cd ${ROOT}
