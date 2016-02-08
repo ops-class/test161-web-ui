@@ -9,7 +9,7 @@ FooterComponent = React.createClass({
           </div>
           <div className="small col-xs-12 col-md-4 col-md-offset-4 text-center">
             Created 2/3/2016 <br />
-            Updated 2/3/2016
+            Updated 2/7/2016
           </div>
         </div>
       </div>
