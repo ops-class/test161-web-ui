@@ -2,7 +2,7 @@ FlowRouter.route("/", {
   name: "home",
   action: function(params, queryParams) {
     ReactLayout.render(MainLayout, {
-      content: (<div>content</div>)
+      content: <SubmissionList />
     });
   }
 });
