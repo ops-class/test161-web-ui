@@ -30,15 +30,15 @@ SubmissionList = React.createClass({
 });
 
 const StatusComponent = ({status, score, max_score}) => {
-    let className = 'text-uppercase ';
+    let className = 'text-uppercase alert ';
     let content = status;
     if (isSubmitted(status)) {
-      className += "bg-warning";
+      className += "alert-warning";
     } else if (isCompleted(status)) {
       content = `${score}/${max_score}`;
-      className += "bg-success";
+      className += "alert-success";
     } else if (isFailed(status)) {
-      className += "bg-danger";
+      className += "alert-danger";
     }
     return (
       <div className={className}>
@@ -73,15 +73,15 @@ const TimeComponent = ({submission_time, completion_time, commit_id}) => {
   return (
     <div className="row">
       <div className="col-md-6 col-xs-6">
-        {time}
+        <i className="fa fa-calendar"></i> {time}
       </div>
       <div className="col-md-6 col-xs-6">
-        <span className="octicon octicon-clock" aria-hidden="false"></span> {duration}
+        <i className="fa fa-clock-o"></i> {duration}
       </div>
       <div className="col-md-6 col-xs-6">
       </div>
       <div className="col-md-6 col-xs-6">
-        <span className="octicon octicon-git-commit"></span> {commit_id.substring(0, 7)}
+        <i className="fa fa-code-fork"></i> {commit_id.substring(0, 7)}
       </div>
     </div>
   )
