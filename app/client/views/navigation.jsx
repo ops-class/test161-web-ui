@@ -18,27 +18,27 @@ NavigationComponent = React.createClass({
               <div className="row">
                 <div className="col-sm-6">
                   <ul className="nav navbar-nav left">
-                    <li><a id="menu-slides" title="Lecture slides, notes, and videos." href="/slides/">lectures</a>
+                    <li><a id="menu-slides" title="Lecture slides, notes, and videos." href="https://www.ops-class.org/slides/" target="_blank">lectures</a>
                     </li>
                     <li>
-                      <a id="menu-exams" title="Exams to test your knowledge of OS concepts." href="/exams/">exams</a>
+                      <a id="menu-exams" title="Exams to test your knowledge of OS concepts." href="https://www.ops-class.org/exams/" target="_blank">exams</a>
                     </li>
                     <li className="dropdown">
                       <a href="#" className="dropdown-toggle" id="menu-courses" title="Courses that have used ops-class.org" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">courses</a>
                       <ul className="dropdown-menu">
-                        <li><a href="/courses/buffalo/CSE421_Spring2016">UB CSE 421/521 Spring 2016</a></li>
+                        <li><a href="https://www.ops-class.org/courses/buffalo/CSE421_Spring2016" target="_blank">UB CSE 421/521 Spring 2016</a></li>
                         <li role="separator" className="divider" />
                         <li>
-                          <a href="/courses/buffalo/CSE421_Spring2015.pdf" target="_blank">UB CSE 421/521 Spring 2015 (PDF)</a>
+                          <a href="https://www.ops-class.org/courses/buffalo/CSE421_Spring2015.pdf" target="_blank">UB CSE 421/521 Spring 2015 (PDF)</a>
                         </li>
                         <li>
-                          <a href="/courses/buffalo/CSE421_Spring2014.pdf" target="_blank">UB CSE 421/521 Spring 2014 (PDF)</a>
+                          <a href="https://www.ops-class.org/courses/buffalo/CSE421_Spring2014.pdf" target="_blank">UB CSE 421/521 Spring 2014 (PDF)</a>
                         </li>
                         <li>
-                          <a href="/courses/buffalo/CSE421_Spring2013.pdf" target="_blank">UB CSE 421/521 Spring 2013 (PDF)</a>
+                          <a href="https://www.ops-class.org/courses/buffalo/CSE421_Spring2013.pdf" target="_blank">UB CSE 421/521 Spring 2013 (PDF)</a>
                         </li>
                         <li>
-                          <a href="/courses/buffalo/CSE421_Spring2012.pdf" target="_blank">UB CSE 421/521 Spring 2012 (PDF)</a>
+                          <a href="https://www.ops-class.org/courses/buffalo/CSE421_Spring2012.pdf" target="_blank">UB CSE 421/521 Spring 2012 (PDF)</a>
                         </li>
                       </ul>
                     </li>
@@ -49,8 +49,8 @@ NavigationComponent = React.createClass({
                     <li className="dropdown">
                       <a href="#" className="dropdown-toggle" id="menu-asst" title="Hack the kernel! OS/161-based operating system assignments." data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">assignments</a>
                       <ul className="dropdown-menu">
-                        <li><a href="/asst/0/">ASST0</a></li>
-                        <li><a href="/asst/1/">ASST1</a></li>
+                        <li><a href="https://www.ops-class.org/asst/0/" target="_blank">ASST0</a></li>
+                        <li><a href="https://www.ops-class.org/asst/1/" target="_blank">ASST1</a></li>
                       </ul>
                     </li>
                     <li><a id="menu-discuss" title="Discourse-based course discussion forum." target="_blank" href="https://discourse.ops-class.org" className="external">discuss</a></li>

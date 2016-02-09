@@ -9,8 +9,8 @@ FlowRouter.route("/", {
 
 FlowRouter.notFound = {
   action: function(params, queryParams) {
-    const {path} = FlowRouter.current();
-    const url = "https://www.ops-class.org" + path;
-    window.open(url, '_blank');
+    ReactLayout.render(MainLayout, {
+      content: <div>404</div>
+    })
   }
 };

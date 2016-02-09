@@ -21,6 +21,19 @@ var to_meteor = function() {
 
 to_meteor();
 
+function addAbsoluteURL(url, element) {
+  var list = element.getElementsByTagName('a');
+  for (var i in list) {
+    var link = list[i];
+    if (link.href.startsWith('/') && link.href.length > 1) {
+      link.setAttribute('href', url + link.href);
+      if (!link.target) {
+        link.setAttribute('target', '_blank');
+      }
+    }
+  }
+}
+
 function loadHtml() {
   return fs.readFileSync('../www/build/index.html').toString();
 }
@@ -33,6 +46,7 @@ function convertToMeteor(content) {
   writeToFile(headStr, 'head.html', headPath);
 
   var navbar = element.getElementsByClassName("navbar")[0].parentNode;
+  addAbsoluteURL('https://www.ops-class.org', navbar);
   var navbarStr = navbar.outerHTML;
   toMeteor(navbarStr, 'navigation', 'NavigationComponent');
 
