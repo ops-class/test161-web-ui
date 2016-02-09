@@ -86,7 +86,7 @@ getRandomSubmission = (index = -1) => {
   const _id = Meteor.uuid();
   const randomTime = moment().subtract(Math.floor(Math.random() * 160000), 'seconds');
   const submission_time = randomTime.toDate();
-  const users = ['t1@test.com', 't2@test.com'];
+  const users = ['t1@xcv58.com', 't2@xcv58.com'];
   const repository = 'git@github.com:ops-class/test161.git';
   const commit_id = '9352d6f4ad60d5183b678d64b9964f8c2a58c0db';
   const status = submissionStatus[index];

@@ -1,7 +1,8 @@
-Meteor.publish('submissions', function () {
-  const selector = {};
-  const options = {
-      sort: {submission_time: -1}
-  };
-  return Submissions.find(selector);
+Meteor.publish('submissions', function(asst) {
+  if (this.userId) {
+    // Meteor._sleepForMs(2000);
+    return findAllSubmissions(this.userId, asst);
+  } else {
+    this.ready();
+  }
 });
