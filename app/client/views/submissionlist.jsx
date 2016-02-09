@@ -48,15 +48,17 @@ const StatusComponent = ({status, score, max_score}) => {
 };
 
 const InfoComponent = ({_id, submission_time, users, repository, commit_id, status, target_name, target_type, max_score, tests, completion_time, score, performance}) => {
+  const className="col-md-12 ellipsis";
+  const userStr = users.join(', ');
   return (
     <div className="row">
-      <div className="col-md-12">
+      <div className={className}>
         <p>{repository}</p>
       </div>
-      <div className="col-md-12">
-        <p>{users}</p>
+      <div className={className}>
+        <p>{userStr}</p>
       </div>
-      <div className="col-md-12">
+      <div className={className}>
         <p>{commit_id}</p>
       </div>
     </div>
