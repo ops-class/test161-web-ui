@@ -18,7 +18,6 @@ ecmascript              # Enable ECMAScript2015+ syntax in app code
 
 kadira:flow-router
 reactive-dict
-audit-argument-checks
 check
 random
 xcv58:auth0-lock
