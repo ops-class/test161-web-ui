@@ -73,6 +73,12 @@ SubmissionSchema = new SimpleSchema({
 
 Submissions.attachSchema(SubmissionSchema);
 
+isCompleted = (status) => status === 'completed'
+
+isFailed = (status) => status === 'failed'
+
+isSubmitted = (status) => status === 'submitted'
+
 getRandomSubmission = (index = -1) => {
   if (index === -1 || index >= submissionStatus.length) {
     index = Math.floor(Math.random() * submissionStatus.length);
@@ -105,4 +111,8 @@ initSubmissions = (count = 10) => {
     const sub = getRandomSubmission(i);
     Submissions.insert(sub);
   }
+}
+
+if (!Submissions.findOne()) {
+  initSubmissions(10);
 }
