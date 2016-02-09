@@ -28,15 +28,14 @@ SubmissionSchema = new SimpleSchema({
     type: String,
     label: "Commit ID"
   },
+  target: {
+    type: String,
+    label: "Target _id"
+  },
   target_name: {
     type: String,
     label: "Target Name",
     allowedValues: targetNames
-  },
-  target_type: {
-    type: String,
-    label: "Target Type",
-    allowedValues: targetTypes
   },
   max_score: {
     type: Number,
@@ -91,18 +90,17 @@ getRandomSubmission = (index = -1) => {
   const commit_id = '9352d6f4ad60d5183b678d64b9964f8c2a58c0db';
   const status = submissionStatus[index];
   const tests = [];
-  const max_score = 1000;
+  const target = _id;
   const target_name = targetNames[Math.floor(Math.random() * targetNames.length)];
-  const target_type = 'grad';
+  const max_score = 100;
   const completion_time = moment(randomTime).add(Math.floor(Math.random() * 10000), 'seconds').toDate();
-  // const completion_time = new Date();
   if (isSubmitted(status)) {
-    return {_id, submission_time, users, repository, commit_id, status, max_score, target_name, target_type, tests};
+    return {_id, submission_time, users, repository, commit_id, status, target, max_score, target_name, tests};
   } else if (isFailed(status)) {
-    return {_id, submission_time, users, repository, commit_id, status, max_score, target_name, target_type, tests, completion_time};
+    return {_id, submission_time, users, repository, commit_id, status, target, max_score, target_name, tests, completion_time};
   } else {
     const score = Math.floor(Math.random() * 100);
-    return {_id, submission_time, users, repository, commit_id, status, max_score, target_name, target_type, tests, completion_time, score};
+    return {_id, submission_time, users, repository, commit_id, status, target, max_score, target_name, tests, completion_time, score};
   }
 }
 
