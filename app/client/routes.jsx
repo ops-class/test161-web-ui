@@ -1,9 +1,7 @@
 FlowRouter.route("/", {
   name: "home",
   action: function(params, queryParams) {
-    ReactLayout.render(MainLayout, {
-      content: <SubmissionList />
-    });
+    ReactLayout.render(MainLayout, {});
   }
 });
 
@@ -11,9 +9,7 @@ FlowRouter.route("/asst/:id", {
   name: "asst",
   action: function(params, queryParams) {
     const asst = `asst${params.id}`;
-    ReactLayout.render(MainLayout, {
-      content: <SubmissionList asst={asst}/>
-    });
+    ReactLayout.render(MainLayout, { asst });
   }
 });
 

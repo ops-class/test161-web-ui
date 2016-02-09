@@ -1,24 +1,18 @@
-SubmissionList = React.createClass({
+SubmissionListComponent = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
-    const {asst} = this.props;
+    const {asst, user} = this.props;
     const ready = false;
-    const user = Meteor.user();
     const data = {ready, asst, user}
-    if (user) {
-      const handle = SubmissionSubs.subscribe('submissions', asst);
-      if (handle.ready()) {
-        data.submissions = findAllSubmissions(user._id, asst).fetch();
-        data.ready = true;
-      }
+    const handle = SubmissionSubs.subscribe('submissions', asst);
+    if (handle.ready()) {
+      data.submissions = findAllSubmissions(user._id, asst).fetch();
+      data.ready = true;
     }
     return data;
   },
   render() {
     const {submissions, ready, user, asst} = this.data;
-    if (!user) {
-      return <div>Not login!</div>
-    }
     if (!ready) {
       return <div>Loading...</div>
     }

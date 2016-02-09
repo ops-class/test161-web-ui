@@ -111,6 +111,8 @@ initSubmissions = (count = 10) => {
   }
 }
 
-if (!Submissions.findOne()) {
-  initSubmissions(10);
+if (Meteor.isServer) {
+  if (!Submissions.findOne()) {
+    initSubmissions(10);
+  }
 }
