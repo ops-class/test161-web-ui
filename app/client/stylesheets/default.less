@@ -1,3 +1,5 @@
+@import "mixins.less";
+
 .ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -30,4 +32,13 @@
     body #a0-lock.a0-theme-default .a0-overlay.a0-active {
         position: fixed;
     }
+}
+
+.submission-container {
+    .transition (all 0.5s ease)
+}
+
+.submission-container:hover {
+    background: #F5F5F5;
+    margin: 4px 0;
 }

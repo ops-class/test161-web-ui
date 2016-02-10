@@ -115,7 +115,7 @@ SubmissionComponent = React.createClass({
     const {closed} = this.state;
     const expandView = closed ? null : <TestListComponent {...submission}/>
     return (
-      <div className="list-group-item">
+      <div className="list-group-item submission-container animated bounceIn">
         <div className="row">
           <div onClick={this.click} className="col-md-2">
             <StatusComponent {...submission} />
