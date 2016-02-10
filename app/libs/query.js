@@ -12,3 +12,20 @@ findAllSubmissions = (userId, asst) => {
   };
   return Submissions.find(selector, options);
 }
+
+findAllTests = (tests) => {
+  const selector = { _id: { $in: tests } };
+  const options = {};
+  return Tests.find(selector, options);
+}
+
+findAllOutputsWithId = (_id) => {
+  const selector = { belong_to: _id };
+  const options = { sort: { walltime: 1 } };
+  return Outputs.find(selector, options);
+}
+
+findAllOutputsWithIds = (ids) => {
+  const selector = { belong_to: { $in: ids } };
+  return Outputs.find(selector, options);
+}
