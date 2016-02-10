@@ -7,7 +7,27 @@
     #sidebar {
         position: fixed;
     }
-    button {
-        width: 100%;
+}
+
+#login-container {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#a0-onestep {
+    margin: 32px auto;
+}
+
+@media screen and (min-width: 480px) {
+    body #a0-lock.a0-theme-default .a0-overlay.a0-active {
+        background: -webkit-radial-gradient(rgba(64, 64, 75, 1), rgba(17, 17, 24, .99)) rgba(34, 34, 40, .52);
+        background: -moz-radial-gradient(rgba(64, 64, 75, 1), rgba(17, 17, 24, .99)) rgba(34, 34, 40, .52);
+        background: radial-gradient(rgba(64, 64, 75, 1), rgba(17, 17, 24, .99)) rgba(34, 34, 40, .52);
+    }
+}
+
+@media screen and (max-width: 480px) {
+    body #a0-lock.a0-theme-default .a0-overlay.a0-active {
+        position: fixed;
     }
 }

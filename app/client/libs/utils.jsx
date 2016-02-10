@@ -17,5 +17,10 @@ logout = () => {
 };
 
 login = () => {
-  Meteor.lock.show();
+  if (Meteor.lock.$container) {
+    Meteor.lock.hide();
+  }
+  Meteor.lock.show({
+    closable: false
+  });
 };

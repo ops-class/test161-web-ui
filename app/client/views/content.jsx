@@ -1,7 +1,28 @@
 ContentComponent = React.createClass({
+  enforceLogin() {
+    const {user} = this.props;
+    if (!user) {
+      login();
+      // Meteor.lock.show({
+      //   container: 'login-container'
+      // });
+    }
+  },
+  componentDidMount() {
+    this.enforceLogin();
+  },
+  componentDidUpdate() {
+    this.enforceLogin();
+  },
   render() {
     const {user, asst} = this.props;
-    const content = user ? <UserComponent {...this.props}/> : <div>not login!</div>;
+    const content = user ?
+    (<UserComponent {...this.props}/>) :
+    (
+      <div className="row">
+        <div className="col-md-12 text-center" id="login-container">Please login!</div>
+      </div>
+    );
     return (
       <div id="content" className="container">
         <div className="row">
