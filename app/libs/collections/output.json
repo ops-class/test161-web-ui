@@ -19,7 +19,7 @@
       "bytes": "2M",
       "nodoom": "false"
     },
-    "randomseed": 34493
+    "randomseed": 42434
   },
   "stat": {
     "resolution": 0.01,
@@ -48,9 +48,9 @@
     "retrycharacters": "true",
     "killonexit": "false"
   },
-  "confstring": "0 serial\n1\temufs\n2\tdisk rpm=7200 file=LHD0.img nodoom # bytes=4M\n28\trandom seed=34493\n29\ttimer\n30\ttrace\n31\tmainboard ramsize=1M cpus=8\n",
-  "walltime": 0.367460,
-  "simtime": 0.708555,
+  "confstring": "0 serial\n1\temufs\n2\tdisk rpm=7200 file=LHD0.img nodoom # bytes=4M\n28\trandom seed=42434\n29\ttimer\n30\ttrace\n31\tmainboard ramsize=1M cpus=8\n",
+  "walltime": 0.367918,
+  "simtime": 0.957293,
   "commands": [{
     "type": "kernel",
     "input": {
@@ -58,187 +58,260 @@
       "simtime": 0.000000,
       "line": "boot"
     },
+    "points_avail": 0,
+    "points_earned": 0,
     "output": [{
-      "walltime": 0.002567,
+      "walltime": 0.006409,
       "simtime": 0.000000,
-      "line": "sys161: System/161 release 2.0.6, compiled Jan 22 2016 17:12:51\r\r\n"
+      "line": "sys161: System/161 release 2.0.6, compiled Jan 22 2016 17:12:51",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.022884,
-      "simtime": 0.006289,
-      "line": "\r\r\n"
+      "walltime": 0.019013,
+      "simtime": 0.012289,
+      "line": "",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.023119,
-      "simtime": 0.006289,
-      "line": "OS/161 base system version 2.0.1\r\r\n"
+      "walltime": 0.019316,
+      "simtime": 0.012289,
+      "line": "OS/161 base system version 2.0.1",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.032271,
-      "simtime": 0.006289,
-      "line": "(with locks/CVs, system calls, VM solutions)\r\r\n"
+      "walltime": 0.028351,
+      "simtime": 0.012289,
+      "line": "(with locks/CVs, system calls, VM solutions)",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.044568,
-      "simtime": 0.006289,
-      "line": "Copyright (c) 2000, 2001-2005, 2008-2011, 2013, 2014\r\r\n"
+      "walltime": 0.040718,
+      "simtime": 0.012289,
+      "line": "Copyright (c) 2000, 2001-2005, 2008-2011, 2013, 2014",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.059039,
-      "simtime": 0.216523,
-      "line": "   President and Fellows of Harvard College.  All rights reserved.\r\r\n"
+      "walltime": 0.055327,
+      "simtime": 0.224230,
+      "line": "   President and Fellows of Harvard College.  All rights reserved.",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.077498,
-      "simtime": 0.256704,
-      "line": "\r\r\n"
+      "walltime": 0.073847,
+      "simtime": 0.264441,
+      "line": "",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.077875,
-      "simtime": 0.256704,
-      "line": "challen@buffalo.edu's system version 0 (GENERIC #18)\r\r\n"
+      "walltime": 0.074154,
+      "simtime": 0.264441,
+      "line": "challen@buffalo.edu's system version 0 (GENERIC #18)",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.092468,
-      "simtime": 0.286798,
-      "line": "\r\r\n"
+      "walltime": 0.088804,
+      "simtime": 0.294572,
+      "line": "",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.092743,
-      "simtime": 0.286798,
-      "line": "708k physical memory available\r\r\n"
+      "walltime": 0.089048,
+      "simtime": 0.294572,
+      "line": "708k physical memory available",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.101187,
-      "simtime": 0.306917,
-      "line": "vm: Page replacement: LRU\r\r\n"
+      "walltime": 0.097475,
+      "simtime": 0.314607,
+      "line": "vm: Page replacement: LRU",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.108427,
-      "simtime": 0.316931,
-      "line": "vm: TLB replacement: random\r\r\n"
+      "walltime": 0.104610,
+      "simtime": 0.334738,
+      "line": "vm: TLB replacement: random",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.116106,
-      "simtime": 0.337060,
-      "line": "Device probe...\r\r\n"
+      "walltime": 0.112270,
+      "simtime": 0.344808,
+      "line": "Device probe...",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.120489,
-      "simtime": 0.337060,
-      "line": "lamebus0 (system main bus)\r\r\n"
+      "walltime": 0.116637,
+      "simtime": 0.354906,
+      "line": "lamebus0 (system main bus)",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.127892,
-      "simtime": 0.357191,
-      "line": "emu0 at lamebus0\r\r\n"
+      "walltime": 0.124204,
+      "simtime": 0.364951,
+      "line": "emu0 at lamebus0",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.132494,
-      "simtime": 0.367208,
-      "line": "ltrace0 at lamebus0\r\r\n"
+      "walltime": 0.128871,
+      "simtime": 0.374961,
+      "line": "ltrace0 at lamebus0",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.138001,
-      "simtime": 0.377297,
-      "line": "ltimer0 at lamebus0\r\r\n"
+      "walltime": 0.134311,
+      "simtime": 0.385042,
+      "line": "ltimer0 at lamebus0",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.143676,
-      "simtime": 0.397410,
-      "line": "beep0 at ltimer0\r\r\n"
+      "walltime": 0.139845,
+      "simtime": 0.395083,
+      "line": "beep0 at ltimer0",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.148287,
-      "simtime": 0.407501,
-      "line": "rtclock0 at ltimer0\r\r\n"
+      "walltime": 0.144653,
+      "simtime": 0.405152,
+      "line": "rtclock0 at ltimer0",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.153895,
-      "simtime": 0.417578,
-      "line": "lrandom0 at lamebus0\r\r\n"
+      "walltime": 0.150071,
+      "simtime": 0.415193,
+      "line": "lrandom0 at lamebus0",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.159599,
-      "simtime": 0.437596,
-      "line": "random0 at lrandom0\r\r\n"
+      "walltime": 0.155867,
+      "simtime": 0.425217,
+      "line": "random0 at lrandom0",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.165236,
-      "simtime": 0.447629,
-      "line": "lhd0 at lamebus0\r\r\n"
+      "walltime": 0.161534,
+      "simtime": 0.445301,
+      "line": "lhd0 at lamebus0",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.169925,
-      "simtime": 0.457665,
-      "line": "lser0 at lamebus0\r\r\n"
+      "walltime": 0.166252,
+      "simtime": 0.455316,
+      "line": "lser0 at lamebus0",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.174865,
-      "simtime": 0.467716,
-      "line": "con0 at lser0\r\r\n"
+      "walltime": 0.171271,
+      "simtime": 0.465330,
+      "line": "con0 at lser0",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.178783,
-      "simtime": 0.477810,
-      "line": "\r\r\n"
+      "walltime": 0.175126,
+      "simtime": 0.475374,
+      "line": "",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.179329,
-      "simtime": 0.477810,
-      "line": "swap: swapping to lhd0raw: (4194304 bytes; 1024 pages)\r\r\n"
+      "walltime": 0.175725,
+      "simtime": 0.485400,
+      "line": "swap: swapping to lhd0raw: (4194304 bytes; 1024 pages)",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.188512,
-      "simtime": 0.487815,
-      "line": "cpu0: MIPS/161 (System/161 2.x) features 0x0\r\r\n"
+      "walltime": 0.185443,
+      "simtime": 0.495405,
+      "line": "cpu0: MIPS/161 (System/161 2.x) features 0x0",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.202406,
-      "simtime": 0.517951,
-      "line": "cpu1: MIPS/161 (System/161 2.x) features 0x0\r\r\n"
+      "walltime": 0.199248,
+      "simtime": 0.525511,
+      "line": "cpu1: MIPS/161 (System/161 2.x) features 0x0",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.214409,
-      "simtime": 0.538118,
-      "line": "cpu2: MIPS/161 (System/161 2.x) features 0x0\r\r\n"
+      "walltime": 0.211238,
+      "simtime": 0.545636,
+      "line": "cpu2: MIPS/161 (System/161 2.x) features 0x0",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.225928,
-      "simtime": 0.558186,
-      "line": "cpu3: MIPS/161 (System/161 2.x) features 0x0\r\r\n"
+      "walltime": 0.222769,
+      "simtime": 0.565676,
+      "line": "cpu3: MIPS/161 (System/161 2.x) features 0x0",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.237455,
-      "simtime": 0.578246,
-      "line": "cpu4: MIPS/161 (System/161 2.x) features 0x0\r\r\n"
+      "walltime": 0.234346,
+      "simtime": 0.585764,
+      "line": "cpu4: MIPS/161 (System/161 2.x) features 0x0",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.248991,
-      "simtime": 0.598276,
-      "line": "cpu5: MIPS/161 (System/161 2.x) features 0x0\r\r\n"
+      "walltime": 0.246040,
+      "simtime": 0.605817,
+      "line": "cpu5: MIPS/161 (System/161 2.x) features 0x0",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.260841,
-      "simtime": 0.618312,
-      "line": "cpu6: MIPS/161 (System/161 2.x) features 0x0\r\r\n"
+      "walltime": 0.258193,
+      "simtime": 0.625868,
+      "line": "cpu6: MIPS/161 (System/161 2.x) features 0x0",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.272607,
-      "simtime": 0.638355,
-      "line": "cpu7: MIPS/161 (System/161 2.x) features 0x0\r\r\n"
+      "walltime": 0.270108,
+      "simtime": 0.645958,
+      "line": "cpu7: MIPS/161 (System/161 2.x) features 0x0",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.284830,
-      "simtime": 0.658376,
-      "line": "OS/161 kernel [? for menu]: "
+      "walltime": 0.282464,
+      "simtime": 0.676076,
+      "line": "OS/161 kernel [? for menu]: ",
+      "trusted": false,
+      "keyname": ""
     }],
     "summarystats": {
       "start": 0.000000,
-      "end": 0.678445,
-      "length": 0.678445,
-      "count": 49,
-      "wallstart": 0.002782,
-      "wallend": 0.291181,
-      "walllength": 0.288399,
-      "kinsns": 7960399,
+      "end": 0.696152,
+      "length": 0.696152,
+      "count": 50,
+      "wallstart": 0.006568,
+      "wallend": 0.290074,
+      "walllength": 0.283506,
+      "kinsns": 8010593,
       "uinsns": 0,
       "udud": 0,
-      "idle": 126869602,
-      "irqs": 1907,
+      "idle": 130360720,
+      "irqs": 1916,
       "exns": 0,
       "disk": 0,
-      "con": 1006,
+      "con": 1010,
       "emu": 1,
       "net": 0,
-      "insns": 134830001
+      "insns": 138371313
     },
     "stats": [{
       "start": 0.000000,
-      "end": 0.678445,
-      "length": 0.678445,
-      "count": 49,
-      "wallstart": 0.002782,
-      "wallend": 0.291181,
-      "walllength": 0.288399,
-      "kinsns": 7960399,
+      "end": 0.696152,
+      "length": 0.696152,
+      "count": 50,
+      "wallstart": 0.006568,
+      "wallend": 0.290074,
+      "walllength": 0.283506,
+      "kinsns": 8010593,
       "uinsns": 0,
       "udud": 0,
-      "idle": 126869602,
-      "irqs": 1907,
+      "idle": 130360720,
+      "irqs": 1916,
       "exns": 0,
       "disk": 0,
-      "con": 1006,
+      "con": 1010,
       "emu": 1,
       "net": 0,
-      "insns": 134830001
-    }]
+      "insns": 138371313
+    }],
+    "status": "correct"
   }, {
     "type": "kernel",
     "input": {
@@ -246,135 +319,182 @@
       "simtime": 0.000000,
       "line": "q"
     },
+    "points_avail": 0,
+    "points_earned": 0,
     "output": [{
-      "walltime": 0.292838,
-      "simtime": 0.678445,
-      "line": "q\r\r\n"
+      "walltime": 0.290537,
+      "simtime": 0.846817,
+      "line": "",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.297867,
-      "simtime": 0.698503,
-      "line": "Shutting down.\r\r\n"
+      "walltime": 0.295411,
+      "simtime": 0.947285,
+      "line": "Shutting down.",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.298135,
-      "simtime": 0.698503,
-      "line": "cpu1: offline.\r\r\n"
+      "walltime": 0.295847,
+      "simtime": 0.947285,
+      "line": "cpu1: offline.",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.328120,
-      "simtime": 0.698503,
-      "line": "cpu5: offline.\r\r\n"
+      "walltime": 0.325744,
+      "simtime": 0.947285,
+      "line": "cpu5: offline.",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.332248,
-      "simtime": 0.698503,
-      "line": "cpu6: offline.\r\r\n"
+      "walltime": 0.329914,
+      "simtime": 0.947285,
+      "line": "cpu6: offline.",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.336359,
-      "simtime": 0.698503,
-      "line": "The system is halted.\r\r\n"
+      "walltime": 0.334203,
+      "simtime": 0.947285,
+      "line": "The system is halted.",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.342323,
-      "simtime": 0.698503,
-      "line": "cpu4: offline.\r\r\n"
+      "walltime": 0.340165,
+      "simtime": 0.947285,
+      "line": "cpu4: offline.",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.346515,
-      "simtime": 0.708555,
-      "line": "cpu2: offline.\r\r\n"
+      "walltime": 0.344516,
+      "simtime": 0.957293,
+      "line": "cpu2: offline.",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.351046,
-      "simtime": 0.708555,
-      "line": "cpu3: offline.\r\r\n"
+      "walltime": 0.348873,
+      "simtime": 0.957293,
+      "line": "cpu3: offline.",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.355320,
-      "simtime": 0.708555,
-      "line": "cpu7: offline.\r\r\n"
+      "walltime": 0.353159,
+      "simtime": 0.957293,
+      "line": "cpu7: offline.",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.366923,
-      "simtime": 0.708555,
-      "line": "sys161: 27909921 cycles (17713781 run, 10196140 global-idle)\r\r\n"
+      "walltime": 0.365019,
+      "simtime": 0.957293,
+      "line": "sys161: 34405286 cycles (18014152 run, 16391134 global-idle)",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.366960,
-      "simtime": 0.708555,
-      "line": "sys161:   cpu0: 7221781 kern, 0 user, 295860 idle; 11146 ll, 11146/0 sc, 31982 sync\r\r\n"
+      "walltime": 0.365038,
+      "simtime": 0.957293,
+      "line": "sys161:   cpu0: 7232717 kern, 0 user, 313891 idle; 11145 ll, 11145/0 sc, 32114 sync",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.367001,
-      "simtime": 0.708555,
-      "line": "sys161:   cpu1: 536280 kern, 0 user, 6981361 idle; 334 ll, 334/0 sc, 2341 sync\r\r\n"
+      "walltime": 0.365069,
+      "simtime": 0.957293,
+      "line": "sys161:   cpu1: 536651 kern, 0 user, 7009957 idle; 334 ll, 334/0 sc, 2341 sync",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.367047,
-      "simtime": 0.708555,
-      "line": "sys161:   cpu2: 538140 kern, 0 user, 6979501 idle; 343 ll, 342/1 sc, 887 sync\r\r\n"
+      "walltime": 0.365122,
+      "simtime": 0.957293,
+      "line": "sys161:   cpu2: 538511 kern, 0 user, 7008097 idle; 343 ll, 342/1 sc, 887 sync",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.367162,
-      "simtime": 0.708555,
-      "line": "sys161:   cpu3: 538528 kern, 0 user, 6979113 idle; 346 ll, 344/2 sc, 889 sync\r\r\n"
+      "walltime": 0.365280,
+      "simtime": 0.957293,
+      "line": "sys161:   cpu3: 538899 kern, 0 user, 7007709 idle; 346 ll, 344/2 sc, 889 sync",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.367165,
-      "simtime": 0.708555,
-      "line": "sys161:   cpu4: 538555 kern, 0 user, 6979086 idle; 345 ll, 342/3 sc, 889 sync\r\r\n"
+      "walltime": 0.365479,
+      "simtime": 0.957293,
+      "line": "sys161:   cpu4: 538926 kern, 0 user, 7007682 idle; 345 ll, 342/3 sc, 889 sync",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.367166,
-      "simtime": 0.708555,
-      "line": "sys161:   cpu5: 538552 kern, 0 user, 6979089 idle; 343 ll, 339/4 sc, 889 sync\r\r\n"
+      "walltime": 0.365707,
+      "simtime": 0.957293,
+      "line": "sys161:   cpu5: 541660 kern, 0 user, 7004948 idle; 348 ll, 344/4 sc, 900 sync",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.367182,
-      "simtime": 0.708555,
-      "line": "sys161:   cpu6: 538549 kern, 0 user, 6979092 idle; 345 ll, 340/5 sc, 889 sync\r\r\n"
+      "walltime": 0.366055,
+      "simtime": 0.957293,
+      "line": "sys161:   cpu6: 541657 kern, 0 user, 7004951 idle; 350 ll, 345/5 sc, 900 sync",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.367185,
-      "simtime": 0.708555,
-      "line": "sys161:   cpu7: 537194 kern, 0 user, 6980447 idle; 348 ll, 340/8 sc, 882 sync\r\r\n"
+      "walltime": 0.366259,
+      "simtime": 0.957293,
+      "line": "sys161:   cpu7: 537565 kern, 0 user, 7009043 idle; 348 ll, 340/8 sc, 882 sync",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.367188,
-      "simtime": 0.708555,
-      "line": "sys161: 1959 irqs 0 exns 0r/0w disk 2r/1154w console 0r/0w/1m emufs 0r/0w net\r\r\n"
+      "walltime": 0.366573,
+      "simtime": 0.957293,
+      "line": "sys161: 1959 irqs 0 exns 0r/0w disk 2r/1154w console 0r/0w/1m emufs 0r/0w net",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.367191,
-      "simtime": 0.708555,
-      "line": "sys161: Elapsed real time: 0.366061 seconds (76.2439 mhz)\r\r\n"
+      "walltime": 0.366915,
+      "simtime": 0.957293,
+      "line": "sys161: Elapsed real time: 0.364360 seconds (94.4266 mhz)",
+      "trusted": false,
+      "keyname": ""
     }, {
-      "walltime": 0.367193,
-      "simtime": 0.708555,
-      "line": "sys161: Elapsed virtual time: 0.712840623 seconds (25 mhz)\r\r\n"
+      "walltime": 0.367277,
+      "simtime": 0.957293,
+      "line": "sys161: Elapsed virtual time: 0.961799520 seconds (25 mhz)",
+      "trusted": false,
+      "keyname": ""
     }],
     "summarystats": {
-      "start": 0.688473,
-      "end": 0.708555,
-      "length": 0.020082,
+      "start": 0.937225,
+      "end": 0.957293,
+      "length": 0.020068,
       "count": 2,
-      "wallstart": 0.293024,
-      "wallend": 0.345788,
-      "walllength": 0.052763,
-      "kinsns": 2118833,
+      "wallstart": 0.290590,
+      "wallend": 0.342595,
+      "walllength": 0.052005,
+      "kinsns": 2082259,
       "uinsns": 0,
       "udud": 0,
-      "idle": 1897495,
-      "irqs": 38,
+      "idle": 1931253,
+      "irqs": 40,
       "exns": 0,
       "disk": 0,
-      "con": 96,
+      "con": 93,
       "emu": 0,
       "net": 0,
-      "insns": 4016328
+      "insns": 4013512
     },
     "stats": [{
-      "start": 0.688473,
-      "end": 0.708555,
-      "length": 0.020082,
+      "start": 0.937225,
+      "end": 0.957293,
+      "length": 0.020068,
       "count": 2,
-      "wallstart": 0.293024,
-      "wallend": 0.345788,
-      "walllength": 0.052763,
-      "kinsns": 2118833,
+      "wallstart": 0.290590,
+      "wallend": 0.342595,
+      "walllength": 0.052005,
+      "kinsns": 2082259,
       "uinsns": 0,
       "udud": 0,
-      "idle": 1897495,
-      "irqs": 38,
+      "idle": 1931253,
+      "irqs": 40,
       "exns": 0,
       "disk": 0,
-      "con": 96,
+      "con": 93,
       "emu": 0,
       "net": 0,
-      "insns": 4016328
-    }]
+      "insns": 4013512
+    }],
+    "status": "running"
   }],
   "status": [{
     "walltime": 0.000001,
@@ -382,11 +502,15 @@
     "status": "started",
     "message": ""
   }, {
-    "walltime": 0.367459,
-    "simtime": 0.708555,
+    "walltime": 0.367917,
+    "simtime": 0.957293,
     "status": "shutdown",
     "message": "normal shutdown"
   }],
-  "result": "ok",
-  "depid": ""
+  "result": "correct",
+  "depid": "",
+  "isdependency": false,
+  "pointsavail": 0,
+  "pointsearned": 0,
+  "scoringmethod": ""
 }

@@ -90,12 +90,34 @@ const TimeComponent = ({submission_time, completion_time, commit_id}) => {
 };
 
 SubmissionComponent = React.createClass({
+  getInitialState () {
+    return {
+      closed: true,
+      processing: false
+    };
+  },
+  componentDidMount() {
+    // const {submission} = this.props;
+    // const {status} = submission;
+    // if (isSubmitted(status)) {
+    //   this.state.closed = false;
+    //   this.setState(this.state);
+    // }
+  },
+  click(event) {
+    const {submission} = this.props;
+    const {closed} = this.state;
+    this.state.closed = !closed;
+    this.setState(this.state);
+  },
   render() {
     const {submission} = this.props;
+    const {closed} = this.state;
+    const expandView = closed ? null : <TestList {...submission}/>
     return (
       <div className="list-group-item">
         <div className="row">
-          <div className="col-md-2">
+          <div onClick={this.click} className="col-md-2">
             <StatusComponent {...submission} />
           </div>
           <div className="col-md-6">
@@ -105,6 +127,7 @@ SubmissionComponent = React.createClass({
             <TimeComponent {...submission} />
           </div>
         </div>
+        {expandView}
       </div>
     );
   }

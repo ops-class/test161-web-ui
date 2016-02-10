@@ -3,7 +3,7 @@ UserComponent = React.createClass({
     return (
       <div>
         <div className="row">
-          user information summary!
+        user information summary!
         </div>
         <div className="row">
           <SubmissionListComponent {...this.props}/>
