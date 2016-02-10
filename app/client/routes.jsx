@@ -1,7 +1,7 @@
 FlowRouter.route("/", {
   name: "home",
   action: function(params, queryParams) {
-    ReactLayout.render(MainLayout, {});
+    ReactLayout.render(MainLayout, {asst: null});
   }
 });
 
