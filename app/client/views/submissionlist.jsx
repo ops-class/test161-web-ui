@@ -113,7 +113,7 @@ SubmissionComponent = React.createClass({
   render() {
     const {submission} = this.props;
     const {closed} = this.state;
-    const expandView = closed ? null : <TestList {...submission}/>
+    const expandView = closed ? null : <TestListComponent {...submission}/>
     return (
       <div className="list-group-item">
         <div className="row">

@@ -44,8 +44,9 @@ SubmissionSchema = new SimpleSchema({
   tests: {
     type: [String],
     label: "Tests",
-    regEx: SimpleSchema.RegEx.Id,
-    min: 0
+    // regEx: SimpleSchema.RegEx.Id,
+    min: 0,
+    regEx: /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/
   },
   status: {
     type: String,
