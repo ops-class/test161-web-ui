@@ -12,6 +12,10 @@ subscribeUserData = function() {
 
 SubmissionSubs = new SubsManager();
 
+TestSubs = new SubsManager();
+
+OutputSubs = new SubsManager();
+
 logout = () => {
   Meteor.logout();
 };
