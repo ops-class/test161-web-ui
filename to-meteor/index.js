@@ -35,7 +35,7 @@ function addAbsoluteURL(url, element) {
 }
 
 function loadHtml() {
-  return fs.readFileSync('../www/build/index.html').toString();
+  return fs.readFileSync('../www/.build/index.html').toString();
 }
 
 function convertToMeteor(content) {
