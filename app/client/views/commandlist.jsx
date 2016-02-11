@@ -13,6 +13,16 @@ CommandListComponent = React.createClass({
 
 CommandComponent = React.createClass({
   mixins: [CollapseMixin],
+  toggleList() {
+    console.log(arguments);
+    console.log(this);
+    const ele = $(ReactDOM.findDOMNode(this));
+    const container = ele.find('.output-container');
+    console.log(container);
+    container.toggleClass('fadeOut')
+    // container.slideToggle(300);
+    // ele.toggleClass('active');
+  },
   render() {
     const {_id, output, points_avail, points_earned, status} = this.props;
     const {collapse} = this.state;
@@ -21,11 +31,18 @@ CommandComponent = React.createClass({
       list = output.map(line =>
         <div key={_id+line.line} className="col-md-12">{line.line}</div>);
     }
+    if (list) {
+      list = (
+        <div className="output-container animated bounceInLeft">
+          {list}
+        </div>
+      );
+    }
     return (
       <div>
         <div className="col-md-12">commands: {_id}</div>
         <div onClick={this.toggleCollapse} className="col-md-12">{status}</div>
-        <div className="col-md-12">{points_earned}/{points_avail}</div>
+        <div onClick={this.toggleList} className="col-md-12">{points_earned}/{points_avail}</div>
         {list}
       </div>
     );
