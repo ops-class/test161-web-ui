@@ -1,28 +1,7 @@
 CommandListComponent = React.createClass({
-  mixins: [ReactMeteorData],
-  getMeteorData() {
-    const ready = false;
-    const data = {ready};
-
-    const {commands} = this.props;
-    const ids = commands.map(cmd => cmd._id);
-    const handle = OutputSubs.subscribe('outputs', ids);
-    if (handle.ready) {
-      data.ready = true;
-      data.outputs = commands.map(command => {
-        const outputs = findAllOutputsWithId(command._id).fetch();
-        return {command, outputs};
-      });
-    }
-    return data;
-  },
   render() {
     const {_id, name, commands, points_avail, points_earned} = this.props;
-    const {ready, outputs} = this.data;
-    let list = <LoadingComponent />;
-    if (ready) {
-      list = outputs.map(output => <CommandComponent key={output.command._id} {...output}/>);
-    }
+    const list = commands.map(cmd => <CommandComponent key={cmd._id} {...cmd}/>);
     return (
       <div className="row">
         <div className="col-md-12">Commands list begin</div>
@@ -33,14 +12,19 @@ CommandListComponent = React.createClass({
 });
 
 CommandComponent = React.createClass({
+  mixins: [CollapseMixin],
   render() {
-    const {command, outputs} = this.props;
-    const {_id, points_avail, points_earned} = command;
-    const list = outputs.map(output =>
-       <div key={output._id} className="col-md-12">{output.line}</div>);
+    const {_id, output, points_avail, points_earned, status} = this.props;
+    const {collapse} = this.state;
+    let list = null;
+    if (status === commandStatus[1] || !collapse) {
+      list = output.map(line =>
+        <div key={_id+line.line} className="col-md-12">{line.line}</div>);
+    }
     return (
       <div>
         <div className="col-md-12">commands: {_id}</div>
+        <div onClick={this.toggleCollapse} className="col-md-12">{status}</div>
         <div className="col-md-12">{points_earned}/{points_avail}</div>
         {list}
       </div>

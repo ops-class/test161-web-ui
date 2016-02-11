@@ -4,6 +4,7 @@ TestListComponent = React.createClass({
     const {tests} = this.props;
     const ready = false;
     const data = {ready};
+
     const handle = TestSubs.subscribe('tests', tests);
     if (handle.ready()) {
       let testList = tests.map(_id => Tests.findOne({_id}));
@@ -19,9 +20,10 @@ TestListComponent = React.createClass({
     if (!ready) {
       return (<LoadingComponent />);
     }
-    console.log(this.props);
-    console.log(tests);
-    const list = testList.map(test => <TestComponent key={test._id} {...test} />);
+    let list = <div>No content</div>;
+    if (testList.length > 0) {
+      list = testList.map(test => <TestComponent key={test._id} {...test} />);
+    }
     return (
       <div className="row">
         {list}
@@ -31,14 +33,21 @@ TestListComponent = React.createClass({
 });
 
 TestComponent = React.createClass({
+  mixins: [CollapseMixin],
   render() {
-    const {_id, name, commands, points_avail, points_earned} = this.props;
+    const {_id, name, commands, points_avail, points_earned, status} = this.props;
+    const {collapse} = this.state;
+    let content = null;
+    if (status === testStatus[0] || !collapse) {
+      content = <CommandListComponent {...this.props} />;
+    }
     return (
       <div className="col-md-12">
         <p>{_id}</p>
         <p>{name}</p>
+        <p onClick={this.toggleCollapse}>{status}</p>
         <p>{points_earned}/{points_avail}</p>
-        <CommandListComponent {...this.props} />
+        {content}
       </div>
     );
   }

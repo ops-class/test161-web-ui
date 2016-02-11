@@ -19,14 +19,14 @@ findAllTests = (tests) => {
   return Tests.find(selector, options);
 }
 
-findAllOutputsWithId = (_id) => {
-  const selector = { belong_to: _id };
-  const options = { sort: { walltime: 1 } };
-  return Outputs.find(selector, options);
-}
-
-findAllOutputsWithIds = (ids) => {
-  const selector = { belong_to: { $in: ids } };
-  const options = {};
-  return Outputs.find(selector, options);
-}
+// findAllOutputsWithId = (_id) => {
+//   const selector = { belong_to: _id };
+//   const options = { sort: { walltime: 1 } };
+//   return Outputs.find(selector, options);
+// }
+//
+// findAllOutputsWithIds = (ids) => {
+//   const selector = { belong_to: { $in: ids } };
+//   const options = {};
+//   return Outputs.find(selector, options);
+// }
