@@ -160,3 +160,9 @@ clean = () => {
   Tests.remove({});
   Submissions.remove({});
 }
+
+Meteor.methods({
+  mock: function(score = 100, num = 2) {
+    mock(score, num);
+  }
+})
