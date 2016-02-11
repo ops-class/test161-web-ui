@@ -27,5 +27,6 @@ findAllOutputsWithId = (_id) => {
 
 findAllOutputsWithIds = (ids) => {
   const selector = { belong_to: { $in: ids } };
+  const options = {};
   return Outputs.find(selector, options);
 }
