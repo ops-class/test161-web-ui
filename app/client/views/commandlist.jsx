@@ -3,46 +3,53 @@ CommandListComponent = React.createClass({
     const {_id, name, commands, points_avail, points_earned} = this.props;
     const list = commands.map(cmd => <CommandComponent key={cmd._id} {...cmd}/>);
     return (
-      <div className="row">
-        <div className="col-md-12">Commands list begin</div>
+      <div className="col-md-12 col-xs-12 col-sm-12">
         {list}
       </div>
-    );
+    )
   }
 });
 
 CommandComponent = React.createClass({
   mixins: [CollapseMixin],
-  toggleList() {
-    console.log(arguments);
-    console.log(this);
-    const ele = $(ReactDOM.findDOMNode(this));
-    const container = ele.find('.output-container');
-    console.log(container);
-    container.toggleClass('fadeOut')
-    // container.slideToggle(300);
-    // ele.toggleClass('active');
+  getInitialState() {
+    return {collapseTarget: '.output-container'};
   },
   render() {
     const {_id, output, points_avail, points_earned, status} = this.props;
     const {collapse} = this.state;
+
     let list = null;
+    let toggleClass = 'toggle fa ';
+    const statusClass = getCommandStatusClass(status);
+
     if (status === commandStatus[1] || !collapse) {
-      list = output.map(line =>
-        <div key={_id+line.line} className="col-md-12">{line.line}</div>);
-    }
-    if (list) {
       list = (
-        <div className="output-container animated bounceInLeft">
-          {list}
+        <div className="col-xs-12 output-container">
+          <pre>
+            <code className="bash">
+              {output.map(line =>
+                <div key={_id+line.line} className="col-md-12">{line.line}</div>)}
+            </code>
+          </pre>
         </div>
       );
+      toggleClass += 'fa-chevron-down';
+    } else {
+      toggleClass += 'fa-chevron-right';
     }
     return (
-      <div>
-        <div className="col-md-12">commands: {_id}</div>
-        <div onClick={this.toggleCollapse} className="col-md-12">{status}</div>
-        <div onClick={this.toggleList} className="col-md-12">{points_earned}/{points_avail}</div>
+      <div className={`row command-container ${statusClass}`}>
+        <div className="col-md-1 col-xs-1 col-sm-1 toggle-container"
+          onClick={this.toggleCollapse}>
+          <i className={toggleClass}></i>
+        </div>
+        <div className="col-md-8 col-xs-12 col-sm-12 ellipsis">
+          commands: {_id}
+        </div>
+        <div className="col-md-3 col-xs-12 col-sm-12 text-right">
+          {status} {points_earned}/{points_avail}
+        </div>
         {list}
       </div>
     );

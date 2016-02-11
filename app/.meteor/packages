@@ -29,5 +29,6 @@ aldeed:collection2
 momentjs:moment
 oaf:moment-duration-format
 less
-fortawesome:fontawesome
 natestrauser:animate-css
+fortawesome:fontawesome
+simple:highlight.js

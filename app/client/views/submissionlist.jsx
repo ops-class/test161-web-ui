@@ -91,21 +91,23 @@ const TimeComponent = ({submission_time, completion_time, commit_id}) => {
 
 SubmissionComponent = React.createClass({
   mixins: [CollapseMixin],
-  componentDidMount() {
-    // const {submission} = this.props;
-    // const {status} = submission;
-    // if (isSubmitted(status)) {
-    //   this.state.closed = false;
-    //   this.setState(this.state);
-    // }
+  getInitialState() {
+    return {collapseTarget: '.submission-details'};
   },
   render() {
     const {submission} = this.props;
     const {collapse} = this.state;
-    const expandView = collapse ? null : <TestListComponent {...submission}/>
+    let details = null;
+    if (!collapse) {
+      details = (
+        <div className="row submission-details">
+          <TestListComponent {...submission}/>
+        </div>
+      );
+    }
     return (
       <div className="list-group-item submission-container animated bounceIn">
-        <div className="row">
+        <div className="row submission-bar">
           <div onClick={this.toggleCollapse} className="col-md-2">
             <StatusComponent {...submission} />
           </div>
@@ -116,7 +118,7 @@ SubmissionComponent = React.createClass({
             <TimeComponent {...submission} />
           </div>
         </div>
-        {expandView}
+        {details}
       </div>
     );
   }

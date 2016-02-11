@@ -25,7 +25,7 @@ TestListComponent = React.createClass({
       list = testList.map(test => <TestComponent key={test._id} {...test} />);
     }
     return (
-      <div className="row">
+      <div className="col-md-12">
         {list}
       </div>
     );
@@ -34,19 +34,36 @@ TestListComponent = React.createClass({
 
 TestComponent = React.createClass({
   mixins: [CollapseMixin],
+  getInitialState() {
+    return {collapseTarget: '.command-container'};
+  },
   render() {
     const {_id, name, commands, points_avail, points_earned, status} = this.props;
     const {collapse} = this.state;
+
     let content = null;
+    let toggleClass = 'toggle fa ';
+    const statusClass = getTestStatusClass(status);
+
     if (status === testStatus[0] || !collapse) {
-      content = <CommandListComponent {...this.props} />;
+      content = (<CommandListComponent {...this.props} />);
+      toggleClass += 'fa-chevron-down';
+    } else {
+      toggleClass += 'fa-chevron-right';
     }
+
     return (
-      <div className="col-md-12">
-        <p>{_id}</p>
-        <p>{name}</p>
-        <p onClick={this.toggleCollapse}>{status}</p>
-        <p>{points_earned}/{points_avail}</p>
+      <div className={`row test-container ${statusClass}`}>
+        <div className="col-md-1 col-xs-1 col-sm-1 toggle-container"
+          onClick={this.toggleCollapse}>
+          <i className={toggleClass}></i>
+        </div>
+        <div className="col-md-9 col-xs-12 col-sm-12 ellipsis">
+          {name}
+        </div>
+        <div className="col-md-2 col-xs-12 col-sm-12 ellipsis text-right">
+          {status} {points_earned}/{points_avail}
+        </div>
         {content}
       </div>
     );
