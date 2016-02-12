@@ -78,18 +78,32 @@
 .output-container {
 }
 
-.running {
+.status-container {
+    padding: 0px 3px !important;
+    height: 100% !important;
+    margin: 0px !important;
+}
+
+.status-none {
+    border-left: 5px solid #FFFFFF;
+}
+
+.status-running {
     border-left: 5px solid #5DD3E5;
 }
 
-.correct {
+.status-correct {
     border-left: 5px solid #2DCA88;
 }
 
-.incorrect {
+.status-incorrect {
     border-left: 5px solid #F15A58;
 }
 
-.skip {
+.status-skip {
+    border-left: 5px solid #DDD;
+}
+
+.status-abort {
     border-left: 5px solid #DDD;
 }

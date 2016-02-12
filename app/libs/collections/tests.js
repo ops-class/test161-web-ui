@@ -1,7 +1,7 @@
 Tests = new Mongo.Collection('tests');
 
 commandStatus = ['none', 'running', 'correct', 'incorrect'];
-testStatus = ['none', 'correct', 'incorrect', 'abort', 'skip'];
+testStatus = ['none', 'running', 'correct', 'incorrect', 'abort', 'skip'];
 
 OutputSchema = new SimpleSchema({
   line: {

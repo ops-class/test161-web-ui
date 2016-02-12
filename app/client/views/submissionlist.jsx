@@ -74,16 +74,12 @@ SubmissionListComponent = React.createClass({
 });
 
 const StatusComponent = ({status, score, max_score}) => {
-    let className = 'text-uppercase alert ';
+    let className = 'text-uppercase hvr-grow-shadow alert ';
     let content = status;
-    if (isSubmitted(status)) {
-      className += "alert-warning";
-    } else if (isCompleted(status)) {
+    if (score) {
       content = `${score}/${max_score}`;
-      className += "alert-success";
-    } else if (isFailed(status)) {
-      className += "alert-danger";
     }
+    className += getSubmissionStatusClass(status);
     return (
       <div className={className}>
         {content}
@@ -152,7 +148,7 @@ SubmissionComponent = React.createClass({
     return (
       <div className="list-group-item submission-container animated bounceIn">
         <div className="row submission-bar">
-          <div onClick={this.toggleCollapse} className="col-md-2">
+          <div onClick={this.toggleCollapse} className="col-md-2 status-container">
             <StatusComponent {...submission} />
           </div>
           <div className="col-md-6">

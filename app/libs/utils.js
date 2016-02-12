@@ -1,27 +1,28 @@
 randomInt = (range = 100) => Math.floor(Math.random() * range)
 
-getTestStatusClass = (status) => {
-  if (status === testStatus[0]) {
-    return 'running';
+// submissionStatus = ['submitted', 'building', 'running', 'completed', 'aborted'];
+getSubmissionStatusClass = (status) => {
+  if (status === submissionStatus[0]) {
+    return 'alert-info';
   }
-  if (status === testStatus[1]) {
-    return 'correct';
+  if (status === submissionStatus[1] || status === submissionStatus[2]) {
+    return 'alert-warning';
   }
-  if (status === testStatus[2]) {
-    return 'incorrect';
+  if (status === submissionStatus[3]) {
+    return 'alert-success';
   }
-  return 'skip';
+  if (status === submissionStatus[4]) {
+    return 'alert-danger';
+  }
 }
 
-getCommandStatusClass = (status) => {
-  if (status === commandStatus[1]) {
-    return 'running';
-  }
-  if (status === commandStatus[2]) {
-    return 'correct';
-  }
-  if (status === commandStatus[3]) {
-    return 'incorrect';
-  }
-  return 'skip';
+// testStatus = ['none', 'running', 'correct', 'incorrect', 'abort', 'skip'];
+// commandStatus = ['none', 'running', 'correct', 'incorrect'];
+const cssMap = Object.assign(...testStatus.map(status => ({[status]: `status-${status}`})));
+getCssClass = (status) => {
+  return cssMap[status] || '';
 }
+
+getTestStatusClass = getCssClass
+
+getCommandStatusClass = getCssClass

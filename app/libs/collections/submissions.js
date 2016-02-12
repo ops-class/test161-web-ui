@@ -1,6 +1,6 @@
 Submissions = new Mongo.Collection('submissions');
 
-submissionStatus = ['submitted', 'completed', 'failed'];
+submissionStatus = ['submitted', 'building', 'running', 'completed', 'aborted'];
 targetNames = ['asst1', 'asst2', 'asst3'];
 
 SubmissionSchema = new SimpleSchema({
