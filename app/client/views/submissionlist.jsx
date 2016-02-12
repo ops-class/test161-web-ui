@@ -20,6 +20,11 @@ SubmissionListComponent = React.createClass({
   getInitialState() {
     return {limit: 10};
   },
+  componentWillReceiveProps(nextProps) {
+    if (this.props.asst !== nextProps.asst) {
+      this.setState({limit: 10});
+    }
+  },
   componentDidMount() {
     $(window).scroll(() => {
       const $elem = $(ReactDOM.findDOMNode(this)).find('#load-more');
