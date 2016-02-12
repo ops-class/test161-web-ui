@@ -18,7 +18,8 @@ SubmissionSchema = new SimpleSchema({
     type: [String],
     label: "Users",
     regEx: SimpleSchema.RegEx.Email,
-    min: 1
+    min: 1,
+    max: 2
   },
   repository: {
     type: String,
