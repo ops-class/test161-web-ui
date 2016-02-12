@@ -3,14 +3,15 @@ TestListComponent = React.createClass({
   getMeteorData() {
     const {tests} = this.props;
     const ready = false;
-    const data = {ready};
+    let data = {ready};
 
     const handle = TestSubs.subscribe('tests', tests);
     if (handle.ready()) {
       let testList = tests.map(_id => Tests.findOne({_id}));
       data.testList = testList.filter(ele => !!ele);
-      // console.log(tests.length, data.testList.length);
       data.ready = true;
+    } else {
+      data = {...this.data};
     }
     return data;
   },
