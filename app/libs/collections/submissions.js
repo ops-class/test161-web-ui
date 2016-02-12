@@ -1,5 +1,7 @@
 Submissions = new Mongo.Collection('submissions');
 
+Submissions._ensureIndex({ "users": 1, "target_name": 1 });
+
 submissionStatus = ['submitted', 'completed', 'failed'];
 targetNames = ['asst1', 'asst2', 'asst3'];
 targetTypes = ['perm', 'grad'];
