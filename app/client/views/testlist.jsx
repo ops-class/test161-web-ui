@@ -26,7 +26,7 @@ TestListComponent = React.createClass({
       list = testList.map(test => <TestComponent key={test._id} {...test} />);
     }
     return (
-      <div className="col-md-12">
+      <div className="col-md-12 detail-container">
         {list}
       </div>
     );

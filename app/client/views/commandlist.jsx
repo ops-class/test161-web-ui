@@ -3,7 +3,7 @@ CommandListComponent = React.createClass({
     const {_id, name, commands, points_avail, points_earned} = this.props;
     const list = commands.map(cmd => <CommandComponent key={cmd._id} {...cmd}/>);
     return (
-      <div className="col-md-12 col-xs-12 col-sm-12">
+      <div className="col-md-12 col-xs-12 col-sm-12 detail-container">
         {list}
       </div>
     )
