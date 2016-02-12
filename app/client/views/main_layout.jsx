@@ -17,9 +17,3 @@ MainLayout = React.createClass({
     );
   }
 });
-
-LoadingComponent = () => {
-  return (
-    <div>Loading</div>
-  );
-};
