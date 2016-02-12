@@ -1,7 +1,5 @@
 Submissions = new Mongo.Collection('submissions');
 
-Submissions._ensureIndex({ "users": 1, "target_name": 1 });
-
 submissionStatus = ['submitted', 'completed', 'failed'];
 targetNames = ['asst1', 'asst2', 'asst3'];
 targetTypes = ['perm', 'grad'];
@@ -114,8 +112,12 @@ initSubmissions = (count = 10) => {
   }
 }
 
-if (Meteor.isServer) {
-  if (!Submissions.findOne()) {
-    initSubmissions(100);
+Meteor.startup(() => {
+  if (Meteor.isServer) {
+    Submissions._ensureIndex({ "users": 1, "target_name": 1 });
+    const count = Submissions.find().count();
+    if (count < 10000) {
+      initSubmissions(10000 - count);
+    }
   }
-}
+});
