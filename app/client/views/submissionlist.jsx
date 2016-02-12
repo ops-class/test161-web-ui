@@ -46,9 +46,9 @@ SubmissionListComponent = React.createClass({
     }
   },
   render() {
-    const {submissions, ready, user, asst} = this.data;
+    const {submissions, ready, user, asst, loading} = this.data;
     if (!ready) {
-      return <div>Loading...</div>
+      return (<LoadingComponent />);
     }
     if (submissions.length === 0) {
       return <div>You haven't submit any solution for {asst}</div>
@@ -58,7 +58,11 @@ SubmissionListComponent = React.createClass({
     return (
       <div className="list-group">
         {list}
-        <div id="load-more">Load more</div>
+        <div className="list-group-item">
+          <div id="load-more">
+            {loading ? <LoadingComponent /> : null}
+          </div>
+        </div>
       </div>
     );
   }
