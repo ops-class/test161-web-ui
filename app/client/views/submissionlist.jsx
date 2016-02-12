@@ -2,14 +2,48 @@ SubmissionListComponent = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     const {asst, user} = this.props;
+    const {limit} = this.state;
     const ready = false;
-    const data = {ready, asst, user}
-    const handle = SubmissionSubs.subscribe('submissions', asst);
+    const loading = true;
+    let data = {ready, asst, user, loading}
+    const handle = SubmissionSubs.subscribe('submissions', asst, limit);
     if (handle.ready()) {
-      data.submissions = findAllSubmissions(user._id, asst).fetch();
+      data.submissions = findAllSubmissions(user._id, asst, limit).fetch();
       data.ready = true;
+      data.loading = false;
+    } else {
+      data = {...this.data};
+      data.loading = true;
     }
     return data;
+  },
+  getInitialState() {
+    return {limit: 10};
+  },
+  componentDidMount() {
+    $(window).scroll(() => {
+      const $elem = $(ReactDOM.findDOMNode(this)).find('#load-more');
+
+      const $window = $(window);
+
+      const docViewTop = $window.scrollTop();
+      const docViewBottom = docViewTop + $window.height();
+
+      const elemTop = $elem.offset().top;
+      const elemBottom = elemTop + $elem.height();
+
+      const loadMore = ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
+      if (loadMore) {
+        this.increaseLimit();
+      }
+    });
+  },
+  increaseLimit() {
+    let {limit} = this.state;
+    if (!this.data.loading) {
+      limit += 10;
+      this.setState({limit});
+    }
   },
   render() {
     const {submissions, ready, user, asst} = this.data;
@@ -24,6 +58,7 @@ SubmissionListComponent = React.createClass({
     return (
       <div className="list-group">
         {list}
+        <div id="load-more">Load more</div>
       </div>
     );
   }
