@@ -1,4 +1,4 @@
-findAllSubmissions = (userId, asst) => {
+findAllSubmissions = (userId, asst, limit = 10) => {
   const user = Meteor.users.findOne(userId);
   const {email, name, picture} = user.services.auth0;
   const selector = {
@@ -8,7 +8,8 @@ findAllSubmissions = (userId, asst) => {
     selector.target_name = asst;
   }
   const options = {
-    sort: {submission_time: -1}
+    sort: {submission_time: -1},
+    limit: limit
   };
   return Submissions.find(selector, options);
 }
