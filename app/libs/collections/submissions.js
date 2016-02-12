@@ -2,7 +2,6 @@ Submissions = new Mongo.Collection('submissions');
 
 submissionStatus = ['submitted', 'completed', 'failed'];
 targetNames = ['asst1', 'asst2', 'asst3'];
-targetTypes = ['perm', 'grad'];
 
 SubmissionSchema = new SimpleSchema({
   _id: {
@@ -19,7 +18,8 @@ SubmissionSchema = new SimpleSchema({
     label: "Users",
     regEx: SimpleSchema.RegEx.Email,
     min: 1,
-    max: 2
+    minCount: 1,
+    maxCount: 2
   },
   repository: {
     type: String,
