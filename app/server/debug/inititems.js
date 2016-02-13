@@ -5,13 +5,18 @@ generateOutput = (i = 0) => {
   return {line, walltime, simtime};
 }
 
-generateCommand = () => {
+generateCommand = (i = -1) => {
   const _id = Meteor.uuid();
   const points_avail = 10;
   const points_earned = 10;
   const status = commandStatus[0];
   const output = [];
-  return {_id, points_avail, points_earned, output, status};
+  const input = {
+    line: 'command line ' + i,
+    walltime: 0.0,
+    simtime: 0.0
+  }
+  return {_id, points_avail, points_earned, output, status, input};
 }
 
 generateTest = (index = -1, target = '', num = 2, outputNum = 10) => {
@@ -26,7 +31,7 @@ generateTest = (index = -1, target = '', num = 2, outputNum = 10) => {
   for (let i = 0; i < num; i++) {
     const noneTime = 2000;
     Meteor.setTimeout(() => {
-      const command = generateCommand();
+      const command = generateCommand(i);
       commands.push(command);
       Tests.update(_id, { $set: { commands: commands, result: testStatus[1] } });
       for (let j = 0; j < outputNum; j++) {
