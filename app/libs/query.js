@@ -2,9 +2,14 @@ const submissionFields = Object.assign(
   ...SubmissionSchema._firstLevelSchemaKeys.map(key => ({[key]: 1}))
 );
 
-findAllSubmissions = (userId, asst, limit = 10) => {
+getUserEmail = (userId) => {
   const user = Meteor.users.findOne(userId);
-  const {email, name, picture} = user.services.auth0;
+  const {email} = user.services.auth0;
+  return email;
+}
+
+findAllSubmissions = (userId, asst, limit = 10) => {
+  const email = getUserEmail(userId);
   const selector = {
     users: { $in: [email] }
   };
@@ -38,6 +43,20 @@ findAllTests = (tests) => {
   const selector = { _id: { $in: tests } };
   const options = { fields: testFields };
   return Tests.find(selector, options);
+}
+
+findAllStudents = (userId) => {
+  const email = getUserEmail(userId);
+  const selector = {email};
+  const options = {};
+  return Students.find(selector, options);
+}
+
+findOneStudent = (userId) => {
+  const email = getUserEmail(userId);
+  const selector = {email};
+  const options = {};
+  return Students.findOne(selector, options);
 }
 
 // findAllOutputsWithId = (_id) => {

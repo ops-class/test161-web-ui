@@ -5,6 +5,7 @@ subscribeUserData = function() {
     const handle = UserSubs.subscribe("userData");
     if (handle.ready()) {
       data.user = Meteor.user();
+      data.student = findOneStudent(Meteor.userId());
       data.ready = true;
     }
     return data;

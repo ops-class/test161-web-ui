@@ -2,7 +2,7 @@ UserComponent = React.createClass({
   render() {
     const {asst, profile} = this.props;
     if (profile) {
-      return (<ProfileComponent />);
+      return (<ProfileComponent {...this.props}/>);
     }
     return (
       <div>
