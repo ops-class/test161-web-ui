@@ -54,6 +54,15 @@ TestComponent = React.createClass({
       toggleClass += 'fa-chevron-right';
     }
 
+    let points = null;
+    if (points_avail) {
+      points = (
+        <div className="col-md-2 col-xs-12 col-sm-12 ellipsis text-right">
+          {points_earned}/{points_avail}
+        </div>
+      );
+    }
+
     return (
       <div className={`row test-container ${statusClass}`}>
         <div className="col-md-1 col-xs-1 col-sm-1 toggle-container"
@@ -63,9 +72,7 @@ TestComponent = React.createClass({
         <div className="col-md-9 col-xs-12 col-sm-12 ellipsis">
           {name}
         </div>
-        <div className="col-md-2 col-xs-12 col-sm-12 ellipsis text-right">
-          {result} {points_earned}/{points_avail}
-        </div>
+        {points}
         {content}
       </div>
     );

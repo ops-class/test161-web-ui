@@ -16,7 +16,7 @@ CommandComponent = React.createClass({
     return {collapseTarget: '.output-container'};
   },
   render() {
-    const {_id, output, points_avail, points_earned, status} = this.props;
+    const {_id, input, output, points_avail, points_earned, status} = this.props;
     const {collapse} = this.state;
 
     let list = null;
@@ -38,6 +38,14 @@ CommandComponent = React.createClass({
     } else {
       toggleClass += 'fa-chevron-right';
     }
+    let points = null;
+    if (points_avail) {
+      points = (
+        <div className="col-md-3 col-xs-12 col-sm-12 text-right">
+          {points_earned}/{points_avail}
+        </div>
+      );
+    }
     return (
       <div className={`row command-container ${statusClass}`}>
         <div className="col-md-1 col-xs-1 col-sm-1 toggle-container"
@@ -45,11 +53,9 @@ CommandComponent = React.createClass({
           <i className={toggleClass}></i>
         </div>
         <div className="col-md-8 col-xs-12 col-sm-12 ellipsis">
-          commands: {_id}
+          {input.line}
         </div>
-        <div className="col-md-3 col-xs-12 col-sm-12 text-right">
-          {status} {points_earned}/{points_avail}
-        </div>
+        {points}
         {list}
       </div>
     );
