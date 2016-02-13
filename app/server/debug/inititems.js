@@ -14,7 +14,7 @@ generateCommand = () => {
   return {_id, points_avail, points_earned, output, status};
 }
 
-generateTest = (index = -1, target = '', num = 2) => {
+generateTest = (index = -1, target = '', num = 2, outputNum = 10) => {
   const _id = Meteor.uuid();
   const name = `${target} test ${index}`;
   const commands = [];
@@ -24,24 +24,25 @@ generateTest = (index = -1, target = '', num = 2) => {
   const test = {_id, name, commands, points_avail, points_earned, status};
   Tests.insert(test);
   for (let i = 0; i < num; i++) {
+    const noneTime = 2000;
     Meteor.setTimeout(() => {
       const command = generateCommand();
       commands.push(command);
-      Tests.update(_id, { $set: { commands: commands } });
-      for (let j = 0; j < 10; j++) {
+      Tests.update(_id, { $set: { commands: commands, status: testStatus[1] } });
+      for (let j = 0; j < outputNum; j++) {
         Meteor.setTimeout(() => {
           command.status = commandStatus[1];
           command.output.push(generateOutput(j));
-          if (command.output.length === 10) {
-            command.status = commandStatus[2];
+          if (command.output.length === outputNum) {
+            command.status = commandStatus[2 + randomInt(2)];
           }
           Tests.update(_id, { $set: {commands: commands } });
-          if (command.output.length === 10 && commands.length == num) {
-            Tests.update(_id, { $set: {status: testStatus[1] } });
+          if (commands.length === num && commands[num - 1].output.length === outputNum) {
+            Tests.update(_id, { $set: {status: testStatus[2 + randomInt(2)] } });
           }
-        }, 1000 * j);
+        }, 1000 * j + noneTime);
       }
-    }, 1000 * 10 * i);
+    }, 1000 * (outputNum + 2) * i + noneTime * num);
   }
   return test;
 }
@@ -57,12 +58,13 @@ generateMockTest = ({_id}, num = 2) => {
     console.log('generateMockTest:', `tests of ${_id} is not empty`);
     return;
   }
+  const outputNum = 3;
   for (let i = 0; i < num; i++) {
     Meteor.setTimeout(() => {
-      const test = generateTest(i, _id);
+      const test = generateTest(i, _id, num, outputNum);
       tests.push(test._id);
       Submissions.update(_id, { $set : { tests: tests } });
-    }, 1000 * 10 * num * i);
+    }, 1000 * outputNum * num * i);
   }
 }
 
