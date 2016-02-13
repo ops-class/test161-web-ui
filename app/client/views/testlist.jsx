@@ -39,7 +39,6 @@ TestComponent = React.createClass({
     return {collapseTarget: '.command-container'};
   },
   render() {
-    console.log(this.props);
     const {_id, name, commands, points_avail, points_earned, result} = this.props;
     const {collapse} = this.state;
 
