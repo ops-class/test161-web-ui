@@ -57,7 +57,7 @@ TestSchema = new SimpleSchema({
     type: String,
     label: "Name"
   },
-  status: {
+  result: {
     type: String,
     label: "Status",
     allowedValues: testStatus

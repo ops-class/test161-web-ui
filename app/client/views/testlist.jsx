@@ -39,14 +39,15 @@ TestComponent = React.createClass({
     return {collapseTarget: '.command-container'};
   },
   render() {
-    const {_id, name, commands, points_avail, points_earned, status} = this.props;
+    console.log(this.props);
+    const {_id, name, commands, points_avail, points_earned, result} = this.props;
     const {collapse} = this.state;
 
     let content = null;
     let toggleClass = 'toggle fa ';
-    const statusClass = getTestStatusClass(status);
+    const statusClass = getTestStatusClass(result);
 
-    if (isTestRunning(status) || !collapse) {
+    if (isTestRunning(result) || !collapse) {
       content = (<CommandListComponent {...this.props} />);
       toggleClass += 'fa-chevron-down';
     } else {
@@ -63,7 +64,7 @@ TestComponent = React.createClass({
           {name}
         </div>
         <div className="col-md-2 col-xs-12 col-sm-12 ellipsis text-right">
-          {status} {points_earned}/{points_avail}
+          {result} {points_earned}/{points_avail}
         </div>
         {content}
       </div>
