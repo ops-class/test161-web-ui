@@ -33,7 +33,7 @@ CommandSchema = new SimpleSchema({
     label: "Outputs"
   },
   input: {
-    type: [OutputSchema],
+    type: OutputSchema,
     label: "input"
   },
   status: {
