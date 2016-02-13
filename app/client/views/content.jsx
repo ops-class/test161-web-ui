@@ -24,12 +24,12 @@ ContentComponent = React.createClass({
       </div>
     );
     return (
-      <div id="content" className="container">
+      <div className="container">
         <div className="row">
           <div className="col-md-2">
             <TabsComponent {...this.props} />
           </div>
-          <div className="col-md-10">
+          <div id="content" className="col-md-10">
             {content}
           </div>
         </div>
