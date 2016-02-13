@@ -26,3 +26,12 @@ getCssClass = (status) => {
 getTestStatusClass = getCssClass
 
 getCommandStatusClass = getCssClass
+
+isRunning = (status) => status === 'running'
+
+isTestRunning = isRunning
+isCommandRunning = isRunning
+
+isSubmissionRunning = (status) => {
+  return isRunning(status) || status === submissionStatus[2];
+}

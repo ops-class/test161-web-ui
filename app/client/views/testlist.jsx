@@ -46,7 +46,7 @@ TestComponent = React.createClass({
     let toggleClass = 'toggle fa ';
     const statusClass = getTestStatusClass(status);
 
-    if (status === testStatus[0] || !collapse) {
+    if (isTestRunning(status) || !collapse) {
       content = (<CommandListComponent {...this.props} />);
       toggleClass += 'fa-chevron-down';
     } else {

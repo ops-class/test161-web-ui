@@ -23,7 +23,7 @@ CommandComponent = React.createClass({
     let toggleClass = 'toggle fa ';
     const statusClass = getCommandStatusClass(status);
 
-    if (status === commandStatus[1] || !collapse) {
+    if (isCommandRunning(status) || !collapse) {
       list = (
         <div className="col-xs-12 output-container">
           <pre>

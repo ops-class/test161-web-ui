@@ -138,7 +138,7 @@ SubmissionComponent = React.createClass({
     const {submission} = this.props;
     const {collapse} = this.state;
     let details = null;
-    if (!collapse) {
+    if (isSubmissionRunning(status) || !collapse) {
       details = (
         <div className="row submission-details">
           <TestListComponent {...submission}/>
