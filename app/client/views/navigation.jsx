@@ -29,16 +29,16 @@ NavigationComponent = React.createClass({
                         <li><a href="https://www.ops-class.org/courses/buffalo/CSE421_Spring2016" target="_blank">UB CSE 421/521 Spring 2016</a></li>
                         <li role="separator" className="divider" />
                         <li>
-                          <a href="https://www.ops-class.org/courses/buffalo/CSE421_Spring2015.pdf" target="_blank">UB CSE 421/521 Spring 2015 (PDF)</a>
+                          <a href="https://www.ops-class.org/courses/buffalo/CSE421_Spring2015" target="_blank">UB CSE 421/521 Spring 2015</a>
                         </li>
                         <li>
-                          <a href="https://www.ops-class.org/courses/buffalo/CSE421_Spring2014.pdf" target="_blank">UB CSE 421/521 Spring 2014 (PDF)</a>
+                          <a href="https://www.ops-class.org/courses/buffalo/CSE421_Spring2014" target="_blank">UB CSE 421/521 Spring 2014</a>
                         </li>
                         <li>
-                          <a href="https://www.ops-class.org/courses/buffalo/CSE421_Spring2013.pdf" target="_blank">UB CSE 421/521 Spring 2013 (PDF)</a>
+                          <a href="https://www.ops-class.org/courses/buffalo/CSE421_Spring2013" target="_blank">UB CSE 421/521 Spring 2013</a>
                         </li>
                         <li>
-                          <a href="https://www.ops-class.org/courses/buffalo/CSE421_Spring2012.pdf" target="_blank">UB CSE 421/521 Spring 2012 (PDF)</a>
+                          <a href="https://www.ops-class.org/courses/buffalo/CSE421_Spring2012" target="_blank">UB CSE 421/521 Spring 2012</a>
                         </li>
                       </ul>
                     </li>
@@ -51,6 +51,7 @@ NavigationComponent = React.createClass({
                       <ul className="dropdown-menu">
                         <li><a href="https://www.ops-class.org/asst/0/" target="_blank">ASST0</a></li>
                         <li><a href="https://www.ops-class.org/asst/1/" target="_blank">ASST1</a></li>
+                        <li><a href="https://www.ops-class.org/asst/2/" target="_blank">ASST2</a></li>
                       </ul>
                     </li>
                     <li><a id="menu-discuss" title="Discourse-based course discussion forum." target="_blank" href="https://discourse.ops-class.org" className="external">discuss</a></li>
