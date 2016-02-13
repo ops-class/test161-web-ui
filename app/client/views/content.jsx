@@ -56,14 +56,16 @@ TabsComponent = React.createClass({
     const links = [
       { name: 'all', href: '/' },
       { name: 'asst1', href: '/asst/1' },
-      { name: 'asst2', href: '/asst/2' },
-      { name: 'asst3', href: '/asst/3' }].map((link) => {
+      { name: 'asst2', href: '/asst/2', disabled: true },
+      { name: 'asst3', href: '/asst/3', disabled: true },
+      { name: 'profile', href: '/profile' }].map((link) => {
         let className = 'btn btn-default btn-block ';
         if (path === link.href) {
           className += 'btn-primary ';
         }
-        if (!user) {
+        if (!user || link.disabled) {
           className += 'disabled ';
+          link.disabled = true;
         }
         return (
           <div key={link.name}
@@ -71,7 +73,7 @@ TabsComponent = React.createClass({
             <button
               type="button"
               className={className}
-              onClick={() => { if (user) { FlowRouter.go(link.href)} } }>
+              onClick={() => { if (user && !link.disabled) { FlowRouter.go(link.href)} } }>
               {link.name}
             </button>
           </div>
