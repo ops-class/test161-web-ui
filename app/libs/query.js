@@ -4,7 +4,10 @@ const submissionFields = Object.assign(
 
 getUserEmail = (userId) => {
   const user = Meteor.users.findOne(userId);
-  const {email} = user.services.auth0;
+  if (!user) {
+    return user;
+  }
+  const {services: {auth0: {email}}} = user;
   return email;
 }
 
