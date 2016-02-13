@@ -12,7 +12,7 @@ MainLayout = React.createClass({
       <div>
         <NavigationComponent />
         {mainContent}
-        <FooterComponent />
+        {/*<FooterComponent />*/}
       </div>
     );
   }
