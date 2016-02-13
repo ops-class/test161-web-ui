@@ -20,15 +20,15 @@ generateTest = (index = -1, target = '', num = 2, outputNum = 10) => {
   const commands = [];
   const points_avail = randomInt(10);
   const points_earned = randomInt(points_avail);
-  const status = testStatus[0];
-  const test = {_id, name, commands, points_avail, points_earned, status};
+  const result = testStatus[0];
+  const test = {_id, name, commands, points_avail, points_earned, result};
   Tests.insert(test);
   for (let i = 0; i < num; i++) {
     const noneTime = 2000;
     Meteor.setTimeout(() => {
       const command = generateCommand();
       commands.push(command);
-      Tests.update(_id, { $set: { commands: commands, status: testStatus[1] } });
+      Tests.update(_id, { $set: { commands: commands, result: testStatus[1] } });
       for (let j = 0; j < outputNum; j++) {
         Meteor.setTimeout(() => {
           command.status = commandStatus[1];
@@ -38,7 +38,7 @@ generateTest = (index = -1, target = '', num = 2, outputNum = 10) => {
           }
           Tests.update(_id, { $set: {commands: commands } });
           if (commands.length === num && commands[num - 1].output.length === outputNum) {
-            Tests.update(_id, { $set: {status: testStatus[2 + randomInt(2)] } });
+            Tests.update(_id, { $set: {result: testStatus[2 + randomInt(2)] } });
           }
         }, 1000 * j + noneTime);
       }
