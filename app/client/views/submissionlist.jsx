@@ -57,11 +57,14 @@ SubmissionListComponent = React.createClass({
     if (!ready) {
       return (<LoadingComponent />);
     }
-    if (submissions.length === 0) {
-      return <div>You haven't submit any solution for {asst}</div>
+    const length = submissions.length;
+    if (length === 0) {
+      return <div>You haven't submit any solution!</div>
     }
+
     let noMoreSubmission = null;
-    if (submissions.length < this.state.limit) {
+    const {limit} = this.state;
+    if (!loading && length < limit && limit > 10) {
       noMoreSubmission = (
         <div className="alert alert-warning">
         No more submissions!
