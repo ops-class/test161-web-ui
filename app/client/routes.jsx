@@ -13,6 +13,13 @@ FlowRouter.route("/asst/:id", {
   }
 });
 
+FlowRouter.route("/profile", {
+  name: "home",
+  action: function(params, queryParams) {
+    ReactLayout.render(MainLayout, {profile: true});
+  }
+});
+
 FlowRouter.notFound = {
   action: function(params, queryParams) {
     ReactLayout.render(MainLayout, {
