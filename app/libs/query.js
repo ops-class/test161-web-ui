@@ -28,7 +28,7 @@ const testFields = {
   _id: 1,
   name: 1,
   result: 1,
-  'commands.id': 1,
+  'commands._id': 1,
   'commands.input': 1,
   'commands.output.line': 1,
   'commands.output.walltime': 1,
