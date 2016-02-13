@@ -45,7 +45,9 @@ SubmissionListComponent = React.createClass({
   },
   increaseLimit() {
     let {limit} = this.state;
-    if (!this.data.loading) {
+    const {loading, submissions} = this.data;
+    const num = submissions.length || 0;
+    if (!loading && num === limit) {
       limit += 10;
       this.setState({limit});
     }
@@ -58,16 +60,23 @@ SubmissionListComponent = React.createClass({
     if (submissions.length === 0) {
       return <div>You haven't submit any solution for {asst}</div>
     }
+    let noMoreSubmission = null;
+    if (submissions.length < this.state.limit) {
+      noMoreSubmission = (
+        <div className="alert alert-warning">
+        No more submissions!
+        </div>
+      );
+    }
     const list = submissions.map(submission =>
       <SubmissionComponent key={submission._id} submission={submission} />);
     return (
       <div className="list-group">
         {list}
-        <div className="list-group-item">
-          <div id="load-more">
-            {loading ? <LoadingComponent /> : null}
-          </div>
+        <div id="load-more">
+          {loading ? <LoadingComponent /> : null}
         </div>
+        {noMoreSubmission}
       </div>
     );
   }
