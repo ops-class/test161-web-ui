@@ -141,7 +141,7 @@ const TimeComponent = React.createClass({
     const time = submission.from(now, true);
     let duration = '--:--';
     if (completion_time) {
-      duration = moment.duration(moment(completion_time).diff(submission)).format('h[:]mm:ss', { forceLength: true });
+      duration = getDurationString(moment(completion_time).diff(submission));
     }
     return (
       <div className="row">
