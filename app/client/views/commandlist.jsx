@@ -24,12 +24,12 @@ CommandComponent = React.createClass({
     const statusClass = getCommandStatusClass(status);
 
     if (isCommandRunning(status) || !collapse) {
+      const content = output.map(line => line.line).join('\n');
       list = (
         <div className="col-xs-12 output-container">
           <pre>
             <code className="bash">
-              {output.map(line =>
-                <div key={_id+line.line} className="col-md-12">{line.line}</div>)}
+              {content}
             </code>
           </pre>
         </div>
