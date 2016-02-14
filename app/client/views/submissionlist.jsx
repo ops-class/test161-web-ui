@@ -131,7 +131,6 @@ const TimeComponent = React.createClass({
 
     this.setState({now});
 
-    console.log(status);
     if (isSubmissionRunning(status)) {
       setTimeout(this.updateDate, 1000);
     } else {
