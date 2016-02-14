@@ -125,23 +125,32 @@ const TimeComponent = React.createClass({
     this.updateDate();
   },
   updateDate() {
-    const {submission_time} = this.props;
+    const {submission_time, status} = this.props;
     const submission = moment(submission_time);
     const now = moment();
 
-    const interval = getInterval(now.diff(submission));
     this.setState({now});
 
-    setTimeout(this.updateDate, interval);
+    console.log(status);
+    if (isSubmissionRunning(status)) {
+      setTimeout(this.updateDate, 1000);
+    } else {
+      const interval = getInterval(now.diff(submission));
+      setTimeout(this.updateDate, interval);
+    }
   },
   render() {
-    const {submission_time, completion_time, commit_id} = this.props;
+    const {submission_time, completion_time, commit_id, status} = this.props;
     const {now} = this.state;
     const submission = moment(submission_time);
     const time = submission.from(now, true);
     let duration = '--:--';
-    if (completion_time) {
-      duration = getDurationString(moment(completion_time).diff(submission));
+    if (isSubmissionRunning(status)) {
+      duration = getDurationString(moment(now).diff(submission));
+    } else {
+      if (completion_time) {
+        duration = getDurationString(moment(completion_time).diff(submission));
+      }
     }
     return (
       <div className="row">
