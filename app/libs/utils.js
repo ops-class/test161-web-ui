@@ -1,7 +1,7 @@
 randomInt = (range = 100) => Math.floor(Math.random() * range)
 
 // submissionStatus = ['submitted', 'building', 'running', 'completed', 'aborted'];
-getSubmissionStatusClass = (status) => {
+getSubmissionStatusClass = ({status, score}) => {
   if (status === submissionStatus[0]) {
     return 'alert-info';
   }
@@ -9,7 +9,11 @@ getSubmissionStatusClass = (status) => {
     return 'alert-warning';
   }
   if (status === submissionStatus[3]) {
-    return 'alert-success';
+    if (score) {
+      return 'alert-success';
+    } else {
+      return 'alert-danger';
+    }
   }
   if (status === submissionStatus[4]) {
     return 'alert-danger';

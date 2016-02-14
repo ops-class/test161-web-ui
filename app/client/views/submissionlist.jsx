@@ -91,7 +91,7 @@ const StatusComponent = ({status, score, max_score}) => {
     if (score) {
       content = `${score}/${max_score}`;
     }
-    className += getSubmissionStatusClass(status);
+    className += getSubmissionStatusClass({status, score});
     return (
       <div className={className}>
         {content}
