@@ -117,29 +117,49 @@ const InfoComponent = ({_id, submission_time, users, repository, commit_id, stat
   );
 };
 
-const TimeComponent = ({submission_time, completion_time, commit_id}) => {
-  const submission = moment(submission_time);
-  const time = submission.fromNow();
-  let duration = '--:--';
-  if (completion_time) {
-    duration = moment.duration(moment(completion_time).diff(submission)).format('h[:]mm:ss', { forceLength: true });
+const TimeComponent = React.createClass({
+  getInitialState() {
+    return {now: moment()};
+  },
+  componentDidMount() {
+    this.updateDate();
+  },
+  updateDate() {
+    const {submission_time} = this.props;
+    const submission = moment(submission_time);
+    const now = moment();
+
+    const interval = getInterval(now.diff(submission));
+    this.setState({now});
+
+    setTimeout(this.updateDate, interval);
+  },
+  render() {
+    const {submission_time, completion_time, commit_id} = this.props;
+    const {now} = this.state;
+    const submission = moment(submission_time);
+    const time = submission.from(now);
+    let duration = '--:--';
+    if (completion_time) {
+      duration = moment.duration(moment(completion_time).diff(submission)).format('h[:]mm:ss', { forceLength: true });
+    }
+    return (
+      <div className="row">
+        <div className="col-md-6 col-xs-6">
+          <i className="fa fa-calendar"></i> {time}
+        </div>
+        <div className="col-md-6 col-xs-6">
+          <i className="fa fa-clock-o"></i> {duration}
+        </div>
+        <div className="col-md-6 col-xs-6">
+        </div>
+        <div className="col-md-6 col-xs-6">
+          <i className="fa fa-code-fork"></i> {commit_id.substring(0, 7)}
+        </div>
+      </div>
+    )
   }
-  return (
-    <div className="row">
-      <div className="col-md-6 col-xs-6">
-        <i className="fa fa-calendar"></i> {time}
-      </div>
-      <div className="col-md-6 col-xs-6">
-        <i className="fa fa-clock-o"></i> {duration}
-      </div>
-      <div className="col-md-6 col-xs-6">
-      </div>
-      <div className="col-md-6 col-xs-6">
-        <i className="fa fa-code-fork"></i> {commit_id.substring(0, 7)}
-      </div>
-    </div>
-  )
-};
+});
 
 SubmissionComponent = React.createClass({
   mixins: [CollapseMixin],
