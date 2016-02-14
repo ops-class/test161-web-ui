@@ -12,7 +12,7 @@
  */
 /* 2D TRANSITIONS */
 /* Grow */
-@media (min-width: 992px) {
+@media screen and (min-width: 1025px) {
     .hvr-grow {
         display: inline-block;
         vertical-align: middle;
