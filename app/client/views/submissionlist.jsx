@@ -138,7 +138,7 @@ const TimeComponent = React.createClass({
     const {submission_time, completion_time, commit_id} = this.props;
     const {now} = this.state;
     const submission = moment(submission_time);
-    const time = submission.from(now);
+    const time = submission.from(now, true);
     let duration = '--:--';
     if (completion_time) {
       duration = moment.duration(moment(completion_time).diff(submission)).format('h[:]mm:ss', { forceLength: true });
