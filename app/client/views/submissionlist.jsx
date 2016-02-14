@@ -168,6 +168,7 @@ SubmissionComponent = React.createClass({
   },
   render() {
     const {submission} = this.props;
+    const {status} = submission;
     const {collapse} = this.state;
     let details = null;
     if (isSubmissionRunning(status) || !collapse) {

@@ -33,5 +33,5 @@ isTestRunning = isRunning
 isCommandRunning = isRunning
 
 isSubmissionRunning = (status) => {
-  return isRunning(status) || status === submissionStatus[2];
+  return isRunning(status) || status === submissionStatus[1];
 }
