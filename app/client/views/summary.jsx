@@ -20,6 +20,11 @@ SummaryComponent = React.createClass({
       }
       return {asst, points_avail, points_earned};
     });
+    scores.push({
+      asst: 'fake asst2', points_avail: 100, points_earned: randomInt(100)
+    }, {
+      asst: 'fake asst3', points_avail: 100, points_earned: randomInt(100)
+    });
     const list = scores.map(score => {
       const {points_earned, points_avail, asst} = score;
       const className = getPointClass(score);
