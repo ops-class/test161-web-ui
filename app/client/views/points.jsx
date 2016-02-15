@@ -15,7 +15,6 @@ getPointClass = ({points_earned, points_avail}) => {
 PointComponent = ({points_earned, points_avail}) => {
   let className = 'alert ';
   className += 'alert-' + getPointClass({points_earned, points_avail});
-  console.log(className);
   return (
     <span className={className}>
       {points_earned}/{points_avail}

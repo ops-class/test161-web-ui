@@ -132,11 +132,14 @@ const TimeComponent = React.createClass({
     this.setState({now});
 
     if (isSubmissionRunning(status)) {
-      setTimeout(this.updateDate, 1000);
+      this.timer = setTimeout(this.updateDate, 1000);
     } else {
       const interval = getInterval(now.diff(submission));
-      setTimeout(this.updateDate, interval);
+      this.timer = setTimeout(this.updateDate, interval);
     }
+  },
+  componentWillUnmount() {
+    clearTimeout(this.timer);
   },
   render() {
     const {submission_time, completion_time, commit_id, status} = this.props;
