@@ -6,9 +6,7 @@ UserComponent = React.createClass({
     }
     return (
       <div>
-        <div className="row">
-        user information summary!
-        </div>
+        <SummaryComponent {...this.props} />
         <div className="row">
           <SubmissionListComponent {...this.props}/>
         </div>
