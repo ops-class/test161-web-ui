@@ -4,13 +4,16 @@ SummaryComponent = React.createClass({
     const {email, target_results} = student;
     let scores = [];
     for (let asst of Object.keys(target_results)) {
-      const {
+      let {
         score: points_earned,
-        score: points_avail,
+        max_score: points_avail,
         status,
         performance,
         submission_id
       } = target_results[asst];
+      if (!points_earned) {
+        points_earned = 0;
+      }
       scores.push({asst, points_avail, points_earned});
     }
     const list = scores.map(score => {
