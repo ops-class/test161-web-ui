@@ -57,7 +57,7 @@ TestComponent = React.createClass({
     if (points_avail) {
       points = (
         <div className="col-md-2 col-xs-12 col-sm-12 ellipsis text-right">
-          {points_earned}/{points_avail}
+          <PointComponent {...{points_earned, points_avail}} />
         </div>
       );
     }

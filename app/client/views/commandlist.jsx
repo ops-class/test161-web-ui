@@ -42,7 +42,7 @@ CommandComponent = React.createClass({
     if (points_avail) {
       points = (
         <div className="col-md-3 col-xs-12 col-sm-12 text-right">
-          {points_earned}/{points_avail}
+          <PointComponent {...{points_earned, points_avail}} />
         </div>
       );
     }
