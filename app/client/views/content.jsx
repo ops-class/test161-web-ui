@@ -70,12 +70,12 @@ TabsComponent = React.createClass({
         return (
           <div key={link.name}
             className="col-md-12 col-xs-12">
-            <button
+            <div
               type="button"
               className={className}
               onClick={() => { if (user && !link.disabled) { FlowRouter.go(link.href)} } }>
               {link.name}
-            </button>
+            </div>
           </div>
         )
       }
