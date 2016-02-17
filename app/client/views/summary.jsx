@@ -1,7 +1,7 @@
 SummaryComponent = React.createClass({
   render() {
     const {student} = this.props;
-    const {email, target_results} = student;
+    const {email, target_results = []} = student;
     let scores = target_results.map(result => {
       console.log(result);
       let {
