@@ -52,6 +52,8 @@ NavigationComponent = React.createClass({
                         <li><a href="https://www.ops-class.org/asst/0/" target="_blank">ASST0</a></li>
                         <li><a href="https://www.ops-class.org/asst/1/" target="_blank">ASST1</a></li>
                         <li><a href="https://www.ops-class.org/asst/2/" target="_blank">ASST2</a></li>
+                        <li role="separator" className="divider" />
+                        <li><a href="https://www.ops-class.org/asst/test161/" target="_blank">test161</a></li>
                       </ul>
                     </li>
                     <li><a id="menu-discuss" title="Discourse-based course discussion forum." target="_blank" href="https://discourse.ops-class.org" className="external">discuss</a></li>
