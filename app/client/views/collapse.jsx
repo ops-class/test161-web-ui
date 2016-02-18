@@ -12,10 +12,13 @@ CollapseMixin = {
     }
   },
   delayCollapse() {
-    this.setState(Object.assign(this.state, {collapse: false}));
-    setTimeout(() => {
-      this.toggleCollapse()
-    }, 2048);
+    const {collapse} = this.state;
+    if (collapse) {
+      this.setState(Object.assign(this.state, {collapse: false}));
+      setTimeout(() => {
+        this.toggleCollapse()
+      }, 2048);
+    }
   },
   toggleCollapse() {
     const ele = $(ReactDOM.findDOMNode(this));
