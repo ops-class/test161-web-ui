@@ -21,7 +21,12 @@ TestListComponent = React.createClass({
     if (!ready) {
       return (<LoadingComponent />);
     }
-    let list = <div>No content</div>;
+    let list = (
+      <div className="row test-container text-center">
+        No content!
+        <LoadingComponent />
+      </div>
+    );
     if (testList.length > 0) {
       list = testList.map(test => <TestComponent key={test._id} {...test} />);
     }
