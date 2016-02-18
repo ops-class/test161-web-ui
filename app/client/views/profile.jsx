@@ -2,8 +2,8 @@ const publicKey = 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDHwkIK3GtIJ+i0aPDiMtGNT
 
 const NoProfileComponent = () => (
   <div className="alert alert-danger">
-  No profile information found!
-  Please refresh the page or contact the course staff.
+    No profile information found!
+    Please refresh the page or contact the course staff.
   </div>
 )
 
