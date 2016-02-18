@@ -12,8 +12,9 @@ CollapseMixin = {
     }
   },
   delayCollapse() {
-    const {collapse} = this.state;
-    if (collapse) {
+    const ele = $(ReactDOM.findDOMNode(this));
+    const container = ele.find(this.state.collapseTarget).first();
+    if (container.is(':visible')) {
       this.setState(Object.assign(this.state, {collapse: false}));
       setTimeout(() => {
         this.toggleCollapse()
