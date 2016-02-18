@@ -15,6 +15,11 @@ CommandComponent = React.createClass({
   getInitialState() {
     return {collapseTarget: '.output-container'};
   },
+  autoCollpase(nextProps) {
+    const {status} = this.props;
+    const nextStatus = nextProps.status;
+    return isCommandRunning(status) && !isCommandRunning(nextStatus);
+  },
   render() {
     const {_id, input, output, points_avail, points_earned, status} = this.props;
     const {collapse} = this.state;

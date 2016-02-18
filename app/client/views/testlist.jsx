@@ -43,6 +43,11 @@ TestComponent = React.createClass({
   getInitialState() {
     return {collapseTarget: '.command-container'};
   },
+  autoCollpase(nextProps) {
+    const {result: status} = this.props;
+    const nextStatus = nextProps.result;
+    return isTestRunning(status) && !isTestRunning(nextStatus);
+  },
   render() {
     const {_id, name, commands, points_avail, points_earned, result} = this.props;
     const {collapse} = this.state;

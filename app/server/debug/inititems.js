@@ -54,6 +54,7 @@ generateTest = (index = -1, target = '', num = 2, outputNum = 10) => {
 
 generateMockTest = ({_id}, num = 2) => {
   const submission = Submissions.findOne(_id);
+  Submissions.update(_id, { $set: {status: submissionStatus[2] } });
   if (!submission) {
     console.log('generateMockTest:', _id, 'not found in Submissions!');
     return;
@@ -71,6 +72,9 @@ generateMockTest = ({_id}, num = 2) => {
       Submissions.update(_id, { $set : { tests: tests } });
     }, 1000 * outputNum * num * i);
   }
+  Meteor.setTimeout(() => {
+    Submissions.update(_id, { $set: {status: submissionStatus[3] } });
+  }, 1000 * outputNum * num * 5);
 }
 
 getRandomSubmission = (index = -1) => {

@@ -177,6 +177,16 @@ SubmissionComponent = React.createClass({
   getInitialState() {
     return {collapseTarget: '.submission-details'};
   },
+  autoCollpase(nextProps) {
+    const {submission} = this.props;
+    const nextSubmission = nextProps.submission;
+    if (!submission || !nextSubmission) {
+      return false;
+    }
+    const {status} = submission;
+    const nextStatus = nextSubmission.status;
+    return isSubmissionRunning(status) && !isSubmissionRunning(nextStatus);
+  },
   render() {
     const {submission} = this.props;
     const {status} = submission;
