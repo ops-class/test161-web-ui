@@ -12,8 +12,7 @@ CollapseMixin = {
     }
   },
   delayCollapse() {
-    const collapse = false;
-    this.setState(Object.assign(this.state, {collapse}));
+    this.setState(Object.assign(this.state, {collapse: false}));
     setTimeout(() => {
       this.toggleCollapse()
     }, 2048);
@@ -22,9 +21,12 @@ CollapseMixin = {
     const ele = $(ReactDOM.findDOMNode(this));
     const container = ele.find(this.state.collapseTarget);
     if (container.length === 0) {
-      this.setState({collapse: false});
+      this.setState(Object.assign(this.state, {collapse: false}));
     } else {
-      ele.find('.toggle').toggleClass('fa-chevron-right').toggleClass('fa-chevron-down');
+      const toggle = ele.find('.toggle').first();
+      if (toggle.hasClass('fa')) {
+        toggle.toggleClass('fa-chevron-right').toggleClass('fa-chevron-down');
+      }
       container.slideToggle(512);
     }
   }

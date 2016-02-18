@@ -86,7 +86,7 @@ SubmissionListComponent = React.createClass({
 });
 
 const StatusComponent = ({status, score, max_score}) => {
-    let className = 'submission-status text-uppercase hvr-grow-shadow alert ';
+    let className = 'submission-status toggle text-uppercase hvr-grow-shadow alert ';
     let content = status;
     if (score) {
       content = `${score}/${max_score}`;
