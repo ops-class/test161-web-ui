@@ -24,6 +24,7 @@ StudentSchema = new SimpleSchema({
   key: {
     type: String,
     label: "Public key",
+    optional: true
   },
   createdAt: {
     type: Date,
