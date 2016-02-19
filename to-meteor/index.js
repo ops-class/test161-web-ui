@@ -28,7 +28,7 @@ function addAbsoluteURL(url, element) {
     if (link.href.startsWith('/') && link.href.length > 0) {
       link.setAttribute('href', url + link.href);
       if (!link.target) {
-        link.setAttribute('target', '_blank');
+        // link.setAttribute('target', '_blank');
       }
     }
   }

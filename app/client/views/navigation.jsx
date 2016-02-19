@@ -4,7 +4,7 @@ NavigationComponent = React.createClass({
 
       <div className="container">
         <nav className="navbar navbar-default navbar-fixed-top">
-          <a className="logo-fixed" href="https://www.ops-class.org/" target="_blank"><img src="/img/logos/ops-class.jpg" alt="ops-class.org logo" /></a>
+          <a className="logo-fixed" href="https://www.ops-class.org/"><img src="/img/logos/ops-class.jpg" alt="ops-class.org logo" /></a>
           <div className="container">
             <div className="navbar-header">
               <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -18,27 +18,27 @@ NavigationComponent = React.createClass({
               <div className="row">
                 <div className="col-sm-6">
                   <ul className="nav navbar-nav left">
-                    <li><a id="menu-slides" title="Lecture slides, notes, and videos." href="https://www.ops-class.org/slides/" target="_blank">lectures</a>
+                    <li><a id="menu-slides" title="Lecture slides, notes, and videos." href="https://www.ops-class.org/slides/">lectures</a>
                     </li>
                     <li>
-                      <a id="menu-exams" title="Exams to test your knowledge of OS concepts." href="https://www.ops-class.org/exams/" target="_blank">exams</a>
+                      <a id="menu-exams" title="Exams to test your knowledge of OS concepts." href="https://www.ops-class.org/exams/">exams</a>
                     </li>
                     <li className="dropdown">
                       <a href="#" className="dropdown-toggle" id="menu-courses" title="Courses that have used ops-class.org" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">courses</a>
                       <ul className="dropdown-menu">
-                        <li><a href="https://www.ops-class.org/courses/buffalo/CSE421_Spring2016" target="_blank">UB CSE 421/521 Spring 2016</a></li>
+                        <li><a href="https://www.ops-class.org/courses/buffalo/CSE421_Spring2016">UB CSE 421/521 Spring 2016</a></li>
                         <li role="separator" className="divider" />
                         <li>
-                          <a href="https://www.ops-class.org/courses/buffalo/CSE421_Spring2015" target="_blank">UB CSE 421/521 Spring 2015</a>
+                          <a href="https://www.ops-class.org/courses/buffalo/CSE421_Spring2015">UB CSE 421/521 Spring 2015</a>
                         </li>
                         <li>
-                          <a href="https://www.ops-class.org/courses/buffalo/CSE421_Spring2014" target="_blank">UB CSE 421/521 Spring 2014</a>
+                          <a href="https://www.ops-class.org/courses/buffalo/CSE421_Spring2014">UB CSE 421/521 Spring 2014</a>
                         </li>
                         <li>
-                          <a href="https://www.ops-class.org/courses/buffalo/CSE421_Spring2013" target="_blank">UB CSE 421/521 Spring 2013</a>
+                          <a href="https://www.ops-class.org/courses/buffalo/CSE421_Spring2013">UB CSE 421/521 Spring 2013</a>
                         </li>
                         <li>
-                          <a href="https://www.ops-class.org/courses/buffalo/CSE421_Spring2012" target="_blank">UB CSE 421/521 Spring 2012</a>
+                          <a href="https://www.ops-class.org/courses/buffalo/CSE421_Spring2012">UB CSE 421/521 Spring 2012</a>
                         </li>
                       </ul>
                     </li>
@@ -49,11 +49,11 @@ NavigationComponent = React.createClass({
                     <li className="dropdown">
                       <a href="#" className="dropdown-toggle active" id="menu-asst" title="Hack the kernel! OS/161-based operating system assignments." data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">assignments</a>
                       <ul className="dropdown-menu">
-                        <li><a href="https://www.ops-class.org/asst/0/" target="_blank">ASST0</a></li>
-                        <li><a href="https://www.ops-class.org/asst/1/" target="_blank">ASST1</a></li>
-                        <li><a href="https://www.ops-class.org/asst/2/" target="_blank">ASST2</a></li>
+                        <li><a href="https://www.ops-class.org/asst/0/">ASST0</a></li>
+                        <li><a href="https://www.ops-class.org/asst/1/">ASST1</a></li>
+                        <li><a href="https://www.ops-class.org/asst/2/">ASST2</a></li>
                         <li role="separator" className="divider" />
-                        <li><a href="https://www.ops-class.org/asst/test161/" target="_blank">test161</a></li>
+                        <li><a href="https://www.ops-class.org/asst/test161/">test161</a></li>
                       </ul>
                     </li>
                     <li><a id="menu-discuss" className="noexternal" title="Discourse-based course discussion forum." href="https://discourse.ops-class.org">discuss</a></li>

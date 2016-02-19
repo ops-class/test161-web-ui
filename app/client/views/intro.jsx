@@ -5,7 +5,7 @@ IntroComponent = React.createClass({
       <div id="content">
         <div className="container">
           <div className="row">
-            <div className="col-md-8 col-md-offset-2">
+            <div className="col-md-12">
               <a className="anchor" id="top" />
               <h1><code>test161</code>: The OS/161 Testing Tool</h1>
               <div className="sect1">
