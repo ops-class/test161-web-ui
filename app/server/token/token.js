@@ -1,6 +1,6 @@
 Meteor.methods({
   regenerateToken: function({email, token}) {
-    Meteor._sleepForMs(5000);
+    // Meteor._sleepForMs(5000);
     const userId = this.userId;
     const student = checkEmailToken({email, token, userId});
     const newToken = Random.id();
