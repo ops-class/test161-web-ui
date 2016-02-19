@@ -50,14 +50,15 @@ TabsComponent = React.createClass({
     }
     return (
       <div key={link.name}
-        className="col-xs-6 col-sm-6 col-md-3">
+        className="col-xs-4 col-md-2 test161-tabs-item">
         <div
-          type="button"
           className={className}
           onClick={() => { if (user && !link.disabled) { FlowRouter.go(link.href)} } }>
           {link.name} {link.count ?
             <span className="badge">{link.count}</span>
-          : null}
+            :
+            <span className="badge"></span>
+          }
         </div>
       </div>
     );
@@ -68,20 +69,23 @@ TabsComponent = React.createClass({
       { name: 'ASST1', href: '/asst/1', count: 4 },
       // { name: 'asst2', href: '/asst/2', disabled: true },
       // { name: 'asst3', href: '/asst/3', disabled: true },
+      { name: 'Menu', href: '/menu' },
+      { name: 'Profile', href: '/profile' },
     ].map(this.getLink);
     const rightLinks = [
       { name: 'Menu', href: '/menu' },
       { name: 'Profile', href: '/profile' },
     ].map(this.getLink);
     return (
-      <div className="row navbar nav-tabs">
-        <div className="col-xs-6">
+      <div className="row">
+        <div className="col-xs-12 test161-tabs">
           {leftLinks}
-        </div>
-        <div className="col-xs-6 pull-right">
-          {rightLinks}
           <LoginOutComponent {...this.props}/>
         </div>
+        {/*<div className="col-xs-6 pull-right">
+          {rightLinks}
+          <LoginOutComponent {...this.props}/>
+        </div>*/}
       </div>
     );
   }
@@ -94,7 +98,7 @@ LoginOutComponent = React.createClass({
     let className = 'btn btn-default btn-block '
     className += this.props.user ? 'btn-danger' : 'btn-success';
     return (
-      <div className="col-xs-6 col-sm-6 col-md-3">
+      <div className="col-xs-4 col-md-2 test161-tabs-item">
         <button className={className} onClick={onClick}>{name}</button>
       </div>
     );
