@@ -109,23 +109,21 @@ const TokenComponent = React.createClass({
     const {token, email} = student;
     return (
       <div className="col-md-12">
-        <p>Your submit token:</p>
-        <div className="col-md-12">
-          <div className="input-group">
-            <input type="text" className="form-control"
-              value={token}
-              onChange={() => {}}
-              onClick={this.onMouseEnter}
-              placeholder="Your Token"/>
-            <span className="input-group-btn">
-              <button className="btn btn-danger"
-                data-toggle="modal"
-                data-target="#tokenModal"
-                type="button">Regenerate</button>
-            </span>
-          </div>
-          <ConfirmComponent {...student}/>
+        <div className="input-group">
+          <span className="input-group-addon">Your submit token</span>
+          <input type="text" className="form-control"
+            value={token}
+            onChange={() => {}}
+            onClick={this.onMouseEnter}
+            placeholder="Your Token"/>
+          <span className="input-group-btn">
+            <button className="btn btn-danger"
+              data-toggle="modal"
+              data-target="#tokenModal"
+              type="button">Regenerate</button>
+          </span>
         </div>
+        <ConfirmComponent {...student}/>
       </div>
     );
   }
@@ -144,7 +142,7 @@ ProfileComponent = React.createClass({
       <div className="row">
         <TokenComponent {...this.props} />
         <div className="col-md-12">
-        Public key:
+          Public key:
           <CodeComponent content={publicKey}/>
         </div>
       </div>
