@@ -59,7 +59,7 @@ SubmissionListComponent = React.createClass({
     }
     const length = submissions.length;
     if (length === 0) {
-      return <div>You haven't submit any solution!</div>
+      return <div>You haven’t submitted any solutions!</div>
     }
 
     let noMoreSubmission = null;
