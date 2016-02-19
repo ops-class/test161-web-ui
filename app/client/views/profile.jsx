@@ -87,8 +87,7 @@ const ConfirmComponent = React.createClass({
                 data-dismiss="modal">Cancel</button>
               <button type="button"
                 onClick={this.regenerate}
-                disabled={input !== email}
-                disabled={processing}
+                disabled={input !== email || processing}
                 className="btn btn-danger">
                 Regenerate {target}
               </button>
