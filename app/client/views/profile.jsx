@@ -17,8 +17,7 @@ const ConfirmComponent = React.createClass({
     this.setState({input: event.target.value});
   },
   modalDismiss() {
-    $('#tokenModal').modal('hide');
-    $('#tokenInput').val('');
+    $('#close-modal').click();
   },
   regenerate() {
     const {email, token} = this.props;
@@ -59,7 +58,7 @@ const ConfirmComponent = React.createClass({
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-header">
-              <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <button type="button" className="close" id="close-modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               <h4 className="modal-title" id="myModalLabel">
               Are you ABSOLUTELY sure?
               </h4>
