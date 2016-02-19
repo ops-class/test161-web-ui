@@ -17,6 +17,7 @@ const ConfirmComponent = React.createClass({
     this.setState({input: event.target.value});
   },
   modalDismiss() {
+    $('#tokenInput').val('');
     $('#close-modal').click();
   },
   regenerate() {
