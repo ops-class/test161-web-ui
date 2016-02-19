@@ -9,3 +9,6 @@
 * Regenerate key dialog should close the modal on success.
 * Fixed-width font for side menu like the top menu
 * Remove red background from Logout... maybe light blue?
+* I'd put "Your Submit Token:", the token, and the regenerate button on the same line.
+* Clarify that the public key there is something that students need to add to their repository.
+* Don't open top links in a separate window.
