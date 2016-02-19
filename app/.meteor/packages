@@ -36,3 +36,4 @@ react-runtime@=0.14.3
 react-runtime-dev@=0.14.3
 react-runtime-prod@=0.14.3
 meteorhacks:kadira
+twbs:bootstrap
