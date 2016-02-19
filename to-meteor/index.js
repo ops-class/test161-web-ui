@@ -25,7 +25,7 @@ function addAbsoluteURL(url, element) {
   var list = element.getElementsByTagName('a');
   for (var i in list) {
     var link = list[i];
-    if (link.href.startsWith('/') && link.href.length > 1) {
+    if (link.href.startsWith('/') && link.href.length > 0) {
       link.setAttribute('href', url + link.href);
       if (!link.target) {
         link.setAttribute('target', '_blank');
@@ -35,7 +35,8 @@ function addAbsoluteURL(url, element) {
 }
 
 function loadHtml() {
-  return fs.readFileSync('../www/.build/index.html').toString();
+  // return fs.readFileSync('../www/.build/index.html').toString();
+  return fs.readFileSync('../www/.build/asst/test161/index.html').toString();
 }
 
 function convertToMeteor(content) {
@@ -54,6 +55,10 @@ function convertToMeteor(content) {
   var footer = containers[containers.length - 1];
   var footerStr = footer.outerHTML;
   toMeteor(footerStr, 'footer', 'FooterComponent');
+
+  var contentEle = doc.getElementById("content");
+  var contentEleStr = contentEle.outerHTML;
+  toMeteor(contentEleStr, 'intro', 'IntroComponent');
 }
 
 function toMeteor(html, filename, className) {

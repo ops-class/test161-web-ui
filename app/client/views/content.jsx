@@ -2,10 +2,7 @@ ContentComponent = React.createClass({
   enforceLogin() {
     const {user} = this.props;
     if (!user) {
-      login();
-      // Meteor.lock.show({
-      //   container: 'login-container'
-      // });
+      FlowRouter.go('/test161')
     }
   },
   componentDidMount() {
@@ -15,14 +12,8 @@ ContentComponent = React.createClass({
     this.enforceLogin();
   },
   render() {
-    const {user, asst} = this.props;
-    const content = user ?
-    (<UserComponent {...this.props}/>) :
-    (
-      <div className="row">
-        <div className="col-md-12 text-center" id="login-container">Please login!</div>
-      </div>
-    );
+    const {user} = this.props;
+    const content = (<UserComponent {...this.props}/>);
     return (
       <div className="container">
         <div className="row">
@@ -56,7 +47,8 @@ TabsComponent = React.createClass({
           className={className}
           onClick={() => { if (user && !link.disabled) { FlowRouter.go(link.href)} } }>
           {link.name} {link.count ?
-            <span className="badge">{link.count}</span>
+            // <span className="badge">{link.count}</span>
+            null
             :
             null
           }
@@ -67,10 +59,10 @@ TabsComponent = React.createClass({
   render() {
     const leftLinks = [
       { name: 'All', href: '/', count: 4 },
-      { name: 'ASST1', href: '/asst/1', count: 4 },
-      // { name: 'asst2', href: '/asst/2', disabled: true },
-      // { name: 'asst3', href: '/asst/3', disabled: true },
-      { name: 'Menu', href: '/menu' },
+      { name: 'ASST1', href: '/asst1', count: 4 },
+      // { name: 'asst2', href: '/asst2', disabled: true },
+      // { name: 'asst3', href: '/asst3', disabled: true },
+      { name: 'Test161', href: '/test161' },
       { name: 'Profile', href: '/profile' },
     ].map(this.getLink);
     const rightLinks = [

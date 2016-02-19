@@ -1,25 +1,14 @@
 FlowRouter.route("/", {
   name: "home",
   action: function(params, queryParams) {
-    ReactLayout.render(MainLayout, {asst: null,
-      profile: false});
+    ReactLayout.render(MainLayout, {params});
   }
 });
 
-FlowRouter.route("/asst/:id", {
+FlowRouter.route("/:path", {
   name: "asst",
   action: function(params, queryParams) {
-    const asst = `asst${params.id}`;
-    ReactLayout.render(MainLayout, {asst: asst,
-      profile: false});
-  }
-});
-
-FlowRouter.route("/profile", {
-  name: "home",
-  action: function(params, queryParams) {
-    ReactLayout.render(MainLayout, {asst: null,
-      profile: true});
+    ReactLayout.render(MainLayout, {params});
   }
 });
 
@@ -30,3 +19,9 @@ FlowRouter.notFound = {
     })
   }
 };
+
+pathIsAll = (path) => path === undefined
+
+pathIsProfile = (path) => path === 'profile'
+
+pathIsIntro = (path) => path === 'test161'

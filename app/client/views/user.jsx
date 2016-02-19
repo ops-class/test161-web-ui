@@ -1,7 +1,10 @@
 UserComponent = React.createClass({
   render() {
-    const {asst, profile} = this.props;
-    if (profile) {
+    const {params: {path}, profile, user} = this.props;
+    if (pathIsIntro(path) || !user) {
+      return (<IntroComponent />);
+    }
+    if (pathIsProfile(path)) {
       return (<ProfileComponent {...this.props}/>);
     }
     return (

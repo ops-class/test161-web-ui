@@ -4,7 +4,7 @@ NavigationComponent = React.createClass({
 
       <div className="container">
         <nav className="navbar navbar-default navbar-fixed-top">
-          <a className="logo-fixed" href="/"><img src="/img/logos/ops-class.jpg" alt="ops-class.org logo" /></a>
+          <a className="logo-fixed" href="https://www.ops-class.org/" target="_blank"><img src="/img/logos/ops-class.jpg" alt="ops-class.org logo" /></a>
           <div className="container">
             <div className="navbar-header">
               <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -47,7 +47,7 @@ NavigationComponent = React.createClass({
                 <div className="col-sm-6">
                   <ul className="nav navbar-nav right">
                     <li className="dropdown">
-                      <a href="#" className="dropdown-toggle" id="menu-asst" title="Hack the kernel! OS/161-based operating system assignments." data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">assignments</a>
+                      <a href="#" className="dropdown-toggle active" id="menu-asst" title="Hack the kernel! OS/161-based operating system assignments." data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">assignments</a>
                       <ul className="dropdown-menu">
                         <li><a href="https://www.ops-class.org/asst/0/" target="_blank">ASST0</a></li>
                         <li><a href="https://www.ops-class.org/asst/1/" target="_blank">ASST1</a></li>
@@ -56,7 +56,8 @@ NavigationComponent = React.createClass({
                         <li><a href="https://www.ops-class.org/asst/test161/" target="_blank">test161</a></li>
                       </ul>
                     </li>
-                    <li><a id="menu-discuss" title="Discourse-based course discussion forum." target="_blank" href="https://discourse.ops-class.org" className="external">discuss</a></li>
+                    <li><a id="menu-discuss" className="noexternal" title="Discourse-based course discussion forum." href="https://discourse.ops-class.org">discuss</a></li>
+                    <li><a id="menu-test161" className="noexternal" title="test161 online testing tool." href="https://test161.ops-class.org">test</a></li>
                   </ul>
                 </div>
               </div>

@@ -1,7 +1,7 @@
 SubmissionListComponent = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
-    const {asst, user} = this.props;
+    const {params: {path: asst}, user} = this.props;
     const {limit} = this.state;
     const ready = false;
     const loading = true;
