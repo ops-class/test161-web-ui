@@ -48,16 +48,17 @@ TabsComponent = React.createClass({
       className += 'disabled ';
       link.disabled = true;
     }
+    let containerClass = 'col-xs-4 col-md-2 test161-tabs-item';
     return (
       <div key={link.name}
-        className="col-xs-4 col-md-2 test161-tabs-item">
+        className={containerClass}>
         <div
           className={className}
           onClick={() => { if (user && !link.disabled) { FlowRouter.go(link.href)} } }>
           {link.name} {link.count ?
             <span className="badge">{link.count}</span>
             :
-            <span className="badge"></span>
+            null
           }
         </div>
       </div>
@@ -98,7 +99,7 @@ LoginOutComponent = React.createClass({
     let className = 'btn btn-default btn-block '
     className += this.props.user ? 'btn-danger' : 'btn-success';
     return (
-      <div className="col-xs-4 col-md-2 test161-tabs-item">
+      <div className="col-xs-4 col-md-2 test161-tabs-item pull-right">
         <button className={className} onClick={onClick}>{name}</button>
       </div>
     );
