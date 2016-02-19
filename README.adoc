@@ -1,0 +1,9 @@
+= `test161.ops-class.org` Web Interface
+
+== TODOs
+
+* "all" -> "All", "profile" -> "Profile"
+* "You haven't submit any solution" -> "You haven't submitted any solutions"
+* Make profile page thinner: middle pane should be only col-md-6
+* Should the sidebar be a dropdown menu like for the assignments?
+* Regenerate key dialog should close the modal on success.
