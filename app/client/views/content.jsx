@@ -17,11 +17,11 @@ ContentComponent = React.createClass({
     return (
       <div className="container">
         <div className="row">
-          <div id="content" className="col-md-10 col-md-offset-1">
+          <div className="col-md-10 col-md-offset-1">
             <TabsComponent {...this.props} />
-            {content}
           </div>
         </div>
+        {content}
       </div>
     );
   }

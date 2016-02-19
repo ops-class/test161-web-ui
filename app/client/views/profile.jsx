@@ -176,7 +176,7 @@ ProfileComponent = React.createClass({
 
     const {token, email} = student;
     return (
-      <div className="row">
+      <div className={mainContentClass}>
         <TokenComponent {...this.props} />
         <PublicKeyComponent {...this.props} />
       </div>
