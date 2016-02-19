@@ -7,3 +7,5 @@
 * Make profile page thinner: middle pane should be only col-md-6
 * Should the sidebar be a dropdown menu like for the assignments?
 * Regenerate key dialog should close the modal on success.
+* Fixed-width font for side menu like the top menu
+* Remove red background from Logout... maybe light blue?
