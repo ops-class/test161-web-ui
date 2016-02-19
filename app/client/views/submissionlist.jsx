@@ -25,23 +25,27 @@ SubmissionListComponent = React.createClass({
       this.setState({limit: 10});
     }
   },
+  scroll() {
+    const $elem = $(ReactDOM.findDOMNode(this)).find('#load-more');
+
+    const $window = $(window);
+
+    const docViewTop = $window.scrollTop();
+    const docViewBottom = docViewTop + $window.height();
+
+    const elemTop = $elem.offset().top;
+    const elemBottom = elemTop + $elem.height();
+
+    const loadMore = ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
+    if (loadMore) {
+      this.increaseLimit();
+    }
+  },
   componentDidMount() {
-    $(window).scroll(() => {
-      const $elem = $(ReactDOM.findDOMNode(this)).find('#load-more');
-
-      const $window = $(window);
-
-      const docViewTop = $window.scrollTop();
-      const docViewBottom = docViewTop + $window.height();
-
-      const elemTop = $elem.offset().top;
-      const elemBottom = elemTop + $elem.height();
-
-      const loadMore = ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
-      if (loadMore) {
-        this.increaseLimit();
-      }
-    });
+    $(window).scroll(this.scroll);
+  },
+  componentWillUnmount() {
+    $(window).unbind('scroll');
   },
   increaseLimit() {
     let {limit} = this.state;
