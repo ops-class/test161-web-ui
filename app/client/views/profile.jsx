@@ -9,23 +9,28 @@ const CodeComponent = ({content}) => <pre><code>{content}</code></pre>
 
 const ConfirmComponent = React.createClass({
   getInitialState() {
-    return {};
+    return {processing: false};
   },
   handleChange(event) {
     this.setState({input: event.target.value});
   },
   modalDismiss() {
-    $('#tokenInput').val('');
-    $('#close-modal').click();
+    this.setState({err: null});
+    $('.tokenInput').val('');
+    $('.close-modal').click();
   },
   regenerate() {
+    this.setState({processing: true});
     const {email, token} = this.props;
     if (this.state.input !== email) {
       console.log('Good catch!');
       this.modalDismiss();
+      this.setState({processing: false});
       return;
     }
-    Meteor.call('regenerateToken', {email, token}, (err, res) => {
+    const {method} = this.props;
+    Meteor.call(method, {email, token}, (err, res) => {
+      this.setState({processing: false});
       if (err) {
         this.state.err = err;
         this.setState(this.state);
@@ -36,11 +41,10 @@ const ConfirmComponent = React.createClass({
     return;
   },
   render() {
-    const {email, token} = this.props;
-    const {input, err} = this.state;
+    const {email, token, warning, modalId, target} = this.props;
+    const {input, err, processing} = this.state;
     let errMessage = null;
     if (err) {
-      console.log(err);
       const errContent = err.reason || err.message || err.error || 'Internal error';
       errMessage = (
         <div className="col-xs-12 alert alert-danger">
@@ -50,29 +54,27 @@ const ConfirmComponent = React.createClass({
     }
     return (
       <div className="modal fade"
-        id="tokenModal"
+        id={modalId}
         tabIndex="-1"
-        role="dialog"
-        aria-labelledby="tokenModalLabel">
+        role="dialog">
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-header">
-              <button type="button" className="close" id="close-modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 className="modal-title" id="myModalLabel">
-              Are you ABSOLUTELY sure?
+              <button type="button" className="close close-modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 className="modal-title">
+                Are you ABSOLUTELY sure?
               </h4>
             </div>
             <div className="modal-body">
               <div className="row">
                 <div className="col-xs-12 alert alert-warning">
                   This action <b>CANNOT</b> be undone.
-                  This will permanently change your token.
+                  {warning}
                   Please type in your email to confirm.
                 </div>
                 <div className="col-xs-12">
                   <input type="text"
-                    id="tokenInput"
-                    className="form-control"
+                    className="form-control tokenInput"
                     onChange={this.handleChange}
                     placeholder="Your email address"/>
                 </div>
@@ -86,8 +88,9 @@ const ConfirmComponent = React.createClass({
               <button type="button"
                 onClick={this.regenerate}
                 disabled={input !== email}
+                disabled={processing}
                 className="btn btn-danger">
-                Regenerate token
+                Regenerate {target}
               </button>
             </div>
           </div>
@@ -105,6 +108,7 @@ const TokenComponent = React.createClass({
   render() {
     const {student, user} = this.props;
     const {token, email} = student;
+    const modalId = "tokenModal";
     return (
       <div className="col-md-12">
         <div className="input-group">
@@ -117,11 +121,16 @@ const TokenComponent = React.createClass({
           <span className="input-group-btn">
             <button className="btn btn-danger"
               data-toggle="modal"
-              data-target="#tokenModal"
+              data-target={`#${modalId}`}
               type="button">Regenerate</button>
           </span>
         </div>
-        <ConfirmComponent {...student}/>
+        <ConfirmComponent {...student}
+          warning={'This will permanently change your token.'}
+          method={'regenerateToken'}
+          modalId={modalId}
+          target={'Token'}
+        />
       </div>
     );
   }
@@ -130,12 +139,29 @@ const TokenComponent = React.createClass({
 const PublicKeyComponent = React.createClass({
   render() {
     const {student, user} = this.props;
-    const {key, token, email} = student;
+    let {key, token, email} = student;
+    const modalId = "publickKeyModal";
+    if (!key) {
+      key = 'Please generate your public key manually!'
+    }
     return (
         <div className="col-md-12">
+          <p>Your public key:</p>
           <pre>
-            {key}
+            <code>
+              {key}
+            </code>
           </pre>
+          <button className="btn btn-danger"
+            data-toggle="modal"
+            data-target={`#${modalId}`}
+            type="button">Regenerate Public Key</button>
+          <ConfirmComponent {...student}
+            warning={'This will permanently change your public key. You have to add new public key to your repo.'}
+            method={'regeneratePublicKey'}
+            modalId={modalId}
+            target={'Public Key'}
+          />
         </div>
     );
   }
