@@ -21,6 +21,10 @@ StudentSchema = new SimpleSchema({
     label: "token",
     regEx: SimpleSchema.RegEx.Id
   },
+  key: {
+    type: String,
+    label: "Public key",
+  },
   createdAt: {
     type: Date,
     label: "Create at"

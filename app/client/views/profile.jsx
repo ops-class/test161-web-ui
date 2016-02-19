@@ -1,5 +1,3 @@
-const publicKey = 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDHwkIK3GtIJ+i0aPDiMtGNT+5H3RGWU1K/ykYtT4Ox/z6gGQ5WxsDPV47N4k7ViXi+d8m0HPIer22iocaykLHogRZBlFlo/bxtHUuh8vBVwdrvoUgu6niswuAnVUy/Xsk85p59gJv2BM3RPgKMOd9Nj4MoLE6+ii/dnQ5XcXPk/S/jlAJVV1h0Yl3UTezLLgMEcnU64xumLnK0jHscb8Kjlj4fr8NZPd8moCtKYY+miVT1nw3i1tDycaB3ExEuJhMaRZDNBmXxoiGa5qgBheiIyG9RelGGRPqy4nbhfiWJ49eDtv1/IzcsC+oOhRdATCCeJNDs9t2lxRlDYBQ7hwcX test161';
-
 const NoProfileComponent = () => (
   <div className="alert alert-danger">
     No profile information found!
@@ -129,6 +127,20 @@ const TokenComponent = React.createClass({
   }
 });
 
+const PublicKeyComponent = React.createClass({
+  render() {
+    const {student, user} = this.props;
+    const {key, token, email} = student;
+    return (
+        <div className="col-md-12">
+          <pre>
+            {key}
+          </pre>
+        </div>
+    );
+  }
+});
+
 ProfileComponent = React.createClass({
   render() {
     const {student, user} = this.props;
@@ -141,10 +153,7 @@ ProfileComponent = React.createClass({
     return (
       <div className="row">
         <TokenComponent {...this.props} />
-        <div className="col-md-12">
-          Public key:
-          <CodeComponent content={publicKey}/>
-        </div>
+        <PublicKeyComponent {...this.props} />
       </div>
     );
   }
