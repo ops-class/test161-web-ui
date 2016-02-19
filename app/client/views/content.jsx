@@ -54,11 +54,11 @@ TabsComponent = React.createClass({
     const {path} = FlowRouter.current();
     const {user} = this.props;
     const links = [
-      { name: 'all', href: '/' },
+      { name: 'All', href: '/' },
       { name: 'asst1', href: '/asst/1' },
       { name: 'asst2', href: '/asst/2', disabled: true },
       { name: 'asst3', href: '/asst/3', disabled: true },
-      { name: 'profile', href: '/profile' }].map((link) => {
+      { name: 'Profile', href: '/profile' }].map((link) => {
         let className = 'btn btn-default btn-block ';
         if (path === link.href) {
           className += 'btn-primary ';
