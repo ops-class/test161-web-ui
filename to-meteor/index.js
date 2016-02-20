@@ -58,6 +58,7 @@ function convertToMeteor(content) {
 
   var contentEle = doc.getElementById("content");
   var contentEleStr = contentEle.outerHTML;
+  contentEleStr = contentEleStr.replace(/(\r\n\s*|\n\s*|\r\s*)/gm, ' ');
   toMeteor(contentEleStr, 'intro', 'IntroComponent');
 }
 
