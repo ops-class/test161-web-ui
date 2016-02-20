@@ -68,9 +68,7 @@ const ConfirmComponent = React.createClass({
             <div className="modal-body">
               <div className="row">
                 <div className="col-xs-12 alert alert-warning">
-                  This action <b>CANNOT</b> be undone.
-                  {warning}
-                  Please type in your email to confirm.
+                  This action <b>CANNOT</b> be undone. {warning} Please type in your email to confirm.
                 </div>
                 <div className="col-xs-12">
                   <input type="text"
