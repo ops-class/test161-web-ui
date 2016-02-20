@@ -1,6 +1,7 @@
 var fs = require('fs'),
     path = require('path'),
-    HTMLtoJSX = require('htmltojsx');
+    // HTMLtoJSX = require('htmltojsx');
+    HTMLtoJSX = require('./htmltojsx');
 
 var jsdom = require("jsdom").jsdom;
 var serializeDocument = require("jsdom").serializeDocument;
@@ -54,7 +55,7 @@ function convertToMeteor(content) {
   var containers = element.getElementsByClassName("container");
   var footer = containers[containers.length - 1];
   var footerStr = footer.outerHTML;
-  toMeteor(footerStr, 'footer', 'FooterComponent');
+  // toMeteor(footerStr, 'footer', 'FooterComponent');
 
   var contentEle = doc.getElementById("content");
   var contentEleStr = contentEle.outerHTML;
