@@ -21,6 +21,11 @@ StudentSchema = new SimpleSchema({
     label: "token",
     regEx: SimpleSchema.RegEx.Id
   },
+  TotalSubmissions: {
+    type: Number,
+    label: "Total Submission",
+    optional: true
+  },
   key: {
     type: String,
     label: "Public key",
