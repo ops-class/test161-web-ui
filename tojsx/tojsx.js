@@ -35,7 +35,9 @@ var converter = new HTMLtoJSX({
 	createClass: true,
 	outputClassName: "NavigationComponent"
 });
-fs.writeFileSync(path.join(argv._[1], 'views', 'navigation.jsx'), converter.convert($.html(nav)));
+var component = converter.convert($.html(nav));
+component = component.replace(/^var /, '', component);
+fs.writeFileSync(path.join(argv._[1], 'views', 'navigation.jsx'), component);
 
 // Documentation
 var metadata = yaml_front_matter.loadFront(fs.readFileSync('test161.adoc'));
@@ -43,5 +45,7 @@ var html = asciidoctor.$convert(metadata.__content.toString());
 var converter = new HTMLtoJSX({
 	createClass: true,
 	outputClassName: "IntroComponent"
-});
-fs.writeFileSync(path.join(argv._[1], 'views', 'intro.jsx'), converter.convert(html));
+})
+var component = converter.convert(html);
+component = component.replace(/^var /, '', component);
+fs.writeFileSync(path.join(argv._[1], 'views', 'intro.jsx'), component);

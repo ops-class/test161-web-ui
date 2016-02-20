@@ -1,4 +1,4 @@
-var NavigationComponent = React.createClass({
+NavigationComponent = React.createClass({
   render: function() {
     return (
 

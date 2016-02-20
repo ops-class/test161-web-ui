@@ -1,4 +1,4 @@
-var IntroComponent = React.createClass({
+IntroComponent = React.createClass({
   render: function() {
     return (
       <div>
