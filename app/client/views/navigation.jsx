@@ -1,4 +1,4 @@
-NavigationComponent = React.createClass({
+var NavigationComponent = React.createClass({
   render: function() {
     return (
 
@@ -47,7 +47,7 @@ NavigationComponent = React.createClass({
                 <div className="col-sm-6">
                   <ul className="nav navbar-nav right">
                     <li className="dropdown">
-                      <a href="#" className="dropdown-toggle active" id="menu-asst" title="Hack the kernel! OS/161-based operating system assignments." data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">assignments</a>
+                      <a href="#" className="dropdown-toggle" id="menu-asst" title="Hack the kernel! OS/161-based operating system assignments." data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">assignments</a>
                       <ul className="dropdown-menu">
                         <li><a href="https://www.ops-class.org/asst/0/">ASST0</a></li>
                         <li><a href="https://www.ops-class.org/asst/1/">ASST1</a></li>
@@ -57,7 +57,7 @@ NavigationComponent = React.createClass({
                       </ul>
                     </li>
                     <li><a id="menu-discuss" className="noexternal" title="Discourse-based course discussion forum." href="https://discourse.ops-class.org">discuss</a></li>
-                    <li><a id="menu-test161" className="noexternal" title="test161 online testing tool." href="https://test161.ops-class.org">test</a></li>
+                    <li><a id="menu-test161" className="noexternal active" title="test161 online testing tool." href="https://test161.ops-class.org">test</a></li>
                   </ul>
                 </div>
               </div>
