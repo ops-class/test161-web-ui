@@ -1,3 +1,5 @@
+const touchToHover = (event) => {$(event).toggleClass('hover')}
+
 SubmissionListComponent = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
@@ -205,7 +207,9 @@ SubmissionComponent = React.createClass({
     }
     return (
       <div className="list-group-item submission-container animated bounceIn">
-        <div className="row submission-bar">
+        <div onTouchStart={touchToHover}
+          onTouchEnd={touchToHover}
+          className="row submission-bar">
           <div onClick={this.toggleCollapse} className="col-md-2 status-container">
             <StatusComponent {...submission} />
           </div>
