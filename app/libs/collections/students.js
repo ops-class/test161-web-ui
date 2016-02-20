@@ -21,7 +21,7 @@ StudentSchema = new SimpleSchema({
     label: "token",
     regEx: SimpleSchema.RegEx.Id
   },
-  TotalSubmissions: {
+  total_submissions: {
     type: Number,
     label: "Total Submission",
     optional: true

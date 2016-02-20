@@ -8,7 +8,7 @@ SummaryComponent = React.createClass({
         max_score: points_avail,
         target_name: asst,
         total_submissions,
-        submission_id
+        best_submission_id
       } = result;
       if (!points_earned) {
         points_earned = 0;

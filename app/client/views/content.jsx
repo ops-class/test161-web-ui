@@ -30,7 +30,18 @@ ContentComponent = React.createClass({
 TabsComponent = React.createClass({
   getLink(link) {
     const {path} = FlowRouter.current();
-    const {user} = this.props;
+    const {user, student} = this.props;
+    const {total_submissions, target_stats} = student || {};
+    let count = 0;
+    if (link.href === '/') {
+      count = total_submissions;
+    } else if(target_stats) {
+      target_stats.map((result) => {
+        if (link.name.toLowerCase() === result.target_name) {
+          count = result.total_submissions
+        }
+      });
+    }
     let className = 'btn btn-default btn-block ';
     if (path === link.href) {
       className += 'btn-primary ';
@@ -46,9 +57,8 @@ TabsComponent = React.createClass({
         <div
           className={className}
           onClick={() => { if (user && !link.disabled) { FlowRouter.go(link.href)} } }>
-          {link.name} {link.count ?
-            // <span className="badge">{link.count}</span>
-            null
+          {link.name} {count ?
+            <span className="badge">{count}</span>
             :
             null
           }
