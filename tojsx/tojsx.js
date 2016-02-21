@@ -11,6 +11,12 @@ if (argv._.length != 2) {
 	return -1;
 }
 
+var handleJsxOutput = function(text) {
+  var output = text.substring(4);
+  output = output.replace(/(\r\n\s*|\n\s*|\r\s*)/gm, ' ');
+  return output;
+}
+
 // Header
 $ = cheerio.load(fs.readFileSync(argv._[0]));
 var head = $('head').first();
@@ -35,7 +41,7 @@ var converter = new HTMLtoJSX({
 	createClass: true,
 	outputClassName: "NavigationComponent"
 });
-fs.writeFileSync(path.join(argv._[1], 'views', 'navigation.jsx'), converter.convert($.html(nav)));
+fs.writeFileSync(path.join(argv._[1], 'views', 'navigation.jsx'), handleJsxOutput(converter.convert($.html(nav))));
 
 // Documentation
 var metadata = yaml_front_matter.loadFront(fs.readFileSync('test161.adoc'));
@@ -44,4 +50,4 @@ var converter = new HTMLtoJSX({
 	createClass: true,
 	outputClassName: "IntroComponent"
 });
-fs.writeFileSync(path.join(argv._[1], 'views', 'intro.jsx'), converter.convert(html));
+fs.writeFileSync(path.join(argv._[1], 'views', 'intro.jsx'), handleJsxOutput(converter.convert(html)));
