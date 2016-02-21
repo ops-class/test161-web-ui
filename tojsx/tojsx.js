@@ -1,10 +1,13 @@
 var fs = require('fs'),
     path = require('path'),
-		HTMLtoJSX = require('htmltojsx'),
+		HTMLtoJSX = require('./htmltojsx.js'),
 		cheerio = require('cheerio'),
 		yaml_front_matter = require('yaml-front-matter'),
 		asciidoctor = require('asciidoctor.js')().Asciidoctor(),
+		footnotes = require('../www/lib/footnotes.js'),
+		hacks = require('../www/lib/hacks.js'),
 		sections = require('../www/lib/sections.js'),
+		highlight = require('../www/lib/highlight.js'),
 		handlebars = require('handlebars');
 
 var argv = require('minimist')(process.argv.slice(2));
@@ -43,9 +46,14 @@ fs.writeFileSync(path.join(argv._[1], 'views', 'navigation.jsx'), component);
 
 // Documentation
 var file = yaml_front_matter.loadFront(fs.readFileSync('test161.adoc'));
-file.doSections = true;
 file.contents = asciidoctor.$convert(file.__content.toString());
+
+file.doSections = true;
+footnotes.doFootnotes(file);
+hacks.doHacks(file);
 sections.doSections(file);
+highlight.doHighlight(file);
+
 var template = handlebars.compile(fs.readFileSync('test161.hbt').toString());
 file.contents = template(file);
 var converter = new HTMLtoJSX({
