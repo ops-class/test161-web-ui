@@ -48,4 +48,5 @@ var converter = new HTMLtoJSX({
 })
 var component = converter.convert(html);
 component = component.replace(/^var /, '', component);
+component = component.replace(/^\s*<a/gm, '{ " " }<a', component);
 fs.writeFileSync(path.join(argv._[1], 'views', 'intro.jsx'), component);
