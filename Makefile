@@ -1,4 +1,4 @@
-all: silent
+all: static
 silent:
 	  @:
 static: app/public/css app/public/js app/public/img app/public/fonts | silent
@@ -6,7 +6,9 @@ static: app/public/css app/public/js app/public/img app/public/fonts | silent
 	@cd tojsx && node tojsx.js ../www/build/index.html ../app/client/
 www:
 	@cd www && git pull origin master >/dev/null 2>&1 && make deploy
-app/public/%: www/build/% www
+app/public/%: www/build/%
 	@rsync -cr $</ $@
+run:
+	cd app && meteor run
 
-.PHONY: static www
+.PHONY: static www run

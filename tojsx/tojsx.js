@@ -3,7 +3,9 @@ var fs = require('fs'),
 		HTMLtoJSX = require('htmltojsx'),
 		cheerio = require('cheerio'),
 		yaml_front_matter = require('yaml-front-matter'),
-		asciidoctor = require('asciidoctor.js')().Asciidoctor();
+		asciidoctor = require('asciidoctor.js')().Asciidoctor(),
+		sections = require('../www/lib/sections.js'),
+		handlebars = require('handlebars');
 
 var argv = require('minimist')(process.argv.slice(2));
 if (argv._.length != 2) {
@@ -40,13 +42,17 @@ component = component.replace(/^var /, '', component);
 fs.writeFileSync(path.join(argv._[1], 'views', 'navigation.jsx'), component);
 
 // Documentation
-var metadata = yaml_front_matter.loadFront(fs.readFileSync('test161.adoc'));
-var html = asciidoctor.$convert(metadata.__content.toString());
+var file = yaml_front_matter.loadFront(fs.readFileSync('test161.adoc'));
+file.doSections = true;
+file.contents = asciidoctor.$convert(file.__content.toString());
+sections.doSections(file);
+var template = handlebars.compile(fs.readFileSync('test161.hbt').toString());
+file.contents = template(file);
 var converter = new HTMLtoJSX({
 	createClass: true,
 	outputClassName: "IntroComponent"
 })
-var component = converter.convert(html);
+var component = converter.convert(file.contents);
 component = component.replace(/^var /, '', component);
 component = component.replace(/^\s*<a/gm, '{ " " }<a', component);
 fs.writeFileSync(path.join(argv._[1], 'views', 'intro.jsx'), component);

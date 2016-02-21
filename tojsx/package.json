@@ -12,6 +12,7 @@
     "asciidoctor.js": "^1.5.5-1",
     "cheerio": "^0.20.0",
     "fs": "0.0.2",
+    "handlebars": "^4.0.5",
     "htmltojsx": "^0.2.5",
     "minimist": "^1.2.0",
     "path": "^0.12.7",
