@@ -7,6 +7,7 @@ var fs = require('fs'),
 		footnotes = require('../www/lib/footnotes.js'),
 		hacks = require('../www/lib/hacks.js'),
 		sections = require('../www/lib/sections.js'),
+		lessjavascript = require('../www/lib/lessjavascript.js'),
 		highlight = require('../www/lib/highlight.js'),
 		handlebars = require('handlebars');
 
@@ -47,11 +48,12 @@ fs.writeFileSync(path.join(argv._[1], 'views', 'navigation.jsx'), component);
 // Documentation
 var file = yaml_front_matter.loadFront(fs.readFileSync('test161.adoc'));
 file.contents = asciidoctor.$convert(file.__content.toString());
-
 file.doSections = true;
+
 footnotes.doFootnotes(file);
 hacks.doHacks(file);
 sections.doSections(file);
+file.contents = lessjavascript.doLessJavascript(file.contents, file);
 highlight.doHighlight(file);
 
 var template = handlebars.compile(fs.readFileSync('test161.hbt').toString());
@@ -62,5 +64,6 @@ var converter = new HTMLtoJSX({
 })
 var component = converter.convert(file.contents);
 component = component.replace(/^var /, '', component);
-component = component.replace(/^\s*<a/gm, '{ " " }<a', component);
+component = component.replace(/^(\s*)<a/gm, '$1{ " " }<a', component);
+component = component.replace(/code>$/gm, 'code>{ " " }', component);
 fs.writeFileSync(path.join(argv._[1], 'views', 'intro.jsx'), component);
