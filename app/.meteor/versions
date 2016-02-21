@@ -19,7 +19,7 @@ caching-html-compiler@1.0.2
 callback-hook@1.0.4
 check@1.1.0
 coffeescript@1.0.11
-cosmos:browserify@0.9.3
+cosmos:browserify@0.9.4
 ddp@1.2.2
 ddp-client@1.2.1
 ddp-common@1.2.2
@@ -97,4 +97,4 @@ underscore@1.0.4
 url@1.0.5
 webapp@1.2.3
 webapp-hashing@1.0.5
-xcv58:auth0-lock@0.3.8
+xcv58:auth0-lock@0.3.9
