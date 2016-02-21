@@ -167,28 +167,6 @@ function escapeSpecialChars(value) {
   return tempEl.innerHTML;
 }
 
-/**
- * Escapes special characters by converting them to their escaped equivalent
- * (eg. "<" to "&lt;"). Only escapes characters ["<", ">", "\""]
- *
- * @param {string} value
- * @return {string}
- */
-function escapeHTMLForAttribute(html) {
-  var start = html.indexOf('"');
-  var end = html.lastIndexOf('"');
-  if (end > start) {
-    return html.substring(0, start + 1) +
-           html.substring(start + 1, end)
-           .replace(/</g, '&lt;')
-           .replace(/>/g, '&gt;')
-           .replace(/"/g, '&quot;')
-           .replace(/'/g, '&apos;') +
-           html.substring(end);
-  }
-  return html;
-}
-
 var HTMLtoJSX = function(config) {
   this.config = config || {};
 
@@ -385,9 +363,7 @@ HTMLtoJSX.prototype = {
     var tagName = node.tagName.toLowerCase();
     var attributes = [];
     for (var i = 0, count = node.attributes.length; i < count; i++) {
-      var attribute = this._getElementAttribute(node, node.attributes[i]);
-      attribute = escapeHTMLForAttribute(attribute);
-      attributes.push(attribute);
+      attributes.push(this._getElementAttribute(node, node.attributes[i]));
     }
 
     if (tagName === 'textarea') {
@@ -511,7 +487,7 @@ HTMLtoJSX.prototype = {
         if (isNumeric(attribute.value)) {
           result += '={' + attribute.value + '}';
         } else if (attribute.value.length > 0) {
-          result += '="' + attribute.value.replace('"', '&quot;') + '"';
+          result += '="' + attribute.value.replace(/"/g, '&quot;') + '"';
         }
         return result;
     }

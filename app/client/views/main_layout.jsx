@@ -3,6 +3,12 @@ MainLayout = React.createClass({
   getMeteorData() {
     return subscribeUserData();
   },
+  componentDidMount: function() {
+    processPage();
+  },
+  componentDidUpdate: function() {
+    processPage();
+  },
   render() {
     let mainContent = <LoadingComponent />;
     if (this.data.ready) {

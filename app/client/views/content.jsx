@@ -72,7 +72,7 @@ TabsComponent = React.createClass({
       { name: 'ASST1', href: '/asst1', count: 4 },
       // { name: 'asst2', href: '/asst2', disabled: true },
       // { name: 'asst3', href: '/asst3', disabled: true },
-      { name: 'Test161', href: '/test161' },
+      { name: 'Manual', href: '/test161' },
       { name: 'Profile', href: '/profile' },
     ].map(this.getLink);
     const rightLinks = [

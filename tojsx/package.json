@@ -1,0 +1,20 @@
+{
+  "name": "tojsx",
+  "version": "1.0.0",
+  "description": "",
+  "main": "tojsx.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "asciidoctor.js": "^1.5.5-1",
+    "cheerio": "^0.20.0",
+    "fs": "0.0.2",
+    "handlebars": "^4.0.5",
+    "minimist": "^1.2.0",
+    "path": "^0.12.7",
+    "yaml-front-matter": "^3.4.0"
+  }
+}
