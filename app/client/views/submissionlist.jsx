@@ -206,7 +206,7 @@ SubmissionComponent = React.createClass({
       );
     }
     return (
-      <div className="list-group-item submission-container animated bounceIn">
+      <div className="list-group-item submission-container animated fadeIn">
         <div onTouchStart={touchToHover}
           onTouchEnd={touchToHover}
           className="row submission-bar">
