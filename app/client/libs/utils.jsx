@@ -26,6 +26,6 @@ login = () => {
     Meteor.lock.hide();
   }
   Meteor.lock.show({
-    closable: false
+    closable: true
   });
 };
