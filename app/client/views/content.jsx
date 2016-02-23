@@ -70,8 +70,6 @@ TabsComponent = React.createClass({
     const leftLinks = [
       { name: 'All', href: '/', count: 4 },
       { name: 'ASST1', href: '/asst1', count: 4 },
-      // { name: 'asst2', href: '/asst2', disabled: true },
-      // { name: 'asst3', href: '/asst3', disabled: true },
       { name: 'Manual', href: '/test161' },
       { name: 'Profile', href: '/profile' },
     ].map(this.getLink);
@@ -80,15 +78,36 @@ TabsComponent = React.createClass({
       { name: 'Profile', href: '/profile' },
     ].map(this.getLink);
     return (
-      <div className="row">
-        <div className="col-xs-12 test161-tabs">
-          {leftLinks}
-          <LoginOutComponent {...this.props}/>
-        </div>
-        {/*<div className="col-xs-6 pull-right">
-          {rightLinks}
-          <LoginOutComponent {...this.props}/>
-        </div>*/}
+			<div className="container">
+        <nav className="navbar navbar-default navbar-second-top">
+          <a className="logo-fixed hidden-md hidden-lg"href="https://www.ops-class.org/">
+						<img src="/img/logos/ops-class.jpg" alt="ops-class.org logo" />
+					</a>
+          <div className="container">
+            <div className="navbar-header">
+              <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span className="sr-only">Toggle navigation</span>
+                <span className="icon-bar" />
+                <span className="icon-bar" />
+                <span className="icon-bar" />
+              </button>
+            </div>
+            <div id="navbar" className="navbar-collapse collapse">
+              <div className="row">
+                <div className="col-sm-6">
+                  <ul className="nav navbar-nav left">
+									{leftLinks}
+									</ul>
+								</div>
+                <div className="col-sm-6">
+                  <ul className="nav navbar-nav right">
+									<LoginOutComponent {...this.props}/>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+        </nav>
       </div>
     );
   }
