@@ -41,7 +41,6 @@ $(nav).find("a").each(function () {
 	$(this).attr('href', 'https://www.ops-class.org' + $(this).attr('href'));
 });
 $(nav).find('.active').removeClass('.active');
-$(nav).find('#menu-test161').addClass('active');
 $(nav).find('nav').addClass('hidden-xs hidden-sm');
 
 var converter = new HTMLtoJSX({
