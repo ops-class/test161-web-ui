@@ -18,7 +18,6 @@ MainLayout = React.createClass({
       <div>
         <NavigationComponent />
         {mainContent}
-        {/*<FooterComponent />*/}
       </div>
     );
   }

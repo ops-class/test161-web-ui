@@ -1,5 +1,6 @@
 var fs = require('fs'),
     path = require('path'),
+		beautify = require('js-beautify'),
 		HTMLtoJSX = require('./htmltojsx.js'),
 		cheerio = require('cheerio'),
 		yaml_front_matter = require('yaml-front-matter'),
@@ -21,7 +22,12 @@ if (argv._.length != 2) {
 $ = cheerio.load(fs.readFileSync(argv._[0]));
 var head = $('head').first();
 $(head).find('title').text("Test Your OS/161 Kernel Online");
-fs.writeFileSync(path.join(argv._[1], 'head.html'), $.html(head));
+$(head)
+	.find("head link[rel='stylesheet']")
+	.last()
+	.after("<link rel='stylesheet' type='text/css' href='/css/test161.css'>");
+fs.writeFileSync(path.join(argv._[1], 'head.html'),
+		beautify.html($.html(head), { indent_size: 2 }));
 
 // Navbar
 var nav = $(".navbar").first().parent();
@@ -35,7 +41,7 @@ $(nav).find("a").each(function () {
 	$(this).attr('href', 'https://www.ops-class.org' + $(this).attr('href'));
 });
 $(nav).find('.active').removeClass('.active');
-$(nav).find('#menu-test161').addClass('active');
+$(nav).find('nav').addClass('hidden-xs hidden-sm');
 
 var converter = new HTMLtoJSX({
 	createClass: true,
