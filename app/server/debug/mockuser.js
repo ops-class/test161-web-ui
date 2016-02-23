@@ -37,7 +37,7 @@ Accounts.registerLoginHandler(function(loginRequest) {
 
 Meteor.methods({
   isDebug: function() {
-    const DEBUG = process.env.DEBUG || Meteor.settings.DEBUG;
+    const DEBUG = process.env.TEST161_DEBUG || Meteor.settings.TEST161_DEBUG;
     return DEBUG;
   }
 });
