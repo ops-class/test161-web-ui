@@ -36,6 +36,7 @@ $(nav).find("a").each(function () {
 });
 $(nav).find('.active').removeClass('.active');
 $(nav).find('#menu-test161').addClass('active');
+$(nav).find('nav').addClass('hidden-xs hidden-sm');
 
 var converter = new HTMLtoJSX({
 	createClass: true,
