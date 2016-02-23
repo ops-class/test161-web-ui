@@ -68,6 +68,7 @@ ContentComponent = React.createClass({
 								<div className="col-sm-6">
 									<ul className="nav navbar-nav right">
 										<li><ActiveLink link="/test161" text="About" user={true}/></li>
+										<li><ActiveLink link="/profile" text="Settings" user={this.props.user}/></li>
 										<LoginOutComponent {...this.props}/>
 									</ul>
 								</div>
