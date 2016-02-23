@@ -1,5 +1,11 @@
 = `test161.ops-class.org` Web Interface
 
+== Local Test
+
+* Meteor hard code account: admin@ops-class.org, use TEST161_DEBUG to trigger this
+* MongoDB url: `mongodb://localhost:3001/meteor`
+* The test161 config files need change
+
 == TODOs
 
 * "all" -> "All", "profile" -> "Profile"
