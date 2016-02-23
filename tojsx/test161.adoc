@@ -12,9 +12,8 @@ spelling_exceptions:
 [.lead]
 `test161` is the OS/161 testing tool designed and implemented by
 https://blue.cse.buffalo.edu/people/shaseley/[Scott Haseley] and
-https://blue.cse.buffalo.edu/people/ychen78/[Yihong Chen]. It will both allow
-you test your assignments locally and submit them our testing server for
-official evaluation.
+https://blue.cse.buffalo.edu/people/ychen78/[Yihong Chen]. It allows you both
+to test your assignments locally and submit them for remote evaluation.
 
 Below we run through how to install, configure, run, and use `test161`. While
 the specific testing target will change from assignment to assignment, we use
