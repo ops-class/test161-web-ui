@@ -1,9 +1,34 @@
-.navbar-second-top {
-	min-height: 10px;
+body {
+	padding-top: 84px;
 }
+.navbar-fixed-top {
+	border-width: 0 0;
+}
+.navbar-second-top.navbar {
+	border-width: 0 0 1px;
+}
+.navbar-second-top .navbar-nav {
+	padding-left: 5px;
+}
+
 @media (min-width:768px) {
 }
 @media (min-width: 992px) {
+	.navbar-second-top {
+		min-height: 10px;
+	}
+	.navbar-second-top .nav {
+		padding-top: 10px;
+	}
+	.navbar-second-top .navbar-nav.right {
+		padding-left: 0px;
+	}
+	.navbar-second-top .navbar-nav.left {
+		padding-right: 0px;
+	}
+	.navbar-second-top.navbar-fixed-top {
+		top: 60px;
+	}
 }
 @media (min-width: 1200px) {
 }
