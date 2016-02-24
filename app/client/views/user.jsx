@@ -32,7 +32,7 @@ SidebarComponent = React.createClass({
     const {target_stats} = student;
     const {path} = FlowRouter.current();
     const list = target_stats.map((stat) => {
-      const {target_name} = stat;
+      const {target_name, total_submissions} = stat;
       let className = 'h5';
       const href = `/${target_name}`;
       if (path === href) {
@@ -42,7 +42,7 @@ SidebarComponent = React.createClass({
         <li key={target_name}
           className={className}>
           <a href={href}>
-            {target_name.toUpperCase()}
+            <span className="badge">{total_submissions}</span> {target_name.toUpperCase()} 
           </a>
         </li>
       );
