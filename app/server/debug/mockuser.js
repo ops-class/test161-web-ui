@@ -1,4 +1,4 @@
-const DEBUG = process.env.TEST161_DEBUG || Meteor.settings.TEST161_DEBUG;
+const DEBUG = !!(process.env.TEST161_DEBUG || Meteor.settings.TEST161_DEBUG);
 
 Meteor.methods({
   isDebug: function() {
