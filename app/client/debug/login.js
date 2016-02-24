@@ -9,7 +9,7 @@ Meteor.loginAsDebug = function(password = 'admin-password', callback) {
 
 Meteor.call('isDebug', function(err, debug) {
   if (err) {
-    console.log(err);
+    return;
   } else if (debug) {
     Meteor.loginAsDebug();
   }
