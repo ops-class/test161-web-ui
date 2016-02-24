@@ -27,7 +27,7 @@ IntroComponent = React.createClass({
                   </div>
                   <div className="sect2">
                     { " " }<a className="anchor" id="_installation" /><h3>1.1. Installation</h3>
-                    <div className="embed-responsive embed-responsive-16by9" style={{marginTop: 10, marginBottom: 10, border: '1px solid grey'}}>
+                    <div className="embed-responsive embed-responsive-16by9 hidden-print" style={{marginTop: 10, marginBottom: 10, border: '1px solid grey'}}>
                       <div className="youtube-container" data-id="riGAGJx9tnw"><img className="youtube-thumb" src="//i.ytimg.com/vi/riGAGJx9tnw/mqdefault.jpg" alt="YouTube placeholder" /><div className="play-button"><span className="glyphicon glyphicon-play" aria-hidden="true" /></div></div>
                     </div>
                     <div className="paragraph">
@@ -154,7 +154,7 @@ IntroComponent = React.createClass({
               <div className="sect1">
                 { " " }<a className="anchor" id="_running_code_test161_code_targets" /><h2>2. Running <code>test161</code> Targets</h2>
                 <div className="sectionbody">
-                  <div className="embed-responsive embed-responsive-16by9" style={{marginTop: 10, marginBottom: 10, border: '1px solid grey'}}>
+                  <div className="embed-responsive embed-responsive-16by9 hidden-print" style={{marginTop: 10, marginBottom: 10, border: '1px solid grey'}}>
                     <div className="youtube-container" data-id="rPVtuUz1w5I"><img className="youtube-thumb" src="//i.ytimg.com/vi/rPVtuUz1w5I/mqdefault.jpg" alt="YouTube placeholder" /><div className="play-button"><span className="glyphicon glyphicon-play" aria-hidden="true" /></div></div>
                   </div>
                   <div className="paragraph lead">
@@ -308,7 +308,7 @@ IntroComponent = React.createClass({
                   </div>
                   <div className="sect2">
                     { " " }<a className="anchor" id="_preparing_for_submission" /><h3>3.1. Preparing for Submission</h3>
-                    <div className="embed-responsive embed-responsive-16by9" style={{marginTop: 10, marginBottom: 10, border: '1px solid grey'}}>
+                    <div className="embed-responsive embed-responsive-16by9 hidden-print" style={{marginTop: 10, marginBottom: 10, border: '1px solid grey'}}>
                       <div className="youtube-container" data-id="wzS-moehW0I"><img className="youtube-thumb" src="//i.ytimg.com/vi/wzS-moehW0I/mqdefault.jpg" alt="YouTube placeholder" /><div className="play-button"><span className="glyphicon glyphicon-play" aria-hidden="true" /></div></div>
                     </div>
                     <div className="paragraph">
@@ -378,7 +378,7 @@ IntroComponent = React.createClass({
                   </div>
                   <div className="sect2">
                     { " " }<a className="anchor" id="_submitting_your_assignment" /><h3>3.3. Submitting Your Assignment</h3>
-                    <div className="embed-responsive embed-responsive-16by9" style={{marginTop: 10, marginBottom: 10, border: '1px solid grey'}}>
+                    <div className="embed-responsive embed-responsive-16by9 hidden-print" style={{marginTop: 10, marginBottom: 10, border: '1px solid grey'}}>
                       <div className="youtube-container" data-id="5i1_C-w46HA"><img className="youtube-thumb" src="//i.ytimg.com/vi/5i1_C-w46HA/mqdefault.jpg" alt="YouTube placeholder" /><div className="play-button"><span className="glyphicon glyphicon-play" aria-hidden="true" /></div></div>
                     </div>
                     <div className="paragraph">
