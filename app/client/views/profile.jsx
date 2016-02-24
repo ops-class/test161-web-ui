@@ -106,14 +106,14 @@ const TokenComponent = React.createClass({
     const {token, email} = student;
     return (
 			<div>
-				<h3>Security Token</h3>
-				<p>Your security token allows you to submit assignments using the {" "}
-				<a href="/test161"><code>test161</code></a> submission tool.
-				Please add it to your <code>.test161.conf</code> file as described in
-				the <a href="/test161#_preparing_for_submission">instructions on preparing for submission</a>.</p>
+        <h3>Security Token</h3>
+        <p>Your security token allows you to submit assignments using the {" "}
+          <a href="/test161"><code>test161</code></a> submission tool.
+          Please add it to your <code>.test161.conf</code> file as described in
+          the <a href="/test161#_preparing_for_submission">instructions on preparing for submission</a>.</p>
 
-				<p><strong>Please keep your token secure and only share it with your partner, if you have one.</strong>
-				{" "}If you are worried that your token has been compromised, you can generate a new one below.</p>
+        <p><strong>Please keep your token secure and only share it with your partner, if you have one.</strong>
+          {" "}If you are worried that your token has been compromised, you can generate a new one below.</p>
 
         <div className="input-group">
           <span className="input-group-addon">Current security token:</span>
@@ -130,7 +130,7 @@ const TokenComponent = React.createClass({
 							Regenerate
 						</button>
           </span>
-        
+
 				<ConfirmComponent {...student}
           warning={'This will permanently change your token.'}
           method={'regenerateToken'}
@@ -144,34 +144,64 @@ const TokenComponent = React.createClass({
 });
 
 const KeyContentComponent = React.createClass({
+  getInitialState() {
+    return { processing : false };
+  },
+  generatePublicKey() {
+    const {student} = this.props;
+    const {email, token} = student || {};
+    this.setState({processing: true});
+    Meteor.call('regeneratePublicKey', {email, token}, (err, res) => {
+      this.setState({processing: false});
+      if (err) {
+        this.setState({err});
+      }
+    });
+  },
 	render() {
-		if (!this.props.key) {
+    const {student} = this.props;
+    const {key} = student || {};
+    if (!key) {
+      const {err, processing} = this.state;
+      let errMessage = null;
+      if (err) {
+        const errContent = err.reason || err.message || err.error || 'Internal error';
+        errMessage = (
+          <div className="col-xs-12 alert alert-danger">
+            {errContent}
+          </div>
+        );
+      }
 			return (
 				<div>
-					<button className="btn btn-success"
-						data-toggle="modal"
-						data-target="#publicKeyModel"
-						type="button">
-						Generate Initial Public Key
-					</button>
-				</div>
+          {errMessage}
+          <button className="btn btn-success"
+            disabled={processing}
+            onClick={this.generatePublicKey}
+            type="button">
+            {processing ?
+              <span className="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+              :
+            null} Generate Initial Public Key
+          </button>
+        </div>
 			);
 		} else {
 			return (
 				<div>
-					<p>Current public key:</p>
-					<pre>
-						<code>
-							{this.props.key}
-						</code>
-					</pre>
-					<button className="btn btn-danger"
-						data-toggle="modal"
-						data-target="#publicKeyModel"
-						type="button">
-						Generate New Public Key
-					</button>
-				</div>
+          <p>Current public key:</p>
+          <pre>
+            <code>
+              {key}
+            </code>
+          </pre>
+          <button className="btn btn-danger"
+            data-toggle="modal"
+            data-target="#publicKeyModel"
+            type="button">
+            Generate New Public Key
+          </button>
+        </div>
 			);
 		}
 	}
@@ -179,30 +209,27 @@ const KeyContentComponent = React.createClass({
 
 const PublicKeyComponent = React.createClass({
   render() {
-    if (!this.props.student.key) {
-      key = 'Please generate your public key manually!'
-    }
     return (
 			<div>
-				<h3>Deployment Public Key</h3>
+        <h3>Deployment Public Key</h3>
 
-				<p><a href="/test161"><code>test161</code></a> needs a way to access your
-				Git repository during remote testing. To enable this, please generate a
-				public key below and add it to your OS/161 repository as a <em>deployment
-				key</em>, following <a
-				href="/test161#_preparing_for_submission">these instructions</a>.
-				{" "}<strong>Do not provide this key with push access or add it to repositories
-				other than your OS/161 repository.</strong></p>
-				
-				<KeyContentComponent key={this.props.student.key} />
+        <p><a href="/test161"><code>test161</code></a> needs a way to access your
+        Git repository during remote testing. To enable this, please generate a
+          public key below and add it to your OS/161 repository as a <em>deployment
+          key</em>, following <a
+               href="/test161#_preparing_for_submission">these instructions</a>.
+          {" "}<strong>Do not provide this key with push access or add it to repositories
+          other than your OS/161 repository.</strong></p>
 
-				<ConfirmComponent {...this.props.student}
-					warning={'This will permanently change your public key. You have to add new public key to your repo.'}
-					method={'regeneratePublicKey'}
-					modalId={'publicKeyModel'}
-					target={'Public Key'}
-				/>
-			</div>
+        <KeyContentComponent {...this.props} />
+
+        <ConfirmComponent {...this.props.student}
+          warning={'This will permanently change your public key. You have to add new public key to your repo.'}
+          method={'regeneratePublicKey'}
+          modalId={'publicKeyModel'}
+          target={'Public Key'}
+        />
+      </div>
     );
   }
 });
@@ -214,12 +241,12 @@ ProfileComponent = React.createClass({
     }
     return (
       <div className={mainContentClass}>
-				<div className="row">
-					<div className="col-md-12">
-						<h2>Account Settings</h2>
-						<TokenComponent {...this.props} />
-						<PublicKeyComponent {...this.props} />
-					</div>
+        <div className="row">
+          <div className="col-md-12">
+            <h2>Account Settings</h2>
+            <TokenComponent {...this.props} />
+            <PublicKeyComponent {...this.props} />
+          </div>
 				</div>
       </div>
     );
