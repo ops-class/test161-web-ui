@@ -75,7 +75,7 @@ if (DEBUG) {
       userId = user._id;
     }
 
-    generateMockStudent(email);
+    // generateMockStudent(email);
     return {userId};
   });
 }
