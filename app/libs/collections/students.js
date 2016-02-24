@@ -1,5 +1,32 @@
 Students = new Mongo.Collection('students');
 
+TargetStatSchema = new SimpleSchema({
+  target_name: {
+    type: String,
+    label: "Target name"
+  },
+  target_version: {
+    type: Number,
+    label: "Target version"
+  },
+  target_type: {
+    type: String,
+    label: "Target type"
+  },
+  max_score: {
+    type: Number,
+    label: "Max score"
+  },
+  total_submissions: {
+    type: Number,
+    label: "Total submissions"
+  },
+  high_score: {
+    type: Number,
+    label: "High score"
+  }
+});
+
 StudentSchema = new SimpleSchema({
   _id: {
     type: String,
@@ -24,6 +51,11 @@ StudentSchema = new SimpleSchema({
   total_submissions: {
     type: Number,
     label: "Total Submission",
+    optional: true
+  },
+  target_stats: {
+    type: [TargetStatSchema],
+    label: "Target stats",
     optional: true
   },
   key: {
