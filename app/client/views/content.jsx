@@ -30,7 +30,7 @@ LoginOutComponent = React.createClass({
       logout();
       return;
     } else {
-      if (this.props.student && (this.props.student.debug != debug)) {
+      if (debug && this.props.student && !this.props.student.debug) {
         logout();
       }
       this.setState({ debug: debug });
