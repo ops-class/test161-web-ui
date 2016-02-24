@@ -14,9 +14,8 @@ IntroComponent = React.createClass({
                   <div className="paragraph lead">
                     <p><code>test161</code> is the OS/161 testing tool designed and implemented by
                       { " " }<a href="https://blue.cse.buffalo.edu/people/shaseley/" target="_blank" className="external">Scott Haseley</a> and
-                      { " " }<a href="https://blue.cse.buffalo.edu/people/ychen78/" target="_blank" className="external">Yihong Chen</a>. It will both allow
-                      you test your assignments locally and submit them our testing server for
-                      official evaluation.</p>
+                      { " " }<a href="https://blue.cse.buffalo.edu/people/ychen78/" target="_blank" className="external">Yihong Chen</a>. It allows you both
+                      to test your assignments locally and submit them for remote evaluation.</p>
                   </div>
                   <div className="paragraph">
                     <p>Below we run through how to install, configure, run, and use <code>test161</code>. While
