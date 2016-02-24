@@ -1,6 +1,8 @@
 Future = Npm.require('fibers/future');
 
-const keygenEndpoint = 'https://test161.ops-class.org/api-v1/keygen';
+const keygenEndpoint = process.env.KEYGEN_ENDPOINT ||
+Meteor.settings.KEYGEN_ENDPOINT ||
+'https://test161.ops-class.org/api-v1/keygen';
 
 Meteor.methods({
   regeneratePublicKey: function({email, token}) {

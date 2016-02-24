@@ -3,6 +3,7 @@
 == Local Test
 
 * Meteor hard code account: admin@ops-class.org, use TEST161_DEBUG to trigger this
+* Meteor need an url for public key generate endpoint, please use KEYGEN_ENDPOINT to set this url
 * MongoDB url: `mongodb://localhost:3001/meteor`
 * The test161 config files need change
 
