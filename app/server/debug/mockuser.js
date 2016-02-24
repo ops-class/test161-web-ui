@@ -1,4 +1,11 @@
 const DEBUG = process.env.TEST161_DEBUG || Meteor.settings.TEST161_DEBUG;
+
+Meteor.methods({
+  isDebug: function() {
+    return DEBUG;
+  }
+});
+
 if (DEBUG) {
   const getTargetStats = (i = 1) => {
     return {
@@ -70,11 +77,5 @@ if (DEBUG) {
 
     generateMockStudent(email);
     return {userId};
-  });
-
-  Meteor.methods({
-    isDebug: function() {
-      return DEBUG;
-    }
   });
 }
