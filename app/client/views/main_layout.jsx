@@ -4,10 +4,10 @@ MainLayout = React.createClass({
     return subscribeUserData();
   },
   componentDidMount: function() {
-    processPage();
+    try { processPage(); } catch (err) {};
   },
   componentDidUpdate: function() {
-    processPage();
+    try { processPage(); } catch (err) {};
   },
   render() {
     let mainContent = <LoadingComponent />;

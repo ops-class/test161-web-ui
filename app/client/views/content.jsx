@@ -1,28 +1,50 @@
 ActiveLink = React.createClass({
-	render() {
-		if (!this.props.user) {
-			return false;
-		}
-    const {link} = this.props;
-    const {path} = FlowRouter.current();
-    let className = '';
-    if (path === link) {
-      className += ' active';
+  render() {
+    if (!this.props.user) {
+      return false;
     }
-		return (
-      <a href={link}
+    const className = (this.props.link === FlowRouter.current().path) ? 'active' : '';
+    return (
+      <a href={this.props.link}
         className={className}
-        onClick={() => FlowRouter.go(link)}>
+        onClick={() => FlowRouter.go(this.props.link)}>
         {this.props.text}
       </a>
-		);
-	}
+    );
+  }
 });
 
+Meteor.loginAsDebug = function() {
+  Accounts.callLoginMethod({
+    methodArguments: [{ debug: true, password: 'admin-password' }]
+  });
+};
+
 LoginOutComponent = React.createClass({
+  getInitialState() {
+    Meteor.call('isDebug', this.setDebug);
+    return { debug: false };
+  },
+  setDebug(err, debug) {
+    if (err) {
+      logout();
+      return;
+    } else {
+      if (this.props.student) {
+        console.log(this.props.student.debug, debug);
+      }
+      if (this.props.student && (this.props.student.debug != debug)) {
+        logout();
+      }
+      this.setState({ debug: debug });
+    }
+  },
   render() {
-    const name = this.props.user ? 'Logout' : 'Login';
-    const onClick = this.props.user ? logout : login;
+    const name = this.props.user ? 'logout' : 'login';
+    let onClick = this.props.user ? logout : login;
+    if (this.state.debug) {
+      onClick = this.props.user ? logout : Meteor.loginAsDebug;
+    }
     return (
       <li><a onClick={onClick}>{name}</a></li>
     );
@@ -43,7 +65,7 @@ ContentComponent = React.createClass({
   },
   render() {
     return (
-			<div>
+      <div>
         <nav className="navbar navbar-default navbar-fixed-top navbar-second-top">
           <a className="logo-fixed hidden-md hidden-lg"href="https://www.ops-class.org/">
             <img src="/img/logos/ops-class.jpg" alt="ops-class.org logo" />
@@ -61,13 +83,13 @@ ContentComponent = React.createClass({
               <div className="row">
                 <div className="col-sm-6">
                   <ul className="nav navbar-nav left">
-                    <li><ActiveLink link="/" text="Results" user={this.props.user}/></li>
+                    <li><ActiveLink link="/" text="results" user={this.props.user}/></li>
                   </ul>
                 </div>
                 <div className="col-sm-6">
                   <ul className="nav navbar-nav right">
-                    <li><ActiveLink link="/test161" text="About" user={true}/></li>
-                    <li><ActiveLink link="/profile" text="Settings" user={this.props.user}/></li>
+                    <li><ActiveLink link="/test161" text="about" user={true}/></li>
+                    <li><ActiveLink link="/profile" text="settings" user={this.props.user}/></li>
                     <LoginOutComponent {...this.props}/>
                   </ul>
                 </div>

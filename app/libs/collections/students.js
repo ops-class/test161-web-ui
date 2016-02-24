@@ -66,6 +66,12 @@ StudentSchema = new SimpleSchema({
   createdAt: {
     type: Date,
     label: "Create at"
+  },
+  debug: {
+    type: Boolean,
+    label: "Debug",
+    optional: true,
+    defaultValue: false
   }
 });
 

@@ -30,23 +30,22 @@ if (DEBUG) {
         getTargetStats(3)
       ]
       const total_submissions = 3;
-      Students.update({email}, {$set: {target_stats, total_submissions} });
+      const debug = true;
+      Students.update({email}, {$set: {target_stats, total_submissions, debug } });
     }
   }
 
   Accounts.registerLoginHandler(function(loginRequest) {
-    if(!loginRequest.debug) {
+    if (!loginRequest.debug) {
       return undefined;
-    }
-
-    if(loginRequest.password != 'admin-password') {
+    } else if (loginRequest.password != 'admin-password') {
       return null;
     }
 
     let userId = null;
     let user = Meteor.users.findOne({username: 'admin'});
     const email = 'admin@ops-class.org';
-    if(!user) {
+    if (!user) {
       const id = Random.id();
       user = {
         username: 'admin',
