@@ -49,14 +49,40 @@ LoginOutComponent = React.createClass({
 });
 
 LeaderboardNavComponent = React.createClass({
+  mixins: [ReactMeteorData],
+  getMeteorData() {
+    const ready = false;
+    const loading = true;
+    let data = {ready, loading}
+
+    const handle = TargetSubs.subscribe('targets');
+    if (handle.ready()) {
+      console.log('ready');
+      const targets = TargetNames.find(
+        {},
+        { sort: { _id: 1 } }
+      ).fetch();
+      data.targets = targets;
+      data.ready = true;
+      data.loading = false;
+    } else {
+      data = {...this.data};
+      data.loading = true;
+    }
+    return data;
+  },
   render() {
     const prefix = LEADERBOARD;
-    const targets = ['asst1', 'asst2', 'asst3'];
+    const {ready, loading, targets} = this.data;
+    if (!ready) {
+      return (<LoadingComponent />);
+    }
     const list = targets.map((target) => {
+      const {_id} = target;
       return (
-        <li key={target}>
-          <a href={`/${prefix}/${target}`}>
-            {target}
+        <li key={_id}>
+          <a href={`/${prefix}/${_id}`}>
+            {_id}
           </a>
         </li>
       );

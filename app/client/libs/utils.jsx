@@ -15,7 +15,7 @@ SubmissionSubs = new SubsManager();
 
 TestSubs = new SubsManager();
 
-OutputSubs = new SubsManager();
+TargetSubs = new SubsManager();
 
 logout = () => {
   Meteor.logout();
