@@ -57,7 +57,6 @@ LeaderboardNavComponent = React.createClass({
 
     const handle = TargetSubs.subscribe('targets');
     if (handle.ready()) {
-      console.log('ready');
       const targets = TargetNames.find(
         {},
         { sort: { _id: 1 } }
