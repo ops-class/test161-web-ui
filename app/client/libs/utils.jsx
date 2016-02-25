@@ -17,6 +17,8 @@ TestSubs = new SubsManager();
 
 TargetSubs = new SubsManager();
 
+LeaderboardSubs = new SubsManager();
+
 logout = () => {
   Meteor.logout();
 };

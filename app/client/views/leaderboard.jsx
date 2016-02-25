@@ -1,6 +1,31 @@
 LeaderboardComponent = React.createClass({
+  mixins: [ReactMeteorData],
+  getMeteorData() {
+    const {params: {target}} = this.props;
+    const ready = false;
+    const loading = true;
+    let data = {ready, loading}
+    const handle = LeaderboardSubs.subscribe('leaderboards', target);
+    if (handle.ready()) {
+      const leaders = Leaders.find(
+        {target},
+        { sort: { score : -1 } }
+      ).fetch();
+      data.leaders = leaders;
+      data.ready = true;
+      data.loading = false;
+    } else {
+      data = {...this.data};
+      data.loading = true;
+    }
+    return data;
+  },
   render() {
     const {params: {target}} = this.props;
+    const {ready, loading, leaders} = this.data
+    if (!ready) {
+      return (<LoadingComponent />);
+    }
     const data = [];
     for (let i = 50; i > 40; i--) {
       const score = i;
@@ -8,11 +33,11 @@ LeaderboardComponent = React.createClass({
       data.push({group, score});
     }
     const list = [];
-    for (let [index, elem] of data.entries()) {
+    for (let [index, elem] of leaders.entries()) {
       list.push(
         <tr key={index + 1}>
           <th>{index + 1}</th>
-          <td>{elem.group}</td>
+          <td>{elem._id}</td>
           <td>{elem.score}</td>
         </tr>
       );
