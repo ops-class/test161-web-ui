@@ -38,3 +38,4 @@ react-runtime-prod@=0.14.3
 meteorhacks:kadira
 http
 accounts-base
+meteorhacks:aggregate
