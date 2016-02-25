@@ -2,12 +2,15 @@ mainContentClass = 'col-md-8 col-md-offset-2';
 
 UserComponent = React.createClass({
   render() {
-    const {params: {path}, profile, user, student} = this.props;
+    const {params: {path, target}, profile, user, student} = this.props;
     if (pathIsIntro(path) || !user) {
       return (<IntroComponent />);
     }
     if (pathIsProfile(path)) {
       return (<ProfileComponent {...this.props}/>);
+    }
+    if (pathIsLeaderboard(path)) {
+      return (<LeaderboardComponent {...this.props}/>);
     }
     return (
       <div className="row">
@@ -42,7 +45,7 @@ SidebarComponent = React.createClass({
         <li key={target_name}
           className={className}>
           <a href={href}>
-            <span className="badge">{total_submissions}</span> {target_name.toUpperCase()} 
+            <span className="badge">{total_submissions}</span> {target_name.toUpperCase()}
           </a>
         </li>
       );
