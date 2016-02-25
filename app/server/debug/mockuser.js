@@ -76,6 +76,7 @@ if (DEBUG) {
     }
 
     // generateMockStudent(email);
+    Students.update({email}, {$set: { debug : true } });
     return {userId};
   });
 }
