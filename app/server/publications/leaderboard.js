@@ -13,6 +13,14 @@ Meteor.publish('leaderboards', function(target_name) {
 
   const pipeline = [
     { $match: selector },
+    {
+      $group: {
+        _id: "$users",
+        users: { $first: "$users" },
+        target: { $first: "$target_name" },
+        score: { $max: "$score" }
+      }
+    },
     { $unwind: "$users" },
     {
       $lookup : {
@@ -22,6 +30,7 @@ Meteor.publish('leaderboards', function(target_name) {
         as: "userObjects"
       }
     },
+    { $unwind: "$userObjects" },
     {
       $lookup : {
         from: "students",
@@ -30,21 +39,32 @@ Meteor.publish('leaderboards', function(target_name) {
         as: "students"
       }
     },
+    { $unwind: "$students" },
     {
       $group: {
         _id: "$_id",
-        target: { $first: "$target_name" },
+        target: { $first: "$target" },
         score: { $max: "$score" },
-        users: { $push: "$users" },
         userObjects: { $push: "$userObjects" },
         students: { $push: "$students" }
       }
     },
     {
-      $group: {
-        _id: "$users",
-        target: { $first: "$target" },
-        score: { $max: "$score" }
+      $match: {
+        userObjects: {
+          $not: {
+            $elemMatch: {
+              "services.auth0.user_metadata.staff": true
+            }
+          }
+        },
+        students: {
+          $not: {
+            $elemMatch: {
+              hide: true
+            }
+          }
+        }
       }
     },
     {

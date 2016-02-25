@@ -67,6 +67,16 @@ StudentSchema = new SimpleSchema({
     type: Date,
     label: "Create at"
   },
+  hide: {
+    type: Boolean,
+    label: "Hide from the leader board",
+    optional: true
+  },
+  anonymous: {
+    type: Boolean,
+    label: "Show name on leader board but anonymous",
+    optional: true
+  },
   debug: {
     type: Boolean,
     label: "Debug",
