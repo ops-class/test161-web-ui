@@ -6,9 +6,8 @@ LeaderboardComponent = React.createClass({
     if (target.length && INITLOAD) {
       $('html, body').animate({
         scrollTop: target.offset().top
-      }, 512, () => {
-        INITLOAD = false;
-      });
+      }, 512);
+      INITLOAD = false;
       return false;
     }
   },
@@ -97,6 +96,9 @@ LeadersComponent = React.createClass({
   },
   componentDidMount() {
     $(window).scroll(this.scroll);
+  },
+  componentWillUnmount() {
+    $(window).unbind('scroll');
   },
   scroll() {
     const $elem = $(ReactDOM.findDOMNode(this)).find('.leaders-container');
