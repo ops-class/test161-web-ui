@@ -234,6 +234,47 @@ const PublicKeyComponent = React.createClass({
   }
 });
 
+const CompeteComponent = React.createClass({
+  toggle(event) {
+    const {email, token, hide, anonymous} = this.props.student || {};
+    const {value, checked} = event.target;
+    if (value === 'hide') {
+      Meteor.call('toggleHide', {email, token});
+    } else if (value === 'anonymous') {
+      Meteor.call('toggleAnonymous', {email, token});
+    } else {
+      console.log('Error!', value, ' unknown!');
+    }
+  },
+  render() {
+    const {email, token, hide, anonymous} = this.props.student || {};
+    return (
+      <div>
+        <h3>Leader Board Settings</h3>
+
+        <div className="switch">
+          <input className=""
+            onClick={this.toggle}
+            value="hide"
+            type="checkbox"
+            checked={hide}
+          /> Hide
+        </div>
+
+        <div className="switch">
+          <input className=""
+            onClick={this.toggle}
+            value="anonymous"
+            type="checkbox"
+            disabled={hide}
+            checked={anonymous}
+          /> Anonymous
+        </div>
+      </div>
+    );
+  }
+})
+
 ProfileComponent = React.createClass({
   render() {
     if (!this.props.student) {
@@ -246,6 +287,7 @@ ProfileComponent = React.createClass({
             <h2>Account Settings</h2>
             <TokenComponent {...this.props} />
             <PublicKeyComponent {...this.props} />
+            <CompeteComponent {...this.props} />
           </div>
 				</div>
       </div>
