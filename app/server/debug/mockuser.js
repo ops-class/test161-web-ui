@@ -65,6 +65,7 @@ if (DEBUG) {
             name: 'admin@ops-class.org',
             nickname: 'admin',
             global_client_id: 'Rf8od4jJNfYw7DGfjPMQLfxXb7MjS3pP',
+            user_metadata: { staff: true },
             id: 'auth0|' + id
           },
           resume: { loginTokens: [] }
