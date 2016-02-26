@@ -234,42 +234,104 @@ const PublicKeyComponent = React.createClass({
   }
 });
 
-const CompeteComponent = React.createClass({
-  toggle(event) {
-    const {email, token, hide, anonymous} = this.props.student || {};
-    const {value, checked} = event.target;
-    if (value === 'hide') {
-      Meteor.call('toggleHide', {email, token});
-    } else if (value === 'anonymous') {
-      Meteor.call('toggleAnonymous', {email, token});
-    } else {
-      console.log('Error!', value, ' unknown!');
+SelectComponent = React.createClass({
+  getInitialState() {
+    return {processing: false};
+  },
+  onClick(value) {
+    if (value === this.props.choice) {
+      return;
     }
+    this.setState({processing: true});
+    Meteor.call('updatePrivacy', this.props, value, (err, res) => {
+      this.setState({processing: false});
+      if (err) {
+        console.log(err);
+      }
+    })
   },
   render() {
-    const {email, token, hide, anonymous} = this.props.student || {};
+    const {choice, type} = this.props;
+    const {processing} = this.state;
+    let text = null;
+    if (type === 'asst') {
+      text = 'Assignments';
+    } else {
+      text = 'Performance targets';
+    }
+    return (
+      <div className="col-md-6">
+        <div className="form-group">
+          <div className="input-group">
+            <span className="input-group-addon target-type">
+              {text}:
+            </span>
+            <div className="input-group-btn">
+              <button type="button"
+                className="btn btn-default dropdown-toggle btn-block"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                disabled={processing}
+                aria-expanded="false">
+                {processing ? <span className="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+                : null} {choice} <span className="caret"></span>
+              </button>
+              <ul className="dropdown-menu dropdown-menu-right">
+                <li><a onClick={this.onClick.bind(this, HIDE)}>{HIDE}</a></li>
+                <li><a onClick={this.onClick.bind(this, ANONYMOUS)}>{ANONYMOUS}</a></li>
+                <li role="separator" className="divider"></li>
+                <li><a onClick={this.onClick.bind(this, SHOW)}>{SHOW}</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+})
+
+const CompeteComponent = React.createClass({
+  render() {
+    let {email, token, privacy} = this.props.student || {};
+    if (!privacy) {
+      privacy = [
+        { type: 'asst', choice: HIDE },
+        { type: 'perf', choice: ANONYMOUS }
+      ];
+    }
+    const settings = privacy.map(setting =>
+      (<SelectComponent key={setting.type} {...setting} email={email} token={token} />)
+    )
     return (
       <div>
-        <h3>Leader Board Settings</h3>
-
-        <div className="switch">
-          <input className=""
-            onClick={this.toggle}
-            value="hide"
-            type="checkbox"
-            checked={hide}
-          /> Hide
-        </div>
-
-        <div className="switch">
-          <input className=""
-            onClick={this.toggle}
-            value="anonymous"
-            type="checkbox"
-            disabled={hide}
-            checked={anonymous}
-          /> Anonymous
-        </div>
+        <h3>Leaderboards Privacy Settings</h3>
+        <p>
+          We'll release leaderboards for different assignments and performance
+          targets soon. The leaderboards will not show your personal information
+          without your prior permssion!
+        </p>
+        <p> There're three different choices you can choice:</p>
+        <ul>
+          <li>
+            <b>Show:</b> leaderboards will show your email address and best
+            score/performance.
+          </li>
+          <li>
+            <b>Anonymous:</b> leaderboards will show your best score/performance,
+            and mark your email address as 'anonymous'.
+          </li>
+          <li>
+            <b>Hide:</b> you and <b>your partner</b> will be totally hidden from the
+            leaderboards.
+          </li>
+        </ul>
+        <p>
+          We treat assignments and performance targets separately. Your default
+          setting for <b>assignments is hide</b>, default setting for <b>
+          performance targets is anonymous</b>.
+          Please use the below select buttons to set your privacy settings.
+        </p>
+        {settings}
       </div>
     );
   }

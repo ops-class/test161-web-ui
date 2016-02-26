@@ -1,16 +1,19 @@
 Meteor.methods({
-  toggleHide: function({email, token}) {
+  updatePrivacy: function({email, token, type}, newChoice) {
+    Meteor._sleepForMs(1000);
     const userId = this.userId;
     const student = checkEmailToken({email, token, userId});
-    let {hide} = student;
-    hide = !hide;
-    return Students.update({_id: student._id}, {$set: {hide} });
-  },
-  toggleAnonymous: function({email, token}) {
-    const userId = this.userId;
-    const student = checkEmailToken({email, token, userId});
-    let {anonymous} = student;
-    anonymous = !anonymous;
-    return Students.update({_id: student._id}, {$set: {anonymous} });
+    let {privacy} = student;
+    if (!privacy) {
+      privacy = [
+        { type: 'asst', choice: HIDE },
+        { type: 'perf', choice: ANONYMOUS }
+      ];
+    }
+    const setting = privacy.find(x => x.type === type);
+    setting.choice = newChoice;
+    return Students.update({_id: student._id},
+      { $set: { privacy } }
+    );
   }
 })

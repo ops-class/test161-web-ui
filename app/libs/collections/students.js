@@ -1,8 +1,8 @@
 Students = new Mongo.Collection('students');
 
-HIDE = 'hide';
-ANONYMOUS = 'anonymous';
-SHOW = 'show';
+HIDE = 'Hide';
+ANONYMOUS = 'Anonymous';
+SHOW = 'Show';
 PrivacyChoices = [HIDE, ANONYMOUS, SHOW];
 
 PrivacySchema = new SimpleSchema({
@@ -87,6 +87,8 @@ StudentSchema = new SimpleSchema({
   privacy: {
     type: [PrivacySchema],
     label: "Privacy settings",
+    minCount: 2,
+    maxCount: 2,
     optional: true
   },
   debug: {
