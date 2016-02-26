@@ -10,7 +10,7 @@ UserComponent = React.createClass({
       return (<ProfileComponent {...this.props}/>);
     }
     if (pathIsLeaderboard(path)) {
-      return (<LeaderboardComponent {...this.props}/>);
+      return (<LeadersComponent {...this.props}/>);
     }
     return (
       <div className="row">

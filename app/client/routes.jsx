@@ -1,4 +1,4 @@
-LEADERBOARD = 'leaderbard';
+LEADERBOARD = 'leaders';
 
 FlowRouter.route('/', {
   name: 'home',
@@ -8,16 +8,8 @@ FlowRouter.route('/', {
 });
 
 FlowRouter.route('/:path', {
-  name: 'asst',
+  name: 'main',
   action: function(params, queryParams) {
-    ReactLayout.render(MainLayout, {params});
-  }
-});
-
-FlowRouter.route(`/${LEADERBOARD}/:target`, {
-  name: 'leaderboard',
-  action: function(params, queryParams) {
-    params.path = LEADERBOARD;
     ReactLayout.render(MainLayout, {params});
   }
 });

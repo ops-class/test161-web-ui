@@ -117,7 +117,7 @@ SecondNavComponent = React.createClass({
     if (user) {
       leftLinks = (
         <ul className="nav navbar-nav left">
-          <LeaderboardNavComponent {...this.props}/>
+          <li><ActiveLink link="/leaders" text="leaders" user={user}/></li>
           <li><ActiveLink link="/" text="results" user={user}/></li>
         </ul>
       );
