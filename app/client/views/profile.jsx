@@ -287,7 +287,8 @@ ProfileComponent = React.createClass({
             <h2>Account Settings</h2>
             <TokenComponent {...this.props} />
             <PublicKeyComponent {...this.props} />
-            <CompeteComponent {...this.props} />
+            {isStaff(this.props.user) ?
+              <CompeteComponent {...this.props} /> : null }
           </div>
 				</div>
       </div>

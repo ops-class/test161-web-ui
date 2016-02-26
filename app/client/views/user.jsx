@@ -9,7 +9,7 @@ UserComponent = React.createClass({
     if (pathIsProfile(path)) {
       return (<ProfileComponent {...this.props}/>);
     }
-    if (pathIsLeaderboard(path)) {
+    if (pathIsLeaderboard(path) && isStaff(user)) {
       return (<LeadersComponent {...this.props}/>);
     }
     return (

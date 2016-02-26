@@ -31,3 +31,7 @@ login = () => {
     closable: true
   });
 };
+
+isStaff = (user) => {
+  return ((((user || {}).services || {}).auth0 || {}).user_metadata || {}).staff;
+}
