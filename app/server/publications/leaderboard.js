@@ -1,3 +1,5 @@
+const LEADERS_CACHE = {};
+
 Meteor.publish('leaderboards', function(target_name) {
   if (!this.userId) {
     this.ready();
@@ -76,15 +78,29 @@ Meteor.publish('leaderboards', function(target_name) {
   ];
 
   const runAggregation = () => {
+    if (!LEADERS_CACHE[target_name]) {
+      LEADERS_CACHE[target_name] = new Set();
+    }
+
+    const leaderSet = new Set();
+
     Submissions.aggregate(pipeline).map((e) => {
       e._id = e._id.join(', ');
       this.added('leaders', e._id, e);
+      leaderSet.add(e._id);
+      LEADERS_CACHE[target_name].add(e._id);
     });
+
+    for (let id of LEADERS_CACHE[target_name]) {
+      if (!leaderSet.has(id)) {
+        LEADERS_CACHE[target_name].delete(id);
+        this.removed('leaders', id);
+      }
+    }
     this.ready();
   }
 
-  const query = Submissions.find(selector);
-  const handle = query.observeChanges({
+  const changeHandler = {
     added: (id) => {
       if (!initializing) {
         runAggregation();
@@ -95,12 +111,28 @@ Meteor.publish('leaderboards', function(target_name) {
     error: (err) => {
       throw new Meteor.Error('Uh oh! something went wrong!', err.message);
     }
+  }
+
+  const query = Submissions.find(selector);
+  const handle = query.observeChanges(changeHandler);
+
+  const studentQuery = Students.find({}, {
+    fields: {
+      _id: 1,
+      email: 1,
+      hide: 1,
+      anonymous: 1
+    }
   });
+  const studentHandle = studentQuery.observeChanges(changeHandler);
 
   initializing = false;
   runAggregation();
 
   this.onStop(function() {
     handle.stop();
+    studentHandle.stop();
   });
+
+  return Leaders.find({});
 });
