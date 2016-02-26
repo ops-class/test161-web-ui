@@ -20,7 +20,7 @@ LeaderboardComponent = React.createClass({
     const handle = LeaderboardSubs.subscribe('leaderboards', target);
     if (handle.ready()) {
       const leaders = Leaders.find(
-        {target},
+        { target: target._id },
         { sort: { score : -1 } }
       ).fetch();
       data.leaders = leaders;
@@ -50,8 +50,8 @@ LeaderboardComponent = React.createClass({
       );
     }
     return (
-      <div className="col-md-12 leaders-container" id={target}>
-        <h1>{target}</h1>
+      <div className="col-md-12 leaders-container" id={target._id}>
+        <h1>{target._id}</h1>
         <table className="table table-striped">
           <thead>
             <tr>
@@ -134,7 +134,7 @@ LeadersComponent = React.createClass({
     const list = targets.map((target) => {
       const {_id} = target;
       return (
-        <LeaderboardComponent key={_id} target={_id}/>
+        <LeaderboardComponent key={_id} target={target}/>
       );
     });
     return (

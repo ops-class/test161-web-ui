@@ -4,7 +4,29 @@ const hash = (name) => {
   return CryptoJS.MD5(name).toString();
 }
 
-Meteor.publish('leaderboards', function(target_name) {
+const isHide = (privacy, type) => {
+  const setting = (privacy || []).find(x => (x || {}).type === type);
+  if (!setting) {
+    if (type === 'asst') {
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    return setting.choice === HIDE;
+  }
+}
+
+const isAnonymous = (privacy, type) => {
+  const setting = (privacy || []).find(x => (x || {}).type === type);
+  if (!setting) {
+    return true;
+  } else {
+    return setting.choice === ANONYMOUS;
+  }
+}
+
+Meteor.publish('leaderboards', function({ _id: target_name, type }) {
   if (!this.userId) {
     this.ready();
     return;
@@ -23,9 +45,16 @@ Meteor.publish('leaderboards', function(target_name) {
         _id: "$users",
         users: { $first: "$users" },
         target: { $first: "$target_name" },
+        max_score: { $max: "$max_score" },
         score: { $max: "$score" }
       }
     },
+    {
+      $project: { _id: 1, users: 1, target: 1, score: 1,
+        cmpToMax: { $cmp: [ "$score", "$max_score" ] }
+      }
+    },
+    { $match: { cmpToMax: 0 } },
     { $unwind: "$users" },
     {
       $lookup : {
@@ -62,13 +91,6 @@ Meteor.publish('leaderboards', function(target_name) {
               "services.auth0.user_metadata.staff": true
             }
           }
-        },
-        students: {
-          $not: {
-            $elemMatch: {
-              hide: true
-            }
-          }
         }
       }
     },
@@ -97,13 +119,19 @@ Meteor.publish('leaderboards', function(target_name) {
 
     Submissions.aggregate(pipeline).map((e) => {
       const group = e._id.join(', ');
-      e.group = group;
       e._id = hash(group);
+      e.group = [];
       for (let student of e.students) {
-        if (student.anonymous) {
-          e.group = 'anonymous';
+        if (isHide(student.privacy, type)) {
+          return;
+        }
+        if (isAnonymous(student.privacy, type)) {
+          e.group.push('anonymous');
+        } else {
+          e.group.push(student.email);
         }
       }
+      e.group = e.group.join(', ');
       delete e.students;
 
       if (LEADERS_CACHE[target_name].has(e._id)) {
@@ -150,8 +178,7 @@ Meteor.publish('leaderboards', function(target_name) {
     fields: {
       _id: 1,
       email: 1,
-      hide: 1,
-      anonymous: 1
+      privacy: 1
     }
   });
   const studentHandle = studentQuery.observeChanges(changeHandler);

@@ -4,12 +4,13 @@ Meteor.publish('targets', function() {
     this.ready();
     return;
   }
-  
+
   let initializing = true;
 
   const pipeline = [{
     $group: {
       _id: "$name",
+      type: { $first: "$type" },
       version: {
         $max: "$version"
       }

@@ -1,5 +1,22 @@
 Students = new Mongo.Collection('students');
 
+HIDE = 'hide';
+ANONYMOUS = 'anonymous';
+SHOW = 'show';
+PrivacyChoices = [HIDE, ANONYMOUS, SHOW];
+
+PrivacySchema = new SimpleSchema({
+  type: {
+    type: String,
+    label: "Target type"
+  },
+  choice: {
+    type: String,
+    label: "User's choice",
+    allowedValues: PrivacyChoices
+  }
+});
+
 TargetStatSchema = new SimpleSchema({
   target_name: {
     type: String,
@@ -67,14 +84,9 @@ StudentSchema = new SimpleSchema({
     type: Date,
     label: "Create at"
   },
-  hide: {
-    type: Boolean,
-    label: "Hide from the leader board",
-    optional: true
-  },
-  anonymous: {
-    type: Boolean,
-    label: "Show name on leader board but anonymous",
+  privacy: {
+    type: [PrivacySchema],
+    label: "Privacy settings",
     optional: true
   },
   debug: {

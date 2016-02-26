@@ -106,7 +106,7 @@ if (DEBUG) {
     } else if (isFailed(status)) {
       return {_id, submission_time, users, repository, commit_id, status, target, max_score, target_name, tests, completion_time};
     } else {
-      const score = Math.floor(Math.random() * 100);
+      const score = max_score - randomInt(10);
       return {_id, submission_time, users, repository, commit_id, status, target, max_score, target_name, tests, completion_time, score};
     }
   }
