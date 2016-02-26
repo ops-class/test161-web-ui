@@ -14,6 +14,7 @@ Meteor.publish('leaderboards', function(target_name) {
   const deadline = getDeadline(target_name);
   const selector = {
     target_name: target_name,
+    submission_time: { $lte: deadline },
     score: { $gt: 0 }
   };
 
