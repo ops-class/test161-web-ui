@@ -26,19 +26,14 @@ LeaderboardComponent = React.createClass({
     if (!ready) {
       return (<LoadingComponent />);
     }
-    const data = [];
-    for (let i = 50; i > 40; i--) {
-      const score = i;
-      const group = `testdata-${i}@buffalo.edu, ${Random.id(8)}@buffalo.edu`
-      data.push({group, score});
-    }
     const list = [];
     for (let [index, elem] of leaders.entries()) {
+      let {score, group} = elem;
       list.push(
         <tr key={index + 1}>
           <th>{index + 1}</th>
-          <td>{elem._id}</td>
-          <td>{elem.score}</td>
+          <td>{group}</td>
+          <td>{score}</td>
         </tr>
       );
     }

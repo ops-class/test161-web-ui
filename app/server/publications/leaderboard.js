@@ -1,5 +1,9 @@
 const LEADERS_CACHE = {};
 
+const hash = (name) => {
+  return CryptoJS.MD5(name).toString();
+}
+
 Meteor.publish('leaderboards', function(target_name) {
   if (!this.userId) {
     this.ready();
@@ -70,6 +74,14 @@ Meteor.publish('leaderboards', function(target_name) {
       }
     },
     {
+      $project: {
+        _id: 1,
+        target: 1,
+        score: 1,
+        students: 1
+      }
+    },
+    {
       $sort: { score: -1 }
     },
     {
@@ -85,8 +97,24 @@ Meteor.publish('leaderboards', function(target_name) {
     const leaderSet = new Set();
 
     Submissions.aggregate(pipeline).map((e) => {
-      e._id = e._id.join(', ');
-      this.added('leaders', e._id, e);
+      const group = e._id.join(', ');
+      e.group = group;
+      e._id = hash(group);
+      for (let student of e.students) {
+        if (student.anonymous) {
+          e.group = 'anonymous';
+        }
+      }
+      delete e.students;
+
+      if (LEADERS_CACHE[target_name].has(e._id)) {
+        // if directly call changed, some client don't have the e._id doc before
+        // if only call added, they wouldn't update when change anonymous
+        this.added('leaders', e._id, e);
+        this.changed('leaders', e._id, e);
+      } else {
+        this.added('leaders', e._id, e);
+      }
       leaderSet.add(e._id);
       LEADERS_CACHE[target_name].add(e._id);
     });
@@ -94,6 +122,9 @@ Meteor.publish('leaderboards', function(target_name) {
     for (let id of LEADERS_CACHE[target_name]) {
       if (!leaderSet.has(id)) {
         LEADERS_CACHE[target_name].delete(id);
+        // make sure remove stale data, because publish doesn't know
+        // which client has the e._id
+        this.added('leaders', id, {_id: id, score: 0, target: 'target'});
         this.removed('leaders', id);
       }
     }
