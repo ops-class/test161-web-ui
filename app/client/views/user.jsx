@@ -32,7 +32,7 @@ SidebarComponent = React.createClass({
     if (!student) {
       return (<div>Error, student not found, this should not happen!</div>);
     }
-    const {target_stats} = student;
+    const {target_stats = []} = student;
     const {path} = FlowRouter.current();
     const list = target_stats.map((stat) => {
       const {target_name, total_submissions} = stat;
