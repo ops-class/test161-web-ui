@@ -261,30 +261,24 @@ const SelectComponent = React.createClass({
     }
     return (
       <div className="col-md-6">
-        <div className="form-group">
-          <div className="input-group">
-            <span className="input-group-addon target-type">
-              {text}:
-            </span>
-            <div className="input-group-btn">
-              <button type="button"
-                className="btn btn-default dropdown-toggle btn-block"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                disabled={processing}
-                aria-expanded="false">
-                {processing ? <span className="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
-                : null} {choice} <span className="caret"></span>
-              </button>
-              <ul className="dropdown-menu dropdown-menu-right">
-                <li><a onClick={this.onClick.bind(this, HIDE)}>{HIDE}</a></li>
-                <li><a onClick={this.onClick.bind(this, ANONYMOUS)}>{ANONYMOUS}</a></li>
-                <li role="separator" className="divider"></li>
-                <li><a onClick={this.onClick.bind(this, SHOW)}>{SHOW}</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
+        <span className="target-type">
+          {text}:
+        </span>
+        <button type="button"
+          className="btn btn-default dropdown-toggle target-btn"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          disabled={processing}
+          aria-expanded="false">
+          {processing ? <span className="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+          : null} {choice} <span className="caret"></span>
+        </button>
+        <ul className="dropdown-menu dropdown-menu-right">
+          <li><a onClick={this.onClick.bind(this, HIDE)}>{HIDE}</a></li>
+          <li><a onClick={this.onClick.bind(this, ANONYMOUS)}>{ANONYMOUS}</a></li>
+          <li role="separator" className="divider"></li>
+          <li><a onClick={this.onClick.bind(this, SHOW)}>{SHOW}</a></li>
+        </ul>
       </div>
     );
   }
@@ -331,7 +325,9 @@ const CompeteComponent = React.createClass({
           performance targets is anonymous</b>.
           Please use the drop-downs below to select your privacy settings.
         </p>
-        {settings}
+        <div className="target-container">
+          {settings}
+        </div>
       </div>
     );
   }
