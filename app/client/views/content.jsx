@@ -7,7 +7,7 @@ ActiveLink = React.createClass({
     return (
       <a href={this.props.link}
         className={className}
-        onClick={() => FlowRouter.go(this.props.link)}>
+        onClick={() => $('.navbar-collapse').collapse('hide') }>
         {this.props.text}
       </a>
     );
