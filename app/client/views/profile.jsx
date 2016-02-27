@@ -234,7 +234,7 @@ const PublicKeyComponent = React.createClass({
   }
 });
 
-SelectComponent = React.createClass({
+const SelectComponent = React.createClass({
   getInitialState() {
     return {processing: false};
   },
@@ -308,9 +308,9 @@ const CompeteComponent = React.createClass({
         <p>
           We'll release leaderboards for different assignments and performance
           targets soon. The leaderboards will not show your personal information
-          without your prior permssion!
+          without your permssion!
         </p>
-        <p> There're three different choices you can choice:</p>
+        <p>There are three different options you can choose:</p>
         <ul>
           <li>
             <b>Show:</b> leaderboards will show your email address and best
@@ -318,7 +318,7 @@ const CompeteComponent = React.createClass({
           </li>
           <li>
             <b>Anonymous:</b> leaderboards will show your best score/performance,
-            and mark your email address as 'anonymous'.
+            and mark your email address as "anonymous".
           </li>
           <li>
             <b>Hide:</b> you and <b>your partner</b> will be totally hidden from the
@@ -326,10 +326,10 @@ const CompeteComponent = React.createClass({
           </li>
         </ul>
         <p>
-          We treat assignments and performance targets separately. Your default
-          setting for <b>assignments is hide</b>, default setting for <b>
+          We treat assignments and performance targets separately. The default
+          setting for <b>assignments is hide</b>, and  the default setting for <b>
           performance targets is anonymous</b>.
-          Please use the below select buttons to set your privacy settings.
+          Please use the drop-downs below to select your privacy settings.
         </p>
         {settings}
       </div>
