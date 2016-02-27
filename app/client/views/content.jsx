@@ -28,7 +28,6 @@ LoginOutComponent = React.createClass({
   setDebug(err, debug) {
     if (err) {
       logout();
-      return;
     } else {
       if (debug && this.props.student && !this.props.student.debug) {
         logout();
@@ -36,14 +35,22 @@ LoginOutComponent = React.createClass({
       this.setState({ debug: debug });
     }
   },
+  onClick() {
+    $('.navbar-collapse').collapse('hide')
+    if (this.props.user) {
+      logout();
+    } else {
+      if (!this.state.debug) {
+        login();
+      } else {
+        Meteor.loginAsDebug();
+      }
+    }
+  },
   render() {
     const name = this.props.user ? 'logout' : 'login';
-    let onClick = this.props.user ? logout : login;
-    if (this.state.debug) {
-      onClick = this.props.user ? logout : Meteor.loginAsDebug;
-    }
     return (
-      <li><a onClick={onClick}>{name}</a></li>
+      <li><a onClick={this.onClick}>{name}</a></li>
     );
   }
 });
