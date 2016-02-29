@@ -18,7 +18,7 @@ Meteor.methods({
           const {statusCode, content} = res;
           future.throw(new Meteor.Error(statusCode, content));
         } else {
-          const {code} = res;
+          const {code} = err;
           future.throw(new Meteor.Error(code, 'Internal error'));
         }
       } else {
