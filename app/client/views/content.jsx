@@ -160,24 +160,13 @@ SecondNavComponent = React.createClass({
               </div>
             </div>
           </div>
-      </div>
+        </div>
       </nav>
     );
   }
 });
 
 ContentComponent = React.createClass({
-  enforceLogin() {
-    if (!this.props.user) {
-      FlowRouter.go('/test161')
-    }
-  },
-  componentDidMount() {
-    this.enforceLogin();
-  },
-  componentDidUpdate() {
-    this.enforceLogin();
-  },
   render() {
     return (
       <div>
