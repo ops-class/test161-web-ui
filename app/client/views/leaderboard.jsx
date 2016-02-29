@@ -52,6 +52,7 @@ LeaderboardComponent = React.createClass({
     return (
       <div className="col-md-12 leaders-container" id={target._id}>
         <h1>{target._id}</h1>
+        <HistogramComponent {...this.props}/>
         <table className="table table-striped">
           <thead>
             <tr>

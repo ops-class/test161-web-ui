@@ -5,7 +5,7 @@ StatisticsSchema = new SimpleSchema({
     type: String,
     label: "Target name"
   },
-  scores1: {
+  scores: {
     type: [Number],
     label: "Scores array of all groups"
   }

@@ -1,8 +1,7 @@
 HistogramComponent = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
-    // const {target} = this.props;
-    const target = {_id: 'asst1', type: 'asst'};
+    const {target = {}} = this.props;
     const ready = false;
     const loading = true;
     let data = {ready, loading}
@@ -17,6 +16,12 @@ HistogramComponent = React.createClass({
       data.loading = true;
     }
     return data;
+  },
+  getInitialState() {
+    const {target = {}} = this.props;
+    return {
+      container: target._id + '-chart'
+    };
   },
   componentDidMount() {
     this.update();
@@ -43,20 +48,21 @@ HistogramComponent = React.createClass({
       }
       prev = i;
     }
-    this.plotlybar({labels, counts});
-    this.chartjs({labels, counts});
-    this.chartist({labels, counts});
-    this.google({labels, counts});
     this.highcharts({labels, counts});
+    // this.plotlybar({labels, counts});
+    // this.chartjs({labels, counts});
+    // this.chartist({labels, counts});
+    // this.google({labels, counts});
   },
   highcharts({labels, counts}) {
+    const {target: { _id, type }} = this.props;
     var chart1 = new Highcharts.Chart({
       chart: {
-        renderTo: 'highcharts',
+        renderTo: this.state.container,
         type: 'column'
       },
       title: {
-        text: 'Statistics for Assignment 1'
+        text: 'Statistics for ' + _id
       },
       xAxis: {
         title: {
@@ -173,9 +179,7 @@ HistogramComponent = React.createClass({
   render() {
     return (
       <div className="col-md-12">
-        <h1>Demo for assignment 1</h1>
-        <canvas id='chartjs'></canvas>
-        <div id="highcharts"></div>
+        <div id={this.state.container}></div>
         <div id="plotly-bar"></div>
         <div id="google"></div>
         <div id="chartist"></div>
