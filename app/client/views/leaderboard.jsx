@@ -135,7 +135,7 @@ LeadersComponent = React.createClass({
     const list = targets.map((target) => {
       const {_id} = target;
       return (
-        <LeaderboardComponent key={_id} target={target}/>
+        <LeaderboardComponent key={_id} target={target} student={this.props.student}/>
       );
     });
     return (

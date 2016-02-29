@@ -1,3 +1,17 @@
+const getMyScore = (student, target_name) => {
+  let res = -1;
+  if (!student || !student.target_stats) {
+    return res;
+  }
+  student.target_stats.map(result => {
+    let {high_score, target_name: asst} = result;
+    if (asst === target_name) {
+      res = high_score;
+    }
+  });
+  return res;
+}
+
 HistogramComponent = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
@@ -38,15 +52,14 @@ HistogramComponent = React.createClass({
       return;
     }
     scores.sort((a, b) => a - b);
+    const max = scores[scores.length - 1];
     let labels = [], counts = [], prev = -1;
+    for (let i = 0; i <= max; i++) {
+      labels[i] = i;
+      counts[i] = 0;
+    }
     for (let i of scores) {
-      if (i !== prev) {
-        labels.push(i);
-        counts.push(1);
-      } else {
-        counts[counts.length - 1]++;
-      }
-      prev = i;
+      counts[i]++;
     }
     this.highcharts({labels, counts});
     // this.plotlybar({labels, counts});
@@ -56,7 +69,7 @@ HistogramComponent = React.createClass({
   },
   highcharts({labels, counts}) {
     const {target: { _id, type }} = this.props;
-    var chart1 = new Highcharts.Chart({
+    const chartOptions = {
       chart: {
         renderTo: this.state.container,
         type: 'column'
@@ -88,7 +101,21 @@ HistogramComponent = React.createClass({
         name: 'Groups',
         data: counts
       }]
-    });
+    };
+    const myScore = getMyScore(this.props.student, _id);
+    if (myScore > -1) {
+      chartOptions.xAxis.plotLines = [{
+        label: {
+          text: 'you are here'
+        },
+        color: 'red',
+        dashStyle: 'Solid',
+        value: myScore,
+        zIndex: 5,
+        width: 1
+      }];
+    }
+    const chart = new Highcharts.Chart(chartOptions);
   },
   google({labels, counts}) {
     const array = [['Score', 'Number']];
