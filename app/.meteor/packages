@@ -40,3 +40,6 @@ http
 accounts-base
 meteorhacks:aggregate
 jparker:crypto-md5
+chart:chart
+mfpierre:chartist-js
+rafaelhdr:google-charts

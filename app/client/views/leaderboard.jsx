@@ -142,6 +142,7 @@ LeadersComponent = React.createClass({
         <div className={mainContentClass}>
           <div className="row">
             <h1>Test stage, only staff can see this page!</h1>
+            <HistogramComponent />
             {list}
           </div>
         </div>

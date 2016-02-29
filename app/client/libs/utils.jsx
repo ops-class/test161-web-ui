@@ -19,6 +19,8 @@ TargetSubs = new SubsManager();
 
 LeaderboardSubs = new SubsManager();
 
+StatisticsSubs = new SubsManager();
+
 logout = () => {
   Meteor.logout();
 };
