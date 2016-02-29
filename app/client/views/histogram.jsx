@@ -43,11 +43,46 @@ HistogramComponent = React.createClass({
       }
       prev = i;
     }
-    this.plotly(scores);
     this.plotlybar({labels, counts});
     this.chartjs({labels, counts});
     this.chartist({labels, counts});
     this.google({labels, counts});
+    this.highcharts({labels, counts});
+  },
+  highcharts({labels, counts}) {
+    var chart1 = new Highcharts.Chart({
+      chart: {
+        renderTo: 'highcharts',
+        type: 'column'
+      },
+      title: {
+        text: 'Statistics for Assignment 1'
+      },
+      xAxis: {
+        title: {
+          text: 'Scores'
+        },
+        categories: labels
+      },
+      yAxis: {
+        title: {
+          text: 'Number of groups'
+        }
+      },
+      plotOptions: {
+        series: {
+          pointPadding: 0,
+          groupPadding: 0,
+          borderWidth: 0,
+          shadow: false
+        }
+      },
+      series: [{
+        showInLegend: false,
+        name: 'Groups',
+        data: counts
+      }]
+    });
   },
   google({labels, counts}) {
     const array = [['Score', 'Number']];
@@ -135,42 +170,12 @@ HistogramComponent = React.createClass({
     };
     Plotly.newPlot('plotly-bar', data, layout);
   },
-  plotly(scores) {
-    var trace1 = {
-      x: [1,1,1,1,2,2,2,4,4,50,50],
-      // x: scores,
-      name: "Trace 0",
-      opacity: 0.75,
-      type: "histogram"
-    };
-    var data = [trace1];
-    var layout = {
-      // barmode: "overlay",
-      title: "Statistics for Assignment 1",
-      xaxis: {
-        title: 'Scores',
-        titlefont: {
-          family: 'Courier New, monospace',
-          size: 18,
-          color: '#7f7f7f'
-        }
-      },
-      yaxis: {
-        title: 'Number of groups',
-        titlefont: {
-          family: 'Courier New, monospace',
-          size: 18,
-          color: '#7f7f7f'
-        }
-      }
-    };
-    // Plotly.newPlot('plotly', data, layout);
-  },
   render() {
     return (
       <div className="col-md-12">
         <h1>Demo for assignment 1</h1>
         <canvas id='chartjs'></canvas>
+        <div id="highcharts"></div>
         <div id="plotly-bar"></div>
         <div id="google"></div>
         <div id="chartist"></div>
