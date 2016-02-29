@@ -6,7 +6,7 @@ generateStudentDoc = (userId) => {
   const target_stats = [];
   const student = {_id, userId, email, token, createdAt, target_stats};
   Students.insert(student);
-  Meteor.call('regeneratePublicKey', {email, token});
+  // Meteor.call('regeneratePublicKey', {email, token});
 }
 
 Meteor.publish("userData", function() {
