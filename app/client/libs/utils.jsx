@@ -15,7 +15,11 @@ SubmissionSubs = new SubsManager();
 
 TestSubs = new SubsManager();
 
-OutputSubs = new SubsManager();
+TargetSubs = new SubsManager();
+
+LeaderboardSubs = new SubsManager();
+
+StatisticsSubs = new SubsManager();
 
 logout = () => {
   Meteor.logout();
@@ -29,3 +33,7 @@ login = () => {
     closable: true
   });
 };
+
+isStaff = (user) => {
+  return ((((user || {}).services || {}).auth0 || {}).user_metadata || {}).staff;
+}

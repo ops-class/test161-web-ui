@@ -14,8 +14,13 @@ Meteor.methods({
       data: {email, token}
     }, (err, res) => {
       if (err) {
-        const {statusCode, content} = res;
-        future.throw(new Meteor.Error(statusCode, content));
+        if (res) {
+          const {statusCode, content} = res;
+          future.throw(new Meteor.Error(statusCode, content));
+        } else {
+          const {code} = err;
+          future.throw(new Meteor.Error(code, 'Internal error'));
+        }
       } else {
         future.return(res);
       }

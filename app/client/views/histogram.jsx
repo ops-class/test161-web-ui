@@ -1,0 +1,216 @@
+const getMyScore = (student, target_name) => {
+  let res = -1;
+  if (!student || !student.target_stats) {
+    return res;
+  }
+  student.target_stats.map(result => {
+    let {high_score, target_name: asst} = result;
+    if (asst === target_name) {
+      res = high_score;
+    }
+  });
+  return res;
+}
+
+HistogramComponent = React.createClass({
+  mixins: [ReactMeteorData],
+  getMeteorData() {
+    const {target = {}} = this.props;
+    const ready = false;
+    const loading = true;
+    let data = {ready, loading}
+    const handle = StatisticsSubs.subscribe('statistics', target);
+    if (handle.ready()) {
+      const {scores = []} = Statistics.findOne({_id: target._id}) || {};
+      data.scores = scores
+      data.ready = true;
+      data.loading = false;
+    } else {
+      data = {...this.data};
+      data.loading = true;
+    }
+    return data;
+  },
+  getInitialState() {
+    const {target = {}} = this.props;
+    return {
+      container: target._id + '-chart'
+    };
+  },
+  componentDidMount() {
+    this.update();
+  },
+  componentDidUpdate() {
+    this.update();
+  },
+  update() {
+    const {ready, scores} = this.data;
+    if (!ready) {
+      return;
+    }
+    if (!scores || scores.length === 0) {
+      return;
+    }
+    scores.sort((a, b) => a - b);
+    const max = scores[scores.length - 1];
+    let labels = [], counts = [], prev = -1;
+    for (let i = 0; i <= max; i++) {
+      labels[i] = i;
+      counts[i] = 0;
+    }
+    for (let i of scores) {
+      counts[i]++;
+    }
+    this.highcharts({labels, counts});
+    // this.plotlybar({labels, counts});
+    // this.chartjs({labels, counts});
+    // this.chartist({labels, counts});
+    // this.google({labels, counts});
+  },
+  highcharts({labels, counts}) {
+    const {target: { _id, type }} = this.props;
+    const chartOptions = {
+      chart: {
+        renderTo: this.state.container,
+        type: 'column'
+      },
+      title: {
+        text: 'Statistics for ' + _id
+      },
+      xAxis: {
+        title: {
+          text: 'Scores'
+        },
+        categories: labels
+      },
+      yAxis: {
+        title: {
+          text: 'Number of groups'
+        }
+      },
+      plotOptions: {
+        series: {
+          pointPadding: 0,
+          groupPadding: 0,
+          borderWidth: 0,
+          shadow: false
+        }
+      },
+      series: [{
+        showInLegend: false,
+        name: 'Groups',
+        data: counts
+      }]
+    };
+    const myScore = getMyScore(this.props.student, _id);
+    if (myScore > -1) {
+      chartOptions.xAxis.plotLines = [{
+        label: {
+          text: 'you are here'
+        },
+        color: 'red',
+        dashStyle: 'Solid',
+        value: myScore,
+        zIndex: 5,
+        width: 1
+      }];
+    }
+    const chart = new Highcharts.Chart(chartOptions);
+  },
+  google({labels, counts}) {
+    const array = [['Score', 'Number']];
+    for (let i = 0; i < labels.length; i++) {
+      array.push([labels[i], counts[i]]);
+    }
+    var data = google.visualization.arrayToDataTable(array);
+
+    var options = {
+      title: 'Statistics for Assignment 1',
+      legend: { position: 'none' },
+    };
+
+    var chart = new google.visualization.ColumnChart(document.getElementById('google'));
+    chart.draw(data, options);
+  },
+  chartist({labels, counts}) {
+    var data = {
+      labels: labels,
+      series: [
+        counts
+      ]
+    };
+
+    var options = {
+      low: 0,
+      axisX: {
+      }
+    };
+
+    new Chartist.Bar('#chartist', data, options);
+  },
+  chartjs({labels, counts}) {
+    const ctx = document.getElementById("chartjs").getContext("2d");
+    var data = {
+      labels: labels,
+      datasets: [
+        {
+          label: 'scores',
+          fillColor: "rgba(151,187,205,0.5)",
+          strokeColor: "rgba(151,187,205,0.8)",
+          highlightFill: "rgba(151,187,205,0.75)",
+          highlightStroke: "rgba(151,187,205,1)",
+          data: counts
+        }
+      ]
+    };
+    const options = {
+      scaleShowHorizontalLines: false,
+      scaleShowVerticalLines: false,
+      barValueSpacing: 1,
+      scaleBeginAtZero: true,
+      responsive: true,
+      maintainAspectRatio: true
+    }
+    var myBarChart = new Chart(ctx).Bar(data, options);
+  },
+  plotlybar({labels, counts}) {
+    const data = [
+      {
+        x: labels,
+        y: counts,
+        type: 'bar'
+      }
+    ];
+    const layout = {
+      bargap: 0.00,
+      title: "Statistics for Assignment 1",
+      xaxis: {
+        title: 'Scores',
+        titlefont: {
+          family: 'Courier New, monospace',
+          size: 18,
+          color: '#7f7f7f'
+        }
+      },
+      yaxis: {
+        title: 'Number of groups',
+        titlefont: {
+          family: 'Courier New, monospace',
+          size: 18,
+          color: '#7f7f7f'
+        }
+      }
+    };
+    Plotly.newPlot('plotly-bar', data, layout);
+  },
+  render() {
+    return (
+      <div className="col-md-12">
+        <div id={this.state.container}></div>
+        <div id="plotly-bar"></div>
+        <div id="google"></div>
+        <div id="chartist"></div>
+      </div>
+    );
+  }
+});

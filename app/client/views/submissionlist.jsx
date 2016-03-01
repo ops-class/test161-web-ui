@@ -116,9 +116,6 @@ const InfoComponent = ({_id, submission_time, users, repository, commit_id, stat
       <div className={className}>
         <p>{userStr}</p>
       </div>
-      <div className={className}>
-        <p>{commit_id}</p>
-      </div>
     </div>
   );
 };
@@ -151,7 +148,7 @@ const TimeComponent = React.createClass({
     const {submission_time, completion_time, commit_id, status} = this.props;
     const {now} = this.state;
     const submission = moment(submission_time);
-    const time = submission.from(now, true);
+    const time = submission.from(now);
     let duration = '--:--';
     if (isSubmissionRunning(status)) {
       duration = getDurationString(moment(now).diff(submission));
@@ -160,17 +157,16 @@ const TimeComponent = React.createClass({
         duration = getDurationString(moment(completion_time).diff(submission));
       }
     }
+    const className = 'col-md-6 col-sm-12 col-xs-12';
     return (
       <div className="row">
-        <div className="col-md-6 col-xs-6">
+        <div className="col-md-12 col-xs-12">
           <i className="fa fa-calendar"></i> {time}
         </div>
-        <div className="col-md-6 col-xs-6">
+        <div className={className}>
           <i className="fa fa-clock-o"></i> {duration}
         </div>
-        <div className="col-md-6 col-xs-6">
-        </div>
-        <div className="col-md-6 col-xs-6">
+        <div className={className}>
           <i className="fa fa-code-fork"></i> {commit_id.substring(0, 7)}
         </div>
       </div>
@@ -210,7 +206,7 @@ SubmissionComponent = React.createClass({
         <div onTouchStart={touchToHover}
           onTouchEnd={touchToHover}
           className="row submission-bar">
-          <div onClick={this.toggleCollapse} className="col-md-2 status-container">
+          <div onClick={this.toggleCollapse} className="col-md-2 status-container ellipsis">
             <StatusComponent {...submission} />
           </div>
           <div className="col-md-6">

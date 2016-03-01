@@ -2,12 +2,15 @@ mainContentClass = 'col-md-8 col-md-offset-2';
 
 UserComponent = React.createClass({
   render() {
-    const {params: {path}, profile, user, student} = this.props;
+    const {params: {path, target}, profile, user, student} = this.props;
     if (pathIsIntro(path) || !user) {
       return (<IntroComponent />);
     }
     if (pathIsProfile(path)) {
       return (<ProfileComponent {...this.props}/>);
+    }
+    if (pathIsLeaderboard(path) && isStaff(user)) {
+      return (<LeadersComponent {...this.props}/>);
     }
     return (
       <div className="row">
@@ -29,7 +32,7 @@ SidebarComponent = React.createClass({
     if (!student) {
       return (<div>Error, student not found, this should not happen!</div>);
     }
-    const {target_stats} = student;
+    const {target_stats = []} = student;
     const {path} = FlowRouter.current();
     const list = target_stats.map((stat) => {
       const {target_name, total_submissions} = stat;
@@ -42,7 +45,7 @@ SidebarComponent = React.createClass({
         <li key={target_name}
           className={className}>
           <a href={href}>
-            <span className="badge">{total_submissions}</span> {target_name.toUpperCase()} 
+            <span className="badge">{total_submissions}</span> {target_name.toUpperCase()}
           </a>
         </li>
       );

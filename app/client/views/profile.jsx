@@ -234,6 +234,105 @@ const PublicKeyComponent = React.createClass({
   }
 });
 
+const SelectComponent = React.createClass({
+  getInitialState() {
+    return {processing: false};
+  },
+  onClick(value) {
+    if (value === this.props.choice) {
+      return;
+    }
+    this.setState({processing: true});
+    Meteor.call('updatePrivacy', this.props, value, (err, res) => {
+      this.setState({processing: false});
+      if (err) {
+        console.log(err);
+      }
+    })
+  },
+  render() {
+    const {choice, type} = this.props;
+    const {processing} = this.state;
+    let text = null;
+    if (type === 'asst') {
+      text = 'Assignments';
+    } else {
+      text = 'Performance targets';
+    }
+    return (
+      <div className="col-md-6">
+        <span className="target-type">
+          {text}:
+        </span>
+        <button type="button"
+          className="btn btn-default dropdown-toggle target-btn"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          disabled={processing}
+          aria-expanded="false">
+          {processing ? <span className="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+          : null} {choice} <span className="caret"></span>
+        </button>
+        <ul className="dropdown-menu dropdown-menu-right">
+          <li><a onClick={this.onClick.bind(this, HIDE)}>{HIDE}</a></li>
+          <li><a onClick={this.onClick.bind(this, ANONYMOUS)}>{ANONYMOUS}</a></li>
+          <li role="separator" className="divider"></li>
+          <li><a onClick={this.onClick.bind(this, SHOW)}>{SHOW}</a></li>
+        </ul>
+      </div>
+    );
+  }
+})
+
+const CompeteComponent = React.createClass({
+  render() {
+    let {email, token, privacy} = this.props.student || {};
+    if (!privacy) {
+      privacy = [
+        { type: 'asst', choice: HIDE },
+        { type: 'perf', choice: ANONYMOUS }
+      ];
+    }
+    const settings = privacy.map(setting =>
+      (<SelectComponent key={setting.type} {...setting} email={email} token={token} />)
+    )
+    return (
+      <div>
+        <h3>Leaderboards Privacy Settings</h3>
+        <p>
+          We'll release leaderboards for different assignments and performance
+          targets soon. The leaderboards will not show your personal information
+          without your permssion!
+        </p>
+        <p>There are three different options you can choose:</p>
+        <ul>
+          <li>
+            <b>Show:</b> leaderboards will show your email address and best
+            score/performance.
+          </li>
+          <li>
+            <b>Anonymous:</b> leaderboards will show your best score/performance,
+            and mark your email address as "anonymous".
+          </li>
+          <li>
+            <b>Hide:</b> you and <b>your partner</b> will be totally hidden from the
+            leaderboards.
+          </li>
+        </ul>
+        <p>
+          We treat assignments and performance targets separately. The default
+          setting for <b>assignments is hide</b>, and  the default setting for <b>
+          performance targets is anonymous</b>.
+          Please use the drop-downs below to select your privacy settings.
+        </p>
+        <div className="target-container">
+          {settings}
+        </div>
+      </div>
+    );
+  }
+})
+
 ProfileComponent = React.createClass({
   render() {
     if (!this.props.student) {
@@ -246,6 +345,8 @@ ProfileComponent = React.createClass({
             <h2>Account Settings</h2>
             <TokenComponent {...this.props} />
             <PublicKeyComponent {...this.props} />
+            {isStaff(this.props.user) ?
+              <CompeteComponent {...this.props} /> : null }
           </div>
 				</div>
       </div>

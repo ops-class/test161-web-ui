@@ -6,6 +6,7 @@ body {
 }
 .navbar-second-top.navbar {
 	border-width: 0 0 1px;
+	z-index: 999;
 }
 .navbar-second-top .navbar-nav {
 	padding-left: 5px;
