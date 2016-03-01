@@ -52,11 +52,12 @@ NavigationComponent = React.createClass({
                         <li><a href="https://www.ops-class.org/asst/0/">ASST0</a></li>
                         <li><a href="https://www.ops-class.org/asst/1/">ASST1</a></li>
                         <li><a href="https://www.ops-class.org/asst/2/">ASST2</a></li>
+                        <li><a href="https://www.ops-class.org/asst/3/">ASST3</a></li>
                         <li role="separator" className="divider" />
-                        <li><a href="https://www.ops-class.org/asst/test161/">test161</a></li>
+                        <li><a href="https://www.ops-class.org/asst/overview/">Overview</a></li>
                       </ul>
                     </li>
-                    <li><a id="menu-discuss" className="noexternal" title="Discourse-based course discussion forum." href="https://discourse.ops-class.org">discuss</a></li>
+                    <li><a id="menu-discuss" title="Discourse-based course discussion forum." href="https://discourse.ops-class.org" target="_blank" className="external">discuss</a></li>
                     <li><a id="menu-test161" className="noexternal" title="test161 online testing tool." href="https://test161.ops-class.org">test</a></li>
                   </ul>
                 </div>
