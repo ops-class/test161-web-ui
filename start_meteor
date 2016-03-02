@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+get_variable() {
+    [ -z "$1" ] && echo $2 || echo $1
+}
+
+MONGO_URL=$(get_variable ${MONGO_URL} "mongodb://localhost:27017/test161")
+KEYGEN_ENDPOINT=$(get_variable ${KEYGEN_ENDPOINT} "http://localhost:4000/api-v1/keygen")
+TEST161_DEBUG=$(get_variable ${TEST161_DEBUG} "1")
+[ ${TEST161_DEBUG} -eq "0" ] && TEST161_DEBUG=""
+echo "Keygen: ${KEYGEN_ENDPOINT}"
+echo "Mongo: ${MONGO_URL}"
+echo "Debug: $TEST161_DEBUG"
+
+cd app && MONGO_URL=${MONGO_URL} KEYGEN_ENDPOINT=${KEYGEN_ENDPOINT} TEST161_DEBUG=${TEST161_DEBUG} meteor
