@@ -4,11 +4,12 @@ get_variable() {
 }
 
 MONGO_URL=$(get_variable ${MONGO_URL} "mongodb://localhost:27017/test161")
+MONGO_OPLOG_URL=$(get_variable ${MONGO_OPLOG_URL} "mongodb://localhost:27017/local?authSource=test161")
 KEYGEN_ENDPOINT=$(get_variable ${KEYGEN_ENDPOINT} "http://localhost:4000/api-v1/keygen")
 TEST161_DEBUG=$(get_variable ${TEST161_DEBUG} "1")
 [ ${TEST161_DEBUG} -eq "0" ] && TEST161_DEBUG=""
 echo "Keygen: ${KEYGEN_ENDPOINT}"
-echo "Mongo: ${MONGO_URL}"
+echo "Mongo: ${MONGO_URL} ${MONGO_OPLOG_URL}"
 echo "Debug: $TEST161_DEBUG"
 
-cd app && MONGO_URL=${MONGO_URL} KEYGEN_ENDPOINT=${KEYGEN_ENDPOINT} TEST161_DEBUG=${TEST161_DEBUG} meteor
+cd app && MONGO_URL=${MONGO_URL} MONGO_OPLOG_URL=${MONGO_OPLOG_URL} KEYGEN_ENDPOINT=${KEYGEN_ENDPOINT} TEST161_DEBUG=${TEST161_DEBUG} meteor

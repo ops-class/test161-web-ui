@@ -4,11 +4,12 @@
 
 === Meteor
 
-There are three environment variables need to set before starting local Meteor
+There are four environment variables need to set before starting local Meteor
 instance.
 
 * `TEST161_DEBUG`: debug mode, you will use a hard code account `admin@ops-class.org` to login when enabled
 * `MONGO_URL`: your MongoDB url (at least 3.2), the test161 server have to access the same MongoDB
+* `MONGO_OPLOG_URL`: your MongoDB oplog url (at least 3.2), your MongoDB should enable oplog support, https://docs.mongodb.org/manual/core/replica-set-oplog/[click here for details]
 * `KEYGEN_ENDPOINT`: url for public key generate endpoint, the test161 server address
 
 Please use ./start_meteor to start Meteor app.
@@ -17,6 +18,7 @@ The default environments:
 
 * `TEST161_DEBUG`: `1`, enabled
 * `MONGO_URL`: `mongodb://localhost:27017/test161`
+* `MONGO_OPLOG_URL`: `mongodb://localhost:27017/local?authSource=test161`
 * `KEYGEN_ENDPOINT`: `http://localhost:4000/api-v1/keygen`
 
 If you want to change `MONGO_URL` or other variables, please use command like this:
