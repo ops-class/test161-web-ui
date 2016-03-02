@@ -1,6 +1,6 @@
 let INITLOAD = true;
 
-LeaderboardComponent = React.createClass({
+const LeaderboardComponent = React.createClass({
   componentDidUpdate() {
     let target = $(location.hash);
     if (target.length && INITLOAD) {
@@ -10,6 +10,7 @@ LeaderboardComponent = React.createClass({
       INITLOAD = false;
       return false;
     }
+    $(this.refs.details).hide();
   },
   mixins: [ReactMeteorData],
   getMeteorData() {
@@ -32,9 +33,13 @@ LeaderboardComponent = React.createClass({
     }
     return data;
   },
+  shouldComponentUpdate(nextProps, nextState) {
+    return false;
+  },
   render() {
     const {target} = this.props;
     const {ready, loading, leaders} = this.data
+    const title = target._id.toUpperCase();
     if (!ready) {
       return (<LoadingComponent />);
     }
@@ -43,28 +48,28 @@ LeaderboardComponent = React.createClass({
       let {score, group} = elem;
       list.push(
         <tr key={index + 1}>
-          <th>{index + 1}</th>
           <td>{group}</td>
-          <td>{score}</td>
         </tr>
       );
     }
     return (
       <div className="col-md-12 leaders-container" id={target._id}>
-        <h1>{target._id}</h1>
+        <h1>{title}</h1>
         <HistogramComponent {...this.props}/>
-        <table className="table table-striped">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Group</th>
-              <th>Score</th>
-            </tr>
-          </thead>
-          <tbody>
-            {list}
-          </tbody>
-        </table>
+        <h4>
+          There are {leaders.length} groups get perfect score for {title}!
+        </h4>
+        <div className="btn btn-default"
+          onClick={() => $(this.refs.details).slideToggle(512)}>
+          Toggle Group Details
+        </div>
+        <div ref="details">
+          <table className="table table-striped">
+            <tbody>
+              {list}
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   }
@@ -92,41 +97,6 @@ LeadersComponent = React.createClass({
     }
     return data;
   },
-  getInitialState() {
-    return { hash: location.hash };
-  },
-  componentDidMount() {
-    $(window).scroll(this.scroll);
-  },
-  componentWillUnmount() {
-    $(window).unbind('scroll');
-  },
-  scroll() {
-    const $elem = $(ReactDOM.findDOMNode(this)).find('.leaders-container');
-    const $window = $(window);
-
-    const docViewTop = $window.scrollTop();
-    const docViewBottom = docViewTop + $window.height();
-
-    for (let ele of $elem) {
-      const elemTop = $(ele).offset().top;
-      const elemBottom = elemTop + $(ele).height();
-
-      const hash = `#${ele.id}`;
-      const active = ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
-      if (active) {
-        if (hash !== location.hash) {
-          this.setState({hash: hash});
-          if (history.pushState) {
-            history.pushState(null, null, hash);
-          } else {
-            location.hash = hash;
-          }
-        }
-        break;
-      }
-    }
-  },
   render() {
     const {ready, loading, targets} = this.data;
     if (!ready) {
@@ -141,13 +111,19 @@ LeadersComponent = React.createClass({
     return (
       <div className="row">
         <div className={mainContentClass}>
-          <div className="row">
-            <h1>Test stage, only staff can see this page!</h1>
-            <HistogramComponent />
+          <div className="col-md-12">
+            <h1>Leaderboards</h1>
+            <p>
+              The leaderboards contain statistics information for all assignment
+              and performance targets. Please note that the scores below does not
+              reflect the actual scores you can get in your course. Because some
+              of you may submit submission(s) with higher score after deadline.
+              We just count your highest score and put it on the statistics board.
+            </p>
             {list}
           </div>
         </div>
-        <LeadersSidebarComponent targets={targets} hash={this.state.hash}/>
+        <LeadersSidebarComponent targets={targets}/>
       </div>
     );
   }
@@ -173,7 +149,8 @@ LeadersSidebarComponent = React.createClass({
     });
   },
   render() {
-    const {targets, hash} = this.props;
+    const {targets} = this.props;
+    const hash = location.hash;
     const list = targets.map((target) => {
       const { _id } = target;
       let className = 'h5';
