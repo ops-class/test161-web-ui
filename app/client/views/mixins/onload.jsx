@@ -1,8 +1,13 @@
 OnloadMixin = {
+  onload() {
+    if ((typeof processPage !== 'undefined') && (typeof processPage === 'function')) {
+      processPage();
+    }
+  },
   componentDidMount() {
-    try { processPage(); } catch (err) {};
+    this.onload();
   },
   componentDidUpdate(){
-    try { processPage(); } catch (err) {};
+    this.onload();
   }
 }
