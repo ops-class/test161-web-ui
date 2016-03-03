@@ -1,5 +1,58 @@
 let INITLOAD = true;
 
+const PerfectScoreComponent = React.createClass({
+  getInitialState() {
+    return {hide: true};
+  },
+  toggle() {
+    this.setState({disabled: true});
+    $(this.refs.details).slideToggle(512,
+      () => {
+        this.setState({hide: !this.state.hide});
+        this.setState({disabled: false});
+      }
+    );
+  },
+  componentDidMount() {
+    $(this.refs.details).hide();
+  },
+  render() {
+    const {leaders, title} = this.props;
+    const {hide, disabled} = this.state;
+    if (!leaders || leaders.length === 0) {
+      return null;
+    }
+    const list = [];
+    for (let [index, elem] of leaders.entries()) {
+      let {score, group} = elem;
+      list.push(
+        <tr key={index + 1}>
+          <td>{group}</td>
+        </tr>
+      );
+    }
+    return (
+      <div>
+        <p>
+          There are total <b>{leaders.length}</b> groups get perfect score for {title}!
+        </p>
+        <div className="btn btn-default"
+          disabled={disabled}
+          onClick={this.toggle}>
+          {hide ? 'Show' : 'Hide' } Details
+        </div>
+        <div ref="details">
+          <table className="table table-striped">
+            <tbody>
+              {list}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    );
+  }
+})
+
 const LeaderboardComponent = React.createClass({
   componentDidUpdate() {
     let target = $(location.hash);
@@ -10,7 +63,6 @@ const LeaderboardComponent = React.createClass({
       INITLOAD = false;
       return false;
     }
-    $(this.refs.details).hide();
   },
   mixins: [ReactMeteorData],
   getMeteorData() {
@@ -43,33 +95,11 @@ const LeaderboardComponent = React.createClass({
     if (!ready) {
       return (<LoadingComponent />);
     }
-    const list = [];
-    for (let [index, elem] of leaders.entries()) {
-      let {score, group} = elem;
-      list.push(
-        <tr key={index + 1}>
-          <td>{group}</td>
-        </tr>
-      );
-    }
     return (
       <div className="col-md-12 leaders-container" id={target._id}>
         <h1>{title}</h1>
         <HistogramComponent {...this.props}/>
-        <h4>
-          There are {leaders.length} groups get perfect score for {title}!
-        </h4>
-        <div className="btn btn-default"
-          onClick={() => $(this.refs.details).slideToggle(512)}>
-          Toggle Group Details
-        </div>
-        <div ref="details">
-          <table className="table table-striped">
-            <tbody>
-              {list}
-            </tbody>
-          </table>
-        </div>
+        <PerfectScoreComponent {...{title, leaders}}/>
       </div>
     );
   }
