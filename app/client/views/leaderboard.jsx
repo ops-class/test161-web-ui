@@ -106,7 +106,7 @@ const LeaderboardComponent = React.createClass({
 });
 
 LeadersComponent = React.createClass({
-  mixins: [ReactMeteorData],
+  mixins: [ReactMeteorData, OnloadMixin],
   getMeteorData() {
     const ready = false;
     const loading = true;
@@ -139,7 +139,7 @@ LeadersComponent = React.createClass({
       );
     });
     return (
-      <div className="row">
+      <div className="row" id="content">
         <div className={mainContentClass}>
           <div className="col-md-12">
             <h1>Leaderboards</h1>
@@ -205,8 +205,8 @@ LeadersSidebarComponent = React.createClass({
       <div id="scrollspy" className="col-md-2 spelling_exception">
         <ul id="side"
           className="nav hidden-xs hidden-sm affix"
-          style={sideStyle}
-          data-spy="affix">
+          data-spy="affix"
+          style={sideStyle}>
           {list}
         </ul>
       </div>
