@@ -84,8 +84,14 @@ HistogramComponent = React.createClass({
       },
       yAxis: {
         title: {
-          text: 'Number of groups'
+          text: 'Percentage of Submissions'
+        },
+        labels: {
+          format: '{value}%'
         }
+      },
+      credits: {
+        enabled: false
       },
       plotOptions: {
         series: {
