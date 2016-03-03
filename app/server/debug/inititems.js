@@ -99,14 +99,14 @@ if (DEBUG) {
     const tests = [];
     const target = _id;
     const target_name = targetNames[Math.floor(Math.random() * targetNames.length)];
-    const max_score = 100;
+    const max_score = 50;
     const completion_time = moment(randomTime).add(Math.floor(Math.random() * 10000), 'seconds').toDate();
     if (isSubmitted(status)) {
       return {_id, submission_time, users, repository, commit_id, status, target, max_score, target_name, tests};
     } else if (isFailed(status)) {
       return {_id, submission_time, users, repository, commit_id, status, target, max_score, target_name, tests, completion_time};
     } else {
-      const score = max_score - randomInt(10);
+      const score = max_score - randomInt(max_score);
       return {_id, submission_time, users, repository, commit_id, status, target, max_score, target_name, tests, completion_time, score};
     }
   }
@@ -162,7 +162,40 @@ if (DEBUG) {
     }
   }
 
+  updateStudents = (selector = {}, choice = SHOW) => {
+    update = {
+      $set: {
+        privacy: [
+          {type: 'asst', choice: choice},
+          {type: 'perf', choice: choice}
+        ]
+      }
+    };
+    Students.update(selector, update, {multi: true});
+  }
+
+  mockTargets = () => {
+    if (Targets.findOne()) {
+      return;
+    }
+    for (let i = 1; i < 4; i++) {
+      for (let j = 0; j < 5; j++) {
+        const name = `asst${i}`;
+        const version = j;
+        const _id = Meteor.uuid();
+        const type = 'asst';
+        const points = 50;
+        const kconfig = 'kconfig';
+        const userland = false;
+        const file_hash = Random.id();
+        const file_name = 'file name';
+        Targets.insert({_id, name, version, type, points, kconfig, userland, file_hash, file_name});
+      }
+    }
+  }
+
   initItems = (num = 1000) => {
+    mockTargets();
     generateUsers(num / 10);
 
     const count = Submissions.find().count();
