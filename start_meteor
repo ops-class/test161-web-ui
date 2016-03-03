@@ -3,8 +3,9 @@ get_variable() {
     [ -z "$1" ] && echo $2 || echo $1
 }
 
-MONGO_URL=$(get_variable ${MONGO_URL} "mongodb://localhost:27017/test161")
-MONGO_OPLOG_URL=$(get_variable ${MONGO_OPLOG_URL} "mongodb://localhost:27017/local?authSource=test161")
+DB=$(get_variable ${DB} "test161")
+MONGO_URL=$(get_variable ${MONGO_URL} "mongodb://localhost:27017/${DB}")
+MONGO_OPLOG_URL=$(get_variable ${MONGO_OPLOG_URL} "mongodb://localhost:27017/local?authSource=${DB}")
 KEYGEN_ENDPOINT=$(get_variable ${KEYGEN_ENDPOINT} "http://localhost:4000/api-v1/keygen")
 TEST161_DEBUG=$(get_variable ${TEST161_DEBUG} "1")
 [ ${TEST161_DEBUG} -eq "0" ] && TEST161_DEBUG=""
