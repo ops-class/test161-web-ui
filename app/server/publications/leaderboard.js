@@ -1,10 +1,10 @@
-const LEADERS_CACHE = {};
-
 Meteor.publish('leaderboards', function({ _id: target_name, type }) {
   if (!this.userId) {
     this.ready();
     return;
   }
+
+  const LEADERS_CACHE = {};
 
   let initializing = true;
   const selector = {
@@ -109,9 +109,6 @@ Meteor.publish('leaderboards', function({ _id: target_name, type }) {
       delete e.students;
 
       if (LEADERS_CACHE[target_name].has(e._id)) {
-        // if directly call changed, some client don't have the e._id doc before
-        // if only call added, they wouldn't update when change anonymous
-        this.added('leaders', e._id, e);
         this.changed('leaders', e._id, e);
       } else {
         this.added('leaders', e._id, e);
@@ -123,9 +120,6 @@ Meteor.publish('leaderboards', function({ _id: target_name, type }) {
     for (let id of LEADERS_CACHE[target_name]) {
       if (!leaderSet.has(id)) {
         LEADERS_CACHE[target_name].delete(id);
-        // make sure remove stale data, because publish doesn't know
-        // which client has the e._id
-        this.added('leaders', id, {_id: id, score: 0, target: 'target'});
         this.removed('leaders', id);
       }
     }
