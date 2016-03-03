@@ -96,7 +96,7 @@ const LeaderboardComponent = React.createClass({
       return (<LoadingComponent />);
     }
     return (
-      <div className="col-md-12 leaders-container" id={target._id}>
+      <div className="col-md-12" id={target._id}>
         <h1>{title}</h1>
         <HistogramComponent {...this.props}/>
         <PerfectScoreComponent {...{title, leaders}}/>
@@ -168,7 +168,7 @@ LeadersSidebarComponent = React.createClass({
           target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
           if (target.length) {
             $('html, body').animate({
-              scrollTop: target.offset().top
+              scrollTop: target.offset().top - 80
             }, 512, () => {
               location.hash = this.hash;
             });
