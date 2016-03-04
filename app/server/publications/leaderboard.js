@@ -4,7 +4,7 @@ Meteor.publish('leaderboards', function({ _id: target_name, type }) {
     return;
   }
 
-  const LEADERS_CACHE = {};
+  const localCache = new Set();
 
   let initializing = true;
   const selector = {
@@ -85,10 +85,6 @@ Meteor.publish('leaderboards', function({ _id: target_name, type }) {
   ];
 
   const runAggregation = () => {
-    if (!LEADERS_CACHE[target_name]) {
-      LEADERS_CACHE[target_name] = new Set();
-    }
-
     const leaderSet = new Set();
 
     Submissions.aggregate(pipeline).map((e) => {
@@ -108,18 +104,18 @@ Meteor.publish('leaderboards', function({ _id: target_name, type }) {
       e.group = e.group.join(', ');
       delete e.students;
 
-      if (LEADERS_CACHE[target_name].has(e._id)) {
+      if (localCache.has(e._id)) {
         this.changed('leaders', e._id, e);
       } else {
         this.added('leaders', e._id, e);
+        localCache.add(e._id);
       }
       leaderSet.add(e._id);
-      LEADERS_CACHE[target_name].add(e._id);
     });
 
-    for (let id of LEADERS_CACHE[target_name]) {
+    for (let id of localCache) {
       if (!leaderSet.has(id)) {
-        LEADERS_CACHE[target_name].delete(id);
+        localCache.delete(id);
         this.removed('leaders', id);
       }
     }
@@ -158,6 +154,4 @@ Meteor.publish('leaderboards', function({ _id: target_name, type }) {
     handle.stop();
     studentHandle.stop();
   });
-
-  return Leaders.find({});
 });
