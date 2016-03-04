@@ -120,6 +120,7 @@ if (DEBUG) {
 
   clean = () => {
     Tests.remove({});
+    Targets.remove({});
     Submissions.remove({});
     Meteor.users.remove({});
   }
@@ -189,7 +190,10 @@ if (DEBUG) {
         const userland = false;
         const file_hash = Random.id();
         const file_name = 'file name';
-        Targets.insert({_id, name, version, type, points, kconfig, userland, file_hash, file_name});
+        const print_name = name.toUpperCase();
+        const description = `${name} description`;
+        const active = true;
+        Targets.insert({_id, name, print_name, description, active, version, type, points, kconfig, userland, file_hash, file_name});
       }
     }
   }

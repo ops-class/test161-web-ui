@@ -13,9 +13,6 @@ const PerfectScoreComponent = React.createClass({
       }
     );
   },
-  componentDidMount() {
-    $(this.refs.details).hide();
-  },
   render() {
     const {leaders, title} = this.props;
     const {hide, disabled} = this.state;
@@ -41,7 +38,7 @@ const PerfectScoreComponent = React.createClass({
           onClick={this.toggle}>
           {hide ? 'Show' : 'Hide' } Details
         </div>
-        <div ref="details">
+        <div ref="details" style={{"display": "none"}}>
           <table className="table table-striped">
             <tbody>
               {list}
@@ -91,7 +88,7 @@ const LeaderboardComponent = React.createClass({
   render() {
     const {target} = this.props;
     const {ready, loading, leaders} = this.data
-    const title = target._id.toUpperCase();
+    const title = target.print_name;
     if (!ready) {
       return (<LoadingComponent />);
     }
@@ -182,7 +179,7 @@ LeadersSidebarComponent = React.createClass({
     const {targets} = this.props;
     const hash = location.hash;
     const list = targets.map((target) => {
-      const { _id } = target;
+      const { _id, print_name } = target;
       let className = 'h5';
       const href = `#${_id}`;
       if (href === hash) {
@@ -192,7 +189,7 @@ LeadersSidebarComponent = React.createClass({
         <li key={_id}
           className={className}>
           <a href={href}>
-            {_id.toUpperCase()}
+            {print_name}
           </a>
         </li>
       );

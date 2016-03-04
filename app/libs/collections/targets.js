@@ -11,6 +11,18 @@ TargetSchema = new SimpleSchema({
     type: String,
     label: "Target name",
   },
+  print_name: {
+    type: String,
+    label: "Target print name",
+  },
+  description: {
+    type: String,
+    label: "Target description",
+  },
+  active: {
+    type: Boolean,
+    label: "Targer is active"
+  },
   version: {
     type: Number,
     label: "Target version"

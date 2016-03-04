@@ -7,15 +7,23 @@ Meteor.publish('targets', function() {
 
   let initializing = true;
 
-  const pipeline = [{
-    $group: {
-      _id: "$name",
-      type: { $first: "$type" },
-      version: {
-        $max: "$version"
+  const pipeline = [
+    {
+      $match: {
+        active: true
+      }
+    },
+    {
+      $group: {
+        _id: "$name",
+        type: { $first: "$type" },
+        print_name: { $first: "$print_name" },
+        version: {
+          $max: "$version"
+        }
       }
     }
-  }];
+  ];
 
   const runAggregation = () => {
     Targets.aggregate(pipeline).map((e) => {
