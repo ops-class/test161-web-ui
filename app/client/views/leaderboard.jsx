@@ -1,4 +1,5 @@
 let INITLOAD = true;
+const fixedTopHeight = 80;
 
 const PerfectScoreComponent = React.createClass({
   getInitialState() {
@@ -55,7 +56,7 @@ const LeaderboardComponent = React.createClass({
     let target = $(location.hash);
     if (target.length && INITLOAD) {
       $('html, body').animate({
-        scrollTop: target.offset().top
+        scrollTop: target.offset().top - fixedTopHeight
       }, 512);
       INITLOAD = false;
       return false;
@@ -92,13 +93,22 @@ const LeaderboardComponent = React.createClass({
     if (!ready) {
       return (<LoadingComponent />);
     }
-    return (
-      <div className="col-md-12" id={target._id}>
-        <h1>{title}</h1>
-        <HistogramComponent {...this.props}/>
-        <PerfectScoreComponent {...{title, leaders}}/>
-      </div>
-    );
+    if (target.type === 'asst') {
+      return (
+        <div className="col-md-12" id={target._id}>
+          <h1>{title}</h1>
+          <HistogramComponent {...this.props}/>
+          <PerfectScoreComponent {...{title, leaders}}/>
+        </div>
+      );
+    } else {
+      return (
+        <div className="col-md-12" id={target._id}>
+          <h1>{title}</h1>
+          <PerformanceComponent {...this.props}/>
+        </div>
+      );
+    }
   }
 });
 
@@ -113,7 +123,7 @@ LeadersComponent = React.createClass({
     if (handle.ready()) {
       const targets = TargetNames.find(
         {},
-        { sort: { _id: 1 } }
+        { sort: { type: -1, _id: 1 } }
       ).fetch();
       data.targets = targets;
       data.ready = true;
@@ -165,7 +175,7 @@ LeadersSidebarComponent = React.createClass({
           target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
           if (target.length) {
             $('html, body').animate({
-              scrollTop: target.offset().top - 80
+              scrollTop: target.offset().top - fixedTopHeight
             }, 512, () => {
               location.hash = this.hash;
             });

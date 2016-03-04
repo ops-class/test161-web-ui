@@ -98,7 +98,7 @@ if (DEBUG) {
     const status = submissionStatus[index];
     const tests = [];
     const target = _id;
-    const target_name = targetNames[Math.floor(Math.random() * targetNames.length)];
+    let target_name = targetNames[Math.floor(Math.random() * targetNames.length)];
     const max_score = 50;
     const completion_time = moment(randomTime).add(Math.floor(Math.random() * 10000), 'seconds').toDate();
     if (isSubmitted(status)) {
@@ -106,8 +106,18 @@ if (DEBUG) {
     } else if (isFailed(status)) {
       return {_id, submission_time, users, repository, commit_id, status, target, max_score, target_name, tests, completion_time};
     } else {
-      const score = max_score - randomInt(max_score);
-      return {_id, submission_time, users, repository, commit_id, status, target, max_score, target_name, tests, completion_time, score};
+      if (randomInt(2)) {
+        let score = max_score;
+        if (randomInt(3)) {
+          score -= randomInt(max_score);
+        }
+        return {_id, submission_time, users, repository, commit_id, status, target, max_score, target_name, tests, completion_time, score};
+      } else {
+        const score = max_score;
+        const performance = Math.floor(Math.random() * 100) / 10;
+        target_name += '-perf';
+        return {_id, submission_time, users, repository, commit_id, status, target, max_score, target_name, tests, completion_time, score, performance};
+      }
     }
   }
 
@@ -179,12 +189,16 @@ if (DEBUG) {
     if (Targets.findOne()) {
       return;
     }
-    for (let i = 1; i < 4; i++) {
+    for (let i = 1; i < 7; i++) {
       for (let j = 0; j < 5; j++) {
-        const name = `asst${i}`;
+        let name = `asst${i}`;
+        let type = 'asst';
+        if (i >= 4) {
+          name = `asst${i - 3}-perf`;
+          type = 'perf';
+        }
         const version = j;
         const _id = Meteor.uuid();
-        const type = 'asst';
         const points = 50;
         const kconfig = 'kconfig';
         const userland = false;

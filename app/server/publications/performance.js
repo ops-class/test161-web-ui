@@ -1,20 +1,21 @@
-Meteor.publish('leaderboards', function({ _id: target_name, type }) {
+Meteor.publish('performance', function({ _id: target_name, type }) {
   if (!this.userId) {
     this.ready();
     return;
   }
 
-  if (type !== 'asst') {
+  if (type !== 'perf') {
     this.ready();
     return;
   }
 
-  const localCache = new Set();
 
   let initializing = true;
+  const localCache = new Set();
+
   const selector = {
     target_name: target_name,
-    score: { $gt: 0 }
+    performance: { $gt: 0 }
   };
 
   const pipeline = [
@@ -24,16 +25,11 @@ Meteor.publish('leaderboards', function({ _id: target_name, type }) {
         _id: "$users",
         users: { $first: "$users" },
         target: { $first: "$target_name" },
+        performance: { $min: "$performance" },
         max_score: { $max: "$max_score" },
         score: { $max: "$score" }
       }
     },
-    {
-      $project: { _id: 1, users: 1, target: 1, score: 1,
-        cmpToMax: { $cmp: [ "$score", "$max_score" ] }
-      }
-    },
-    { $match: { cmpToMax: 0 } },
     { $unwind: "$users" },
     {
       $lookup : {
@@ -56,7 +52,10 @@ Meteor.publish('leaderboards', function({ _id: target_name, type }) {
     {
       $group: {
         _id: "$_id",
+        users: { $first: "$users" },
         target: { $first: "$target" },
+        performance: { $min: "$performance" },
+        max_score: { $max: "$max_score" },
         score: { $max: "$score" },
         userObjects: { $push: "$userObjects" },
         students: { $push: "$students" }
@@ -76,13 +75,15 @@ Meteor.publish('leaderboards', function({ _id: target_name, type }) {
     {
       $project: {
         _id: 1,
+        performance: 1,
         target: 1,
         score: 1,
+        max_score: 1,
         students: 1
       }
     },
     {
-      $sort: { score: -1 }
+      $sort: { performance: 1 }
     },
     {
       $limit: 100
@@ -124,6 +125,7 @@ Meteor.publish('leaderboards', function({ _id: target_name, type }) {
         this.removed('leaders', id);
       }
     }
+
     this.ready();
   }
 
