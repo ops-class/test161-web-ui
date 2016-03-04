@@ -114,7 +114,7 @@ HistogramComponent = React.createClass({
       },
       tooltip: {
         useHTML: true,
-        headerFormat: '<span>Score: {point.key} {myScore}</span><br/>',
+        headerFormat: '<span>Score: {point.key}</span><br/>',
         valueDecimals: 2,
         valuePrefix: '',
         valueSuffix: ' %'
