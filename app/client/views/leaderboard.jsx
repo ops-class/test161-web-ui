@@ -1,11 +1,62 @@
 let INITLOAD = true;
+const fixedTopHeight = 80;
 
-LeaderboardComponent = React.createClass({
+const PerfectScoreComponent = React.createClass({
+  getInitialState() {
+    return {hide: true};
+  },
+  toggle() {
+    this.setState({disabled: true});
+    $(this.refs.details).slideToggle(512,
+      () => {
+        this.setState({hide: !this.state.hide});
+        this.setState({disabled: false});
+      }
+    );
+  },
+  render() {
+    const {leaders, title} = this.props;
+    const {hide, disabled} = this.state;
+    if (!leaders || leaders.length === 0) {
+      return null;
+    }
+    const list = [];
+    for (let [index, elem] of leaders.entries()) {
+      let {score, group} = elem;
+      list.push(
+        <tr key={index + 1}>
+          <td>{group}</td>
+        </tr>
+      );
+    }
+    return (
+      <div>
+        <p>
+          There are total <b>{leaders.length}</b> groups get perfect score for {title}!
+        </p>
+        <div className="btn btn-default"
+          disabled={disabled}
+          onClick={this.toggle}>
+          {hide ? 'Show' : 'Hide' } Details
+        </div>
+        <div ref="details" style={{"display": "none"}}>
+          <table className="table table-striped">
+            <tbody>
+              {list}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    );
+  }
+})
+
+const LeaderboardComponent = React.createClass({
   componentDidUpdate() {
     let target = $(location.hash);
     if (target.length && INITLOAD) {
       $('html, body').animate({
-        scrollTop: target.offset().top
+        scrollTop: target.offset().top - fixedTopHeight
       }, 512);
       INITLOAD = false;
       return false;
@@ -32,46 +83,37 @@ LeaderboardComponent = React.createClass({
     }
     return data;
   },
+  shouldComponentUpdate(nextProps, nextState) {
+    return false;
+  },
   render() {
     const {target} = this.props;
     const {ready, loading, leaders} = this.data
+    const title = target.print_name;
     if (!ready) {
       return (<LoadingComponent />);
     }
-    const list = [];
-    for (let [index, elem] of leaders.entries()) {
-      let {score, group} = elem;
-      list.push(
-        <tr key={index + 1}>
-          <th>{index + 1}</th>
-          <td>{group}</td>
-          <td>{score}</td>
-        </tr>
+    if (target.type === 'asst') {
+      return (
+        <div className="col-md-12" id={target._id}>
+          <h1>{title}</h1>
+          <HistogramComponent {...this.props}/>
+          <PerfectScoreComponent {...{title, leaders}}/>
+        </div>
+      );
+    } else {
+      return (
+        <div className="col-md-12" id={target._id}>
+          <h1>{title}</h1>
+          <PerformanceComponent {...this.props}/>
+        </div>
       );
     }
-    return (
-      <div className="col-md-12 leaders-container" id={target._id}>
-        <h1>{target._id}</h1>
-        <HistogramComponent {...this.props}/>
-        <table className="table table-striped">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Group</th>
-              <th>Score</th>
-            </tr>
-          </thead>
-          <tbody>
-            {list}
-          </tbody>
-        </table>
-      </div>
-    );
   }
 });
 
 LeadersComponent = React.createClass({
-  mixins: [ReactMeteorData],
+  mixins: [ReactMeteorData, OnloadMixin],
   getMeteorData() {
     const ready = false;
     const loading = true;
@@ -81,7 +123,7 @@ LeadersComponent = React.createClass({
     if (handle.ready()) {
       const targets = TargetNames.find(
         {},
-        { sort: { _id: 1 } }
+        { sort: { type: -1, _id: 1 } }
       ).fetch();
       data.targets = targets;
       data.ready = true;
@@ -91,41 +133,6 @@ LeadersComponent = React.createClass({
       data.loading = true;
     }
     return data;
-  },
-  getInitialState() {
-    return { hash: location.hash };
-  },
-  componentDidMount() {
-    $(window).scroll(this.scroll);
-  },
-  componentWillUnmount() {
-    $(window).unbind('scroll');
-  },
-  scroll() {
-    const $elem = $(ReactDOM.findDOMNode(this)).find('.leaders-container');
-    const $window = $(window);
-
-    const docViewTop = $window.scrollTop();
-    const docViewBottom = docViewTop + $window.height();
-
-    for (let ele of $elem) {
-      const elemTop = $(ele).offset().top;
-      const elemBottom = elemTop + $(ele).height();
-
-      const hash = `#${ele.id}`;
-      const active = ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
-      if (active) {
-        if (hash !== location.hash) {
-          this.setState({hash: hash});
-          if (history.pushState) {
-            history.pushState(null, null, hash);
-          } else {
-            location.hash = hash;
-          }
-        }
-        break;
-      }
-    }
   },
   render() {
     const {ready, loading, targets} = this.data;
@@ -139,15 +146,21 @@ LeadersComponent = React.createClass({
       );
     });
     return (
-      <div className="row">
+      <div className="row" id="content">
         <div className={mainContentClass}>
-          <div className="row">
-            <h1>Test stage, only staff can see this page!</h1>
-            <HistogramComponent />
+          <div className="col-md-12">
+            <h1>Leaderboards</h1>
+            <p>
+              The leaderboards contain statistics information for all assignment
+              and performance targets. Please note that the scores below does not
+              reflect the actual scores you can get in your course. Because some
+              of you may submit submission(s) with higher score after deadline.
+              We just count your highest score and put it on the statistics board.
+            </p>
             {list}
           </div>
         </div>
-        <LeadersSidebarComponent targets={targets} hash={this.state.hash}/>
+        <LeadersSidebarComponent targets={targets}/>
       </div>
     );
   }
@@ -162,7 +175,7 @@ LeadersSidebarComponent = React.createClass({
           target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
           if (target.length) {
             $('html, body').animate({
-              scrollTop: target.offset().top
+              scrollTop: target.offset().top - fixedTopHeight
             }, 512, () => {
               location.hash = this.hash;
             });
@@ -173,9 +186,10 @@ LeadersSidebarComponent = React.createClass({
     });
   },
   render() {
-    const {targets, hash} = this.props;
+    const {targets} = this.props;
+    const hash = location.hash;
     const list = targets.map((target) => {
-      const { _id } = target;
+      const { _id, print_name } = target;
       let className = 'h5';
       const href = `#${_id}`;
       if (href === hash) {
@@ -185,7 +199,7 @@ LeadersSidebarComponent = React.createClass({
         <li key={_id}
           className={className}>
           <a href={href}>
-            {_id.toUpperCase()}
+            {print_name}
           </a>
         </li>
       );
@@ -198,8 +212,8 @@ LeadersSidebarComponent = React.createClass({
       <div id="scrollspy" className="col-md-2 spelling_exception">
         <ul id="side"
           className="nav hidden-xs hidden-sm affix"
-          style={sideStyle}
-          data-spy="affix">
+          data-spy="affix"
+          style={sideStyle}>
           {list}
         </ul>
       </div>

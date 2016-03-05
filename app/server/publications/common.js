@@ -3,7 +3,6 @@ hash = (name) => {
 }
 
 isHide = (privacy, type) => {
-  // return false;
   const setting = (privacy || []).find(x => (x || {}).type === type);
   if (!setting) {
     if (type === 'asst') {
@@ -17,7 +16,6 @@ isHide = (privacy, type) => {
 }
 
 isAnonymous = (privacy, type) => {
-  // return false;
   const setting = (privacy || []).find(x => (x || {}).type === type);
   if (!setting) {
     return true;

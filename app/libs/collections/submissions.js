@@ -35,8 +35,7 @@ SubmissionSchema = new SimpleSchema({
   },
   target_name: {
     type: String,
-    label: "Target Name",
-    allowedValues: targetNames
+    label: "Target Name"
   },
   max_score: {
     type: Number,
@@ -68,6 +67,7 @@ SubmissionSchema = new SimpleSchema({
   performance: {
     type: Number,
     label: "Performance",
+    decimal: true,
     optional: true
   }
 });

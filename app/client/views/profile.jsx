@@ -284,7 +284,7 @@ const SelectComponent = React.createClass({
   }
 })
 
-const CompeteComponent = React.createClass({
+const PrivacyComponent = React.createClass({
   render() {
     let {email, token, privacy} = this.props.student || {};
     if (!privacy) {
@@ -325,7 +325,7 @@ const CompeteComponent = React.createClass({
           performance targets is anonymous</b>.
           Please use the drop-downs below to select your privacy settings.
         </p>
-        <div className="target-container">
+        <div className="row target-container">
           {settings}
         </div>
       </div>
@@ -346,7 +346,7 @@ ProfileComponent = React.createClass({
             <TokenComponent {...this.props} />
             <PublicKeyComponent {...this.props} />
             {isStaff(this.props.user) ?
-              <CompeteComponent {...this.props} /> : null }
+              <PrivacyComponent {...this.props} /> : null }
           </div>
 				</div>
       </div>

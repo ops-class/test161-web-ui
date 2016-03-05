@@ -1,13 +1,7 @@
 MainLayout = React.createClass({
-  mixins: [ReactMeteorData],
+  mixins: [ReactMeteorData, OnloadMixin],
   getMeteorData() {
     return subscribeUserData();
-  },
-  componentDidMount: function() {
-    try { processPage(); } catch (err) {};
-  },
-  componentDidUpdate: function() {
-    try { processPage(); } catch (err) {};
   },
   render() {
     let mainContent = <LoadingComponent />;
