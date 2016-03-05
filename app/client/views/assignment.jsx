@@ -12,7 +12,7 @@ const getMyScore = (student, target_name) => {
   return res;
 }
 
-HistogramComponent = React.createClass({
+const HistogramComponent = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     const {target = {}} = this.props;
@@ -150,5 +150,93 @@ HistogramComponent = React.createClass({
         </div>
       </div>
     );
+  }
+});
+
+const PerfectScoreComponent = React.createClass({
+  getInitialState() {
+    return {hide: true};
+  },
+  toggle() {
+    this.setState({disabled: true});
+    $(this.refs.details).slideToggle(512,
+      () => {
+        this.setState({hide: !this.state.hide});
+        this.setState({disabled: false});
+      }
+    );
+  },
+  render() {
+    const {leaders, title} = this.props;
+    const {hide, disabled} = this.state;
+    if (!leaders || leaders.length === 0) {
+      return null;
+    }
+    const list = [];
+    for (let [index, elem] of leaders.entries()) {
+      let {score, group} = elem;
+      list.push(
+        <tr key={index + 1}>
+          <td>{group}</td>
+        </tr>
+      );
+    }
+    return (
+      <div>
+        <p>
+          There are total <b>{leaders.length}</b> groups get perfect score for {title}!
+        </p>
+        <div className="btn btn-default"
+          disabled={disabled}
+          onClick={this.toggle}>
+          {hide ? 'Show' : 'Hide' } Details
+        </div>
+        <div ref="details" style={{"display": "none"}}>
+          <table className="table table-striped">
+            <tbody>
+              {list}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    );
+  }
+});
+
+AssignmentComponent = React.createClass({
+  mixins: [ReactMeteorData],
+  getMeteorData() {
+    const {target} = this.props;
+    const ready = false;
+    const loading = true;
+    let data = {ready, loading}
+    const handle = LeaderboardSubs.subscribe('leaderboards', target);
+    if (handle.ready()) {
+      const leaders = Leaders.find(
+        { target: target._id },
+        { sort: { score : -1 } }
+      ).fetch();
+      data.leaders = leaders;
+      data.ready = true;
+      data.loading = false;
+    } else {
+      data = {...this.data};
+      data.loading = true;
+    }
+    return data;
+  },
+  render() {
+    const {target} = this.props;
+    const {ready, loading, leaders} = this.data
+    const title = target.print_name;
+    if (!ready) {
+      return (<LoadingComponent />);
+    }
+    return (
+      <div>
+        <HistogramComponent {...this.props}/>
+        <PerfectScoreComponent {...{title, leaders}}/>
+      </div>
+    )
   }
 });

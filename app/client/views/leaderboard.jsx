@@ -1,57 +1,27 @@
 let INITLOAD = true;
 const fixedTopHeight = 80;
 
-const PerfectScoreComponent = React.createClass({
-  getInitialState() {
-    return {hide: true};
-  },
-  toggle() {
-    this.setState({disabled: true});
-    $(this.refs.details).slideToggle(512,
-      () => {
-        this.setState({hide: !this.state.hide});
-        this.setState({disabled: false});
-      }
-    );
+const isAssignment = (type) => type === 'asst';
+
+const LeaderboardComponent = React.createClass({
+  shouldComponentUpdate(nextProps, nextState) {
+    return false;
   },
   render() {
-    const {leaders, title} = this.props;
-    const {hide, disabled} = this.state;
-    if (!leaders || leaders.length === 0) {
-      return null;
-    }
-    const list = [];
-    for (let [index, elem] of leaders.entries()) {
-      let {score, group} = elem;
-      list.push(
-        <tr key={index + 1}>
-          <td>{group}</td>
-        </tr>
-      );
-    }
+    const {target: {type, print_name: title, _id: id}} = this.props;
     return (
-      <div>
-        <p>
-          There are total <b>{leaders.length}</b> groups get perfect score for {title}!
-        </p>
-        <div className="btn btn-default"
-          disabled={disabled}
-          onClick={this.toggle}>
-          {hide ? 'Show' : 'Hide' } Details
-        </div>
-        <div ref="details" style={{"display": "none"}}>
-          <table className="table table-striped">
-            <tbody>
-              {list}
-            </tbody>
-          </table>
-        </div>
+      <div className="col-md-12" id={id}>
+        <h1>{title}</h1>
+        { isAssignment(type) ?
+          <AssignmentComponent {...this.props}/> :
+          <PerformanceComponent {...this.props}/>
+        }
       </div>
     );
   }
-})
+});
 
-const LeaderboardComponent = React.createClass({
+LeadersComponent = React.createClass({
   componentDidUpdate() {
     let target = $(location.hash);
     if (target.length && INITLOAD) {
@@ -62,57 +32,6 @@ const LeaderboardComponent = React.createClass({
       return false;
     }
   },
-  mixins: [ReactMeteorData],
-  getMeteorData() {
-    const {target} = this.props;
-    const ready = false;
-    const loading = true;
-    let data = {ready, loading}
-    const handle = LeaderboardSubs.subscribe('leaderboards', target);
-    if (handle.ready()) {
-      const leaders = Leaders.find(
-        { target: target._id },
-        { sort: { score : -1 } }
-      ).fetch();
-      data.leaders = leaders;
-      data.ready = true;
-      data.loading = false;
-    } else {
-      data = {...this.data};
-      data.loading = true;
-    }
-    return data;
-  },
-  shouldComponentUpdate(nextProps, nextState) {
-    return false;
-  },
-  render() {
-    const {target} = this.props;
-    const {ready, loading, leaders} = this.data
-    const title = target.print_name;
-    if (!ready) {
-      return (<LoadingComponent />);
-    }
-    if (target.type === 'asst') {
-      return (
-        <div className="col-md-12" id={target._id}>
-          <h1>{title}</h1>
-          <HistogramComponent {...this.props}/>
-          <PerfectScoreComponent {...{title, leaders}}/>
-        </div>
-      );
-    } else {
-      return (
-        <div className="col-md-12" id={target._id}>
-          <h1>{title}</h1>
-          <PerformanceComponent {...this.props}/>
-        </div>
-      );
-    }
-  }
-});
-
-LeadersComponent = React.createClass({
   mixins: [ReactMeteorData, OnloadMixin],
   getMeteorData() {
     const ready = false;
