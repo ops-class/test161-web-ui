@@ -106,38 +106,41 @@ const TokenComponent = React.createClass({
     const {token, email} = student;
     return (
 			<div>
-        <h3>Security Token</h3>
-        <p>Your security token allows you to submit assignments using the {" "}
-          <a href="/test161"><code>test161</code></a> submission tool.
-          Please add it to your <code>.test161.conf</code> file as described in
-          the <a href="/test161#_preparing_for_submission">instructions on preparing for submission</a>.</p>
+				<div>
+					<h2>Security Token</h2>
+					<p>Your security token allows you to submit assignments using the {" "}
+						<a href="/test161"><code>test161</code></a> submission tool.
+						Please add it to your <code>.test161.conf</code> file as described in
+						the <a href="/test161#_preparing_for_submission">instructions on preparing for submission</a>.</p>
 
-        <p><strong>Please keep your token secure and only share it with your partner, if you have one.</strong>
-          {" "}If you are worried that your token has been compromised, you can generate a new one below.</p>
+					<p><strong>Please keep your token secure and only share it with your partner, if you have one.</strong>
+						{" "}If you are worried that your token has been compromised, you can generate a new one below.</p>
 
-        <div className="input-group">
-          <span className="input-group-addon">Current security token:</span>
-          <input type="text" className="form-control"
-            value={token}
-            onChange={() => {}}
-            onClick={this.onMouseEnter}
-            placeholder="Your Token"/>
-          <span className="input-group-btn">
-            <button className="btn btn-danger"
-              data-toggle="modal"
-              data-target="#tokenModal"
-              type="button">
-							Regenerate
-						</button>
-          </span>
+					<div className="input-group">
+						<span className="input-group-addon">Current security token:</span>
+						<input type="text" className="form-control"
+							value={token}
+							onChange={() => {}}
+							onClick={this.onMouseEnter}
+							placeholder="Your Token"/>
+						<span className="input-group-btn">
+							<button className="btn btn-danger"
+								data-toggle="modal"
+								data-target="#tokenModal"
+								type="button">
+								Regenerate
+							</button>
+						</span>
 
-				<ConfirmComponent {...student}
-          warning={'This will permanently change your token.'}
-          method={'regenerateToken'}
-          modalId={'tokenModal'}
-          target={'Token'}
-        />
-      </div>
+					<ConfirmComponent {...student}
+						warning={'This will permanently change your token.'}
+						method={'regenerateToken'}
+						modalId={'tokenModal'}
+						target={'Token'}
+					/>
+				</div>
+			<hr />
+			</div>
 		</div>
     );
   }
@@ -174,33 +177,39 @@ const KeyContentComponent = React.createClass({
       }
 			return (
 				<div>
-          {errMessage}
-          <button className="btn btn-success"
-            disabled={processing}
-            onClick={this.generatePublicKey}
-            type="button">
-            {processing ?
-              <span className="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
-              :
-            null} Generate Initial Public Key
-          </button>
+					<div>
+						{errMessage}
+						<button className="btn btn-success"
+							disabled={processing}
+							onClick={this.generatePublicKey}
+							type="button">
+							{processing ?
+								<span className="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+								:
+							null} Generate Initial Public Key
+						</button>
+					<hr />
+					</div>
         </div>
 			);
 		} else {
 			return (
 				<div>
-          <p>Current public key:</p>
-          <pre>
-            <code>
-              {key}
-            </code>
-          </pre>
-          <button className="btn btn-danger"
-            data-toggle="modal"
-            data-target="#publicKeyModel"
-            type="button">
-            Generate New Public Key
-          </button>
+					<div>
+						<p>Current public key:</p>
+						<pre>
+							<code>
+								{key}
+							</code>
+						</pre>
+						<button className="btn btn-danger"
+							data-toggle="modal"
+							data-target="#publicKeyModel"
+							type="button">
+							Generate New Public Key
+						</button>
+					</div>
+					<hr />
         </div>
 			);
 		}
@@ -211,14 +220,16 @@ const PublicKeyComponent = React.createClass({
   render() {
     return (
 			<div>
-        <h3>Deployment Public Key</h3>
+        <h2>Deployment Public Key</h2>
 
         <p><a href="/test161"><code>test161</code></a> needs a way to access your
         Git repository during remote testing. To enable this, please generate a
-          public key below and add it to your OS/161 repository as a <em>deployment
-          key</em>, following <a
-               href="/test161#_preparing_for_submission">these instructions</a>.
-          {" "}<strong>Do not provide this key with push access or add it to repositories
+          public key below and add it to your OS/161 repository as a
+					{" "}<em>deployment key</em>, following
+					{" "}<a href="/test161#_preparing_for_submission">these instructions</a>.
+					Note that this key is exchanged with the <code>test161</code> client (over HTTPS)
+					during assignment submission.
+          {" "}<strong>So do not provide this key with push access or add it to repositories
           other than your OS/161 repository.</strong></p>
 
         <KeyContentComponent {...this.props} />
@@ -298,33 +309,36 @@ const PrivacyComponent = React.createClass({
     )
     return (
       <div>
-        <h3>Leaderboards Privacy Settings</h3>
+        <h2>Leaderboard Privacy Settings</h2>
         <p>
-          We'll release leaderboards for different assignments and performance
-          targets soon. The leaderboards will not show your personal information
-          without your permssion!
-        </p>
-        <p>There are three different options you can choose:</p>
+					Leaderboards enable friendly competition between students and allow you
+					to brag publicly about how well you did on the <code>ops-class.org</code>
+					{" "}assignments&mdash;maybe to potential employers!
+					{" "}<strong>However, participation in the leaderboards is optional.</strong>
+					{" "}There are three different available blanket privacy settings:
+				</p>
         <ul>
           <li>
-            <b>Show:</b> leaderboards will show your email address and best
-            score/performance.
+            <strong>Show:</strong> leaderboards will display your email address and best score.
           </li>
           <li>
-            <b>Anonymous:</b> leaderboards will show your best score/performance,
-            and mark your email address as "anonymous".
+            <strong>Anonymous:</strong> leaderboards will show your best score but conceal your
+						email address.
           </li>
           <li>
-            <b>Hide:</b> you and <b>your partner</b> will be totally hidden from the
-            leaderboards.
+            <strong>Hide:</strong> you <em>and your partner</em> will have your scores
+						omitted from the leaderboards.
           </li>
         </ul>
         <p>
-          We treat assignments and performance targets separately. The default
-          setting for <b>assignments is hide</b>, and  the default setting for <b>
-          performance targets is anonymous</b>.
-          Please use the drop-downs below to select your privacy settings.
-        </p>
+					We have separate privacy settings for assignment and performance targets.
+					This is because assignment submissions are mandatory, while submitting to
+					performance targets is optional. The default setting for assignment
+					targets is <em>hidden</em>, while the default for performance targets
+					is <em>anonymous</em>. <strong>Note that you can always adjust the privacy settings
+					for individual submissions on the leaderboard page.</strong>
+				</p>
+
         <div className="row target-container">
           {settings}
         </div>
@@ -342,7 +356,7 @@ ProfileComponent = React.createClass({
       <div className={mainContentClass}>
         <div className="row">
           <div className="col-md-12">
-            <h2>Account Settings</h2>
+            <h1>Account Settings</h1>
             <TokenComponent {...this.props} />
             <PublicKeyComponent {...this.props} />
             {isStaff(this.props.user) ?
