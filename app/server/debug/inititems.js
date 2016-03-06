@@ -122,10 +122,37 @@ if (DEBUG) {
     }
   }
 
+  updateTargetStats = (sub) => {
+    const {users, target_name} = sub;
+    for (let email of users) {
+      const student = Students.findOne({email});
+      if (!student) {
+        return console.log(`${email} not exist in Students!`);
+      }
+      const {target_stats = []} = student;
+      let stat = target_stats.find(x => x.target_name === target_name);
+      if (stat) {
+        stat.total_submissions++;
+        stat.high_score = Math.max(stat.high_score, sub.score || 0);
+      } else {
+        const target_version = 1;
+        const target_type = target_name.endsWith('perf') ? 'perf' : 'asst';
+        const max_score = 50;
+        const total_submissions = 1;
+        const high_score = sub.score || 0;
+        stat = {target_name, target_version, target_type, max_score, total_submissions, high_score};
+        target_stats.push(stat);
+      }
+      Students.update({email}, { $set: { target_stats }})
+    }
+    return;
+  }
+
   initSubmissions = (count = 10) => {
     for (let i = 0; i < count; i++) {
       const sub = getRandomSubmission(i);
       Submissions.insert(sub);
+      updateTargetStats(sub);
     }
   }
 
@@ -133,6 +160,7 @@ if (DEBUG) {
     Tests.remove({});
     Targets.remove({});
     Submissions.remove({});
+    Students.remove({});
     Meteor.users.remove({});
   }
 
