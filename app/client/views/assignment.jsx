@@ -28,7 +28,8 @@ const PerfectScoreComponent = React.createClass({
       let {score, group} = elem;
       list.push(
         <tr key={index + 1}>
-          <td>{group}</td>
+          <td>{group[0]}</td>
+          <td>{group[1]}</td>
         </tr>
       );
     }
@@ -44,6 +45,12 @@ const PerfectScoreComponent = React.createClass({
         </div>
         <div ref="details" style={{"display": "none"}}>
           <table className="table table-striped">
+            <thead>
+              <tr>
+                <th>Group Member 1</th>
+                <th>Member 2</th>
+              </tr>
+            </thead>
             <tbody>
               {list}
             </tbody>

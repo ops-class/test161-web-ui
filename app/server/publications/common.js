@@ -38,7 +38,7 @@ filterAggregate = (e, target_name, type) => {
       e.group.push(student.email);
     }
   }
-  e.group = e.group.join(', ');
+  // e.group = e.group.join(', ');
   delete e.students;
   return e;
 }
