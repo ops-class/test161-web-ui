@@ -10,7 +10,7 @@ Meteor.publish('targets', function() {
   const pipeline = [
     {
       $match: {
-        active: true
+        active: 'true'
       }
     },
     {

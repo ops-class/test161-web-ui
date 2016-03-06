@@ -1,5 +1,6 @@
 const DEBUG = !!(process.env.TEST161_DEBUG || Meteor.settings.TEST161_DEBUG);
 if (DEBUG) {
+  const privacy = [{type: 'asst', choice: SHOW}, {type: 'perf', choice: SHOW}];
   generateOutput = (i = 0) => {
     const line = 'line ' + i;
     const walltime = 0.1 * i;
@@ -168,7 +169,7 @@ if (DEBUG) {
       const token = Random.id();
       const createdAt = new Date();
       const target_stats = [];
-      const student = {_id, userId, email, token, createdAt, target_stats};
+      const student = {_id, userId, email, token, createdAt, target_stats, privacy};
       Students.insert(student);
     }
   }
@@ -206,7 +207,7 @@ if (DEBUG) {
         const file_name = 'file name';
         const print_name = name.toUpperCase();
         const description = `${name} description`;
-        const active = true;
+        const active = 'true';
         Targets.insert({_id, name, print_name, description, active, version, type, points, kconfig, userland, file_hash, file_name});
       }
     }

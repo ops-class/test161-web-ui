@@ -1,5 +1,6 @@
 Targets = new Mongo.Collection('targets');
 TargetNames = new Mongo.Collection('targetnames');
+const TRUE_FALSE = ['true', 'false'];
 
 TargetSchema = new SimpleSchema({
   _id: {
@@ -20,8 +21,9 @@ TargetSchema = new SimpleSchema({
     label: "Target description",
   },
   active: {
-    type: Boolean,
-    label: "Targer is active"
+    type: String,
+    label: "Targer is active",
+    allowedValues: TRUE_FALSE
   },
   version: {
     type: Number,
