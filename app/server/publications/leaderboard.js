@@ -1,4 +1,4 @@
-Meteor.publish('leaderboards', function({ _id: target_name, type }) {
+Meteor.publish('leaderboards', function({ _id: target_name, type, points }) {
   if (!this.userId) {
     this.ready();
     return;
@@ -28,12 +28,6 @@ Meteor.publish('leaderboards', function({ _id: target_name, type }) {
         score: { $max: "$score" }
       }
     },
-    {
-      $project: { _id: 1, users: 1, target: 1, score: 1,
-        cmpToMax: { $cmp: [ "$score", "$max_score" ] }
-      }
-    },
-    { $match: { cmpToMax: 0 } },
     { $unwind: "$users" },
     {
       $lookup : {
@@ -83,39 +77,28 @@ Meteor.publish('leaderboards', function({ _id: target_name, type }) {
     },
     {
       $sort: { score: -1 }
-    },
-    {
-      $limit: 100
     }
   ];
 
   const runAggregation = () => {
     const leaderSet = new Set();
+    const scores = [];
 
     Submissions.aggregate(pipeline).map((e) => {
-      const group = e._id.join(', ');
-      e._id = hash(group);
-      e.group = [];
-      for (let student of e.students) {
-        if (isHide(student.privacy, type)) {
+      scores.push(e.score);
+      if (e.score === points) {
+        if (!filterAggregate(e, target_name, type)) {
           return;
         }
-        if (isAnonymous(student.privacy, type)) {
-          e.group.push('anonymous');
-        } else {
-          e.group.push(student.email);
-        }
-      }
-      e.group = e.group.join(', ');
-      delete e.students;
 
-      if (localCache.has(e._id)) {
-        this.changed('leaders', e._id, e);
-      } else {
-        this.added('leaders', e._id, e);
-        localCache.add(e._id);
+        if (localCache.has(e._id)) {
+          this.changed('leaders', e._id, e);
+        } else {
+          this.added('leaders', e._id, e);
+          localCache.add(e._id);
+        }
+        leaderSet.add(e._id);
       }
-      leaderSet.add(e._id);
     });
 
     for (let id of localCache) {
@@ -124,6 +107,10 @@ Meteor.publish('leaderboards', function({ _id: target_name, type }) {
         this.removed('leaders', id);
       }
     }
+
+    this.added('leaders', target_name, {scores});
+    this.changed('leaders', target_name, {scores});
+
     this.ready();
   }
 

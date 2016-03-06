@@ -1,6 +1,3 @@
-let INITLOAD = true;
-const fixedTopHeight = 80;
-
 const isAssignment = (type) => type === 'asst';
 
 const LeaderboardComponent = React.createClass({
@@ -8,30 +5,20 @@ const LeaderboardComponent = React.createClass({
     return false;
   },
   render() {
-    const {target: {type, print_name: title, _id: id}} = this.props;
+    const {target: {type}} = this.props;
     return (
-      <div className="col-md-12" id={id}>
-        <h1>{title}</h1>
+      <div className="col-md-12" >
         { isAssignment(type) ?
           <AssignmentComponent {...this.props}/> :
           <PerformanceComponent {...this.props}/>
         }
+        <hr/>
       </div>
     );
   }
 });
 
 LeadersComponent = React.createClass({
-  componentDidUpdate() {
-    let target = $(location.hash);
-    if (target.length && INITLOAD) {
-      $('html, body').animate({
-        scrollTop: target.offset().top - fixedTopHeight
-      }, 512);
-      INITLOAD = false;
-      return false;
-    }
-  },
   mixins: [ReactMeteorData, OnloadMixin],
   getMeteorData() {
     const ready = false;

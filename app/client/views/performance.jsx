@@ -1,5 +1,65 @@
 const BINS = 10;
 
+const PerfectScoreComponent = React.createClass({
+  mixins: [ButtonToggleMixin],
+  getToggleTarget() {
+    return this.refs.details;
+  },
+  render() {
+    const {leaders, title} = this.props;
+    const {hide, disabled} = this.state;
+    if (!leaders || leaders.length === 0) {
+      return null;
+    }
+    let anchor = -1, order = 0, count = 1;
+    const list = leaders.map(leader => {
+      const {performance, group, _id} = leader;
+      let notSame = performance > anchor;
+      if (notSame) {
+        anchor = performance;
+        order += count;
+        count = 1;
+      } else {
+        count++;
+      }
+      return (
+        <tr key={_id}>
+          {/*{notSame ? <td>{order}</td> : <td></td>}*/}
+          <td>{order}</td>
+          <td>{group}</td>
+          <td>{performance}</td>
+        </tr>
+      )
+    })
+    return (
+      <div>
+        <p>
+          Top <b>{leaders.length}</b> groups for {title}!
+        </p>
+        <div className="btn btn-default"
+          disabled={disabled}
+          onClick={this.toggle}>
+          {hide ? 'Show' : 'Hide' } Details
+        </div>
+        <div ref="details" style={{"display": "none"}}>
+          <table className="table table-striped">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Group</th>
+                <th>Performance</th>
+              </tr>
+            </thead>
+            <tbody>
+              {list}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    );
+  }
+});
+
 PerformanceComponent = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
@@ -7,13 +67,14 @@ PerformanceComponent = React.createClass({
     const ready = false;
     const loading = true;
     let data = {ready, loading}
-    const handle = StatisticsSubs.subscribe('performance', target);
+    const handle = LeaderboardSubs.subscribe('performance', target);
     if (handle.ready()) {
       const leaders = Leaders.find(
         { target: target._id },
         { sort: { performance: 1 } }
       ).fetch();
       data.leaders = leaders;
+      data.performances = (Leaders.findOne({_id: target._id})||{}).performances;
       data.ready = true;
       data.loading = false;
     } else {
@@ -35,14 +96,14 @@ PerformanceComponent = React.createClass({
     };
   },
   update() {
-    const {ready, leaders} = this.data;
+    const {ready, performances} = this.data;
     if (!ready) {
       return;
     }
-    if (!leaders || leaders.length === 0) {
+    if (!performances || performances.length === 0) {
       return;
     }
-    const values = leaders.map(x => x.performance);
+    const values = performances;
     const max = values[values.length - 1];
     const min = values[0];
     const interval = max / BINS;
@@ -148,48 +209,19 @@ PerformanceComponent = React.createClass({
     const chart = new Highcharts.Chart(chartOptions);
   },
   render() {
+    const {target = {}} = this.props;
+    const title = target.print_name;
     const {ready, loading, leaders} = this.data;
     if (!ready) {
       return (<LoadingComponent />);
     }
-    let anchor = -1, order = 0;
-    const list = leaders.map(leader => {
-      const {performance, group, _id} = leader;
-      let notSame = performance > anchor;
-      if (notSame) {
-        anchor = performance;
-        order++;
-      }
-      return (
-        <tr key={_id}>
-          {/*{notSame ? <td>{order}</td> : <td></td>}*/}
-          <td>{order}</td>
-          <td>{group}</td>
-          <td>{performance}</td>
-        </tr>
-      )
-    })
-    // console.log(leaders);
     return (
-      <div className="row">
+      <div className="row" id={target._id}>
+        <h1>{title}</h1>
         <div className="col-md-12">
           <div id={this.state.container}></div>
         </div>
-        <div className="col-md-12"
-          ref="details">
-          <table className="table table-striped">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Group</th>
-                <th>Performance</th>
-              </tr>
-            </thead>
-            <tbody>
-              {list}
-            </tbody>
-          </table>
-        </div>
+        <PerfectScoreComponent {...{title, leaders}}/>
       </div>
     );
   }

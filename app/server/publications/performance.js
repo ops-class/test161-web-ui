@@ -1,3 +1,5 @@
+const LIMIT = 10;
+
 Meteor.publish('performance', function({ _id: target_name, type }) {
   if (!this.userId) {
     this.ready();
@@ -84,39 +86,31 @@ Meteor.publish('performance', function({ _id: target_name, type }) {
     },
     {
       $sort: { performance: 1 }
-    },
-    {
-      $limit: 100
     }
   ];
 
   const runAggregation = () => {
     const leaderSet = new Set();
+    const performances = [];
+    let count = 0;
 
     Submissions.aggregate(pipeline).map((e) => {
-      const group = e._id.join(', ');
-      e._id = hash(group);
-      e.group = [];
-      for (let student of e.students) {
-        if (isHide(student.privacy, type)) {
+      performances.push(e.performance);
+
+      if (count < LIMIT) {
+        if (!filterAggregate(e, target_name, type)) {
           return;
         }
-        if (isAnonymous(student.privacy, type)) {
-          e.group.push('anonymous');
-        } else {
-          e.group.push(student.email);
-        }
-      }
-      e.group = e.group.join(', ');
-      delete e.students;
 
-      if (localCache.has(e._id)) {
-        this.changed('leaders', e._id, e);
-      } else {
-        this.added('leaders', e._id, e);
-        localCache.add(e._id);
+        if (localCache.has(e._id)) {
+          this.changed('leaders', e._id, e);
+        } else {
+          this.added('leaders', e._id, e);
+          localCache.add(e._id);
+        }
+        count++;
+        leaderSet.add(e._id);
       }
-      leaderSet.add(e._id);
     });
 
     for (let id of localCache) {
@@ -125,6 +119,9 @@ Meteor.publish('performance', function({ _id: target_name, type }) {
         this.removed('leaders', id);
       }
     }
+
+    this.added('leaders', target_name, {performances});
+    this.changed('leaders', target_name, {performances});
 
     this.ready();
   }

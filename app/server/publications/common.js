@@ -23,3 +23,22 @@ isAnonymous = (privacy, type) => {
     return setting.choice === ANONYMOUS;
   }
 }
+
+filterAggregate = (e, target_name, type) => {
+  const group = e._id.join(', ') + target_name;
+  e._id = hash(group);
+  e.group = [];
+  for (let student of e.students) {
+    if (isHide(student.privacy, type)) {
+      return null;
+    }
+    if (isAnonymous(student.privacy, type)) {
+      e.group.push('anonymous');
+    } else {
+      e.group.push(student.email);
+    }
+  }
+  e.group = e.group.join(', ');
+  delete e.students;
+  return e;
+}

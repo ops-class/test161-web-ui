@@ -12,17 +12,63 @@ const getMyScore = (student, target_name) => {
   return res;
 }
 
-const HistogramComponent = React.createClass({
-  mixins: [ReactMeteorData],
+const PerfectScoreComponent = React.createClass({
+  mixins: [ButtonToggleMixin],
+  getToggleTarget() {
+    return this.refs.details;
+  },
+  render() {
+    const {leaders, title} = this.props;
+    const {hide, disabled} = this.state;
+    if (!leaders || leaders.length === 0) {
+      return null;
+    }
+    const list = [];
+    for (let [index, elem] of leaders.entries()) {
+      let {score, group} = elem;
+      list.push(
+        <tr key={index + 1}>
+          <td>{group}</td>
+        </tr>
+      );
+    }
+    return (
+      <div>
+        <p>
+          There are total <b>{leaders.length}</b> groups get perfect score for {title}!
+        </p>
+        <div className="btn btn-default"
+          disabled={disabled}
+          onClick={this.toggle}>
+          {hide ? 'Show' : 'Hide' } Details
+        </div>
+        <div ref="details" style={{"display": "none"}}>
+          <table className="table table-striped">
+            <tbody>
+              {list}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    );
+  }
+});
+
+AssignmentComponent = React.createClass({
+  mixins: [ReactMeteorData, UrlHashMixin],
   getMeteorData() {
-    const {target = {}} = this.props;
+    const {target} = this.props;
     const ready = false;
     const loading = true;
     let data = {ready, loading}
-    const handle = StatisticsSubs.subscribe('statistics', target);
+    const handle = LeaderboardSubs.subscribe('leaderboards', target);
     if (handle.ready()) {
-      const {scores = []} = Statistics.findOne({_id: target._id}) || {};
-      data.scores = scores
+      const leaders = Leaders.find(
+        { target: target._id },
+        { sort: { score : -1 } }
+      ).fetch();
+      data.scores = (Leaders.findOne({_id: target._id}) || {}).scores;
+      data.leaders = leaders;
       data.ready = true;
       data.loading = false;
     } else {
@@ -143,89 +189,6 @@ const HistogramComponent = React.createClass({
     const chart = new Highcharts.Chart(chartOptions);
   },
   render() {
-    return (
-      <div className="row">
-        <div className="col-md-12">
-          <div id={this.state.container}></div>
-        </div>
-      </div>
-    );
-  }
-});
-
-const PerfectScoreComponent = React.createClass({
-  getInitialState() {
-    return {hide: true};
-  },
-  toggle() {
-    this.setState({disabled: true});
-    $(this.refs.details).slideToggle(512,
-      () => {
-        this.setState({hide: !this.state.hide});
-        this.setState({disabled: false});
-      }
-    );
-  },
-  render() {
-    const {leaders, title} = this.props;
-    const {hide, disabled} = this.state;
-    if (!leaders || leaders.length === 0) {
-      return null;
-    }
-    const list = [];
-    for (let [index, elem] of leaders.entries()) {
-      let {score, group} = elem;
-      list.push(
-        <tr key={index + 1}>
-          <td>{group}</td>
-        </tr>
-      );
-    }
-    return (
-      <div>
-        <p>
-          There are total <b>{leaders.length}</b> groups get perfect score for {title}!
-        </p>
-        <div className="btn btn-default"
-          disabled={disabled}
-          onClick={this.toggle}>
-          {hide ? 'Show' : 'Hide' } Details
-        </div>
-        <div ref="details" style={{"display": "none"}}>
-          <table className="table table-striped">
-            <tbody>
-              {list}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    );
-  }
-});
-
-AssignmentComponent = React.createClass({
-  mixins: [ReactMeteorData],
-  getMeteorData() {
-    const {target} = this.props;
-    const ready = false;
-    const loading = true;
-    let data = {ready, loading}
-    const handle = LeaderboardSubs.subscribe('leaderboards', target);
-    if (handle.ready()) {
-      const leaders = Leaders.find(
-        { target: target._id },
-        { sort: { score : -1 } }
-      ).fetch();
-      data.leaders = leaders;
-      data.ready = true;
-      data.loading = false;
-    } else {
-      data = {...this.data};
-      data.loading = true;
-    }
-    return data;
-  },
-  render() {
     const {target} = this.props;
     const {ready, loading, leaders} = this.data
     const title = target.print_name;
@@ -233,8 +196,9 @@ AssignmentComponent = React.createClass({
       return (<LoadingComponent />);
     }
     return (
-      <div>
-        <HistogramComponent {...this.props}/>
+      <div className="row" id={target._id}>
+        <h1>{title}</h1>
+        <div id={this.state.container}></div>
         <PerfectScoreComponent {...{title, leaders}}/>
       </div>
     )
