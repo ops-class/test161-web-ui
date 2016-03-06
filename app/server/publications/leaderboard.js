@@ -14,6 +14,7 @@ Meteor.publish('leaderboards', function({ _id: target_name, type, points }) {
   let initializing = true;
   const selector = {
     target_name: target_name,
+    hide: { $ne: true },
     score: { $gt: 0 }
   };
 

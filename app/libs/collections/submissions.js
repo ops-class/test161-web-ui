@@ -53,6 +53,11 @@ SubmissionSchema = new SimpleSchema({
     label: "Status",
     allowedValues: submissionStatus
   },
+  hide: {
+    type: Boolean,
+    label: "Hidden from leaderboards",
+    optional: true
+  },
   completion_time: {
     type: Date,
     label: "Completion Time",

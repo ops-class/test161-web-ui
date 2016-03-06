@@ -17,6 +17,7 @@ Meteor.publish('performance', function({ _id: target_name, type }) {
 
   const selector = {
     target_name: target_name,
+    hide: { $ne: true },
     performance: { $gt: 0 }
   };
 

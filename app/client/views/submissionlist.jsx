@@ -65,7 +65,7 @@ SubmissionListComponent = React.createClass({
     }
     const length = submissions.length;
     if (length === 0) {
-      return <div>You haven’t submitted any solutions!</div>
+      return (<div>You haven’t submitted any solutions!</div>);
     }
 
     let noMoreSubmission = null;
@@ -144,8 +144,14 @@ const TimeComponent = React.createClass({
   componentWillUnmount() {
     clearTimeout(this.timer);
   },
+  toggle() {
+    const {_id, hide = false} = this.props;
+    Meteor.call('toggleSubmission', _id, (err, res) => {
+      console.log(err, res);
+    });
+  },
   render() {
-    const {submission_time, completion_time, commit_id, status} = this.props;
+    const {submission_time, completion_time, commit_id, status, hide = false} = this.props;
     const {now} = this.state;
     const submission = moment(submission_time);
     const time = submission.from(now);
@@ -160,8 +166,14 @@ const TimeComponent = React.createClass({
     const className = 'col-md-6 col-sm-12 col-xs-12';
     return (
       <div className="row">
-        <div className="col-md-12 col-xs-12">
+        <div className="col-md-8">
           <i className="fa fa-calendar"></i> {time}
+        </div>
+        <div className="col-md-4">
+          <div onClick={this.toggle}
+            className="btn btn-default">
+            {hide ? 'show' : 'hide'}
+          </div>
         </div>
         <div className={className}>
           <i className="fa fa-clock-o"></i> {duration}
