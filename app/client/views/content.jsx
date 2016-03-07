@@ -170,7 +170,8 @@ ContentComponent = React.createClass({
   render() {
     return (
       <div>
-        <SecondNavComponent {...this.props}/>
+        {this.props.ready ?
+          <SecondNavComponent {...this.props}/> : null}
         <div className="container">
           <UserComponent {...this.props}/>
         </div>

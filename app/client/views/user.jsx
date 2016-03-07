@@ -1,26 +1,33 @@
 mainContentClass = 'col-md-8 col-md-offset-2';
 
+const Intro = ({ready}) => (
+  <div>
+    {!ready ? <LoadingComponent /> : null}
+    <IntroComponent />
+  </div>
+)
+
 UserComponent = React.createClass({
   render() {
-    const {params: {path, target}, profile, user, student} = this.props;
+    const {params: {path, target}, profile, user, student, ready} = this.props;
     if (pathIsIntro(path) || !user) {
-      return (<IntroComponent />);
+      return <Intro {...this.props} />
     }
     if (pathIsProfile(path)) {
-      return (<ProfileComponent {...this.props}/>);
+      return (<ProfileComponent {...this.props} />);
     }
     if (pathIsLeaderboard(path) && isStaff(user)) {
-      return (<LeadersComponent {...this.props}/>);
+      return (<LeadersComponent {...this.props} />);
     }
     return (
       <div className="row">
         <div className={mainContentClass}>
           <SummaryComponent {...this.props} />
           <div className="row">
-            <SubmissionListComponent {...this.props}/>
+            <SubmissionListComponent {...this.props} />
           </div>
         </div>
-        <SidebarComponent {...this.props}/>
+        <SidebarComponent {...this.props} />
       </div>
     );
   }
