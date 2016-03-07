@@ -164,14 +164,18 @@ const TimeComponent = React.createClass({
       }
     }
     const className = 'col-md-6 col-sm-12 col-xs-12';
+    let toggleClass = 'btn pull-right';
+    if (hide) {
+      toggleClass += ' btn-info';
+    } else {
+      toggleClass += ' btn-default';
+    }
     return (
       <div className="row">
-        <div className="col-md-8">
+        <div className="col-md-12 col-xs-12">
           <i className="fa fa-calendar"></i> {time}
-        </div>
-        <div className="col-md-4">
           <div onClick={this.toggle}
-            className="btn btn-default">
+            className={toggleClass}>
             {hide ? 'show' : 'hide'}
           </div>
         </div>
