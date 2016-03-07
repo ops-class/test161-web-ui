@@ -60,6 +60,7 @@ SubmissionListComponent = React.createClass({
   },
   render() {
     const {submissions, ready, user, asst, loading} = this.data;
+    const {student} = this.props;
     if (!ready) {
       return (<LoadingComponent />);
     }
@@ -73,12 +74,12 @@ SubmissionListComponent = React.createClass({
     if (!loading && length < limit && limit > 10) {
       noMoreSubmission = (
         <div className="alert alert-warning">
-        No more submissions!
+          No more submissions!
         </div>
       );
     }
     const list = submissions.map(submission =>
-      <SubmissionComponent key={submission._id} submission={submission} />);
+      <SubmissionComponent key={submission._id} submission={submission} student={student}/>);
     return (
       <div className="list-group">
         {list}
@@ -105,20 +106,23 @@ const StatusComponent = ({status, score, max_score}) => {
     );
 };
 
-const InfoComponent = ({_id, submission_time, users, repository, commit_id, status, target_name, target_type, max_score, tests, completion_time, score, performance}) => {
-  const className="col-md-12 ellipsis";
-  const userStr = users.join(', ');
-  return (
-    <div className="row">
-      <div className={className}>
-        <p>{repository}</p>
+const InfoComponent = React.createClass({
+  render() {
+    const {_id, submission_time, users, repository, commit_id, status, target_name, target_type, max_score, tests, completion_time, score, performance, student} = this.props;
+    const className="col-md-12 ellipsis";
+    const userStr = users.join(', ');
+    return (
+      <div className="row">
+        <div className={className}>
+          <p>{repository}</p>
+        </div>
+        <div className={className}>
+          <p>{userStr}</p>
       </div>
-      <div className={className}>
-        <p>{userStr}</p>
       </div>
-    </div>
-  );
-};
+    );
+  }
+})
 
 const TimeComponent = React.createClass({
   getInitialState() {
@@ -206,7 +210,7 @@ SubmissionComponent = React.createClass({
     return isSubmissionRunning(status) && !isSubmissionRunning(nextStatus);
   },
   render() {
-    const {submission} = this.props;
+    const {submission, student} = this.props;
     const {status} = submission;
     const {collapse} = this.state;
     let details = null;
@@ -226,7 +230,7 @@ SubmissionComponent = React.createClass({
             <StatusComponent {...submission} />
           </div>
           <div className="col-md-6">
-            <InfoComponent {...submission} />
+            <InfoComponent {...submission} student={student} />
           </div>
           <div className="col-md-4">
             <TimeComponent {...submission} />

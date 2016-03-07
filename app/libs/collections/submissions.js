@@ -63,6 +63,13 @@ SubmissionSchema = new SimpleSchema({
     label: "Completion Time",
     optional: true
   },
+  privacy: {
+    type: [PrivacySchema],
+    label: "Submission privacy settings",
+    minCount: 1,
+    maxCount: 2,
+    optional: true
+  },
   score: {
     type: Number,
     label: "Number",

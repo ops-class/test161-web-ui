@@ -8,7 +8,7 @@ PrivacyChoices = [HIDE, ANONYMOUS, SHOW];
 PrivacySchema = new SimpleSchema({
   type: {
     type: String,
-    label: "Target type"
+    label: "Target type or user email"
   },
   choice: {
     type: String,
