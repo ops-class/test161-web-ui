@@ -37,8 +37,17 @@ SubmissionSchema = new SimpleSchema({
     type: String,
     label: "Target Name"
   },
+  target_type: {
+    type: String,
+    label: "Target Type"
+  },
+  target_version: {
+    type: Number,
+    label: "Target Version"
+  },
   max_score: {
     type: Number,
+    label: "Target maximum score",
     min: 1
   },
   tests: {
@@ -52,11 +61,6 @@ SubmissionSchema = new SimpleSchema({
     type: String,
     label: "Status",
     allowedValues: submissionStatus
-  },
-  hide: {
-    type: Boolean,
-    label: "Hidden from leaderboards",
-    optional: true
   },
   completion_time: {
     type: Date,

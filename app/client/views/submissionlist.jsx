@@ -106,19 +106,86 @@ const StatusComponent = ({status, score, max_score}) => {
     );
 };
 
+const getPrivacyChoice = (email, {privacy = [], target_type, student}) => {
+  let setting = privacy.find(x => x.type === email);
+  if (setting && setting.choice) {
+    return setting.choice;
+  }
+  if (student.email === email) {
+    let setting = (student.privacy || []).find(x => x.type === target_type);
+    if (setting && setting.choice) {
+      return setting.choice;
+    }
+    if (target_type === 'asst') {
+      return HIDE;
+    } else {
+      return ANONYMOUS;
+    }
+  } else {
+    return 'Global';
+  }
+}
+
+const SelectComponent = React.createClass({
+  getInitialState() {
+    return {processing: false};
+  },
+  onClick(choice) {
+    const {_id, privacy = [], student: {email, token}} = this.props;
+    this.setState({processing: true});
+    Meteor.call('updateSubmissionPrivacy', _id, {email, token, choice}, (err, res) => {
+      this.setState({processing: false});
+      if (err) {
+        console.log(err, res);
+      }
+    });
+  },
+  render() {
+    const {user, student: {email}} = this.props;
+    const {processing} = this.state;
+    const choice = getPrivacyChoice(user, this.props)
+    return (
+      <div className="col-md-12">
+        <span className="target-type">
+          {user}
+        </span>
+        <button type="button"
+          className="btn btn-default dropdown-toggle target-btn"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          disabled={email !== user}
+          aria-expanded="false">
+          {processing ? <span className="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+          : null} {choice} <span className="caret"></span>
+        </button>
+        <ul className="dropdown-menu pull-right dropdown-menu-test161">
+          <li><a onClick={this.onClick.bind(this, HIDE)}>{HIDE}</a></li>
+          <li><a onClick={this.onClick.bind(this, ANONYMOUS)}>{ANONYMOUS}</a></li>
+          <li role="separator" className="divider"></li>
+          <li><a onClick={this.onClick.bind(this, SHOW)}>{SHOW}</a></li>
+        </ul>
+      </div>
+    );
+  }
+});
+
 const InfoComponent = React.createClass({
   render() {
-    const {_id, submission_time, users, repository, commit_id, status, target_name, target_type, max_score, tests, completion_time, score, performance, student} = this.props;
+    const {users, repository, privacy = [], target_name, target_type, student} = this.props;
+    const {email} = student;
+
     const className="col-md-12 ellipsis";
-    const userStr = users.join(', ');
+    const list = users.map((user, index) => {
+      return (
+        <SelectComponent {...this.props} key={`${user}-${index}`} user={user} />
+      );
+    });
     return (
       <div className="row">
         <div className={className}>
           <p>{repository}</p>
         </div>
-        <div className={className}>
-          <p>{userStr}</p>
-      </div>
+        {list}
       </div>
     );
   }
@@ -148,14 +215,8 @@ const TimeComponent = React.createClass({
   componentWillUnmount() {
     clearTimeout(this.timer);
   },
-  toggle() {
-    const {_id, hide = false} = this.props;
-    Meteor.call('toggleSubmission', _id, (err, res) => {
-      console.log(err, res);
-    });
-  },
   render() {
-    const {submission_time, completion_time, commit_id, status, hide = false} = this.props;
+    const {submission_time, completion_time, commit_id, status} = this.props;
     const {now} = this.state;
     const submission = moment(submission_time);
     const time = submission.from(now);
@@ -168,20 +229,10 @@ const TimeComponent = React.createClass({
       }
     }
     const className = 'col-md-6 col-sm-12 col-xs-12';
-    let toggleClass = 'btn pull-right';
-    if (hide) {
-      toggleClass += ' btn-info';
-    } else {
-      toggleClass += ' btn-default';
-    }
     return (
       <div className="row">
         <div className="col-md-12 col-xs-12">
           <i className="fa fa-calendar"></i> {time}
-          <div onClick={this.toggle}
-            className={toggleClass}>
-            {hide ? 'show' : 'hide'}
-          </div>
         </div>
         <div className={className}>
           <i className="fa fa-clock-o"></i> {duration}

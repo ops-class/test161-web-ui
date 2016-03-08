@@ -93,6 +93,9 @@ if (DEBUG) {
     const users = [USERS_EMAILS[randomInt(USERS_EMAILS.length)]];
     if (randomInt(2)) {
       users.push(USERS_EMAILS[randomInt(USERS_EMAILS.length)]);
+      if (users[0] === users[1]) {
+        users.splice(1, 1);
+      }
     }
     const repository = 'git@github.com:ops-class/test161.git';
     const commit_id = '9352d6f4ad60d5183b678d64b9964f8c2a58c0db';
@@ -100,24 +103,27 @@ if (DEBUG) {
     const tests = [];
     const target = _id;
     let target_name = targetNames[Math.floor(Math.random() * targetNames.length)];
+    let target_type = 'asst';
+    const target_version = 1;
     const max_score = 50;
     const completion_time = moment(randomTime).add(Math.floor(Math.random() * 10000), 'seconds').toDate();
     if (isSubmitted(status)) {
-      return {_id, submission_time, users, repository, commit_id, status, target, max_score, target_name, tests};
+      return {_id, submission_time, users, repository, commit_id, status, target, max_score, target_name, target_type, target_version, tests};
     } else if (isFailed(status)) {
-      return {_id, submission_time, users, repository, commit_id, status, target, max_score, target_name, tests, completion_time};
+      return {_id, submission_time, users, repository, commit_id, status, target, max_score, target_name, target_type, target_version, tests, completion_time};
     } else {
       if (randomInt(2)) {
         let score = max_score;
         if (randomInt(3)) {
           score -= randomInt(max_score);
         }
-        return {_id, submission_time, users, repository, commit_id, status, target, max_score, target_name, tests, completion_time, score};
+        return {_id, submission_time, users, repository, commit_id, status, target, max_score, target_name, target_type, target_version, tests, completion_time, score};
       } else {
         const score = max_score;
         const performance = Math.floor(Math.random() * 100) / 10;
         target_name += '-perf';
-        return {_id, submission_time, users, repository, commit_id, status, target, max_score, target_name, tests, completion_time, score, performance};
+        target_type = 'perf';
+        return {_id, submission_time, users, repository, commit_id, status, target, max_score, target_name, target_type, target_version, tests, completion_time, score, performance};
       }
     }
   }
@@ -174,6 +180,9 @@ if (DEBUG) {
   }
 
   generateUsers = (num = 100) => {
+    if (Meteor.users.find().count() > 1) {
+      return;
+    }
     for (let i = 0; i < num; i++) {
       const id = Random.id();
       const email = Random.id(5) + '@buffalo.edu';
