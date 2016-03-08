@@ -104,8 +104,9 @@ AssignmentComponent = React.createClass({
     if (!scores || scores.length === 0) {
       return;
     }
+    const {target: {points = 0}} = this.props;
     scores.sort((a, b) => a - b);
-    const max = scores[scores.length - 1];
+    const max = Math.max(points, scores[scores.length - 1]);
     let labels = [], counts = [], total = scores.length;
     for (let i = 0; i <= max; i++) {
       labels[i] = i;
