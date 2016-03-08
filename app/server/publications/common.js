@@ -61,7 +61,7 @@ filterAggregate = (e, target_name, type, value) => {
     const name = getStudentName(student, values, type, target_name);
     if (name) {
       if (isStaff(student, userObjects)) {
-        e.group.push(name + ' - staff');
+        e.group.push(name + ' (staff)');
       } else {
         e.group.push(name);
       }
