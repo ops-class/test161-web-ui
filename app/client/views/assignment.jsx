@@ -12,53 +12,129 @@ const getMyScore = (student, target_name) => {
   return res;
 }
 
+const GroupComponent = React.createClass({
+	render() {
+		const { group } = this.props;
+    if (group.length == 1) {
+      return (
+				<strong>{group[0]}</strong>
+			);
+    } else if (group.length == 2) {
+      return (
+				<div>
+					<strong>{group[0]}</strong> and <strong>{group[1]}</strong>
+				</div>
+			);
+    }
+	}
+});
+
 const PerfectScoreComponent = React.createClass({
   mixins: [ButtonToggleMixin],
   getToggleTarget() {
     return this.refs.details;
   },
   render() {
+		const topSize = 16;
     const {leaders, title} = this.props;
     const {hide, disabled} = this.state;
     if (!leaders || leaders.length === 0) {
       return null;
     }
-    const list = [];
+    let list = [];
+		const group_string = (leaders.length == 1) ? 'group' : 'groups';
     for (let [index, elem] of leaders.entries()) {
       let {score, group} = elem;
       list.push(
-        <tr key={index + 1}>
-          <td>{group[0]}</td>
-          <td>{group[1]}</td>
-        </tr>
+				<li key={index} className="h5"><GroupComponent {...{group}}/></li>
       );
     }
-    return (
-      <div>
-        <p>
-          There are total <b>{leaders.length}</b> groups get perfect score for {title}!
-        </p>
-        <div className="btn btn-default"
-          disabled={disabled}
-          onClick={this.toggle}>
-          {hide ? 'Show' : 'Hide' } Details
-        </div>
-        <div ref="details" style={{"display": "none"}}>
-          <table className="table table-striped">
-            <thead>
-              <tr>
-                <th>Group Member 1</th>
-                <th>Member 2</th>
-              </tr>
-            </thead>
-            <tbody>
-              {list}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    );
-  }
+		let extra = 0;
+		if (list.length > topSize) {
+			extra = list.length - topSize;
+			extra_left = list.slice(topSize, topSize + extra / 2);
+			extra_right = list.slice(topSize + extra / 2);
+			right_start = topSize + extra / 2 + 1;
+			list = list.slice(0, topSize);
+		}	
+		if (list.length > 8) {
+			list_left = list.slice(0, topSize / 2);
+			list_right = list.slice(topSize / 2);
+		}
+		const accordion = "accordion_" + title;
+		if (extra_left.length == 0) {
+			return (
+				<div>
+					<div className="alert alert-success text-center" role="alert">
+						<span className="h3">
+							{leaders.length} {group_string} earned a perfect score on {title}!
+						</span>
+					</div>
+					<div className="row">
+						<div className="col-md-6">
+							<ol>
+								{list_left}
+							</ol>
+						</div>
+						<div className="col-md-6">
+							<ol start="9">
+								{list_right}
+							</ol>
+						</div>
+					</div>
+				</div>
+			);
+		} else {
+			return (
+				<div>
+					<div className="alert alert-success text-center" role="alert">
+						<span className="h3">
+							{leaders.length} {group_string} earned a perfect score on {title}!
+						</span>
+					</div>
+					<div className="row">
+						<div className="col-md-6">
+							<ol>
+								{list_left}
+							</ol>
+						</div>
+						<div className="col-md-6">
+							<ol start="9">
+								{list_right}
+							</ol>
+						</div>
+					</div>
+					<div className="panel-group" id={"accordion_" + title}
+							 role="tablist" aria-multiselectable="true">
+						<div className="panel panel-default">
+							<div className="panel-heading" role="tab">
+								<h4 className="panel-title">
+									<a className="collapsed" role="button" data-toggle="collapse"
+										data-parent={"#accordion_" + title}
+										href={"#collapse_" + title}
+										aria-expanded="false" aria-controls={"collapse_" + title}>
+										Show {extra} More
+									</a>
+								</h4>
+							</div>
+							<div id={"collapse_" + title} className="panel-collapse collapse" role="tabpanel">
+								<div className="panel-body">
+									<div className="row">
+										<div className="col-md-6">
+											<ol start="17">{extra_left}</ol>
+										</div>
+										<div className="col-md-6">
+											<ol start={right_start}>{extra_right}</ol>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			);
+		}
+	}
 });
 
 AssignmentComponent = React.createClass({

@@ -56,12 +56,15 @@ LeadersComponent = React.createClass({
         <div className={mainContentClass}>
           <div className="col-md-12">
             <h1>Leaderboards</h1>
-            <p>
-              The leaderboards contain statistics information for all assignment
-              and performance targets. Please note that the scores below does not
-              reflect the actual scores you can get in your course. Because some
-              of you may submit submission(s) with higher score after deadline.
-              We just count your highest score and put it on the statistics board.
+            <p className="lead">
+							Leaderboards display performance for all <code>test161</code>
+						  {" "}	assignment and performance targets.
+						</p>
+						<p>
+							{" "}<strong>Please note that your score below does not necessarily
+							reflect the score you will earn for your course, since you can
+							continue to submit after your course's deadline.</strong>
+							{" " }But regardless of your deadlines, your best score is always shown.
             </p>
             {list}
           </div>
