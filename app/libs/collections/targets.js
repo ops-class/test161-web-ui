@@ -25,6 +25,11 @@ TargetSchema = new SimpleSchema({
     label: "Targer is active",
     allowedValues: TRUE_FALSE
   },
+  leaderboard: {
+    type: String,
+    label: "Whether show target on leaderboard",
+    allowedValues: TRUE_FALSE
+  },
   version: {
     type: Number,
     label: "Target version"

@@ -7,11 +7,14 @@ Meteor.publish('targets', function() {
 
   let initializing = true;
 
+  const selector = {
+    active: 'true',
+    leaderboard: 'true'
+  };
+
   const pipeline = [
     {
-      $match: {
-        active: 'true'
-      }
+      $match: selector
     },
     {
       $group: {
@@ -33,7 +36,7 @@ Meteor.publish('targets', function() {
     this.ready();
   }
 
-  const query = Targets.find({});
+  const query = Targets.find(selector);
   const handle = query.observeChanges({
     added: (id) => {
       if (!initializing) {

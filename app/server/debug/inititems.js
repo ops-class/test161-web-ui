@@ -245,7 +245,8 @@ if (DEBUG) {
         const print_name = name.toUpperCase();
         const description = `${name} description`;
         const active = 'true';
-        Targets.insert({_id, name, print_name, description, active, version, type, points, kconfig, userland, file_hash, file_name});
+        const leaderboard = 'true';
+        Targets.insert({_id, name, print_name, description, active, leaderboard, version, type, points, kconfig, userland, file_hash, file_name});
       }
     }
   }
