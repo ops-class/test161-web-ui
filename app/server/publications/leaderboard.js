@@ -70,22 +70,12 @@ Meteor.publish('leaderboards', function({ _id: target_name, type, points }) {
       }
     },
     {
-      $match: {
-        userObjects: {
-          $not: {
-            $elemMatch: {
-              "services.auth0.user_metadata.staff": true
-            }
-          }
-        }
-      }
-    },
-    {
       $project: {
         _id: 1,
         target: 1,
         score: 1,
         privacyArray: 1,
+        userObjects: 1,
         students: 1
       }
     },

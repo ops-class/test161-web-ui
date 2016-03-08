@@ -76,23 +76,13 @@ Meteor.publish('performance', function({ _id: target_name, type }) {
       }
     },
     {
-      $match: {
-        userObjects: {
-          $not: {
-            $elemMatch: {
-              "services.auth0.user_metadata.staff": true
-            }
-          }
-        }
-      }
-    },
-    {
       $project: {
         _id: 1,
         performance: 1,
         target: 1,
         score: 1,
         privacyArray: 1,
+        userObjects: 1,
         students: 1
       }
     },

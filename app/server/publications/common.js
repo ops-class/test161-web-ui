@@ -46,8 +46,13 @@ const getStudentName = (student, values, type, target_name) => {
   return null;
 }
 
+const isStaff = ({email}, userObjects) => {
+  const user = userObjects.find(x => x.services.auth0.email === email);
+  return ((((user || {}).services || {}).auth0 || {}).user_metadata || {}).staff;
+}
+
 filterAggregate = (e, target_name, type, value) => {
-  const {_id: users, privacyArray = [], students} = e;
+  const {_id: users, privacyArray = [], students, userObjects = []} = e;
   e._id = hash(users.join(', ') + target_name);
   e.group = [];
   let values = privacyArray.filter(x => x.privacy && x.value === value);
@@ -55,12 +60,17 @@ filterAggregate = (e, target_name, type, value) => {
   for (let student of students) {
     const name = getStudentName(student, values, type, target_name);
     if (name) {
-      e.group.push(name);
+      if (isStaff(student, userObjects)) {
+        e.group.push(name + ' - staff');
+      } else {
+        e.group.push(name);
+      }
     } else {
       return null;
     }
   }
   // e.group = e.group.join(', ');
+  delete e.userObjects;
   delete e.students;
   delete e.privacyArray;
   return e;
