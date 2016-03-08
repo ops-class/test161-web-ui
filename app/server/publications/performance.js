@@ -17,19 +17,30 @@ Meteor.publish('performance', function({ _id: target_name, type }) {
 
   const selector = {
     target_name: target_name,
-    hide: { $ne: true },
     performance: { $gt: 0 }
   };
 
   const pipeline = [
     { $match: selector },
     {
+      $project: {
+        _id: 1,
+        users: 1,
+        target_name: 1,
+        performance: 1,
+        privacyObj: {
+          value: "$performance",
+          privacy: "$privacy"
+        }
+      }
+    },
+    {
       $group: {
         _id: "$users",
         users: { $first: "$users" },
         target: { $first: "$target_name" },
         performance: { $min: "$performance" },
-        max_score: { $max: "$max_score" },
+        privacyArray: { $push: "$privacyObj" },
         score: { $max: "$score" }
       }
     },
@@ -57,8 +68,8 @@ Meteor.publish('performance', function({ _id: target_name, type }) {
         _id: "$_id",
         users: { $first: "$users" },
         target: { $first: "$target" },
+        privacyArray: { $first: "$privacyArray" },
         performance: { $min: "$performance" },
-        max_score: { $max: "$max_score" },
         score: { $max: "$score" },
         userObjects: { $push: "$userObjects" },
         students: { $push: "$students" }
@@ -81,7 +92,7 @@ Meteor.publish('performance', function({ _id: target_name, type }) {
         performance: 1,
         target: 1,
         score: 1,
-        max_score: 1,
+        privacyArray: 1,
         students: 1
       }
     },
@@ -99,7 +110,7 @@ Meteor.publish('performance', function({ _id: target_name, type }) {
       performances.push(e.performance);
 
       if (count < LIMIT) {
-        if (!filterAggregate(e, target_name, type)) {
+        if (!filterAggregate(e, target_name, type, e.performance)) {
           return;
         }
 

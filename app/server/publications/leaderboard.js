@@ -14,18 +14,29 @@ Meteor.publish('leaderboards', function({ _id: target_name, type, points }) {
   let initializing = true;
   const selector = {
     target_name: target_name,
-    hide: { $ne: true },
     score: { $gt: 0 }
   };
 
   const pipeline = [
     { $match: selector },
     {
+      $project: {
+        _id: 1,
+        users: 1,
+        target_name: 1,
+        score: 1,
+        privacyObj: {
+          value: "$score",
+          privacy: "$privacy"
+        }
+      }
+    },
+    {
       $group: {
         _id: "$users",
         users: { $first: "$users" },
         target: { $first: "$target_name" },
-        max_score: { $max: "$max_score" },
+        privacyArray: { $push: "$privacyObj" },
         score: { $max: "$score" }
       }
     },
@@ -52,6 +63,7 @@ Meteor.publish('leaderboards', function({ _id: target_name, type, points }) {
       $group: {
         _id: "$_id",
         target: { $first: "$target" },
+        privacyArray: { $first: "$privacyArray" },
         score: { $max: "$score" },
         userObjects: { $push: "$userObjects" },
         students: { $push: "$students" }
@@ -73,6 +85,7 @@ Meteor.publish('leaderboards', function({ _id: target_name, type, points }) {
         _id: 1,
         target: 1,
         score: 1,
+        privacyArray: 1,
         students: 1
       }
     },
@@ -88,7 +101,7 @@ Meteor.publish('leaderboards', function({ _id: target_name, type, points }) {
     Submissions.aggregate(pipeline).map((e) => {
       scores.push(e.score);
       if (e.score === points) {
-        if (!filterAggregate(e, target_name, type)) {
+        if (!filterAggregate(e, target_name, type, e.score)) {
           return;
         }
 
