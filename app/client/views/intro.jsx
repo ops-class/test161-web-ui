@@ -12,115 +12,52 @@ IntroComponent = React.createClass({
                 { " " }<a className="anchor" id="_introduction" /><h2>1. Introduction</h2>
                 <div className="sectionbody">
                   <div className="paragraph lead">
-                    <p><code>test161</code> is the OS/161 testing tool designed and implemented by
+                    <p><a href="/test161"><code>test161</code></a> is the OS/161 testing tool designed and implemented by
                       { " " }<a href="https://blue.cse.buffalo.edu/people/shaseley/" target="_blank" className="external">Scott Haseley</a> and
                       { " " }<a href="https://blue.cse.buffalo.edu/people/ychen78/" target="_blank" className="external">Yihong Chen</a>. It allows you both
                       to test your assignments locally and submit them for remote evaluation.</p>
                   </div>
                   <div className="paragraph">
-                    <p>Below we run through how to install, configure, run, and use <code>test161</code>. While
+                    <p>Below we run through how to install, configure, run, and use <a href="/test161"><code>test161</code></a>. While
                       the specific testing target will change from assignment to assignment, we use
-                      { " " }<a href="/asst/1/">ASST1</a> below as an example. Note that this tutorial duplicates
-                      some information from the official <code>test161</code>{ " " }
-                      { " " }<a href="https://github.com/ops-class/test161/blob/master/README.adoc" target="_blank" className="external">README</a> located
-                      on the project’s <a href="https://github.com/ops-class/test161" target="_blank" className="external">GitHub page</a>.</p>
+                      { " " }<a href="https://www.ops-class.org/asst/1/" className="noexternal">ASST1</a> below as an example. Note that this tutorial duplicates some
+                      information from the <code>test161</code> <a href="https://github.com/ops-class/test161/blob/master/README.adoc" target="_blank" className="external">README</a> located on the project’s
+                      { " " }<a href="https://github.com/ops-class/test161" target="_blank" className="external">GitHub page</a>.</p>
                   </div>
                   <div className="sect2">
                     { " " }<a className="anchor" id="_installation" /><h3>1.1. Installation</h3>
-                    <div className="embed-responsive embed-responsive-16by9 hidden-print" style={{marginTop: 10, marginBottom: 10, border: '1px solid grey'}}>
-                      <div className="youtube-container" data-id="riGAGJx9tnw"><img className="youtube-thumb" src="//i.ytimg.com/vi/riGAGJx9tnw/mqdefault.jpg" alt="YouTube placeholder" /><div className="play-button"><span className="glyphicon glyphicon-play" aria-hidden="true" /></div></div>
+                    <div className="paragraph">
+                      <p><a href="/test161"><code>test161</code></a> is distributed as part of the <a href="https://www.ops-class.org/asst/toolchain/" className="noexternal"><code>ops-class.org</code> toolchain</a>, which is packaged for
+                        Ubuntu Linux 14.04 "Trusty". Install and upgrade it from the
+                        { " " }<a href="https://www.ops-class.org/asst/toolchain/#ppa" className="noexternal"><code>ops-class.org</code> PPA</a>:</p>
+                    </div>
+                    <div className="listingblock">
+                      <div className="content">
+                        <pre className="highlight"><code className="language-bash lang-bash" data-lang="bash">sudo add-apt-repository ppa:geoffrey-challen/os161-toolchain{"\n"}sudo apt-get update ; sudo apt-get install os161-toolchain</code></pre>
+                      </div>
                     </div>
                     <div className="paragraph">
-                      <p>Eventually <code>test161</code> will be distributed as part of the OS/161 toolchain,
-                        allowing you to install it from the
-                        { " " }<a href="https://launchpad.net/~geoffrey-challen/+archive/ubuntu/os161-toolchain/" target="_blank" className="external"><code>ops-class.org</code>{ " " }
-                          Launchpad PPA</a>. However, at the moment the installation is a bit more
-                        complicated.</p>
+                      <p>If you need an Ubuntu environment to develop OS/161, you
+                        may want to try our
+                        { " " }<a href="https://www.ops-class.org/asst/toolchain/#vagrant" className="noexternal"><code>ops-class.org</code> Vagrant virtual machine</a>.</p>
                     </div>
-                    <div className="sect3">
-                      { " " }<a className="anchor" id="_installing_go" /><h4>1.1.1. Installing Go</h4>
-                      <div className="paragraph">
-                        <p><code>test161</code> is written in <a href="https://golang.org/" target="_blank" className="external">Go</a> <span className="badge footnote default-tooltip" data-toggle="popover" data-placement="top" data-html="true" data-content="Which is awesome. <a href=&quot;https://tour.golang.org/&quot; target=&quot;_blank&quot; class=&quot;external&quot;>Learn it!</a>">1</span>. So to install <code>test161</code> you must first
-                          install Go.</p>
-                      </div>
-                      <div className="paragraph">
-                        <p>Unfortunately, most Linux distributions package a fairly out-of-date version
-                          of Go. However, Go has binary distributions prepared for
-                          { " " }<a href="https://golang.org/dl/" target="_blank" className="external">most programming environments</a>. <strong>But keep in mind that
-                            you need to install <code>test161</code> in the same environment where you compile and
-                            run your OS/161 kernel.</strong> So you should install Go there as well. Another
-                          option is to install Go from
-                          { " " }<a href="https://launchpad.net/~ubuntu-lxc/+archive/ubuntu/lxd-stable" target="_blank" className="external">this PPA</a> that
-                          maintains a more up-to-date version.</p>
-                      </div>
-                      <div className="paragraph">
-                        <p>Probably the best alternative <a href="https://github.com/moovweb/gvm" target="_blank" className="external">GVM, the Go
-                            Version Manager</a>, which can download, build, install, and manage multiple Go
-                          versions for you. We encourage you to use this excellent tool. GVM is very
-                          easy to install on the Ubuntu systems that we have packaged the OS/161
-                          toolchain for:</p>
-                      </div>
-                      <div className="listingblock noautohighlight">
-                        <div className="content">
-                          <pre className="highlight"><code>sudo apt-get install -y curl bison # Install installation requirements{"\n"}bash &lt; &lt;(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer){"\n"}source $HOME/.gvm/scripts/gvm</code></pre>
-                        </div>
-                      </div>
-                      <div className="paragraph">
-                        <p>At this point you are ready to start using GVM. We are currently building and
-                          testing <code>test161</code> with Go version <code>go1.5.3</code>. However, because the Go
-                          compiler is now written in Go, installing versions of Go past 1.5 require
-                          installing Go version 1.4 first.</p>
-                      </div>
-                      <div className="listingblock noautohighlight">
-                        <div className="content">
-                          <pre className="highlight"><code>gvm install go1.4{"\n"}gvm use 1.4{"\n"}gvm install go1.5.3{"\n"}gvm use 1.5.3 --default</code></pre>
-                        </div>
-                      </div>
-                      <div className="paragraph">
-                        <p>Once you have installed Go 1.6 you can remove Go 1.4 if you like:</p>
-                      </div>
-                      <div className="listingblock noautohighlight">
-                        <div className="content">
-                          <pre className="highlight"><code>gvm uninstall go1.4</code></pre>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="sect3">
-                      { " " }<a className="anchor" id="_setting_your_code_gopath_code" /><h4>1.1.2. Setting your <code>GOPATH</code></h4>
-                      <div className="paragraph">
-                        <p>Note that <code>gvm</code> will set your <code>GOPATH</code> and <code>PATH</code> variables properly to allow
-                          you to run Go binaries that you install. However, if you did not use GVM or
-                          are interested in writing Go code you should set a more accessible <code>GOPATH</code>{ " " }
-                          as described as <a href="https://golang.org/doc/code.html#GOPATH" target="_blank" className="external">described here.</a> If
-                          you do not set your <code>GOPATH</code> environment variable correctly the following
-                          steps will fail. And if you do not set your <code>PATH</code> environment variable to
-                          include the directory where Go installs binaries you will not be able to run
-                          <code>test161</code> from your path.</p>
-                      </div>
+                    <div className="paragraph">
+                      <p>If needed, <code>test161</code> can also be installed from sources. See the
+                        { " " }<a href="https://github.com/ops-class/test161/blob/master/README.adoc" target="_blank" className="external">README</a> for more
+                        details.</p>
                     </div>
                   </div>
                   <div className="sect2">
-                    { " " }<a className="anchor" id="_installing_code_test161_code" /><h3>1.2. Installing <code>test161</code></h3>
+                    { " " }<a className="anchor" id="_configuration" /><h3>1.2. Configuration</h3>
                     <div className="paragraph">
-                      <p>Once you have Go installed, upgrading or installing <code>test161</code> is simple:</p>
-                    </div>
-                    <div className="listingblock noautohighlight">
-                      <div className="content">
-                        <pre className="highlight"><code>go get -u github.com/ops-class/test161/test161</code></pre>
-                      </div>
-                    </div>
-                    <div className="paragraph">
-                      <p>If this completes successfully, and if have set your <code>GOPATH</code> and <code>PATH</code>{ " " }
-                        variables properly as described above, you will we able to run <code>test161</code>:</p>
+                      <p>Once you have installed <code>test161</code> you should be able to run it and see output
+                        like this:</p>
                     </div>
                     <div className="listingblock noautohighlight">
                       <div className="content">
                         <pre className="highlight"><code>$ test161{"\n"}{"\n"}{"    "}usage: test161{"  "}&lt;command&gt; &lt;flags&gt; &lt;args&gt;{"\n"}{"\n"}{"           "}test161 run [-dry-run | -r] [sequential | -s] [-dependencies | -d]{"\n"}{"                       "}[-verbose | -v (whisper|quiet|loud*)] [-tag] &lt;names&gt;{"\n"}...</code></pre>
                       </div>
                     </div>
-                  </div>
-                  <div className="sect2">
-                    { " " }<a className="anchor" id="_configuration" /><h3>1.3. Configuration</h3>
                     <div className="paragraph">
                       <p><code>test161</code> requires a configuration file to operate. You can create your
                         <code>.test161.conf</code> file either in your home directory—​which is probably best
@@ -287,7 +224,7 @@ IntroComponent = React.createClass({
                 { " " }<a className="anchor" id="_submitting_using_code_test161_code" /><h2>3. Submitting Using <code>test161</code></h2>
                 <div className="sectionbody">
                   <div className="paragraph lead">
-                    <p>Once you are happy with your score on each assignment <span className="badge footnote default-tooltip" data-toggle="popover" data-placement="top" data-html="true" data-content="Or with the deadline looming&#x2026;&#x200B;">2</span>, <code>test161</code> allows you to submit your assignments for
+                    <p>Once you are happy with your score on each assignment <span className="badge footnote default-tooltip" data-toggle="popover" data-placement="top" data-html="true" data-content="Or with the deadline looming&#x2026;&#x200B;">1</span>, <code>test161</code> allows you to submit your assignments for
                       automated grading.</p>
                   </div>
                   <div className="paragraph">
@@ -544,7 +481,7 @@ IntroComponent = React.createClass({
                         we have to interpret or run to make sure that you don’t try to damage our
                         server. We also overwrite all of the tests in <code>kern/test</code> with trusted code
                         to ensure that your kernel is running our tests and that you didn’t rewire
-                        the menu to try and trick the testing suite <span className="badge footnote default-tooltip" data-toggle="popover" data-placement="top" data-html="true" data-content="We have a few other tricks up our sleeve here, so I wouldn&#x2019;t bother trying to flummox the remote grader. Doing the assignment is probably easier.">3</span>.</p>
+                        the menu to try and trick the testing suite <span className="badge footnote default-tooltip" data-toggle="popover" data-placement="top" data-html="true" data-content="We have a few other tricks up our sleeve here, so I wouldn&#x2019;t bother trying to flummox the remote grader. Doing the assignment is probably easier.">2</span>.</p>
                     </div>
                   </div>
                   <div className="sect2">
@@ -576,7 +513,7 @@ IntroComponent = React.createClass({
                     { " " }<a className="anchor" id="_tests" /><h3>4.1. Tests</h3>
                     <div className="paragraph">
                       <p>The main <code>test161</code> configuration object is a test, which are stored in files
-                        with a <code>.t</code> extension <span className="badge footnote default-tooltip" data-toggle="popover" data-placement="top" data-html="true" data-content="In homage to the original <code>test161</code> tool that David wrote years ago that also used a <code>.t</code> extension.">4</span>. Here is an example
+                        with a <code>.t</code> extension <span className="badge footnote default-tooltip" data-toggle="popover" data-placement="top" data-html="true" data-content="In homage to the original <code>test161</code> tool that David wrote years ago that also used a <code>.t</code> extension.">3</span>. Here is an example
                         from <code>test161/synch/sem1.t</code>:</p>
                     </div>
                     <div className="listingblock noautohighlight">
@@ -753,8 +690,7 @@ IntroComponent = React.createClass({
                 <li className="h5"><a href="#top">1. Introduction</a>
                   <ul className="nav">
                     <li className="h6"><a href="#_installation">1.1. Installation</a></li>
-                    <li className="h6"><a href="#_installing_code_test161_code">1.2. Installing test161</a></li>
-                    <li className="h6"><a href="#_configuration">1.3. Configuration</a></li>
+                    <li className="h6"><a href="#_configuration">1.2. Configuration</a></li>
                   </ul>
                 </li>
                 <li className="h5"><a href="#_running_code_test161_code_targets">2. Running test161 Targets</a>

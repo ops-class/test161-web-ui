@@ -10,103 +10,41 @@ spelling_exceptions:
 == Introduction
 
 [.lead]
-`test161` is the OS/161 testing tool designed and implemented by
+{test161} is the OS/161 testing tool designed and implemented by
 https://blue.cse.buffalo.edu/people/shaseley/[Scott Haseley] and
 https://blue.cse.buffalo.edu/people/ychen78/[Yihong Chen]. It allows you both
 to test your assignments locally and submit them for remote evaluation.
 
-Below we run through how to install, configure, run, and use `test161`. While
+Below we run through how to install, configure, run, and use {test161}. While
 the specific testing target will change from assignment to assignment, we use
-link:/asst/1/[ASST1] below as an example. Note that this tutorial duplicates
-some information from the official `test161`
-https://github.com/ops-class/test161/blob/master/README.adoc[README] located
-on the project's https://github.com/ops-class/test161[GitHub page].
+{asst1} below as an example. Note that this tutorial duplicates some
+information from the `test161` {readme} located on the project's
+https://github.com/ops-class/test161[GitHub page].
 
 === Installation
 
-++++
-<div class="embed-responsive embed-responsive-16by9"
-		 style="margin-top:10px; margin-bottom:10px; border:1px solid grey">
-<div class="youtube-container" data-id="riGAGJx9tnw"></div>
-</div>
-++++
+{test161} is distributed as part of the {toolchain}, which is packaged for
+Ubuntu Linux 14.04 "Trusty". Install and upgrade it from the
+https://www.ops-class.org/asst/toolchain/#ppa[`ops-class.org` PPA, role="noexternal"]:
 
-Eventually `test161` will be distributed as part of the OS/161 toolchain,
-allowing you to install it from the
-https://launchpad.net/~geoffrey-challen/+archive/ubuntu/os161-toolchain/[`ops-class.org`
-Launchpad PPA]. However, at the moment the installation is a bit more
-complicated.
-
-==== Installing Go
-
-`test161` is written in https://golang.org/[Go] footnote:[Which is awesome.
-https://tour.golang.org/[Learn it!]]. So to install `test161` you must first
-install Go.
-
-Unfortunately, most Linux distributions package a fairly out-of-date version
-of Go. However, Go has binary distributions prepared for
-https://golang.org/dl/[most programming environments]. *But keep in mind that
-you need to install `test161` in the same environment where you compile and
-run your OS/161 kernel.* So you should install Go there as well. Another
-option is to install Go from
-https://launchpad.net/~ubuntu-lxc/+archive/ubuntu/lxd-stable[this PPA] that
-maintains a more up-to-date version.
-
-Probably the best alternative https://github.com/moovweb/gvm[GVM, the Go
-Version Manager], which can download, build, install, and manage multiple Go
-versions for you. We encourage you to use this excellent tool. GVM is very
-easy to install on the Ubuntu systems that we have packaged the OS/161
-toolchain for:
-
-[source,role='noautohighlight']
+[source,bash]
 ----
-sudo apt-get install -y curl bison # Install installation requirements
-bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
-source $HOME/.gvm/scripts/gvm
+sudo add-apt-repository ppa:geoffrey-challen/os161-toolchain
+sudo apt-get update ; sudo apt-get install os161-toolchain
 ----
 
-At this point you are ready to start using GVM. We are currently building and
-testing `test161` with Go version `go1.5.3`. However, because the Go
-compiler is now written in Go, installing versions of Go past 1.5 require
-installing Go version 1.4 first.
+If you need an Ubuntu environment to develop OS/161, you
+may want to try our
+https://www.ops-class.org/asst/toolchain/#vagrant[`ops-class.org` Vagrant virtual machine, role="noexternal"].
 
-[source,role='noautohighlight']
-----
-gvm install go1.4
-gvm use 1.4
-gvm install go1.5.3
-gvm use 1.5.3 --default
-----
+If needed, `test161` can also be installed from sources. See the
+https://github.com/ops-class/test161/blob/master/README.adoc[README] for more
+details.
 
-Once you have installed Go 1.6 you can remove Go 1.4 if you like:
+=== Configuration
 
-[source,role='noautohighlight']
-----
-gvm uninstall go1.4
-----
-
-==== Setting your `GOPATH`
-
-Note that `gvm` will set your `GOPATH` and `PATH` variables properly to allow
-you to run Go binaries that you install. However, if you did not use GVM or
-are interested in writing Go code you should set a more accessible `GOPATH`
-as described as https://golang.org/doc/code.html#GOPATH[described here.] If
-you do not set your `GOPATH` environment variable correctly the following
-steps will fail. And if you do not set your `PATH` environment variable to
-include the directory where Go installs binaries you will not be able to run
-`test161` from your path.
-
-=== Installing `test161`
-
-Once you have Go installed, upgrading or installing `test161` is simple:
-
-[source,role='noautohighlight']
-----
-go get -u github.com/ops-class/test161/test161
-----
-
-If this completes successfully, and if have set your `GOPATH` and `PATH`
-variables properly as described above, you will we able to run `test161`:
+Once you have installed `test161` you should be able to run it and see output
+like this:
 
 [source,role='noautohighlight']
 ----
@@ -118,8 +56,6 @@ $ test161
                        [-verbose | -v (whisper|quiet|loud*)] [-tag] <names>
 ...
 ----
-
-=== Configuration
 
 `test161` requires a configuration file to operate. You can create your
 `.test161.conf` file either in your home directory--which is probably best

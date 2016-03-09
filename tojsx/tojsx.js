@@ -53,7 +53,10 @@ fs.writeFileSync(path.join(argv._[1], 'views', 'navigation.jsx'), component);
 
 // Documentation
 var file = yaml_front_matter.loadFront(fs.readFileSync('test161.adoc'));
-file.contents = asciidoctor.$convert(file.__content.toString());
+var template = handlebars.compile(fs.readFileSync('asst.adoc').toString());
+file.contents = file.__content;
+file.contents = template(file);
+file.contents = asciidoctor.$convert(file.contents.toString());
 file.doSections = true;
 
 footnotes.doFootnotes(file);

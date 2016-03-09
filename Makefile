@@ -6,9 +6,10 @@ static: app/public/img app/public/fonts silent
 	@cp www/build/favicon.ico app/public/
 	@cp www/build/css/site.css app/public/css/
 	@cp www/build/js/site.js app/public/js/
-	@cd tojsx && node tojsx.js ../www/build/index.html ../app/client/
+	+make -C tojsx
 www:
-	@cd www && git pull origin master >/dev/null 2>&1 && make deploy
+	@cd www && git pull origin master >/dev/null 2>&1
+	+make -C www deploy
 app/public/%: www/build/% FORCE
 	@rsync -cr --exclude="**/slides/" $</ $@
 run:
