@@ -12,20 +12,29 @@ const getMyScore = (student, target_name) => {
   return res;
 }
 
+const MemberComponent = ({name, link}) => {
+  if (link) {
+    return (
+      <strong><a href={link} target="_blank">{name}</a></strong>
+    );
+  }
+  return (<strong>{name}</strong>);
+}
+
 const GroupComponent = React.createClass({
   render() {
     const { group } = this.props;
-    if (group.length == 1) {
-      return (
-        <strong>{group[0]}</strong>
-      );
-    } else if (group.length == 2) {
-      return (
-        <div>
-          <strong>{group[0]}</strong> and <strong>{group[1]}</strong>
-        </div>
-      );
-    }
+    const list = [];
+    let first = true;
+    group.map((member, index) => {
+      if (first) {
+        first = false;
+      } else {
+        list.push(<span key={index*2}> and </span>);
+      }
+      list.push(<MemberComponent {...member} key={index*2+1}/>);
+    })
+    return (<div>{list}</div>);
   }
 });
 
@@ -277,14 +286,13 @@ AssignmentComponent = React.createClass({
     const chart = new Highcharts.Chart(chartOptions);
   },
   render() {
-    const {target} = this.props;
+    const {target: {_id, print_name: title}} = this.props;
     const {ready, loading, leaders} = this.data
-    const title = target.print_name;
     if (!ready) {
       return (<LoadingComponent />);
     } else {
       return (
-        <div className="row" id={this.props._id}>
+        <div className="row" id={_id}>
           <div className="col-md-12">
             <h1>{title}</h1>
             <div id={this.state.container}></div>

@@ -150,6 +150,8 @@ Meteor.publish('performance', function({ _id: target_name, type }) {
     fields: {
       _id: 1,
       email: 1,
+      name: 1,
+      link: 1,
       privacy: 1
     }
   });

@@ -206,7 +206,9 @@ if (DEBUG) {
       const token = Random.id();
       const createdAt = new Date();
       const target_stats = [];
-      const student = {_id, userId, email, token, createdAt, target_stats, privacy};
+      const name = email.substring(0, 5);
+      const link = 'https://www.ops-class.org';
+      const student = {_id, userId, email, token, name, link, createdAt, target_stats, privacy};
       Students.insert(student);
     }
   }
