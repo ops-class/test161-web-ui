@@ -31,8 +31,7 @@ const ConfirmComponent = React.createClass({
     Meteor.call(method, {email, token}, (err, res) => {
       this.setState({processing: false});
       if (err) {
-        this.state.err = err;
-        this.setState(this.state);
+        this.setState({err});
       } else {
         this.modalDismiss();
       }
@@ -122,20 +121,20 @@ const TokenComponent = React.createClass({
 							value={token}
 							onChange={() => {}}
 							onClick={this.onMouseEnter}
-							placeholder="Your Token"/>
+        placeholder="Your Token"/>
 						<span className="input-group-btn">
 							<button className="btn btn-danger"
 								data-toggle="modal"
 								data-target="#tokenModal"
-								type="button">
+         type="button">
 								Regenerate
 							</button>
 						</span>
 
-					<ConfirmComponent {...student}
-						warning={'This will permanently change your token.'}
-						method={'regenerateToken'}
-						modalId={'tokenModal'}
+            <ConfirmComponent {...student}
+              warning={'This will permanently change your token.'}
+              method={'regenerateToken'}
+              modalId={'tokenModal'}
 						target={'Token'}
 					/>
 				</div>
@@ -182,13 +181,13 @@ const KeyContentComponent = React.createClass({
 						<button className="btn btn-success"
 							disabled={processing}
 							onClick={this.generatePublicKey}
-							type="button">
+        type="button">
 							{processing ?
 								<span className="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
 								:
 							null} Generate Initial Public Key
 						</button>
-					<hr />
+            <hr />
 					</div>
         </div>
 			);
@@ -205,7 +204,7 @@ const KeyContentComponent = React.createClass({
 						<button className="btn btn-danger"
 							data-toggle="modal"
 							data-target="#publicKeyModel"
-							type="button">
+        type="button">
 							Generate New Public Key
 						</button>
 					</div>
@@ -223,7 +222,7 @@ const PublicKeyComponent = React.createClass({
         <h2>Deployment Public Key</h2>
 
         <p><a href="/test161"><code>test161</code></a> needs a way to access your
-        Git repository during remote testing. To enable this, please generate a
+          Git repository during remote testing. To enable this, please generate a
           public key below and add it to your OS/161 repository as a
 					{" "}<em>deployment key</em>, following
 					{" "}<a href="/test161#_preparing_for_submission">these instructions</a>.
@@ -255,10 +254,10 @@ const SelectComponent = React.createClass({
     }
     this.setState({processing: true});
     Meteor.call('updatePrivacy', this.props, value, (err, res) => {
-      this.setState({processing: false});
       if (err) {
         console.log(err);
       }
+      this.setState({processing: false});
     })
   },
   render() {
@@ -347,6 +346,143 @@ const PrivacyComponent = React.createClass({
   }
 })
 
+const InformationComponent = React.createClass({
+  onMouseEnter(event) {
+    const target = event.target;
+    target.setSelectionRange(0, target.value.length)
+  },
+  modalDismiss({name, link}) {
+    this.setState({err: null, processing: false});
+    $(this.refs.name).val(name);
+    $(this.refs.link).val(link);
+    $(this.refs.close).click();
+  },
+  getInitialState() {
+    return {processing: false, invalidLink: false};
+  },
+  onChange(event) {
+    const link = event.target.value
+    if (link) {
+      const invalidLink = !link.match(SimpleSchema.RegEx.Url);
+      this.setState({invalidLink});
+    } else {
+      this.setState({invalidLink: false});
+    }
+  },
+  update() {
+    const {student: {email, token}} = this.props;
+    const name = this.refs.name.value;
+    const link = this.refs.link.value;
+    if (name === this.props.student.name && link === this.props.student.link) {
+      this.modalDismiss({name, link});
+      return;
+    }
+    this.setState({processing: true});
+    Meteor.call('updateProfile', {email, token, name, link}, (err, res) => {
+      if (err) {
+        this.setState({err});
+        console.log(err);
+      } else {
+        this.modalDismiss({name, link});
+      }
+      this.setState({processing: false});
+    })
+  },
+  render() {
+    const {student: {token, email, name, link}} = this.props;
+    const {processing, err, invalidLink} = this.state;
+    let errMessage = null;
+    if (err) {
+      const errContent = err.reason || err.message || err.error || 'Internal error';
+      errMessage = (
+        <div className="col-xs-12 alert alert-danger">
+          {errContent}
+        </div>
+      );
+    }
+    return (
+      <div>
+        <h2>Personal Information</h2>
+        <p>
+          <i className="glyphicon glyphicon-user"></i> {name ? name : 'Unknown'}
+        </p>
+        <p>
+          <i className="glyphicon glyphicon-envelope"></i> <a className="email"
+            href={`mailto:${email}`}>
+            {email}
+          </a>
+        </p>
+        {link ?
+          <p><i className="glyphicon glyphicon-link"></i> <a href={link} target="_blank">{link}</a> </p>
+          : null
+        }
+        <div className="btn btn-success"
+          data-toggle="modal"
+          data-target="#profileModel">
+          Edit Profile
+        </div>
+        <hr />
+        <div className="modal fade"
+          id="profileModel"
+          tabIndex="-1"
+          role="dialog">
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <button type="button"
+                  ref="close"
+                  className="close close-modal"
+                  data-dismiss="modal"
+                  aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 className="modal-title">
+                  Update Profile
+                </h4>
+              </div>
+              <div className="modal-body">
+                <form>
+                  <div className="form-group">
+                    <input type="text"
+                      ref="name"
+                      className="form-control"
+                      onClick={this.onMouseEnter}
+                      disabled={processing}
+                      defaultValue={name}
+                      placeholder="Your name"/>
+                  </div>
+                  <div className={invalidLink ? "form-group has-error" : "form-group"}>
+                    <input type="url"
+                      ref="link"
+                      className="form-control"
+                      onClick={this.onMouseEnter}
+                      disabled={processing}
+                      defaultValue={link}
+                      onChange={this.onChange}
+                      placeholder="Your link, leave empty to remove it"/>
+                  </div>
+                </form>
+            </div>
+              {errMessage}
+              <div className="modal-footer">
+                <button type="button"
+                  className="btn btn-default"
+                  data-dismiss="modal">Cancel</button>
+                <button type="button"
+                  onClick={this.update}
+                  disabled={processing || invalidLink}
+                  className="btn btn-danger">
+                  {processing ?
+                    <span className="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+                  : null} Update Profile
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+});
+
 ProfileComponent = React.createClass({
   render() {
     if (!this.props.student) {
@@ -357,6 +493,7 @@ ProfileComponent = React.createClass({
         <div className="row">
           <div className="col-md-12">
             <h1>Account Settings</h1>
+            <InformationComponent {...this.props} />
             <TokenComponent {...this.props} />
             <PublicKeyComponent {...this.props} />
             {isStaff(this.props.user) ?

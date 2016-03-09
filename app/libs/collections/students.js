@@ -91,6 +91,17 @@ StudentSchema = new SimpleSchema({
     maxCount: 2,
     optional: true
   },
+  name: {
+    type: String,
+    label: "Student name",
+    optional: true
+  },
+  link: {
+    type: String,
+    label: "Student link",
+    regEx: SimpleSchema.RegEx.Url,
+    optional: true
+  },
   debug: {
     type: Boolean,
     label: "Debug",
