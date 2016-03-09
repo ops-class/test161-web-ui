@@ -50,19 +50,23 @@ const PerfectScoreComponent = React.createClass({
       );
     }
     let extra = 0;
+    let extra_left = [];
     if (list.length > topSize) {
       extra = list.length - topSize;
       extra_left = list.slice(topSize, topSize + extra / 2);
       extra_right = list.slice(topSize + extra / 2);
       right_start = topSize + extra / 2 + 1;
       list = list.slice(0, topSize);
-    } 
+    }
     if (list.length > 8) {
       list_left = list.slice(0, topSize / 2);
       list_right = list.slice(topSize / 2);
+    } else {
+      list_left = list;
+      list_right = [];
     }
     const accordion = "accordion_" + title;
-    if (extra_left.length == 0) {
+    if (extra_left.length === 0) {
       return (
         <div>
           <div className="alert alert-success text-center" role="alert">
@@ -105,7 +109,7 @@ const PerfectScoreComponent = React.createClass({
             </div>
           </div>
           <div className="panel-group" id={"accordion_" + title}
-               role="tablist" aria-multiselectable="true">
+            role="tablist" aria-multiselectable="true">
             <div className="panel panel-default">
               <div className="panel-heading" role="tab">
                 <h4 className="panel-title">
@@ -148,7 +152,7 @@ AssignmentComponent = React.createClass({
     if (handle.ready()) {
       const leaders = Leaders.find(
         { target: target._id },
-        { sort: { score : -1 } }
+        { sort: { score : -1, submission_time: -1 } }
       ).fetch();
       data.scores = (Leaders.findOne({_id: target._id}) || {}).scores;
       data.leaders = leaders;
