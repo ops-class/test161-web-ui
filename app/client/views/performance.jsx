@@ -26,8 +26,8 @@ const PerfectScoreComponent = React.createClass({
         <tr key={_id}>
           {/*{notSame ? <td>{order}</td> : <td></td>}*/}
           <td>{order}</td>
-          <td>{group[0]}</td>
-          <td>{group[1]}</td>
+          <td>{group[0].name}</td>
+          <td>{group[1] && group[1].name}</td>
           <td>{performance}</td>
         </tr>
       )
