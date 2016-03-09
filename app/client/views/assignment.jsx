@@ -26,13 +26,13 @@ const GroupComponent = React.createClass({
     const { group } = this.props;
     const list = [];
     let first = true;
-    group.map(x => {
+    group.map((member, index) => {
       if (first) {
         first = false;
       } else {
-        list.push(<span> and </span>);
+        list.push(<span key={index*2}> and </span>);
       }
-      list.push(<MemberComponent {...x}/>);
+      list.push(<MemberComponent {...member} key={index*2+1}/>);
     })
     return (<div>{list}</div>);
   }
