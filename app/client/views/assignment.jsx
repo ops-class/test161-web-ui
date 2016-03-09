@@ -13,20 +13,20 @@ const getMyScore = (student, target_name) => {
 }
 
 const GroupComponent = React.createClass({
-	render() {
-		const { group } = this.props;
+  render() {
+    const { group } = this.props;
     if (group.length == 1) {
       return (
-				<strong>{group[0]}</strong>
-			);
+        <strong>{group[0]}</strong>
+      );
     } else if (group.length == 2) {
       return (
-				<div>
-					<strong>{group[0]}</strong> and <strong>{group[1]}</strong>
-				</div>
-			);
+        <div>
+          <strong>{group[0]}</strong> and <strong>{group[1]}</strong>
+        </div>
+      );
     }
-	}
+  }
 });
 
 const PerfectScoreComponent = React.createClass({
@@ -35,106 +35,106 @@ const PerfectScoreComponent = React.createClass({
     return this.refs.details;
   },
   render() {
-		const topSize = 16;
+    const topSize = 16;
     const {leaders, title} = this.props;
     const {hide, disabled} = this.state;
     if (!leaders || leaders.length === 0) {
       return null;
     }
     let list = [];
-		const group_string = (leaders.length == 1) ? 'group' : 'groups';
+    const group_string = (leaders.length == 1) ? 'group' : 'groups';
     for (let [index, elem] of leaders.entries()) {
       let {score, group} = elem;
       list.push(
-				<li key={index} className="h5"><GroupComponent {...{group}}/></li>
+        <li key={index} className="h5"><GroupComponent {...{group}}/></li>
       );
     }
-		let extra = 0;
-		if (list.length > topSize) {
-			extra = list.length - topSize;
-			extra_left = list.slice(topSize, topSize + extra / 2);
-			extra_right = list.slice(topSize + extra / 2);
-			right_start = topSize + extra / 2 + 1;
-			list = list.slice(0, topSize);
-		}	
-		if (list.length > 8) {
-			list_left = list.slice(0, topSize / 2);
-			list_right = list.slice(topSize / 2);
-		}
-		const accordion = "accordion_" + title;
-		if (extra_left.length == 0) {
-			return (
-				<div>
-					<div className="alert alert-success text-center" role="alert">
-						<span className="h3">
-							{leaders.length} {group_string} earned a perfect score on {title}!
-						</span>
-					</div>
-					<div className="row">
-						<div className="col-md-6">
-							<ol>
-								{list_left}
-							</ol>
-						</div>
-						<div className="col-md-6">
-							<ol start="9">
-								{list_right}
-							</ol>
-						</div>
-					</div>
-				</div>
-			);
-		} else {
-			return (
-				<div>
-					<div className="alert alert-success text-center" role="alert">
-						<span className="h3">
-							{leaders.length} {group_string} earned a perfect score on {title}!
-						</span>
-					</div>
-					<div className="row">
-						<div className="col-md-6">
-							<ol>
-								{list_left}
-							</ol>
-						</div>
-						<div className="col-md-6">
-							<ol start="9">
-								{list_right}
-							</ol>
-						</div>
-					</div>
-					<div className="panel-group" id={"accordion_" + title}
-							 role="tablist" aria-multiselectable="true">
-						<div className="panel panel-default">
-							<div className="panel-heading" role="tab">
-								<h4 className="panel-title">
-									<a className="collapsed" role="button" data-toggle="collapse"
-										data-parent={"#accordion_" + title}
-										href={"#collapse_" + title}
-										aria-expanded="false" aria-controls={"collapse_" + title}>
-										Show {extra} More
-									</a>
-								</h4>
-							</div>
-							<div id={"collapse_" + title} className="panel-collapse collapse" role="tabpanel">
-								<div className="panel-body">
-									<div className="row">
-										<div className="col-md-6">
-											<ol start="17">{extra_left}</ol>
-										</div>
-										<div className="col-md-6">
-											<ol start={right_start}>{extra_right}</ol>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			);
-		}
-	}
+    let extra = 0;
+    if (list.length > topSize) {
+      extra = list.length - topSize;
+      extra_left = list.slice(topSize, topSize + extra / 2);
+      extra_right = list.slice(topSize + extra / 2);
+      right_start = topSize + extra / 2 + 1;
+      list = list.slice(0, topSize);
+    } 
+    if (list.length > 8) {
+      list_left = list.slice(0, topSize / 2);
+      list_right = list.slice(topSize / 2);
+    }
+    const accordion = "accordion_" + title;
+    if (extra_left.length == 0) {
+      return (
+        <div>
+          <div className="alert alert-success text-center" role="alert">
+            <span className="h3">
+              {leaders.length} {group_string} earned a perfect score on {title}!
+            </span>
+          </div>
+          <div className="row">
+            <div className="col-md-6">
+              <ol>
+                {list_left}
+              </ol>
+            </div>
+            <div className="col-md-6">
+              <ol start="9">
+                {list_right}
+              </ol>
+            </div>
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <div className="alert alert-success text-center" role="alert">
+            <span className="h3">
+              {leaders.length} {group_string} earned a perfect score on {title}!
+            </span>
+          </div>
+          <div className="row">
+            <div className="col-md-6">
+              <ol>
+                {list_left}
+              </ol>
+            </div>
+            <div className="col-md-6">
+              <ol start="9">
+                {list_right}
+              </ol>
+            </div>
+          </div>
+          <div className="panel-group" id={"accordion_" + title}
+               role="tablist" aria-multiselectable="true">
+            <div className="panel panel-default">
+              <div className="panel-heading" role="tab">
+                <h4 className="panel-title">
+                  <a className="collapsed" role="button" data-toggle="collapse"
+                    data-parent={"#accordion_" + title}
+                    href={"#collapse_" + title}
+                    aria-expanded="false" aria-controls={"collapse_" + title}>
+                    Show {extra} More
+                  </a>
+                </h4>
+              </div>
+              <div id={"collapse_" + title} className="panel-collapse collapse" role="tabpanel">
+                <div className="panel-body">
+                  <div className="row">
+                    <div className="col-md-6">
+                      <ol start="17">{extra_left}</ol>
+                    </div>
+                    <div className="col-md-6">
+                      <ol start={right_start}>{extra_right}</ol>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+  }
 });
 
 AssignmentComponent = React.createClass({
@@ -278,13 +278,16 @@ AssignmentComponent = React.createClass({
     const title = target.print_name;
     if (!ready) {
       return (<LoadingComponent />);
+    } else {
+      return (
+        <div className="row" id={this.props._id}>
+          <div className="col-md-12">
+            <h1>{title}</h1>
+            <div id={this.state.container}></div>
+            <PerfectScoreComponent {...{title, leaders}}/>
+          </div>
+        </div>
+      );
     }
-    return (
-      <div className="row" id={target._id}>
-        <h1>{title}</h1>
-        <div id={this.state.container}></div>
-        <PerfectScoreComponent {...{title, leaders}}/>
-      </div>
-    )
   }
 });
