@@ -73,7 +73,7 @@ PerformanceComponent = React.createClass({
     if (handle.ready()) {
       const leaders = Leaders.find(
         { target: target._id },
-        { sort: { performance: 1 } }
+        { sort: { performance: 1, submission_time: -1 } }
       ).fetch();
       data.leaders = leaders;
       data.performances = (Leaders.findOne({_id: target._id})||{}).performances;

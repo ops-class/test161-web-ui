@@ -61,7 +61,7 @@ filterAggregate = (e, target_name, type, value) => {
   for (let student of students) {
     const {email} = student;
     let name = null;
-    for (let submission of privacyArray) {
+    for (let submission of values) {
       const newName = getStudentName(student, submission, type);
       if (newName === email || (newName === ANONYMOUS && name !== email)) {
         name = newName;

@@ -22,6 +22,7 @@ Meteor.publish('performance', function({ _id: target_name, type }) {
 
   const pipeline = [
     { $match: selector },
+    { $sort: { submission_time: 1 } },
     {
       $project: {
         _id: 1,
@@ -29,6 +30,7 @@ Meteor.publish('performance', function({ _id: target_name, type }) {
         target_name: 1,
         performance: 1,
         privacyObj: {
+          submission_time: "$submission_time",
           value: "$performance",
           privacy: "$privacy"
         }
