@@ -19,6 +19,7 @@ Meteor.publish('leaderboards', function({ _id: target_name, type, points }) {
 
   const pipeline = [
     { $match: selector },
+    { $sort: { submission_time: 1 } },
     {
       $project: {
         _id: 1,
@@ -26,6 +27,7 @@ Meteor.publish('leaderboards', function({ _id: target_name, type, points }) {
         target_name: 1,
         score: 1,
         privacyObj: {
+          submission_time: "$submission_time",
           value: "$score",
           privacy: "$privacy"
         }

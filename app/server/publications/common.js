@@ -24,26 +24,27 @@ isAnonymous = (privacy, type) => {
   }
 }
 
-const getStudentName = (student, values, type, target_name) => {
+const getStudentName = (student, submission, type) => {
   const {email} = student;
-  const privacySet = new Set(values.filter(x => x.type === email).map(x => x.choice));
-  if (privacySet.size === 0) {
-    if (isHide(student.privacy, type)) {
-      return null;
-    }
-    if (isAnonymous(student.privacy, type)) {
-      return ANONYMOUS;
-    } else {
+  const {privacy = []} = submission;
+  const localPrivacy = privacy.find(x => x.type === email);
+  if (localPrivacy) {
+    if (localPrivacy.choice === SHOW) {
       return email;
     }
+    if (localPrivacy.choice === ANONYMOUS) {
+      return ANONYMOUS;
+    }
+    return null;
   }
-  if (privacySet.has(SHOW)) {
+  if (isHide(student.privacy, type)) {
+    return null;
+  }
+  if (isAnonymous(student.privacy, type)) {
+    return ANONYMOUS;
+  } else {
     return email;
   }
-  if (privacySet.has(ANONYMOUS)) {
-    return ANONYMOUS;
-  }
-  return null;
 }
 
 const isStaff = ({email}, userObjects) => {
@@ -55,10 +56,18 @@ filterAggregate = (e, target_name, type, value) => {
   const {_id: users, privacyArray = [], students, userObjects = []} = e;
   e._id = hash(users.join(', ') + target_name);
   e.group = [];
-  let values = privacyArray.filter(x => x.privacy && x.value === value);
-  values = [].concat(...values.map(x => x.privacy));
+
+  let values = privacyArray.filter(x => x.value === value);
   for (let student of students) {
-    const name = getStudentName(student, values, type, target_name);
+    const {email} = student;
+    let name = null;
+    for (let submission of privacyArray) {
+      const newName = getStudentName(student, submission, type);
+      if (newName === email || (newName === ANONYMOUS && name !== email)) {
+        name = newName;
+        e.submission_time = submission.submission_time;
+      }
+    }
     if (name) {
       if (isStaff(student, userObjects)) {
         e.group.push(name + ' (staff)');
@@ -69,7 +78,6 @@ filterAggregate = (e, target_name, type, value) => {
       return null;
     }
   }
-  // e.group = e.group.join(', ');
   delete e.userObjects;
   delete e.students;
   delete e.privacyArray;
