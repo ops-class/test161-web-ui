@@ -140,6 +140,8 @@ Meteor.publish('leaderboards', function({ _id: target_name, type, points }) {
     fields: {
       _id: 1,
       email: 1,
+      name: 1,
+      link: 1,
       privacy: 1
     }
   });
