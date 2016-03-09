@@ -30,173 +30,221 @@ https://www.ops-class.org/asst/toolchain/#ppa[`ops-class.org` PPA, role="noexter
 [source,bash]
 ----
 sudo add-apt-repository ppa:geoffrey-challen/os161-toolchain
-sudo apt-get update ; sudo apt-get install os161-toolchain
+sudo apt-get update
+sudo apt-get install os161-toolchain
+# sudo apt-get install test161 # If you don't want the entire toolchain
 ----
 
 If you need an Ubuntu environment to develop OS/161, you
 may want to try our
 https://www.ops-class.org/asst/toolchain/#vagrant[`ops-class.org` Vagrant virtual machine, role="noexternal"].
 
-If needed, `test161` can also be installed from sources. See the
+If needed, {test161} can also be installed from sources. See the
 https://github.com/ops-class/test161/blob/master/README.adoc[README] for more
 details.
 
-=== Configuration
-
-Once you have installed `test161` you should be able to run it and see output
+Once you have installed {test161} you should be able to run it and see output
 like this:
 
 [source,role='noautohighlight']
 ----
 $ test161
+usage:
+    test161  <command> <flags> <args>
 
-    usage: test161  <command> <flags> <args>
+    test161 run [-dry-run | -d] [-explain | -x] [sequential | -s]
+                [-no-dependencies | -n] [-verbose | -v (whisper|quiet|loud*)]
+                [-tag] <names>
 
-           test161 run [-dry-run | -r] [sequential | -s] [-dependencies | -d]
-                       [-verbose | -v (whisper|quiet|loud*)] [-tag] <names>
-...
+    test161 submit [-debug] [-verify] [-no-cache] <target> <commit>
+
+    test161 list (targets|tags|tests) [-remote | -r]
+
+    test161 config [-debug] [(add-user|del-user|change-token)] <username> <token>
+
+    test161 version
+
+    test161 help for a detailed commands description
 ----
 
-`test161` requires a configuration file to operate. You can create your
-`.test161.conf` file either in your home directory--which is probably best
-for most users--or in your OS/161 root directory where you run `test161`.
+=== Environment Inference
 
-If you run `test161 run` without a configuration file an example will be
-displayed on screen. You can save this output as `~/.test161.conf` and edit
-it appropriately. For local testing your configuration file only needs to
-tell `test161` where to find your OS/161 root directory and where to find the
-`test161` target, test, and command files. Here's an example that works in
-the OS/161 Vagrant VM that we provide:
+To run and submit your OS/161 kernel, {test161} needs to be able to find your
+OS/161 sources and the root directory where your kernel is installed.
+If you are using the {ops-class}
+https://www.ops-class.org/asst/toolchain/#os161[OS/161 sources,role="noexternal"], 
+this will happen automatically.
+If you are not, you will need to merge our changes to `mk/os161.kernel.mk`,
+specifically
+https://github.com/ops-class/os161/commit/3ab7073fc255dcc17d559485ae6a54c888c72766[this
+commit].
+It should be straightforward to merge into OS/161 sources provided by other
+schools footnote:[And please encourage your instructor to incorporate this
+useful change. Or better yet, help us use and maintain the {ops-class} OS/161
+sources.].
 
-[source,role='noautohighlight']
-----
-rootdir: /home/trinity/root/
-test161dir: /home/trinity/src/test161/
-----
-
-We'll add more values to the `.test161.conf` file later when we set up
-`test161` to submit your assignment for grading.
-
-*Note that the `test161.conf` file is in http://yaml.org/[YAML] syntax and
-that YAML doesn't like tabs.* You may want to disable tab expansion when
-editing your `.test161.conf` file if your normal editor performs it.
-
-== Running `test161` Targets
-
-++++
-<div class="embed-responsive embed-responsive-16by9"
-		 style="margin-top:10px; margin-bottom:10px; border:1px solid grey">
-<div class="youtube-container" data-id="rPVtuUz1w5I"></div>
-</div>
-++++
+== Running {test161} Targets
 
 [.lead]
 `test161` is a very flexible tool and can rapidly run one or many tests and
 evaluate their output.
 
+In this section we show you how to obtain and run {test161} targets.
+
+=== Obtaining {test161} Configuration Files
+
+{test161} uses a http://yaml.org[YAML]-based configuration system. To run the
+following targets, you will need configuration files for {test161} installed
+in a `test161` subdirectory at the base of your OS/161 sources.
+Again, if you are using the {ops-class}
+https://www.ops-class.org/asst/toolchain/#os161[OS/161 sources,role="noexternal"]
+you will already have this directory.
+
+If not, you can easily add the
+https://github.com/ops-class/test161-conf[`test161` configuration] to your
+existing OS/161 sources:
+
+[source,bash]
+----
+cd <your OS/161 source directory>
+git clone https://github.com/ops-class/test161-conf/ test161
+rm -rf test161/.git
+# Do whatever you need to do to add the files to your version control system.
+# Alternatively, use a Git submodule if your repository is using Git.
+----
+
+=== Running {test161}
+
 For this example, we'll assume that you want to run all tests for ASST1 and
-perform grading. To do that, you provide the `asst1` target as the argument
-to `test161 run`. Here's what happens when we run it on the base sources
-downloaded from the https://github.com/ops-class/os161[`ops-class.org` OS/161
-GitHub repository]:
+perform grading. To do that, you provide the `asst1` target as the argument to
+`test161 run`. Once you've built and installed an OS/161 kernel, here's what
+happens when we run it on the base
+https://github.com/ops-class/os161[`ops-class.org` OS/161 sources]:
 
 [source,role='noautohighlight']
 ----
 $ test161 run asst1
-0.000000	sys161: System/161 release 2.0.6, compiled Feb 16 2016 01:44:26
-0.014289
-0.014289	OS/161 base system version 2.0.1
-0.014289	Copyright (c) 2000, 2001-2005, 2008-2011, 2013, 2014
-0.014289	   President and Fellows of Harvard College.  All rights reserved.
-0.236243
-0.236243	Put-your-group-name-here's system version 0 (ASST1 #2)
-0.266461
-0.266461	756k physical memory available
-0.286483	Device probe...
-0.286483	lamebus0 (system main bus)
-...
-2.965587	Operation took 0.018019320 seconds
-2.991262	OS/161 kernel [? for menu]:
-2.849897	OS/161 kernel [? for menu]:
-2.844126	OS/161 kernel [? for menu]:
-3.026152	cvt3: Should panic...
-3.036162	cvt3: FAIL
-3.046057	OS/161 kernel [? for menu]:
-3.036162	Operation took 0.053904920 seconds
-3.076270	OS/161 kernel [? for menu]:
-2.914384	lt1: FAIL
-2.914384	Operation took 0.087485440 seconds
-2.934525	OS/161 kernel [? for menu]:
-Test                             Result       Score
-------------------------------   ----------   ----------
-boot.t                           correct      0/0
-sync/rwt5.t                      incorrect    0/1
-sync/rwt4.t                      incorrect    0/1
-sync/rwt3.t                      incorrect    0/1
-sync/cvt4.t                      incorrect    0/1
-sync/rwt1.t                      incorrect    0/5
-sync/rwt2.t                      incorrect    0/2
-sync/lt2.t                       incorrect    0/1
-sync/lt3.t                       incorrect    0/1
-sync/cvt3.t                      incorrect    0/1
-sync/lt1.t                       incorrect    0/8
-sync/cvt1.t                      skip         0/4
-syncprobs/sp2.t                  skip         0/10
-sync/cvt2.t                      skip         0/4
-syncprobs/sp1.t                  skip         0/10
+[boot.t          ]      0.000000        sys161: System/161 release 2.0.8, compiled Mar  2 2016 17:16:01
+[boot.t          ]      0.006289
+[boot.t          ]      0.006289        OS/161 base system version 2.0.1
+[boot.t          ]      0.006289        Copyright (c) 2000, 2001-2005, 2008-2011, 2013, 2014
+[boot.t          ]      0.006289           President and Fellows of Harvard College.  All rights reserved.
+[boot.t          ]      0.227285
+[boot.t          ]      0.227285        Put-your-group-name-here's system version 0 (DUMBVM #2)
+[boot.t          ]      0.267567
+[boot.t          ]      0.267567        764k physical memory available
+[boot.t          ]      0.287666        Device probe...
+[boot.t          ]      0.297720        lamebus0 (system main bus)
+[boot.t          ]      0.317862        emu0 at lamebus0
+[boot.t          ]      0.327908        ltrace0 at lamebus0
+[boot.t          ]      0.337925        ltimer0 at lamebus0
+[boot.t          ]      0.347946        beep0 at ltimer0
+[boot.t          ]      0.358038        rtclock0 at ltimer0
+[boot.t          ]      0.378165        lrandom0 at lamebus0
+[boot.t          ]      0.388208        random0 at lrandom0
+[boot.t          ]      0.398299        lhd0 at lamebus0
+[boot.t          ]      0.408364        lser0 at lamebus0
+[boot.t          ]      0.418427        con0 at lser0
+[boot.t          ]      0.428477
+[boot.t          ]      0.428477        cpu0: MIPS/161 (System/161 2.x) features 0x0
+[boot.t          ]      0.458668        2 CPUs online
+[boot.t          ]      0.458668        OS/161 kernel [? for menu]: 
+[boot.t          ]      0.730138
+[boot.t          ]      0.740156        Shutting down.
+[boot.t          ]      0.740156        The system is halted.
+[boot.t          ]      0.750199        sys161: 26551578 cycles (12701612 run, 13849966 global-idle)
+[boot.t          ]      0.750199        sys161:   cpu0: 4714252 kern, 0 user, 135235 idle; 7626 ll, 7626/0 sc, 21863 sync
+[boot.t          ]      0.750199        sys161:   cpu1: 312156 kern, 0 user, 4537331 idle; 7 ll, 7/0 sc, 15 sync
+[boot.t          ]      0.750199        sys161: 1146 irqs 0 exns 0r/0w disk 2r/597w console 0r/0w/1m emufs 0r/0w net
+[boot.t          ]      0.750199        sys161: Elapsed real time: 0.166175 seconds (159.781 mhz)
+[boot.t          ]      0.750199        sys161: Elapsed virtual time: 0.752267915 seconds (25 mhz)
+[boot.t          ]      0.750199        shutdown: normal shutdown
+[synch/rwt4.t    ]      0.000000        sys161: System/161 release 2.0.8, compiled Mar  2 2016 17:16:01
+[synch/lt3.t     ]      0.000000        sys161: System/161 release 2.0.8, compiled Mar  2 2016 17:16:01
+[synch/sem1.t    ]      0.000000        sys161: System/161 release 2.0.8, compiled Mar  2 2016 17:16:01
+[synch/lt2.t     ]      0.000000        sys161: System/161 release 2.0.8, compiled Mar  2 2016 17:16:01
+[synch/rwt3.t    ]      0.000000        sys161: System/161 release 2.0.8, compiled Mar  2 2016 17:16:01
+[synch/rwt5.t    ]      0.000000        sys161: System/161 release 2.0.8, compiled Mar  2 2016 17:16:01
+[synch/rwt4.t    ]      0.006289
+[synch/lt3.t     ]      0.006289
+[synch/lt2.t     ]      0.006289
+[synch/rwt3.t    ]      0.006289
+[synch/rwt5.t    ]      0.006289
+[synch/rwt4.t    ]      0.006289        OS/161 base system version 2.0.1
+[synch/lt3.t     ]      0.006289        OS/161 base system version 2.0.1
+[synch/lt2.t     ]      0.006289        OS/161 base system version 2.0.1
+[synch/rwt3.t    ]      0.006289        OS/161 base system version 2.0.1
 
-Total Correct  : 1/15
-Total Incorrect: 10/15
-Total Aborted  : 4/15
+# ... lots of output omitted ...
+
+Test                             Result                Memory Leaks        Score
+------------------------------   -------------------   ------------   ----------
+boot.t                           correct                        ---          0/0
+synch/sem1.t                     correct                        ---          0/0
+synch/lt2.t                      incorrect                      ---          0/1
+synch/lt3.t                      incorrect                      ---          0/1
+synch/lt1.t                      incorrect                      ---          0/8
+synch/cvt2.t                     skip (synch/lt2.t)             ---          0/3
+synch/cvt3.t                     skip (synch/lt1.t)             ---          0/1
+synch/cvt5.t                     skip (synch/lt2.t)             ---          0/1
+synch/cvt1.t                     skip (synch/lt2.t)             ---          0/4
+synch/cvt4.t                     skip (synch/lt2.t)             ---          0/1
+synch/rwt4.t                     incorrect                      ---          0/1
+synch/rwt3.t                     incorrect                      ---          0/1
+synch/rwt1.t                     incorrect                      ---          0/5
+synch/rwt2.t                     skip (synch/cvt2.t)            ---          0/2
+synch/rwt5.t                     incorrect                      ---          0/1
+synchprobs/sp2.t                 skip (synch/lt1.t)             ---         0/10
+synchprobs/sp1.t                 skip (synch/lt2.t)             ---         0/10
+
+Total Correct  : 2/17
+Total Incorrect: 7/17
+Total Skipped  : 8/17
 
 Total Score    : 0/50
 ----
 
-As you can see, `test161` has rapidly generated a lot of useful output while
-also giving our base sources the score they deserve on link:/asst/1[ASST1]:
-0/50! Let's quickly go through the two mains parts of the `test161` output.
+As you can see, {test161} has rapidly generated a lot of useful output while
+also giving our base sources the score they deserve on {asst1}: 0/50! Let's
+quickly go through the two mains parts of the {test161} output.
 
 === `sys161` Output
 
-To speed execution, `test161` runs multiple tests in parallel. As a result,
+To speed execution, {test161} runs multiple tests in parallel. As a result,
 test output is interleaved at parts of the testing suite where multiple tests
-are being run. At the beginning of the ASST1 test suite only the boot test is
-being performed because all other tests depend on it, so the output is not
+are being run. At the beginning of the {asst1} test suite only the boot test
+is being performed because all other tests depend on it, so the output is not
 interleaved. However, at the end several tests are being run in parallel and
-so the output is interleaved.
-
-This can be difficult to interpret, so `test161 run` provides a `-s` option.
-This does not effect parallel testing, which `test161` will still perform
-when the dependency graph allows it. However, it does make the output
-sequential and easier to read.
+so the output is interleaved. Output prefixes show what test generated each
+output line.  This can be difficult to interpret, so `test161 run` provides a
+`-s` option which performs sequential testing.
 
 === Test Status
 
-Following the test output `test161` prints a summary detailing what tests
-were performed and, if appropriate, how they were scored. Scoring is optional
-and only performed when using certain targets.
+Following the test output {test161} prints a summary detailing what tests were
+performed and, if appropriate, how they were scored. Scoring is optional and
+only performed when using certain targets.
 
 In the example above, the output shows that `boot.t` ran correctly but earned
-no points. That is because the kernel booted but this was not worth any
-points for ASST1. However, if the kernel had not booted the rest of the tests
-would have been skipped. In this case, `boot.t` was run because it was
-specified as a _dependency_ by other tests that were included as part of the
-ASST1 target. `test161` can automatically run test dependencies when
-appropriate.
+no points. That is because the kernel booted but this was not worth any points
+for {asst1}. However, if the kernel had not booted the rest of the tests would
+have been skipped. In this case, `boot.t` was run because it was specified as
+a _dependency_ by other tests that were included as part of the {asst1}
+target. {test161} can automatically run test dependencies when appropriate.
 
-For the next 10 tests above `test161` reports that they did not complete
+For the next 10 tests above {test161} reports that they did not complete
 correctly. Again, this is unsurprising given that the base OS/161 sources do
-not include working locks, condition variables, or reader-writer locks. As
-you complete portions of each assignment you will notice that your score will
+not include working locks, condition variables, or reader-writer locks. As you
+complete portions of each assignment you will notice that your score will
 increase.
 
-For the final 4 tests `test161` reports them as being skipped. This was
+For the final 4 tests {test161} reports them as being skipped. This was
 because their dependencies were not met. For example, the condition-variable
 tests `cvt{1,2}` depend on working locks, and these locks did not work.
 Similarly, both the stoplight and whale mating synchronization test drivers
 rely on working locks.
 
-=== Running Single `test161` Tests
+=== Running Single {test161} Tests
 
 In our example above `test161` was used to run a _target_, which configures a
 set of tests to be run and maps test results to point values. If you are

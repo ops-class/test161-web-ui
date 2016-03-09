@@ -12,13 +12,13 @@ IntroComponent = React.createClass({
                 { " " }<a className="anchor" id="_introduction" /><h2>1. Introduction</h2>
                 <div className="sectionbody">
                   <div className="paragraph lead">
-                    <p><a href="/test161"><code>test161</code></a> is the OS/161 testing tool designed and implemented by
+                    <p><code>test161</code> is the OS/161 testing tool designed and implemented by
                       { " " }<a href="https://blue.cse.buffalo.edu/people/shaseley/" target="_blank" className="external">Scott Haseley</a> and
                       { " " }<a href="https://blue.cse.buffalo.edu/people/ychen78/" target="_blank" className="external">Yihong Chen</a>. It allows you both
                       to test your assignments locally and submit them for remote evaluation.</p>
                   </div>
                   <div className="paragraph">
-                    <p>Below we run through how to install, configure, run, and use <a href="/test161"><code>test161</code></a>. While
+                    <p>Below we run through how to install, configure, run, and use <code>test161</code>. While
                       the specific testing target will change from assignment to assignment, we use
                       { " " }<a href="https://www.ops-class.org/asst/1/" className="noexternal">ASST1</a> below as an example. Note that this tutorial duplicates some
                       information from the <code>test161</code> <a href="https://github.com/ops-class/test161/blob/master/README.adoc" target="_blank" className="external">README</a> located on the project’s
@@ -27,13 +27,13 @@ IntroComponent = React.createClass({
                   <div className="sect2">
                     { " " }<a className="anchor" id="_installation" /><h3>1.1. Installation</h3>
                     <div className="paragraph">
-                      <p><a href="/test161"><code>test161</code></a> is distributed as part of the <a href="https://www.ops-class.org/asst/toolchain/" className="noexternal"><code>ops-class.org</code> toolchain</a>, which is packaged for
+                      <p><code>test161</code> is distributed as part of the <a href="https://www.ops-class.org/asst/toolchain/" className="noexternal"><code>ops-class.org</code> toolchain</a>, which is packaged for
                         Ubuntu Linux 14.04 "Trusty". Install and upgrade it from the
                         { " " }<a href="https://www.ops-class.org/asst/toolchain/#ppa" className="noexternal"><code>ops-class.org</code> PPA</a>:</p>
                     </div>
                     <div className="listingblock">
                       <div className="content">
-                        <pre className="highlight"><code className="language-bash lang-bash" data-lang="bash">sudo add-apt-repository ppa:geoffrey-challen/os161-toolchain{"\n"}sudo apt-get update ; sudo apt-get install os161-toolchain</code></pre>
+                        <pre className="highlight"><code className="language-bash lang-bash" data-lang="bash">sudo add-apt-repository ppa:geoffrey-challen/os161-toolchain{"\n"}sudo apt-get update{"\n"}sudo apt-get install os161-toolchain{"\n"}<span className="hljs-comment"># sudo apt-get install test161 # If you don't want the entire toolchain</span></code></pre>
                       </div>
                     </div>
                     <div className="paragraph">
@@ -46,44 +46,30 @@ IntroComponent = React.createClass({
                         { " " }<a href="https://github.com/ops-class/test161/blob/master/README.adoc" target="_blank" className="external">README</a> for more
                         details.</p>
                     </div>
-                  </div>
-                  <div className="sect2">
-                    { " " }<a className="anchor" id="_configuration" /><h3>1.2. Configuration</h3>
                     <div className="paragraph">
                       <p>Once you have installed <code>test161</code> you should be able to run it and see output
                         like this:</p>
                     </div>
                     <div className="listingblock noautohighlight">
                       <div className="content">
-                        <pre className="highlight"><code>$ test161{"\n"}{"\n"}{"    "}usage: test161{"  "}&lt;command&gt; &lt;flags&gt; &lt;args&gt;{"\n"}{"\n"}{"           "}test161 run [-dry-run | -r] [sequential | -s] [-dependencies | -d]{"\n"}{"                       "}[-verbose | -v (whisper|quiet|loud*)] [-tag] &lt;names&gt;{"\n"}...</code></pre>
+                        <pre className="highlight"><code>$ test161{"\n"}usage:{"\n"}{"    "}test161{"  "}&lt;command&gt; &lt;flags&gt; &lt;args&gt;{"\n"}{"\n"}{"    "}test161 run [-dry-run | -d] [-explain | -x] [sequential | -s]{"\n"}{"                "}[-no-dependencies | -n] [-verbose | -v (whisper|quiet|loud*)]{"\n"}{"                "}[-tag] &lt;names&gt;{"\n"}{"\n"}{"    "}test161 submit [-debug] [-verify] [-no-cache] &lt;target&gt; &lt;commit&gt;{"\n"}{"\n"}{"    "}test161 list (targets|tags|tests) [-remote | -r]{"\n"}{"\n"}{"    "}test161 config [-debug] [(add-user|del-user|change-token)] &lt;username&gt; &lt;token&gt;{"\n"}{"\n"}{"    "}test161 version{"\n"}{"\n"}{"    "}test161 help for a detailed commands description</code></pre>
                       </div>
                     </div>
+                  </div>
+                  <div className="sect2">
+                    { " " }<a className="anchor" id="_environment_inference" /><h3>1.2. Environment Inference</h3>
                     <div className="paragraph">
-                      <p><code>test161</code> requires a configuration file to operate. You can create your
-                        <code>.test161.conf</code> file either in your home directory—​which is probably best
-                        for most users—​or in your OS/161 root directory where you run <code>test161</code>.</p>
-                    </div>
-                    <div className="paragraph">
-                      <p>If you run <code>test161 run</code> without a configuration file an example will be
-                        displayed on screen. You can save this output as <code>~/.test161.conf</code> and edit
-                        it appropriately. For local testing your configuration file only needs to
-                        tell <code>test161</code> where to find your OS/161 root directory and where to find the
-                        <code>test161</code> target, test, and command files. Here’s an example that works in
-                        the OS/161 Vagrant VM that we provide:</p>
-                    </div>
-                    <div className="listingblock noautohighlight">
-                      <div className="content">
-                        <pre className="highlight"><code>rootdir: /home/trinity/root/{"\n"}test161dir: /home/trinity/src/test161/</code></pre>
-                      </div>
-                    </div>
-                    <div className="paragraph">
-                      <p>We’ll add more values to the <code>.test161.conf</code> file later when we set up
-                        <code>test161</code> to submit your assignment for grading.</p>
-                    </div>
-                    <div className="paragraph">
-                      <p><strong>Note that the <code>test161.conf</code> file is in <a href="http://yaml.org/" target="_blank" className="external">YAML</a> syntax and
-                          that YAML doesn’t like tabs.</strong> You may want to disable tab expansion when
-                        editing your <code>.test161.conf</code> file if your normal editor performs it.</p>
+                      <p>To run and submit your OS/161 kernel, <code>test161</code> needs to be able to find your
+                        OS/161 sources and the root directory where your kernel is installed.
+                        If you are using the <a href="https://www.ops-class.org" className="noexternal"><code>ops-class.org</code></a>
+                        { " " }<a href="https://www.ops-class.org/asst/toolchain/#os161" className="noexternal">OS/161 sources</a>,
+                        this will happen automatically.
+                        If you are not, you will need to merge our changes to <code>mk/os161.kernel.mk</code>,
+                        specifically
+                        { " " }<a href="https://github.com/ops-class/os161/commit/3ab7073fc255dcc17d559485ae6a54c888c72766" target="_blank" className="external">this
+                          commit</a>.
+                        It should be straightforward to merge into OS/161 sources provided by other
+                        schools <span className="badge footnote default-tooltip" data-toggle="popover" data-placement="top" data-html="true" data-content="And please encourage your instructor to incorporate this useful change. Or better yet, help us use and maintain the <a href=&quot;https://www.ops-class.org&quot; class=&quot;noexternal&quot;><code>ops-class.org</code></a> OS/161 sources.">1</span>.</p>
                     </div>
                   </div>
                 </div>
@@ -91,68 +77,87 @@ IntroComponent = React.createClass({
               <div className="sect1">
                 { " " }<a className="anchor" id="_running_code_test161_code_targets" /><h2>2. Running <code>test161</code> Targets</h2>
                 <div className="sectionbody">
-                  <div className="embed-responsive embed-responsive-16by9 hidden-print" style={{marginTop: 10, marginBottom: 10, border: '1px solid grey'}}>
-                    <div className="youtube-container" data-id="rPVtuUz1w5I"><img className="youtube-thumb" src="//i.ytimg.com/vi/rPVtuUz1w5I/mqdefault.jpg" alt="YouTube placeholder" /><div className="play-button"><span className="glyphicon glyphicon-play" aria-hidden="true" /></div></div>
-                  </div>
                   <div className="paragraph lead">
                     <p><code>test161</code> is a very flexible tool and can rapidly run one or many tests and
                       evaluate their output.</p>
                   </div>
                   <div className="paragraph">
-                    <p>For this example, we’ll assume that you want to run all tests for ASST1 and
-                      perform grading. To do that, you provide the <code>asst1</code> target as the argument
-                      to <code>test161 run</code>. Here’s what happens when we run it on the base sources
-                      downloaded from the <a href="https://github.com/ops-class/os161" target="_blank" className="external"><code>ops-class.org</code> OS/161
-                        GitHub repository</a>:</p>
-                  </div>
-                  <div className="listingblock noautohighlight">
-                    <div className="content">
-                      <pre className="highlight"><code>$ test161 run asst1{"\n"}0.000000{"\t"}sys161: System/161 release 2.0.6, compiled Feb 16 2016 01:44:26{"\n"}0.014289{"\n"}0.014289{"\t"}OS/161 base system version 2.0.1{"\n"}0.014289{"\t"}Copyright (c) 2000, 2001-2005, 2008-2011, 2013, 2014{"\n"}0.014289{"\t"}{"   "}President and Fellows of Harvard College.{"  "}All rights reserved.{"\n"}0.236243{"\n"}0.236243{"\t"}Put-your-group-name-here's system version 0 (ASST1 #2){"\n"}0.266461{"\n"}0.266461{"\t"}756k physical memory available{"\n"}0.286483{"\t"}Device probe...{"\n"}0.286483{"\t"}lamebus0 (system main bus){"\n"}...{"\n"}2.965587{"\t"}Operation took 0.018019320 seconds{"\n"}2.991262{"\t"}OS/161 kernel [? for menu]:{"\n"}2.849897{"\t"}OS/161 kernel [? for menu]:{"\n"}2.844126{"\t"}OS/161 kernel [? for menu]:{"\n"}3.026152{"\t"}cvt3: Should panic...{"\n"}3.036162{"\t"}cvt3: FAIL{"\n"}3.046057{"\t"}OS/161 kernel [? for menu]:{"\n"}3.036162{"\t"}Operation took 0.053904920 seconds{"\n"}3.076270{"\t"}OS/161 kernel [? for menu]:{"\n"}2.914384{"\t"}lt1: FAIL{"\n"}2.914384{"\t"}Operation took 0.087485440 seconds{"\n"}2.934525{"\t"}OS/161 kernel [? for menu]:{"\n"}Test{"                             "}Result{"       "}Score{"\n"}------------------------------{"   "}----------{"   "}----------{"\n"}boot.t{"                           "}correct{"      "}0/0{"\n"}sync/rwt5.t{"                      "}incorrect{"    "}0/1{"\n"}sync/rwt4.t{"                      "}incorrect{"    "}0/1{"\n"}sync/rwt3.t{"                      "}incorrect{"    "}0/1{"\n"}sync/cvt4.t{"                      "}incorrect{"    "}0/1{"\n"}sync/rwt1.t{"                      "}incorrect{"    "}0/5{"\n"}sync/rwt2.t{"                      "}incorrect{"    "}0/2{"\n"}sync/lt2.t{"                       "}incorrect{"    "}0/1{"\n"}sync/lt3.t{"                       "}incorrect{"    "}0/1{"\n"}sync/cvt3.t{"                      "}incorrect{"    "}0/1{"\n"}sync/lt1.t{"                       "}incorrect{"    "}0/8{"\n"}sync/cvt1.t{"                      "}skip{"         "}0/4{"\n"}syncprobs/sp2.t{"                  "}skip{"         "}0/10{"\n"}sync/cvt2.t{"                      "}skip{"         "}0/4{"\n"}syncprobs/sp1.t{"                  "}skip{"         "}0/10{"\n"}{"\n"}Total Correct{"  "}: 1/15{"\n"}Total Incorrect: 10/15{"\n"}Total Aborted{"  "}: 4/15{"\n"}{"\n"}Total Score{"    "}: 0/50</code></pre>
-                    </div>
-                  </div>
-                  <div className="paragraph">
-                    <p>As you can see, <code>test161</code> has rapidly generated a lot of useful output while
-                      also giving our base sources the score they deserve on <a href="/asst/1">ASST1</a>:
-                      0/50! Let’s quickly go through the two mains parts of the <code>test161</code> output.</p>
+                    <p>In this section we show you how to obtain and run <code>test161</code> targets.</p>
                   </div>
                   <div className="sect2">
-                    { " " }<a className="anchor" id="__code_sys161_code_output" /><h3>2.1. <code>sys161</code> Output</h3>
+                    { " " }<a className="anchor" id="_obtaining_code_test161_code_configuration_files" /><h3>2.1. Obtaining <code>test161</code> Configuration Files</h3>
+                    <div className="paragraph">
+                      <p><code>test161</code> uses a <a href="http://yaml.org" target="_blank" className="external">YAML</a>-based configuration system. To run the
+                        following targets, you will need configuration files for <code>test161</code> installed
+                        in a <code>test161</code> subdirectory at the base of your OS/161 sources.
+                        Again, if you are using the <a href="https://www.ops-class.org" className="noexternal"><code>ops-class.org</code></a>
+                        { " " }<a href="https://www.ops-class.org/asst/toolchain/#os161" className="noexternal">OS/161 sources</a>
+                        you will already have this directory.</p>
+                    </div>
+                    <div className="paragraph">
+                      <p>If not, you can easily add the
+                        { " " }<a href="https://github.com/ops-class/test161-conf" target="_blank" className="external"><code>test161</code> configuration</a> to your
+                        existing OS/161 sources:</p>
+                    </div>
+                    <div className="listingblock">
+                      <div className="content">
+                        <pre className="highlight"><code className="language-bash lang-bash" data-lang="bash"><span className="hljs-built_in">cd</span> &lt;your OS/161 <span className="hljs-built_in">source</span> directory&gt;{"\n"}git <span className="hljs-built_in">clone</span> https://github.com/ops-class/<span className="hljs-built_in">test</span>161-conf/ <span className="hljs-built_in">test</span>161{"\n"}rm -rf <span className="hljs-built_in">test</span>161/.git{"\n"}<span className="hljs-comment"># Do whatever you need to do to add the files to your version control system.</span>{"\n"}<span className="hljs-comment"># Alternatively, use a Git submodule if your repository is using Git.</span></code></pre>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="sect2">
+                    { " " }<a className="anchor" id="_running_code_test161_code" /><h3>2.2. Running <code>test161</code></h3>
+                    <div className="paragraph">
+                      <p>For this example, we’ll assume that you want to run all tests for ASST1 and
+                        perform grading. To do that, you provide the <code>asst1</code> target as the argument to
+                        <code>test161 run</code>. Once you’ve built and installed an OS/161 kernel, here’s what
+                        happens when we run it on the base
+                        { " " }<a href="https://github.com/ops-class/os161" target="_blank" className="external"><code>ops-class.org</code> OS/161 sources</a>:</p>
+                    </div>
+                    <div className="listingblock noautohighlight">
+                      <div className="content">
+                        <pre className="highlight"><code>$ test161 run asst1{"\n"}[boot.t{"          "}]{"      "}0.000000{"        "}sys161: System/161 release 2.0.8, compiled Mar{"  "}2 2016 17:16:01{"\n"}[boot.t{"          "}]{"      "}0.006289{"\n"}[boot.t{"          "}]{"      "}0.006289{"        "}OS/161 base system version 2.0.1{"\n"}[boot.t{"          "}]{"      "}0.006289{"        "}Copyright (c) 2000, 2001-2005, 2008-2011, 2013, 2014{"\n"}[boot.t{"          "}]{"      "}0.006289{"           "}President and Fellows of Harvard College.{"  "}All rights reserved.{"\n"}[boot.t{"          "}]{"      "}0.227285{"\n"}[boot.t{"          "}]{"      "}0.227285{"        "}Put-your-group-name-here's system version 0 (DUMBVM #2){"\n"}[boot.t{"          "}]{"      "}0.267567{"\n"}[boot.t{"          "}]{"      "}0.267567{"        "}764k physical memory available{"\n"}[boot.t{"          "}]{"      "}0.287666{"        "}Device probe...{"\n"}[boot.t{"          "}]{"      "}0.297720{"        "}lamebus0 (system main bus){"\n"}[boot.t{"          "}]{"      "}0.317862{"        "}emu0 at lamebus0{"\n"}[boot.t{"          "}]{"      "}0.327908{"        "}ltrace0 at lamebus0{"\n"}[boot.t{"          "}]{"      "}0.337925{"        "}ltimer0 at lamebus0{"\n"}[boot.t{"          "}]{"      "}0.347946{"        "}beep0 at ltimer0{"\n"}[boot.t{"          "}]{"      "}0.358038{"        "}rtclock0 at ltimer0{"\n"}[boot.t{"          "}]{"      "}0.378165{"        "}lrandom0 at lamebus0{"\n"}[boot.t{"          "}]{"      "}0.388208{"        "}random0 at lrandom0{"\n"}[boot.t{"          "}]{"      "}0.398299{"        "}lhd0 at lamebus0{"\n"}[boot.t{"          "}]{"      "}0.408364{"        "}lser0 at lamebus0{"\n"}[boot.t{"          "}]{"      "}0.418427{"        "}con0 at lser0{"\n"}[boot.t{"          "}]{"      "}0.428477{"\n"}[boot.t{"          "}]{"      "}0.428477{"        "}cpu0: MIPS/161 (System/161 2.x) features 0x0{"\n"}[boot.t{"          "}]{"      "}0.458668{"        "}2 CPUs online{"\n"}[boot.t{"          "}]{"      "}0.458668{"        "}OS/161 kernel [? for menu]:{"\n"}[boot.t{"          "}]{"      "}0.730138{"\n"}[boot.t{"          "}]{"      "}0.740156{"        "}Shutting down.{"\n"}[boot.t{"          "}]{"      "}0.740156{"        "}The system is halted.{"\n"}[boot.t{"          "}]{"      "}0.750199{"        "}sys161: 26551578 cycles (12701612 run, 13849966 global-idle){"\n"}[boot.t{"          "}]{"      "}0.750199{"        "}sys161:{"   "}cpu0: 4714252 kern, 0 user, 135235 idle; 7626 ll, 7626/0 sc, 21863 sync{"\n"}[boot.t{"          "}]{"      "}0.750199{"        "}sys161:{"   "}cpu1: 312156 kern, 0 user, 4537331 idle; 7 ll, 7/0 sc, 15 sync{"\n"}[boot.t{"          "}]{"      "}0.750199{"        "}sys161: 1146 irqs 0 exns 0r/0w disk 2r/597w console 0r/0w/1m emufs 0r/0w net{"\n"}[boot.t{"          "}]{"      "}0.750199{"        "}sys161: Elapsed real time: 0.166175 seconds (159.781 mhz){"\n"}[boot.t{"          "}]{"      "}0.750199{"        "}sys161: Elapsed virtual time: 0.752267915 seconds (25 mhz){"\n"}[boot.t{"          "}]{"      "}0.750199{"        "}shutdown: normal shutdown{"\n"}[synch/rwt4.t{"    "}]{"      "}0.000000{"        "}sys161: System/161 release 2.0.8, compiled Mar{"  "}2 2016 17:16:01{"\n"}[synch/lt3.t{"     "}]{"      "}0.000000{"        "}sys161: System/161 release 2.0.8, compiled Mar{"  "}2 2016 17:16:01{"\n"}[synch/sem1.t{"    "}]{"      "}0.000000{"        "}sys161: System/161 release 2.0.8, compiled Mar{"  "}2 2016 17:16:01{"\n"}[synch/lt2.t{"     "}]{"      "}0.000000{"        "}sys161: System/161 release 2.0.8, compiled Mar{"  "}2 2016 17:16:01{"\n"}[synch/rwt3.t{"    "}]{"      "}0.000000{"        "}sys161: System/161 release 2.0.8, compiled Mar{"  "}2 2016 17:16:01{"\n"}[synch/rwt5.t{"    "}]{"      "}0.000000{"        "}sys161: System/161 release 2.0.8, compiled Mar{"  "}2 2016 17:16:01{"\n"}[synch/rwt4.t{"    "}]{"      "}0.006289{"\n"}[synch/lt3.t{"     "}]{"      "}0.006289{"\n"}[synch/lt2.t{"     "}]{"      "}0.006289{"\n"}[synch/rwt3.t{"    "}]{"      "}0.006289{"\n"}[synch/rwt5.t{"    "}]{"      "}0.006289{"\n"}[synch/rwt4.t{"    "}]{"      "}0.006289{"        "}OS/161 base system version 2.0.1{"\n"}[synch/lt3.t{"     "}]{"      "}0.006289{"        "}OS/161 base system version 2.0.1{"\n"}[synch/lt2.t{"     "}]{"      "}0.006289{"        "}OS/161 base system version 2.0.1{"\n"}[synch/rwt3.t{"    "}]{"      "}0.006289{"        "}OS/161 base system version 2.0.1{"\n"}{"\n"}# ... lots of output omitted ...{"\n"}{"\n"}Test{"                             "}Result{"                "}Memory Leaks{"        "}Score{"\n"}------------------------------{"   "}-------------------{"   "}------------{"   "}----------{"\n"}boot.t{"                           "}correct{"                        "}---{"          "}0/0{"\n"}synch/sem1.t{"                     "}correct{"                        "}---{"          "}0/0{"\n"}synch/lt2.t{"                      "}incorrect{"                      "}---{"          "}0/1{"\n"}synch/lt3.t{"                      "}incorrect{"                      "}---{"          "}0/1{"\n"}synch/lt1.t{"                      "}incorrect{"                      "}---{"          "}0/8{"\n"}synch/cvt2.t{"                     "}skip (synch/lt2.t){"             "}---{"          "}0/3{"\n"}synch/cvt3.t{"                     "}skip (synch/lt1.t){"             "}---{"          "}0/1{"\n"}synch/cvt5.t{"                     "}skip (synch/lt2.t){"             "}---{"          "}0/1{"\n"}synch/cvt1.t{"                     "}skip (synch/lt2.t){"             "}---{"          "}0/4{"\n"}synch/cvt4.t{"                     "}skip (synch/lt2.t){"             "}---{"          "}0/1{"\n"}synch/rwt4.t{"                     "}incorrect{"                      "}---{"          "}0/1{"\n"}synch/rwt3.t{"                     "}incorrect{"                      "}---{"          "}0/1{"\n"}synch/rwt1.t{"                     "}incorrect{"                      "}---{"          "}0/5{"\n"}synch/rwt2.t{"                     "}skip (synch/cvt2.t){"            "}---{"          "}0/2{"\n"}synch/rwt5.t{"                     "}incorrect{"                      "}---{"          "}0/1{"\n"}synchprobs/sp2.t{"                 "}skip (synch/lt1.t){"             "}---{"         "}0/10{"\n"}synchprobs/sp1.t{"                 "}skip (synch/lt2.t){"             "}---{"         "}0/10{"\n"}{"\n"}Total Correct{"  "}: 2/17{"\n"}Total Incorrect: 7/17{"\n"}Total Skipped{"  "}: 8/17{"\n"}{"\n"}Total Score{"    "}: 0/50</code></pre>
+                      </div>
+                    </div>
+                    <div className="paragraph">
+                      <p>As you can see, <code>test161</code> has rapidly generated a lot of useful output while
+                        also giving our base sources the score they deserve on <a href="https://www.ops-class.org/asst/1/" className="noexternal">ASST1</a>: 0/50! Let’s
+                        quickly go through the two mains parts of the <code>test161</code> output.</p>
+                    </div>
+                  </div>
+                  <div className="sect2">
+                    { " " }<a className="anchor" id="__code_sys161_code_output" /><h3>2.3. <code>sys161</code> Output</h3>
                     <div className="paragraph">
                       <p>To speed execution, <code>test161</code> runs multiple tests in parallel. As a result,
                         test output is interleaved at parts of the testing suite where multiple tests
-                        are being run. At the beginning of the ASST1 test suite only the boot test is
-                        being performed because all other tests depend on it, so the output is not
+                        are being run. At the beginning of the <a href="https://www.ops-class.org/asst/1/" className="noexternal">ASST1</a> test suite only the boot test
+                        is being performed because all other tests depend on it, so the output is not
                         interleaved. However, at the end several tests are being run in parallel and
-                        so the output is interleaved.</p>
-                    </div>
-                    <div className="paragraph">
-                      <p>This can be difficult to interpret, so <code>test161 run</code> provides a <code>-s</code> option.
-                        This does not effect parallel testing, which <code>test161</code> will still perform
-                        when the dependency graph allows it. However, it does make the output
-                        sequential and easier to read.</p>
+                        so the output is interleaved. Output prefixes show what test generated each
+                        output line.  This can be difficult to interpret, so <code>test161 run</code> provides a
+                        <code>-s</code> option which performs sequential testing.</p>
                     </div>
                   </div>
                   <div className="sect2">
-                    { " " }<a className="anchor" id="_test_status" /><h3>2.2. Test Status</h3>
+                    { " " }<a className="anchor" id="_test_status" /><h3>2.4. Test Status</h3>
                     <div className="paragraph">
-                      <p>Following the test output <code>test161</code> prints a summary detailing what tests
-                        were performed and, if appropriate, how they were scored. Scoring is optional
-                        and only performed when using certain targets.</p>
+                      <p>Following the test output <code>test161</code> prints a summary detailing what tests were
+                        performed and, if appropriate, how they were scored. Scoring is optional and
+                        only performed when using certain targets.</p>
                     </div>
                     <div className="paragraph">
                       <p>In the example above, the output shows that <code>boot.t</code> ran correctly but earned
-                        no points. That is because the kernel booted but this was not worth any
-                        points for ASST1. However, if the kernel had not booted the rest of the tests
-                        would have been skipped. In this case, <code>boot.t</code> was run because it was
-                        specified as a <em>dependency</em> by other tests that were included as part of the
-                        ASST1 target. <code>test161</code> can automatically run test dependencies when
-                        appropriate.</p>
+                        no points. That is because the kernel booted but this was not worth any points
+                        for <a href="https://www.ops-class.org/asst/1/" className="noexternal">ASST1</a>. However, if the kernel had not booted the rest of the tests would
+                        have been skipped. In this case, <code>boot.t</code> was run because it was specified as
+                        a <em>dependency</em> by other tests that were included as part of the <a href="https://www.ops-class.org/asst/1/" className="noexternal">ASST1</a>
+                        target. <code>test161</code> can automatically run test dependencies when appropriate.</p>
                     </div>
                     <div className="paragraph">
                       <p>For the next 10 tests above <code>test161</code> reports that they did not complete
                         correctly. Again, this is unsurprising given that the base OS/161 sources do
-                        not include working locks, condition variables, or reader-writer locks. As
-                        you complete portions of each assignment you will notice that your score will
+                        not include working locks, condition variables, or reader-writer locks. As you
+                        complete portions of each assignment you will notice that your score will
                         increase.</p>
                     </div>
                     <div className="paragraph">
@@ -164,7 +169,7 @@ IntroComponent = React.createClass({
                     </div>
                   </div>
                   <div className="sect2">
-                    { " " }<a className="anchor" id="_running_single_code_test161_code_tests" /><h3>2.3. Running Single <code>test161</code> Tests</h3>
+                    { " " }<a className="anchor" id="_running_single_code_test161_code_tests" /><h3>2.5. Running Single <code>test161</code> Tests</h3>
                     <div className="paragraph">
                       <p>In our example above <code>test161</code> was used to run a <em>target</em>, which configures a
                         set of tests to be run and maps test results to point values. If you are
@@ -191,7 +196,7 @@ IntroComponent = React.createClass({
                     </div>
                   </div>
                   <div className="sect2">
-                    { " " }<a className="anchor" id="_running_groups_of_tests" /><h3>2.4. Running Groups of Tests</h3>
+                    { " " }<a className="anchor" id="_running_groups_of_tests" /><h3>2.6. Running Groups of Tests</h3>
                     <div className="paragraph">
                       <p>The name passed to <code>test161 run</code> identifies a test relative to the <code>tests</code>{ " " }
                         subdirectory of the the <code>test161dir</code> configured in <code>.test161.conf</code>. In this
@@ -224,7 +229,7 @@ IntroComponent = React.createClass({
                 { " " }<a className="anchor" id="_submitting_using_code_test161_code" /><h2>3. Submitting Using <code>test161</code></h2>
                 <div className="sectionbody">
                   <div className="paragraph lead">
-                    <p>Once you are happy with your score on each assignment <span className="badge footnote default-tooltip" data-toggle="popover" data-placement="top" data-html="true" data-content="Or with the deadline looming&#x2026;&#x200B;">1</span>, <code>test161</code> allows you to submit your assignments for
+                    <p>Once you are happy with your score on each assignment <span className="badge footnote default-tooltip" data-toggle="popover" data-placement="top" data-html="true" data-content="Or with the deadline looming&#x2026;&#x200B;">2</span>, <code>test161</code> allows you to submit your assignments for
                       automated grading.</p>
                   </div>
                   <div className="paragraph">
@@ -481,7 +486,7 @@ IntroComponent = React.createClass({
                         we have to interpret or run to make sure that you don’t try to damage our
                         server. We also overwrite all of the tests in <code>kern/test</code> with trusted code
                         to ensure that your kernel is running our tests and that you didn’t rewire
-                        the menu to try and trick the testing suite <span className="badge footnote default-tooltip" data-toggle="popover" data-placement="top" data-html="true" data-content="We have a few other tricks up our sleeve here, so I wouldn&#x2019;t bother trying to flummox the remote grader. Doing the assignment is probably easier.">2</span>.</p>
+                        the menu to try and trick the testing suite <span className="badge footnote default-tooltip" data-toggle="popover" data-placement="top" data-html="true" data-content="We have a few other tricks up our sleeve here, so I wouldn&#x2019;t bother trying to flummox the remote grader. Doing the assignment is probably easier.">3</span>.</p>
                     </div>
                   </div>
                   <div className="sect2">
@@ -513,7 +518,7 @@ IntroComponent = React.createClass({
                     { " " }<a className="anchor" id="_tests" /><h3>4.1. Tests</h3>
                     <div className="paragraph">
                       <p>The main <code>test161</code> configuration object is a test, which are stored in files
-                        with a <code>.t</code> extension <span className="badge footnote default-tooltip" data-toggle="popover" data-placement="top" data-html="true" data-content="In homage to the original <code>test161</code> tool that David wrote years ago that also used a <code>.t</code> extension.">3</span>. Here is an example
+                        with a <code>.t</code> extension <span className="badge footnote default-tooltip" data-toggle="popover" data-placement="top" data-html="true" data-content="In homage to the original <code>test161</code> tool that David wrote years ago that also used a <code>.t</code> extension.">4</span>. Here is an example
                         from <code>test161/synch/sem1.t</code>:</p>
                     </div>
                     <div className="listingblock noautohighlight">
@@ -690,15 +695,17 @@ IntroComponent = React.createClass({
                 <li className="h5"><a href="#top">1. Introduction</a>
                   <ul className="nav">
                     <li className="h6"><a href="#_installation">1.1. Installation</a></li>
-                    <li className="h6"><a href="#_configuration">1.2. Configuration</a></li>
+                    <li className="h6"><a href="#_environment_inference">1.2. Environment Inference</a></li>
                   </ul>
                 </li>
                 <li className="h5"><a href="#_running_code_test161_code_targets">2. Running test161 Targets</a>
                   <ul className="nav">
-                    <li className="h6"><a href="#__code_sys161_code_output">2.1. sys161 Output</a></li>
-                    <li className="h6"><a href="#_test_status">2.2. Test Status</a></li>
-                    <li className="h6"><a href="#_running_single_code_test161_code_tests">2.3. Running Single test161 Tests</a></li>
-                    <li className="h6"><a href="#_running_groups_of_tests">2.4. Running Groups of Tests</a></li>
+                    <li className="h6"><a href="#_obtaining_code_test161_code_configuration_files">2.1. Obtaining test161 Configuration Files</a></li>
+                    <li className="h6"><a href="#_running_code_test161_code">2.2. Running test161</a></li>
+                    <li className="h6"><a href="#__code_sys161_code_output">2.3. sys161 Output</a></li>
+                    <li className="h6"><a href="#_test_status">2.4. Test Status</a></li>
+                    <li className="h6"><a href="#_running_single_code_test161_code_tests">2.5. Running Single test161 Tests</a></li>
+                    <li className="h6"><a href="#_running_groups_of_tests">2.6. Running Groups of Tests</a></li>
                   </ul>
                 </li>
                 <li className="h5"><a href="#_submitting_using_code_test161_code">3. Submitting Using test161</a>
