@@ -15,8 +15,14 @@ const getMyScore = (student, target_name) => {
 const MemberComponent = ({name, link, email}) => {
   return (
     <strong>
-      {link ? <a href={link} target="_blank">{name}</a>
-      : name} {email ? email : null}
+      {link ?
+        <a href={link} target="_blank"
+        data-toggle={email ? "tooltip" : null}
+        title={email ? email : null}>{name}</a>
+        :
+        <span data-toggle={email ? "tooltip" : null}
+          title={email ? email : null}>{name}</span>
+      }
     </strong>
   );
 }
@@ -39,114 +45,30 @@ const GroupComponent = React.createClass({
 });
 
 const PerfectScoreComponent = React.createClass({
-  mixins: [ButtonToggleMixin],
-  getToggleTarget() {
-    return this.refs.details;
+  componentDidMount() {
+    this.initTooltip();
+  },
+  componentDidUpdate() {
+    this.initTooltip();
+  },
+  initTooltip() {
+    $(ReactDOM.findDOMNode(this)).find('[data-toggle="tooltip"]').tooltip();
   },
   render() {
-    const topSize = 16;
-    const {leaders, title} = this.props;
-    const {hide, disabled} = this.state;
+    const {leaders} = this.props;
     if (!leaders || leaders.length === 0) {
       return null;
     }
-    let list = [];
-    const group_string = (leaders.length == 1) ? 'group' : 'groups';
-    for (let [index, elem] of leaders.entries()) {
-      let {score, group} = elem;
-      list.push(
-        <li key={index} className="h5"><GroupComponent {...{group}}/></li>
-      );
-    }
-    let extra = 0;
-    let extra_left = [];
-    if (list.length > topSize) {
-      extra = list.length - topSize;
-      extra_left = list.slice(topSize, topSize + extra / 2);
-      extra_right = list.slice(topSize + extra / 2);
-      right_start = topSize + extra / 2 + 1;
-      list = list.slice(0, topSize);
-    }
-    if (list.length > 8) {
-      list_left = list.slice(0, topSize / 2);
-      list_right = list.slice(topSize / 2);
-    } else {
-      list_left = list;
-      list_right = [];
-    }
-    const accordion = "accordion_" + title;
-    if (extra_left.length === 0) {
-      return (
-        <div>
-          <div className="alert alert-success text-center" role="alert">
-            <span className="h3">
-              {leaders.length} {group_string} earned a perfect score on {title}!
-            </span>
-          </div>
-          <div className="row">
-            <div className="col-md-6">
-              <ol>
-                {list_left}
-              </ol>
-            </div>
-            <div className="col-md-6">
-              <ol start="9">
-                {list_right}
-              </ol>
-            </div>
-          </div>
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          <div className="alert alert-success text-center" role="alert">
-            <span className="h3">
-              {leaders.length} {group_string} earned a perfect score on {title}!
-            </span>
-          </div>
-          <div className="row">
-            <div className="col-md-6">
-              <ol>
-                {list_left}
-              </ol>
-            </div>
-            <div className="col-md-6">
-              <ol start="9">
-                {list_right}
-              </ol>
-            </div>
-          </div>
-          <div className="panel-group" id={"accordion_" + title}
-            role="tablist" aria-multiselectable="true">
-            <div className="panel panel-default">
-              <div className="panel-heading" role="tab">
-                <h4 className="panel-title">
-                  <a className="collapsed" role="button" data-toggle="collapse"
-                    data-parent={"#accordion_" + title}
-                    href={"#collapse_" + title}
-                    aria-expanded="false" aria-controls={"collapse_" + title}>
-                    Show {extra} More
-                  </a>
-                </h4>
-              </div>
-              <div id={"collapse_" + title} className="panel-collapse collapse" role="tabpanel">
-                <div className="panel-body">
-                  <div className="row">
-                    <div className="col-md-6">
-                      <ol start="17">{extra_left}</ol>
-                    </div>
-                    <div className="col-md-6">
-                      <ol start={right_start}>{extra_right}</ol>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    }
+    const list = leaders.map((leader, index) => (
+      <li key={index} className="h5"> <GroupComponent {...leader}/> </li>
+    ));
+    return (
+      <div className="test161-fixed-height-container">
+        <ol>
+          {list}
+        </ol>
+      </div>
+    );
   }
 });
 
@@ -213,6 +135,8 @@ AssignmentComponent = React.createClass({
     const {target: { _id, type }} = this.props;
     const chartOptions = {
       chart: {
+        marginLeft: 60,
+        marginRight: 10,
         renderTo: this.state.container,
         type: 'column'
       },
@@ -223,6 +147,8 @@ AssignmentComponent = React.createClass({
         title: {
           text: 'Scores'
         },
+        showLastLabel: true,
+        endOnTick: true,
         categories: labels
       },
       yAxis: {
@@ -295,8 +221,20 @@ AssignmentComponent = React.createClass({
         <div className="row" id={_id}>
           <div className="col-md-12">
             <h1>{title}</h1>
-            <div id={this.state.container}></div>
-            <PerfectScoreComponent {...{title, leaders}}/>
+            <div className="alert alert-success text-center" role="alert">
+              <span className="h3">
+                {leaders.length} group{leaders.length > 1 ? 's' : null} earned
+                a perfect score on {title}!
+              </span>
+            </div>
+            <div className="col-md-8">
+              <div className="row">
+                <div id={this.state.container}></div>
+              </div>
+            </div>
+            <div className="col-md-4">
+              <PerfectScoreComponent {...{leaders}}/>
+            </div>
           </div>
         </div>
       );
