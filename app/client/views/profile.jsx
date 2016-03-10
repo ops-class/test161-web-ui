@@ -344,21 +344,22 @@ const PrivacyComponent = React.createClass({
       </div>
     );
   }
-})
+});
+
+const EmailIcon = (<i className="glyphicon glyphicon-envelope"></i>);
+const NameIcon = (<i className="glyphicon glyphicon-user"></i>);
+const LinkIcon = (<i className="glyphicon glyphicon-link"></i>);
 
 const InformationComponent = React.createClass({
+  getInitialState() {
+    return {processing: false, invalidLink: false, edit: false};
+  },
   onMouseEnter(event) {
     const target = event.target;
     target.setSelectionRange(0, target.value.length)
   },
-  modalDismiss({name, link}) {
-    this.setState({err: null, processing: false});
-    $(this.refs.name).val(name);
-    $(this.refs.link).val(link);
-    $(this.refs.close).click();
-  },
-  getInitialState() {
-    return {processing: false, invalidLink: false};
+  cleanup() {
+    this.setState({err: null, processing: false, invalidLink: false, edit: false});
   },
   onChange(event) {
     const link = event.target.value
@@ -369,28 +370,35 @@ const InformationComponent = React.createClass({
       this.setState({invalidLink: false});
     }
   },
-  update() {
-    const {student: {email, token}} = this.props;
+  update(event) {
+    if (event && event.preventDefault) {
+      event.preventDefault();
+    }
+
     const name = this.refs.name.value;
     const link = this.refs.link.value;
     if (name === this.props.student.name && link === this.props.student.link) {
-      this.modalDismiss({name, link});
+      this.cleanup();
       return;
     }
+    const {student: {email, token}} = this.props;
     this.setState({processing: true});
     Meteor.call('updateProfile', {email, token, name, link}, (err, res) => {
       if (err) {
         this.setState({err});
         console.log(err);
       } else {
-        this.modalDismiss({name, link});
+        this.cleanup();
       }
       this.setState({processing: false});
     })
   },
+  toggleEdit() {
+    this.setState({edit: !this.state.edit});
+  },
   render() {
     const {student: {token, email, name, link}} = this.props;
-    const {processing, err, invalidLink} = this.state;
+    const {processing, err, invalidLink, edit} = this.state;
     let errMessage = null;
     if (err) {
       const errContent = err.reason || err.message || err.error || 'Internal error';
@@ -400,86 +408,100 @@ const InformationComponent = React.createClass({
         </div>
       );
     }
+    let content = null;
+    if (edit) {
+      content = (
+        <form onSubmit={this.update}>
+          <div className="form-group">
+            <div className="input-group">
+              <span className="input-group-addon">
+                {NameIcon}
+              </span>
+              <input type="text"
+                ref="name"
+                className="form-control"
+                onClick={this.onMouseEnter}
+                disabled={processing}
+                defaultValue={name}
+                placeholder="Your name"/>
+            </div>
+          </div>
+          <div className={invalidLink ? "form-group has-error" : "form-group"}>
+            <div className="input-group">
+              <span className="input-group-addon">
+                {LinkIcon}
+              </span>
+              <input type="url"
+                ref="link"
+                className="form-control"
+                onClick={this.onMouseEnter}
+                disabled={processing}
+                defaultValue={link}
+                onChange={this.onChange}
+                placeholder="Your link, leave empty to remove it"/>
+            </div>
+          </div>
+          <div className="form-group">
+            <div className="input-group">
+              <span className="input-group-addon">
+                {EmailIcon}
+              </span>
+              <input type="text"
+                ref="email"
+                className="form-control"
+                onClick={this.onMouseEnter}
+                disabled
+                defaultValue={email}
+                placeholder="Your email address"/>
+            </div>
+          </div>
+          {errMessage}
+          <div className="btn-group" role="group">
+            <button type="button"
+              onClick={this.cleanup}
+              className="btn btn-default">
+              Cancel
+            </button>
+            <button type="submit"
+              disabled={processing || invalidLink}
+              className="btn btn-danger">
+              {processing ?
+                <span className="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+              : null} Update Profile
+            </button>
+          </div>
+        </form>
+      );
+    } else {
+      content = (
+        <div>
+          <p>
+            {NameIcon} {name ? name : 'Unknown'}
+          </p>
+          {link ?
+            <p>{LinkIcon} <a href={link} target="_blank">{link}</a> </p>
+            : null
+          }
+          <p>
+            {EmailIcon} <a className="email"
+              href={`mailto:${email}`}>
+              {email}
+            </a>
+          </p>
+          <div className="btn btn-success"
+            onClick={this.toggleEdit} >
+            Edit Profile
+          </div>
+        </div>
+      );
+    }
     return (
       <div>
         <h2>Personal Information</h2>
-        <p>
-          <i className="glyphicon glyphicon-user"></i> {name ? name : 'Unknown'}
-        </p>
-        <p>
-          <i className="glyphicon glyphicon-envelope"></i> <a className="email"
-            href={`mailto:${email}`}>
-            {email}
-          </a>
-        </p>
-        {link ?
-          <p><i className="glyphicon glyphicon-link"></i> <a href={link} target="_blank">{link}</a> </p>
-          : null
-        }
-        <div className="btn btn-success"
-          data-toggle="modal"
-          data-target="#profileModel">
-          Edit Profile
-        </div>
+        {content}
         <hr />
-        <div className="modal fade"
-          id="profileModel"
-          tabIndex="-1"
-          role="dialog">
-          <div className="modal-dialog" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <button type="button"
-                  ref="close"
-                  className="close close-modal"
-                  data-dismiss="modal"
-                  aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 className="modal-title">
-                  Update Profile
-                </h4>
-              </div>
-              <div className="modal-body">
-                <form>
-                  <div className="form-group">
-                    <input type="text"
-                      ref="name"
-                      className="form-control"
-                      onClick={this.onMouseEnter}
-                      disabled={processing}
-                      defaultValue={name}
-                      placeholder="Your name"/>
-                  </div>
-                  <div className={invalidLink ? "form-group has-error" : "form-group"}>
-                    <input type="url"
-                      ref="link"
-                      className="form-control"
-                      onClick={this.onMouseEnter}
-                      disabled={processing}
-                      defaultValue={link}
-                      onChange={this.onChange}
-                      placeholder="Your link, leave empty to remove it"/>
-                  </div>
-                </form>
-            </div>
-              {errMessage}
-              <div className="modal-footer">
-                <button type="button"
-                  className="btn btn-default"
-                  data-dismiss="modal">Cancel</button>
-                <button type="button"
-                  onClick={this.update}
-                  disabled={processing || invalidLink}
-                  className="btn btn-danger">
-                  {processing ?
-                    <span className="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
-                  : null} Update Profile
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
-    )
+    );
   }
 });
 
