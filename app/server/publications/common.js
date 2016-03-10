@@ -24,8 +24,11 @@ isAnonymous = (privacy, type) => {
   }
 }
 
-const getStudentEmail = (student, submission, type) => {
+const getStudentEmail = (student, submission, type, staff) => {
   const {email} = student;
+  if (staff) {
+    return email;
+  }
   const {privacy = []} = submission;
   const localPrivacy = privacy.find(x => x.type === email);
   if (localPrivacy) {
@@ -60,17 +63,17 @@ const isStaff = ({email}, userObjects) => {
   return ((((user || {}).services || {}).auth0 || {}).user_metadata || {}).staff;
 }
 
-filterAggregate = (e, target_name, type, value) => {
+filterAggregate = (e, target_name, type, value, staff) => {
   const {_id: users, privacyArray = [], students, userObjects = []} = e;
   e._id = hash(users.join(', ') + target_name);
   e.group = [];
 
   let values = privacyArray.filter(x => x.value === value);
   for (let student of students) {
-    const {email, name = 'Unknown', link} = student;
+    const {email, name, link} = student;
     let tmpEmail = null;
     for (let submission of values) {
-      const newEmail = getStudentEmail(student, submission, type);
+      const newEmail = getStudentEmail(student, submission, type, staff);
       if (newEmail === email || (newEmail === ANONYMOUS && tmpEmail !== email)) {
         tmpEmail = newEmail;
         e.submission_time = submission.submission_time;
@@ -83,7 +86,7 @@ filterAggregate = (e, target_name, type, value) => {
         });
       } else {
         e.group.push({
-          name: appendStaffSuffix({student, userObjects}, name),
+          name: appendStaffSuffix({student, userObjects}, name || tmpEmail),
           link: link
         });
       }
