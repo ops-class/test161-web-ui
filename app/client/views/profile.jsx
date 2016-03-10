@@ -349,45 +349,43 @@ const PrivacyComponent = React.createClass({
 const EmailIcon = (<i className="glyphicon glyphicon-envelope"></i>);
 const NameIcon = (<i className="glyphicon glyphicon-user"></i>);
 const LinkIcon = (<i className="glyphicon glyphicon-link"></i>);
+const LoadingInput = (
+  <i className="glyphicon glyphicon-refresh glyphicon-refresh-animate form-control-feedback">
+  </i>
+);
+const SuccessInput = (
+  <i className="glyphicon glyphicon-ok form-control-feedback"></i>
+);
+const errorInput = (
+  <i className="glyphicon glyphicon-remove form-control-feedback"></i>
+);
 
-const InformationComponent = React.createClass({
+const InfoRowComponent = React.createClass({
   getInitialState() {
-    return {processing: false, invalidLink: false};
-  },
-  cleanup() {
-    const {student: {name, link}} = this.props;
-    if (name === this.state.name) {
-      this.setState({name: null});
-    }
-    if (link === this.state.link) {
-      this.setState({link: null});
-    }
-    this.setState({err: null, processing: false, invalidLink: false});
+    return {};
   },
   onChange() {
-    let invalidLink = false;
-    const link = this.refs.link.value;
-    const name = this.refs.name.value;
-    if (link) {
-      invalidLink = !link.match(SimpleSchema.RegEx.Url);
+    let invalidInput = false;
+
+    const newValue = this.refs.input.value;
+
+    const {regex} = this.props;
+    if (regex && newValue) {
+      invalidInput = !newValue.match(regex);
     }
-    this.setState({invalidLink});
-    if (!invalidLink) {
-      this.setState({name, link});
-      _.throttle(this.update({name, link}), 300);
+
+    this.setState({invalidInput, newValue});
+    if (!invalidInput) {
+      const obj = {};
+      obj[this.props.field] = newValue;
+      this.setState({newValue});
+      _.throttle(this.update(obj), 300);
     }
   },
-  update({name, link}) {
-    const updateName = name !== this.props.student.name;
-    const updateLink = link !== this.props.student.link;
-    if (!updateLink && !updateName) {
-      this.cleanup();
-      return;
-    }
-    this.setState({updateName, updateLink});
-    const {student: {email, token}} = this.props;
+  update(obj) {
+    const {email, token} = this.props;
     this.setState({processing: true});
-    Meteor.call('updateProfile', {email, token, name, link}, (err, res) => {
+    Meteor.call('updateProfile', {email, token}, obj, (err, res) => {
       if (err) {
         this.setState({err});
         console.log(err);
@@ -397,75 +395,75 @@ const InformationComponent = React.createClass({
       this.setState({processing: false});
     })
   },
-  render() {
-    const {student: {token, email, name, link}} = this.props;
-    const {processing, err, invalidLink, updateLink, updateName} = this.state;
-    let errMessage = null;
-    if (err) {
-      const errContent = err.reason || err.message || err.error || 'Internal error';
-      errMessage = (
-        <div className="col-xs-12 alert alert-danger">
-          {errContent}
-        </div>
-      );
+  cleanup() {
+    this.setState({success: true});
+    if (this.state.newValue === this.props.value) {
+      this.setState({newValue: null});
     }
-    let saving = processing ? (
-      <span className="input-group-addon">
-        <i className="glyphicon glyphicon-refresh glyphicon-refresh-animate">
-        </i>
-      </span>
-    ) : null;
-    let content = (
-      <form>
-        <div className="form-group">
-          <div className="input-group">
-            <span className="input-group-addon">
-              {EmailIcon} Username:
-            </span>
-            <input type="text"
-              ref="email"
-              className="form-control"
-              onClick={this.onMouseEnter}
-              disabled
-              defaultValue={email}
-              placeholder="Your email address"/>
-          </div>
+    this.setState({err: null, processing: false, invalidInput: false});
+  },
+  render() {
+    const {value, icon, desc, disabled, placeHolder} = this.props;
+    const {processing, err, invalidInput, newValue, success} = this.state;
+    let formGroupClass = 'form-group has-feedback';
+    let indicator = null;
+    if (err || invalidInput) {
+      formGroupClass += ' has-error';
+      indicator = errorInput;
+    } else if (!processing && success) {
+      formGroupClass += ' has-success';
+      indicator = SuccessInput;
+    }
+    let showValue = value;
+    if (this.state.newValue || this.state.newValue === '') {
+      showValue = this.state.newValue;
+    }
+    return (
+      <div className={formGroupClass}>
+        <div className="input-group">
+          <span className="input-group-addon">
+            {icon} {desc}
+          </span>
+          <input type="text"
+            ref="input"
+            disabled={disabled}
+            className="form-control"
+            onChange={this.onChange}
+            value={showValue}
+            placeholder={placeHolder} />
+          {processing ? LoadingInput : indicator}
         </div>
-        <div className="form-group">
-          <div className="input-group">
-            <span className="input-group-addon">
-              {NameIcon}
-            </span>
-            <input type="text"
-              ref="name"
-              className="form-control"
-              onChange={this.onChange}
-              value={this.state.name || name}
-              placeholder="Your name"/>
-            {updateName ? saving : null}
-          </div>
-        </div>
-        <div className={invalidLink ? "form-group has-error" : "form-group"}>
-          <div className="input-group">
-            <span className="input-group-addon">
-              {LinkIcon}
-            </span>
-            <input type="url"
-              ref="link"
-              className="form-control"
-              value={this.state.link || link}
-              onChange={this.onChange}
-              placeholder="Your link, leave empty to remove it"/>
-            {updateLink ? saving : null}
-          </div>
-        </div>
-        {errMessage}
-      </form>
+      </div>
     );
+  }
+});
+
+const InformationComponent = React.createClass({
+  render() {
+    const {student: {email, token, name, link}} = this.props;
     return (
       <div>
         <h2>Personal Information</h2>
-        {content}
+        <form>
+          <InfoRowComponent {...{email, token}}
+            icon={EmailIcon}
+            value={email}
+            disabled
+            field="email"
+            desc=" Username:"
+            placeHolder="Your email address" />
+          <InfoRowComponent {...{email, token}}
+            icon={NameIcon}
+            value={name}
+            field="name"
+            placeHolder="Your name" />
+          <InfoRowComponent {...{email, token}}
+            icon={LinkIcon}
+            value={link}
+            field="link"
+            regex={SimpleSchema.RegEx.Url}
+            placeHolder="Your link, leave empty to remove it" />
+        </form>
         <hr />
       </div>
     );
