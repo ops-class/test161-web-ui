@@ -73,7 +73,15 @@ var converter = new HTMLtoJSX({
 })
 var component = converter.convert(file.contents);
 component = component.replace(/^var /, '', component);
+
+// Sadness
 component = component.replace(/^(\s*)<a/gm, '$1{ " " }<a', component);
+component = component.replace(/\/a>$/gm, '/a>{ " " }', component);
 component = component.replace(/^(\s*)<code/gm, '$1{ " " }<code', component);
-component = component.replace(/code>$/gm, 'code>{ " " }', component);
+component = component.replace(/\/code>$/gm, '/code>{ " " }', component);
+component = component.replace(/^(\s*)<strong/gm, '$1{ " " }<strong', component);
+component = component.replace(/\/strong>$/gm, '/strong>{ " " }', component);
+component = component.replace(/^(\s*)<em/gm, '$1{ " " }<em', component);
+component = component.replace(/\/em>$/gm, '/em>{ " " }', component);
+
 fs.writeFileSync(path.join(argv._[1], 'views', 'intro.jsx'), component);

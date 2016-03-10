@@ -25,7 +25,7 @@ IntroComponent = React.createClass({
                       { " " }<a href="https://github.com/ops-class/test161" target="_blank" className="external">GitHub page</a>.</p>
                   </div>
                   <div className="sect2">
-                    { " " }<a className="anchor" id="_installation" /><h3>1.1. Installation</h3>
+                    { " " }<a className="anchor" id="install" /><h3>1.1. Installation</h3>
                     <div className="paragraph">
                       <p><code>test161</code> is distributed as part of the <a href="https://www.ops-class.org/asst/toolchain/" className="noexternal"><code>ops-class.org</code> toolchain</a>, which is packaged for
                         Ubuntu Linux 14.04 "Trusty". Install and upgrade it from the
@@ -248,39 +248,47 @@ IntroComponent = React.createClass({
                     <p>With some important exceptions (see below), remote <code>test161</code> grading is
                       identical to the tests that you run in your local environment. As a result,
                       the grade or performance marks that you achieve on the remote server should
-                      line up closely with what you achieve locally.</p>
+                      line up closely with what you achieve locally.  <strong>This also means that it is
+                        both unnecessary and discouraged to repeatedly submit assignments using
+                        { " " }<code>test161</code>.</strong></p>
                   </div>
                   <div className="paragraph">
-                    <p>This also means that it is both unnecessary and discouraged to repeatedly
-                      submit assignments using <code>test161</code>. You will notice that the remote output
-                      from <code>test161</code> is different than what you normally see, and that many useful
-                      messages are disabled. This is because remote automated testing is not
-                      intended to produce diagnostic output. Iterative <code>test161</code> testing should be
-                      done locally. If you are missing tests required to evaluate your kernel, that
-                      is because writing them is part of the assignment. So do that, rather than
-                      bang on the <code>test161</code> server.</p>
+                    <p>You will notice that the remote <code>test161</code> output is different than what you
+                      normally see, and that many useful messages are disabled. This is because
+                      remote automated testing is <em>not intended to produce diagnostic output</em>.
+                      Iterative <code>test161</code> testing should be done locally. If you are missing tests
+                      required to evaluate your kernel, that is because writing them is part of the
+                      assignment. So do that, rather than bang on the <code>test161</code> server.</p>
                   </div>
                   <div className="sect2">
                     { " " }<a className="anchor" id="_preparing_for_submission" /><h3>3.1. Preparing for Submission</h3>
-                    <div className="embed-responsive embed-responsive-16by9 hidden-print" style={{marginTop: 10, marginBottom: 10, border: '1px solid grey'}}>
-                      <div className="youtube-container" data-id="wzS-moehW0I"><img className="youtube-thumb" src="//i.ytimg.com/vi/wzS-moehW0I/mqdefault.jpg" alt="YouTube placeholder" /><div className="play-button"><span className="glyphicon glyphicon-play" aria-hidden="true" /></div></div>
+                    <div className="paragraph">
+                      <p>To submit you first need to</p>
+                    </div>
+                    <div className="olist arabic">
+                      <ol className="arabic">
+                        <li>
+                          <p>Create an account on <code>test161.ops-class.org</code></p>
+                        </li>
+                        <li>
+                          <p>Log in and <a href="/profile/">create and retrieve</a> your user token and public key</p>
+                        </li>
+                        <li>
+                          <p>Configure your repository to allow <code>test161</code> to clone it during remote testing.</p>
+                        </li>
+                      </ol>
                     </div>
                     <div className="paragraph">
-                      <p>To submit to <a href="https://test161.ops-class.org" target="_blank" className="external"><code>test161.ops-class.org</code></a>, you
-                        first need to retrieve your user token and public key and configure your
-                        repository to allow <code>test161</code> to clone it during remote testing.</p>
-                    </div>
-                    <div className="paragraph">
-                      <p>Log in to <a href="https://test161.ops-class.org" target="_blank" className="external"><code>test161.ops-class.org</code></a> and click on
-                        the profile tab. You should see a submit token, which you will need to add to
-                        your <code>.test161.conf</code> file in a minute.</p>
+                      <p>Log in to <code>test161.ops-class.org</code> and click on the <a href="/profile/">profile tab</a>.
+                        You should see a submit token, which you will need to use in a minute.</p>
                     </div>
                     <div className="paragraph">
                       <p>You should also see a dialog allowing you to create a new public key. The
                         reason for this is that <code>test161</code> needs access to your Git repository to test
                         it but will <em>not</em> test public repositories. So you need to ensure that
                         { " " }<code>test161</code> can clone the OS/161 repository that you are going to submit with
-                        the public key that is shown on your profile page.</p>
+                        the public key that is shown on your <a href="/profile/">profile page</a>. <code>test161</code>{ " " }
+                        will verify this during assignment submission.</p>
                     </div>
                     <div className="paragraph">
                       <p>How to add this key differs depending on where you host your private OS/161
@@ -296,45 +304,29 @@ IntroComponent = React.createClass({
                   <div className="sect2">
                     { " " }<a className="anchor" id="_configuration_for_submission" /><h3>3.2. Configuration for Submission</h3>
                     <div className="paragraph">
-                      <p>To submit assignments we have to add a few new values to your <code>.test161.conf</code>{ " " }
-                        file, wherever you put it. Here’s what we started with above and what was
-                        sufficient for local testing:</p>
+                      <p>To submit assignments you have to add you (and your partner’s, if you have
+                        one) submission token to <code>test161</code>:</p>
                     </div>
                     <div className="listingblock noautohighlight">
                       <div className="content">
-                        <pre className="highlight"><code>rootdir: /home/trinity/root/{"\n"}test161dir: /home/trinity/src/test161/</code></pre>
+                        <pre className="highlight"><code>$ test161 config add-user &lt;username&gt; &lt;token&gt;{"\n"}# Repeat as needed for your partner. Also look at del-user and change-token.</code></pre>
                       </div>
                     </div>
                     <div className="paragraph">
-                      <p>For remote submission you to add values that tell <code>test161</code> where to submit
-                        your assignment, how to get your code, and who you are working with. Here’s
-                        an example:</p>
-                    </div>
-                    <div className="listingblock noautohighlight">
-                      <div className="content">
-                        <pre className="highlight"><code>rootdir: /home/trinity/root/{"\n"}test161dir: /home/trinity/src/test161/{"\n"}server: https://test161.ops-class.org{"\n"}repository: git@gitlab.ops-class.org:staff/os161.git{"\n"}users:{"\n"}{"  "}- email: "challen@buffalo.edu"{"\n"}{"    "}token: "MYSECRETTOKEN"{"\n"}{"  "}- email: "mypartner@buffalo.edu"{"\n"}{"    "}token: "HERSECRETTOKEN"</code></pre>
-                      </div>
-                    </div>
-                    <div className="paragraph">
-                      <p>The <code>token</code> value is the token that is shown on your
-                        { " " }<a href="https://test161.ops-class.org" target="_blank" className="external"><code>test161.ops-class.org</code></a> profile page. If you
-                        are working with a partner you should add their email address and token as
-                        shown above. Contact them privately to get their token. If you are working
+                      <p>Your <code>username</code> is shown on your <a href="/profile/">profile page</a>, as is your
+                        token. If you are working with a partner you should add their username and
+                        token as well. Contact them privately to get their token. If you are working
                         alone only submit on behalf of yourself.</p>
                     </div>
                     <div className="paragraph">
-                      <p>At any point you can use the
-                        { " " }<a href="https://test161.ops-class.org" target="_blank" className="external"><code>test161.ops-class.org</code></a> web interface to
-                        regenerate a new public key or private token. This is particularly important
-                        if you end a partnership to ensure that your partner can no longer submit on
-                        your behalf.</p>
+                      <p>At any point you can use the <a href="/profile/">profile page</a> to regenerate a new
+                        public key or private token, which you should then update using <code>test161
+                          config change-token</code>. This is particularly important if you end a partnership
+                        to ensure that your partner can no longer submit on your behalf.</p>
                     </div>
                   </div>
                   <div className="sect2">
                     { " " }<a className="anchor" id="_submitting_your_assignment" /><h3>3.3. Submitting Your Assignment</h3>
-                    <div className="embed-responsive embed-responsive-16by9 hidden-print" style={{marginTop: 10, marginBottom: 10, border: '1px solid grey'}}>
-                      <div className="youtube-container" data-id="5i1_C-w46HA"><img className="youtube-thumb" src="//i.ytimg.com/vi/5i1_C-w46HA/mqdefault.jpg" alt="YouTube placeholder" /><div className="play-button"><span className="glyphicon glyphicon-play" aria-hidden="true" /></div></div>
-                    </div>
                     <div className="paragraph">
                       <p>If you have followed the instructions above then you are ready to submit your
                         assignment. But before you do, <strong>please test locally using <code>test161 run</code></strong>. Our
@@ -349,11 +341,10 @@ IntroComponent = React.createClass({
                     </div>
                     <div className="paragraph">
                       <p>Once you are happy with the score that you earned using <code>test161 run</code>, there
-                        are a few other things you need to do before submitting. First, make sure
-                        that all of your changes are checked in and that the tip of the branch that
-                        you are working on has the changes that you want to submit. Second, make sure
-                        that the changes are pushed to the remote repository you configured in your
-                        { " " }<code>.test161.conf</code> file.</p>
+                        are a few other things you need to do before submitting. First, make sure that
+                        all of your changes are checked in and that the tip of the branch that you are
+                        working on has the changes that you want to submit. Second, make sure that the
+                        changes are pushed to your upstream remote repository.</p>
                     </div>
                     <div className="paragraph">
                       <p>The best way to check for this is to run <code>git status</code>. This is bad output,
@@ -388,36 +379,41 @@ IntroComponent = React.createClass({
                     </div>
                     <div className="paragraph">
                       <p>At that point you should be ready to submit. You need to run the <code>test161
-                          submit &lt;target&gt;</code> command from your Git source directory. When you do, the
-                        following steps will take place locally:</p>
+                          submit &lt;target&gt;</code> command from your OS/161 source or root directory. When you
+                        do, the following steps take place locally:</p>
                     </div>
                     <div className="olist arabic">
                       <ol className="arabic">
                         <li>
-                          <p><code>test161</code> will clone a copy of the Git repository in your <code>.test161.conf</code>{ " " }
-                            file into a temporary directory and check out the commit that you are
-                            submitting. This can fail if you have not pushed your changes.</p>
+                          <p><code>test161</code> will try to clone a copy of your Git repository using the
+                            deployment key shown on your <a href="/profile/">profile page</a>. This will fail if
+                            you have not set up your remote properly to allow <code>test161</code> to clone using
+                            this key.</p>
                         </li>
                         <li>
-                          <p><code>test161</code> will then configure and build your kernel. This can fail or
-                            produce incorrect results if you have uncommitted changes in your working
-                            tree.</p>
+                          <p><code>test161</code> will check out the commit that you are submitting. By default this
+                            is the tip of the branch that you are on, but you can pass a tree-ish argument
+                            to <code>test161 submit</code>. This should succeed, since <code>test161</code> will confirm that
+                            this commit is on the remote before getting this far.</p>
                         </li>
                         <li>
-                          <p><code>test161</code> will then run and the kernel that it built by running <code>test161
-                              run &lt;target&gt;</code>. If you have not earned any points you will not be able to
-                            submit. If you have earned some points, <code>test161</code> will ask you to confirm
-                            your submission and agree to the course collaboration policy before
-                            submitting. This is mandatory.</p>
+                          <p><code>test161</code> will then configure and build your kernel. If your kernel doesn’t
+                            build, this will fail <span className="badge footnote default-tooltip" data-toggle="popover" data-placement="top" data-html="true" data-content="Duh.">2</span>.</p>
+                        </li>
+                        <li>
+                          <p><code>test161</code> will then run the kernel that it built by running <code>test161 run
+                              &lt;target&gt;</code>. If you have not earned any points you will not be able to submit.
+                            If you have earned some points, <code>test161</code> will ask you to confirm your
+                            submission, confirm your partners, and agree to the course collaboration
+                            policy before submitting.</p>
                         </li>
                       </ol>
                     </div>
                     <div className="paragraph">
-                      <p>At that point the action moves to the
-                        { " " }<a href="https://test161.ops-class.org" target="_blank" className="external"><code>test161.ops-class.org</code></a> server. You can watch
-                        the live testing process if you are logged in and have all or that submission
-                        target selected. The server-side testing process is fundamentally no
-                        different than the local testing process, with a few caveats described below.
+                      <p>At that point the action moves to the <a href="/"><code>test161.ops-class.org</code></a> server.
+                        If you are logged in, you can watch the live testing process on the
+                        { " " }<a href="/">results page</a>. <strong>The server-side testing process is fundamentally no
+                          different than the local testing process, with a few caveats described below.</strong>{ " " }
                         Hopefully, when testing completes you have earned the score that you were
                         expecting.</p>
                     </div>
@@ -425,91 +421,80 @@ IntroComponent = React.createClass({
                       <p>Note that testing and grading may not happen immediately. If the <code>test161</code>{ " " }
                         server receives many requests the process will slow down and future
                         submissions will be delayed. <strong>Keep this in mind when submitting close to the
-                          deadline!</strong> Your submission will be timestamped when the request arrives on
-                        our server, but you may not be able to see the testing results until after
-                        the deadline has passed.</p>
+                          deadline!</strong> Your submission will be timestamped when the request arrives on our
+                        server, but you may not be able to see the testing results until after the
+                        deadline has passed.</p>
                     </div>
                     <div className="paragraph">
                       <p>Congrats! You submitted your assignment.</p>
                     </div>
-                    <div className="sect3">
-                      { " " }<a className="anchor" id="_troubleshooting" /><h4>3.3.1. Troubleshooting</h4>
-                      <div className="paragraph">
-                        <p>Here is a list of things to try if your submission is not succeeding, either
-                          locally or remotely:</p>
-                      </div>
-                      <div className="olist arabic">
-                        <ol className="arabic">
-                          <li>
-                            <p>Try updating your copy of <code>test161</code> by running <code>go get -u
-                                github.com/ops-class/test161/test161</code>. This is always safe to do.</p>
-                          </li>
-                          <li>
-                            <p>Make sure that all of your changes are checked in and pushed to your
-                              remote repository.</p>
-                          </li>
-                          <li>
-                            <p>If you have configured a remote in your <code>.test161.conf</code> file, make sure it
-                              matches the one that you are pushing and pulling from.</p>
-                          </li>
-                          <li>
-                            <p>Make sure that the <a href="https://test161.ops-class.org" target="_blank" className="external"><code>test161.ops-class.org</code></a>
-                              server can use the public key that you have configured through the web
-                              interface to pull from the repository that you are submitting.</p>
-                          </li>
-                        </ol>
-                      </div>
-                      <div className="paragraph">
-                        <p>Here is a list of things to try if you are not getting as much credit as you
-                          deserve:</p>
-                      </div>
-                      <div className="olist arabic">
-                        <ol className="arabic">
-                          <li>
-                            <p>If the assignment required you to write certain tests, make sure that they
-                              are complete and accurate.</p>
-                          </li>
-                          <li>
-                            <p>Make sure that <code>test161 run</code> is testing the same kernel that you are
-                              submitting! This can happen if the root directory configured in your
-                              { " " }<code>.test161.conf</code> file is different from where you are installing your kernels
-                              and, as a result, hosts a stale kernel file. Check the file timestamps after
-                              a <code>bmake install</code>.</p>
-                          </li>
-                          <li>
-                            <p>Examine the server logs to determine what went wrong and use that to focus
-                              your local testing.</p>
-                          </li>
-                        </ol>
-                      </div>
+                  </div>
+                  <div className="sect2">
+                    { " " }<a className="anchor" id="_troubleshooting" /><h3>3.4. Troubleshooting</h3>
+                    <div className="paragraph">
+                      <p>Here is a list of things to try if your submission is not succeeding, either
+                        locally or remotely:</p>
+                    </div>
+                    <div className="olist arabic">
+                      <ol className="arabic">
+                        <li>
+                          <p>Try <a href="/test161/#install">updating your copy of <code>test161</code></a>. This is always
+                            safe to do.</p>
+                        </li>
+                        <li>
+                          <p>Make sure that the <a href="/"><code>test161.ops-class.org</code></a>{ " " }
+                            server can use the public key that you have configured through the web
+                            interface to pull from the repository that you are submitting.</p>
+                        </li>
+                      </ol>
+                    </div>
+                    <div className="paragraph">
+                      <p>Here is a list of things to try if you are not getting as much credit as you
+                        deserve:</p>
+                    </div>
+                    <div className="olist arabic">
+                      <ol className="arabic">
+                        <li>
+                          <p>If the assignment required you to write certain tests, make sure that they
+                            are complete and accurate.</p>
+                        </li>
+                        <li>
+                          <p>Make sure that <code>test161</code> is testing the same kernel that you are running
+                            manually using <code>sys161</code>.</p>
+                        </li>
+                        <li>
+                          <p>Examine the server logs to determine what went wrong and use that to focus
+                            your local testing.</p>
+                        </li>
+                      </ol>
                     </div>
                   </div>
                   <div className="sect2">
-                    { " " }<a className="anchor" id="_differences_between_the_local_and_remote_testing_environments" /><h3>3.4. Differences Between the Local and Remote Testing Environments</h3>
+                    { " " }<a className="anchor" id="_differences_between_the_local_and_remote_testing_environments" /><h3>3.5. Differences Between the Local and Remote Testing Environments</h3>
                     <div className="paragraph">
                       <p>One of the design goals of <code>test161</code> is to make local evaluation as accurate
                         as possible. However, there are some differences between your local test
                         environment and the remote one.</p>
                     </div>
                     <div className="paragraph">
-                      <p>Specifically, before performing remote testing <code>test161</code> applies an <em>overlay</em>
+                      <p>Specifically, before performing remote testing <code>test161</code> applies an <em>overlay</em>{ " " }
                         to your kernel which removes some files and replaces the contents of others.
-                        For example, we overwrite all of your <code>Makefiles</code>s and anything else that
-                        we have to interpret or run to make sure that you don’t try to damage our
-                        server. We also overwrite all of the tests in <code>kern/test</code> with trusted code
-                        to ensure that your kernel is running our tests and that you didn’t rewire
-                        the menu to try and trick the testing suite <span className="badge footnote default-tooltip" data-toggle="popover" data-placement="top" data-html="true" data-content="We have a few other tricks up our sleeve here, so I wouldn&#x2019;t bother trying to flummox the remote grader. Doing the assignment is probably easier.">2</span>.</p>
+                        For example, we overwrite all of your <code>Makefile</code>s and anything else that we
+                        have to interpret or run to make sure that you don’t try to damage our server.
+                        We also overwrite many of the tests in <code>kern/test</code> with trusted code to ensure
+                        that your kernel is running our tests and that you didn’t rewire the menu to
+                        try and trick the testing suite <span className="badge footnote default-tooltip" data-toggle="popover" data-placement="top" data-html="true" data-content="We have a few other tricks up our sleeve here, so I wouldn&#x2019;t bother trying to flummox the remote grader. Doing the assignment is probably easier.">3</span>.</p>
                     </div>
                   </div>
                   <div className="sect2">
-                    { " " }<a className="anchor" id="_cheating_detection" /><h3>3.5. Cheating Detection</h3>
+                    { " " }<a className="anchor" id="_cheating_detection" /><h3>3.6. Cheating Detection</h3>
                     <div className="paragraph">
                       <p>Finally, note that each repository submitted to the
-                        { " " }<a href="https://test161.ops-class.org" target="_blank" className="external"><code>test161.ops-class.org</code></a> server will be checked
-                        in its entirely for plagiarism: <strong>every file, and every commit</strong>, not limited
-                        to submissions. Any evidence of plagiarism will be forwarded to the relevant
-                        course staff and plagiarized assignments will be removed from the <code>test161</code>{ " " }
-                        results.</p>
+                        { " " }<a href="/"><code>test161.ops-class.org</code></a> server will be checked in its entirely for
+                        plagiarism: <strong>every file, and every commit</strong>, not limited to submissions. Any
+                        evidence of plagiarism will be forwarded to the relevant course staff and
+                        plagiarized assignments will be removed from the <code>test161</code> results and
+                        leaderboards.</p>
                     </div>
                   </div>
                 </div>
@@ -530,7 +515,7 @@ IntroComponent = React.createClass({
                     { " " }<a className="anchor" id="_tests" /><h3>4.1. Tests</h3>
                     <div className="paragraph">
                       <p>The main <code>test161</code> configuration object is a test, which are stored in files
-                        with a <code>.t</code> extension <span className="badge footnote default-tooltip" data-toggle="popover" data-placement="top" data-html="true" data-content="In homage to the original <code>test161</code> tool that David wrote years ago that also used a <code>.t</code> extension.">3</span>. Here is an example
+                        with a <code>.t</code> extension <span className="badge footnote default-tooltip" data-toggle="popover" data-placement="top" data-html="true" data-content="In homage to the original <code>test161</code> tool that David wrote years ago that also used a <code>.t</code> extension.">4</span>. Here is an example
                         from <code>test161/synch/sem1.t</code>:</p>
                     </div>
                     <div className="listingblock noautohighlight">
@@ -704,13 +689,13 @@ IntroComponent = React.createClass({
             </div>
             <div id="scrollspy" className="col-md-2 spelling_exception">
               <ul id="side" className="nav hidden-xs hidden-sm affix" data-spy="affix" style={{paddingTop: 20, paddingRight: 10}}>
-                <li className="h5"><a href="#top">1. Introduction</a>
+                <li className="h5"><a href="#top">1. Introduction</a>{ " " }
                   <ul className="nav">
-                    <li className="h6"><a href="#_installation">1.1. Installation</a></li>
+                    <li className="h6"><a href="#install">1.1. Installation</a></li>
                     <li className="h6"><a href="#__a_href_http_os161_eecs_harvard_edu_os_161_a_dependencies">1.2. OS/161 Dependencies</a></li>
                   </ul>
                 </li>
-                <li className="h5"><a href="#_running_code_test161_code_targets">2. Running test161 Targets</a>
+                <li className="h5"><a href="#_running_code_test161_code_targets">2. Running test161 Targets</a>{ " " }
                   <ul className="nav">
                     <li className="h6"><a href="#__code_sys161_code_output">2.1. sys161 Output</a></li>
                     <li className="h6"><a href="#_test_status">2.2. Test Status</a></li>
@@ -718,16 +703,17 @@ IntroComponent = React.createClass({
                     <li className="h6"><a href="#_running_groups_of_tests">2.4. Running Groups of Tests</a></li>
                   </ul>
                 </li>
-                <li className="h5"><a href="#_submitting_using_code_test161_code">3. Submitting Using test161</a>
+                <li className="h5"><a href="#_submitting_using_code_test161_code">3. Submitting Using test161</a>{ " " }
                   <ul className="nav">
                     <li className="h6"><a href="#_preparing_for_submission">3.1. Preparing for Submission</a></li>
                     <li className="h6"><a href="#_configuration_for_submission">3.2. Configuration for Submission</a></li>
                     <li className="h6"><a href="#_submitting_your_assignment">3.3. Submitting Your Assignment</a></li>
-                    <li className="h6"><a href="#_differences_between_the_local_and_remote_testing_environments">3.4. Differences Between the Local and Remote Testing Environments</a></li>
-                    <li className="h6"><a href="#_cheating_detection">3.5. Cheating Detection</a></li>
+                    <li className="h6"><a href="#_troubleshooting">3.4. Troubleshooting</a></li>
+                    <li className="h6"><a href="#_differences_between_the_local_and_remote_testing_environments">3.5. Differences Between the Local and Remote Testing Environments</a></li>
+                    <li className="h6"><a href="#_cheating_detection">3.6. Cheating Detection</a></li>
                   </ul>
                 </li>
-                <li className="h5"><a href="#_writing_code_test161_code_tests">4. Writing test161 Tests</a>
+                <li className="h5"><a href="#_writing_code_test161_code_tests">4. Writing test161 Tests</a>{ " " }
                   <ul className="nav">
                     <li className="h6"><a href="#_tests">4.1. Tests</a></li>
                     <li className="h6"><a href="#_identifying_single_tests">4.2. Identifying single tests</a></li>
