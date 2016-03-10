@@ -352,35 +352,39 @@ const LinkIcon = (<i className="glyphicon glyphicon-link"></i>);
 
 const InformationComponent = React.createClass({
   getInitialState() {
-    return {processing: false, invalidLink: false, edit: false};
-  },
-  onMouseEnter(event) {
-    const target = event.target;
-    target.setSelectionRange(0, target.value.length)
+    return {processing: false, invalidLink: false};
   },
   cleanup() {
-    this.setState({err: null, processing: false, invalidLink: false, edit: false});
-  },
-  onChange(event) {
-    const link = event.target.value
-    if (link) {
-      const invalidLink = !link.match(SimpleSchema.RegEx.Url);
-      this.setState({invalidLink});
-    } else {
-      this.setState({invalidLink: false});
+    const {student: {name, link}} = this.props;
+    if (name === this.state.name) {
+      this.setState({name: null});
     }
-  },
-  update(event) {
-    if (event && event.preventDefault) {
-      event.preventDefault();
+    if (link === this.state.link) {
+      this.setState({link: null});
     }
-
-    const name = this.refs.name.value;
+    this.setState({err: null, processing: false, invalidLink: false});
+  },
+  onChange() {
+    let invalidLink = false;
     const link = this.refs.link.value;
-    if (name === this.props.student.name && link === this.props.student.link) {
+    const name = this.refs.name.value;
+    if (link) {
+      invalidLink = !link.match(SimpleSchema.RegEx.Url);
+    }
+    this.setState({invalidLink});
+    if (!invalidLink) {
+      this.setState({name, link});
+      _.throttle(this.update({name, link}), 300);
+    }
+  },
+  update({name, link}) {
+    const updateName = name !== this.props.student.name;
+    const updateLink = link !== this.props.student.link;
+    if (!updateLink && !updateName) {
       this.cleanup();
       return;
     }
+    this.setState({updateName, updateLink});
     const {student: {email, token}} = this.props;
     this.setState({processing: true});
     Meteor.call('updateProfile', {email, token, name, link}, (err, res) => {
@@ -393,12 +397,9 @@ const InformationComponent = React.createClass({
       this.setState({processing: false});
     })
   },
-  toggleEdit() {
-    this.setState({edit: !this.state.edit});
-  },
   render() {
     const {student: {token, email, name, link}} = this.props;
-    const {processing, err, invalidLink, edit} = this.state;
+    const {processing, err, invalidLink, updateLink, updateName} = this.state;
     let errMessage = null;
     if (err) {
       const errContent = err.reason || err.message || err.error || 'Internal error';
@@ -408,93 +409,59 @@ const InformationComponent = React.createClass({
         </div>
       );
     }
-    let content = null;
-    if (edit) {
-      content = (
-        <form onSubmit={this.update}>
-          <div className="form-group">
-            <div className="input-group">
-              <span className="input-group-addon">
-                {NameIcon}
-              </span>
-              <input type="text"
-                ref="name"
-                className="form-control"
-                onClick={this.onMouseEnter}
-                disabled={processing}
-                defaultValue={name}
-                placeholder="Your name"/>
-            </div>
-          </div>
-          <div className={invalidLink ? "form-group has-error" : "form-group"}>
-            <div className="input-group">
-              <span className="input-group-addon">
-                {LinkIcon}
-              </span>
-              <input type="url"
-                ref="link"
-                className="form-control"
-                onClick={this.onMouseEnter}
-                disabled={processing}
-                defaultValue={link}
-                onChange={this.onChange}
-                placeholder="Your link, leave empty to remove it"/>
-            </div>
-          </div>
-          <div className="form-group">
-            <div className="input-group">
-              <span className="input-group-addon">
-                {EmailIcon}
-              </span>
-              <input type="text"
-                ref="email"
-                className="form-control"
-                onClick={this.onMouseEnter}
-                disabled
-                defaultValue={email}
-                placeholder="Your email address"/>
-            </div>
-          </div>
-          {errMessage}
-          <div className="btn-group" role="group">
-            <button type="button"
-              onClick={this.cleanup}
-              className="btn btn-default">
-              Cancel
-            </button>
-            <button type="submit"
-              disabled={processing || invalidLink}
-              className="btn btn-danger">
-              {processing ?
-                <span className="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
-              : null} Update Profile
-            </button>
-          </div>
-        </form>
-      );
-    } else {
-      content = (
-        <div>
-          <p>
-            {NameIcon} {name ? name : 'Unknown'}
-          </p>
-          {link ?
-            <p>{LinkIcon} <a href={link} target="_blank">{link}</a> </p>
-            : null
-          }
-          <p>
-            {EmailIcon} <a className="email"
-              href={`mailto:${email}`}>
-              {email}
-            </a>
-          </p>
-          <div className="btn btn-success"
-            onClick={this.toggleEdit} >
-            Edit Profile
+    let saving = processing ? (
+      <span className="input-group-addon">
+        <i className="glyphicon glyphicon-refresh glyphicon-refresh-animate">
+        </i>
+      </span>
+    ) : null;
+    let content = (
+      <form>
+        <div className="form-group">
+          <div className="input-group">
+            <span className="input-group-addon">
+              {EmailIcon} Username:
+            </span>
+            <input type="text"
+              ref="email"
+              className="form-control"
+              onClick={this.onMouseEnter}
+              disabled
+              defaultValue={email}
+              placeholder="Your email address"/>
           </div>
         </div>
-      );
-    }
+        <div className="form-group">
+          <div className="input-group">
+            <span className="input-group-addon">
+              {NameIcon}
+            </span>
+            <input type="text"
+              ref="name"
+              className="form-control"
+              onChange={this.onChange}
+              value={this.state.name || name}
+              placeholder="Your name"/>
+            {updateName ? saving : null}
+          </div>
+        </div>
+        <div className={invalidLink ? "form-group has-error" : "form-group"}>
+          <div className="input-group">
+            <span className="input-group-addon">
+              {LinkIcon}
+            </span>
+            <input type="url"
+              ref="link"
+              className="form-control"
+              value={this.state.link || link}
+              onChange={this.onChange}
+              placeholder="Your link, leave empty to remove it"/>
+            {updateLink ? saving : null}
+          </div>
+        </div>
+        {errMessage}
+      </form>
+    );
     return (
       <div>
         <h2>Personal Information</h2>
