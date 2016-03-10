@@ -67,38 +67,33 @@ usage:
     test161 help for a detailed commands description
 ----
 
-=== Environment Inference
+=== {os161} Dependencies
+
+You should be able to use {test161} to test any {os161}-based kernel--but it
+is easiest to start with our {ops-os161}. Here are some of the changes that we
+have made to OS/161 to support automated testing and how to apply them to your
+OS/161 tree if you are not using our sources. (And if you are an instructor
+using {os161}, let's collaborate on maintaining OS/161! Please contact us.)
+
+==== Environment Inference
 
 To run and submit your OS/161 kernel, {test161} needs to be able to find your
-OS/161 sources and the root directory where your kernel is installed.
-If you are using the {ops-class}
-https://www.ops-class.org/asst/toolchain/#os161[OS/161 sources,role="noexternal"], 
-this will happen automatically.
-If you are not, you will need to merge our changes to `mk/os161.kernel.mk`,
+OS/161 sources and the root directory where your kernel is installed. If you
+are using the {ops-os161} this will happen automatically using symlinks
+created during kernel compilation.
+
+Otherwise, you will need to merge our changes to `mk/os161.kernel.mk`,
 specifically
 https://github.com/ops-class/os161/commit/3ab7073fc255dcc17d559485ae6a54c888c72766[this
-commit].
-It should be straightforward to merge into OS/161 sources provided by other
-schools footnote:[And please encourage your instructor to incorporate this
-useful change. Or better yet, help us use and maintain the {ops-class} OS/161
-sources.].
+commit]. It should be straightforward to merge into {os161} sources used by
+other schools.
 
-== Running {test161} Targets
+==== {test161} Configuration Files
 
-[.lead]
-`test161` is a very flexible tool and can rapidly run one or many tests and
-evaluate their output.
-
-In this section we show you how to obtain and run {test161} targets.
-
-=== Obtaining {test161} Configuration Files
-
-{test161} uses a http://yaml.org[YAML]-based configuration system. To run the
-following targets, you will need configuration files for {test161} installed
-in a `test161` subdirectory at the base of your OS/161 sources.
-Again, if you are using the {ops-class}
-https://www.ops-class.org/asst/toolchain/#os161[OS/161 sources,role="noexternal"]
-you will already have this directory.
+{test161} uses a http://yaml.org[YAML]-based configuration system. To run
+tests you will need configuration files for {test161}. Again, if you are using
+the {ops-os161} you will already have these configuration files in a
+subdirectory of your OS/161 source tree.
 
 If not, you can easily add the
 https://github.com/ops-class/test161-conf[`test161` configuration] to your
@@ -113,7 +108,12 @@ rm -rf test161/.git
 # Alternatively, use a Git submodule if your repository is using Git.
 ----
 
-=== Running {test161}
+== Running {test161} Targets
+
+[.lead]
+`test161` is a very flexible tool and can rapidly run one or many tests and
+evaluate their output. In this section we show you how to obtain and run
+{test161} targets.
 
 For this example, we'll assume that you want to run all tests for ASST1 and
 perform grading. To do that, you provide the `asst1` target as the argument to
@@ -180,22 +180,22 @@ $ test161 run asst1
 Test                             Result                Memory Leaks        Score
 ------------------------------   -------------------   ------------   ----------
 boot.t                           correct                        ---          0/0
-synch/sem1.t                     correct                        ---          0/0
-synch/lt2.t                      incorrect                      ---          0/1
+synch/sem1.t                     correct                    0 bytes          0/0
 synch/lt3.t                      incorrect                      ---          0/1
-synch/lt1.t                      incorrect                      ---          0/8
-synch/cvt2.t                     skip (synch/lt2.t)             ---          0/3
-synch/cvt3.t                     skip (synch/lt1.t)             ---          0/1
-synch/cvt5.t                     skip (synch/lt2.t)             ---          0/1
-synch/cvt1.t                     skip (synch/lt2.t)             ---          0/4
-synch/cvt4.t                     skip (synch/lt2.t)             ---          0/1
-synch/rwt4.t                     incorrect                      ---          0/1
-synch/rwt3.t                     incorrect                      ---          0/1
-synch/rwt1.t                     incorrect                      ---          0/5
-synch/rwt2.t                     skip (synch/cvt2.t)            ---          0/2
+synch/lt1.t                      incorrect                  0 bytes          0/8
+synch/lt2.t                      incorrect                      ---          0/1
+synch/cvt5.t                     skip (synch/lt1.t)             ---          0/1
+synch/cvt1.t                     skip (synch/lt3.t)             ---          0/4
+synch/cvt2.t                     skip (synch/lt3.t)             ---          0/3
+synch/cvt3.t                     skip (synch/lt3.t)             ---          0/1
+synch/cvt4.t                     skip (synch/lt3.t)             ---          0/1
 synch/rwt5.t                     incorrect                      ---          0/1
-synchprobs/sp2.t                 skip (synch/lt1.t)             ---         0/10
+synchprobs/sp2.t                 skip (synch/lt3.t)             ---         0/10
+synch/rwt3.t                     incorrect                      ---          0/1
 synchprobs/sp1.t                 skip (synch/lt2.t)             ---         0/10
+synch/rwt4.t                     incorrect                      ---          0/1
+synch/rwt1.t                     incorrect                  0 bytes          0/5
+synch/rwt2.t                     skip (synch/cvt2.t)            ---          0/2
 
 Total Correct  : 2/17
 Total Incorrect: 7/17
@@ -206,7 +206,7 @@ Total Score    : 0/50
 
 As you can see, {test161} has rapidly generated a lot of useful output while
 also giving our base sources the score they deserve on {asst1}: 0/50! Let's
-quickly go through the two mains parts of the {test161} output.
+quickly go through the two parts of the {test161} output.
 
 === `sys161` Output
 
@@ -225,117 +225,148 @@ Following the test output {test161} prints a summary detailing what tests were
 performed and, if appropriate, how they were scored. Scoring is optional and
 only performed when using certain targets.
 
-In the example above, the output shows that `boot.t` ran correctly but earned
-no points. That is because the kernel booted but this was not worth any points
-for {asst1}. However, if the kernel had not booted the rest of the tests would
-have been skipped. In this case, `boot.t` was run because it was specified as
-a _dependency_ by other tests that were included as part of the {asst1}
-target. {test161} can automatically run test dependencies when appropriate.
+In the example above, the output shows that the `boot` and `sem1` tests ran
+correctly but earned no points. That is because the kernel booted but this was
+not worth any points for {asst1}, and working semaphores are provided as part
+of the base {ops-os161}. However, if the kernel had not booted the rest of the
+tests would have been skipped, and if semaphores were broken many tests would
+also have been skipped. In this case, both the `boot` and semaphore tests were
+run because they were specified as a _dependency_ by other tests that were
+included as part of the {asst1} target. {test161} can automatically run test
+dependencies when appropriate.
 
-For the next 10 tests above {test161} reports that they did not complete
-correctly. Again, this is unsurprising given that the base OS/161 sources do
-not include working locks, condition variables, or reader-writer locks. As you
-complete portions of each assignment you will notice that your score will
-increase.
+For the next 15 tests above {test161} reports that they either failed
+(`incorrect`) or were skipped (`skip`). This is unsurprising given that the
+{ops-os161} do not include working locks, condition variables, or
+reader-writer locks. As you complete portions of each assignment your score
+will increase.
 
-For the final 4 tests {test161} reports them as being skipped. This was
-because their dependencies were not met. For example, the condition-variable
-tests `cvt{1,2}` depend on working locks, and these locks did not work.
-Similarly, both the stoplight and whale mating synchronization test drivers
-rely on working locks.
+{test161} skips tests because their dependencies are not met. For the 8 tests
+that were skipped above, in each case {test161} reports one of the failed or
+missing dependencies that caused it to skip the test. For example, the
+condition-variable tests `cvt{1,2}` depend on working locks, and these locks
+did not work. Similarly, both the stoplight and whale mating synchronization
+test drivers rely on working locks.
+
+{test161} also reports memory leaks when this is enabled by the test. In some
+cases above, it was not. But it is reassuring that the semaphores provided by
+the {ops-os161} don't leak memory!
 
 === Running Single {test161} Tests
 
-In our example above `test161` was used to run a _target_, which configures a
+In our example above {test161} was used to run a _target_, which configures a
 set of tests to be run and maps test results to point values. If you are
-curious, look at the `asst1.tt` file located in the `test161` subdirectory of
-your OS/161 source tree. (Or wherever you configured your `test161dir` in
-`.test161.conf`.)
+curious, look at the `asst1.tt` file located in the `targets` subdirectory of
+your {test161} configuration directory.
 
-But `test161` can also be a part of your development process by running
-single tests and reporting their output (without scores). Here is an example,
-again with the base OS/161 sources:
+But {test161} can also be a part of your development process by running single
+tests and reporting their output (without scores). Here is an example, again
+with the base {ops-os161}:
 
 [source,role='noautohighlight']
 ----
-$ test161 run sync/sem1.t
-0.000000	sys161: System/161 release 2.0.6, compiled Feb 16 2016 01:44:26
-0.000000
-0.000000	OS/161 base system version 2.0.1
-0.018289	Copyright (c) 2000, 2001-2005, 2008-2011, 2013, 2014
-0.018289	   President and Fellows of Harvard College.  All rights reserved.
-0.228843
-0.228843	Put-your-group-name-here's system version 0 (ASST1 #2)
-....
-3.917044	sys161:   cpu7: 739019 kern, 0 user, 39921249 idle; 354 ll, 346/8
-sc, 895 sync
-3.917044	sys161: 8673 irqs 0 exns 0r/0w disk 7r/5548w console 0r/0w/1m emufs
-0r/0w net
-3.917044	sys161: Elapsed real time: 1.608594 seconds (86.582 mhz)
-3.917044	sys161: Elapsed virtual time: 3.919384560 seconds (25 mhz)
+$ test161 run synch/sem1.t
+[boot.t      ]  0.000000        sys161: System/161 release 2.0.8, compiled Mar  2 2016 17:16:01
+[boot.t      ]  0.006289
+[boot.t      ]  0.006289        OS/161 base system version 2.0.1
+[boot.t      ]  0.006289        Copyright (c) 2000, 2001-2005, 2008-2011, 2013, 2014
+[boot.t      ]  0.006289           President and Fellows of Harvard College.  All rights reserved.
+[boot.t      ]  0.237759
 
-Test                             Result
-------------------------------   ----------
-sync/sem1.t                      correct
+# ... lots of output omitted ...
 
-Total Correct  : 1/1
+[synch/sem1.t]  0.000000        sys161: System/161 release 2.0.8, compiled Mar  2 2016 17:16:01
+[synch/sem1.t]  0.006289
+[synch/sem1.t]  0.006289        OS/161 base system version 2.0.1
+[synch/sem1.t]  0.006289        Copyright (c) 2000, 2001-2005, 2008-2011, 2013, 2014
+[synch/sem1.t]  0.006289           President and Fellows of Harvard College.  All rights reserved.
+[synch/sem1.t]  0.237964
+[synch/sem1.t]  0.237964        Put-your-group-name-here's system version 0 (DUMBVM #6)
+[synch/sem1.t]  0.268137
+[synch/sem1.t]  0.268137        764k physical memory available
+[synch/sem1.t]  0.288267        Device probe...
+[synch/sem1.t]  0.298354        lamebus0 (system main bus)
+
+# ... lots of output omitted ...
+
+[synch/sem1.t]  3.364153        sys161:   cpu30: 327482 kern, 0 user, 40112024 idle; 43 ll, 13/30 sc, 10 sync
+[synch/sem1.t]  3.364153        sys161:   cpu31: 327115 kern, 0 user, 40112391 idle; 44 ll, 13/31 sc, 10 sync
+[synch/sem1.t]  3.364153        sys161: 8409 irqs 0 exns 0r/0w disk 15r/5300w console 0r/0w/1m emufs 0r/0w net
+[synch/sem1.t]  3.364153        sys161: Elapsed real time: 3.686627 seconds (33.7904 mhz)
+[synch/sem1.t]  3.364153        sys161: Elapsed virtual time: 3.365535757 seconds (25 mhz)
+[synch/sem1.t]  3.364153        shutdown: normal shutdown
+
+Test                             Result       Memory Leaks
+------------------------------   ----------   ------------
+boot.t                           correct               ---
+synch/sem1.t                     correct           0 bytes
+
+Total Correct  : 2/2
 ----
 
 In this case we ran the semaphore test `sem1`, which does work in the base
-sources, and `test161` produced output reflecting that. You can also tell
-`test161` to run both a test and its dependencies by providing the `-d` flag
-to `test161 run`. The output of `test161 run -d sync/sem1.t` will show that
-both `sem1` and it's dependency (`boot.t`) were run.
+sources, and {test161} produced output reflecting that. You can instruct
+{test161} to omit a test's dependencies by providing the `-n` flag to `test161
+run`, in which case it would have skipped the `boot` test.
 
 === Running Groups of Tests
 
 The name passed to `test161 run` identifies a test relative to the `tests`
-subdirectory of the the `test161dir` configured in `.test161.conf`. In this
-case, [.small]`~/src/test161/tests/sync/sem1.t` contains:
+subdirectory of the the {test161} configuration directory. (If you have
+installed our
+https://github.com/ops-class/test161/tree/master/bash_completion[`bash`
+completion script], `test161` should tab complete many things including tests
+and targets.)
+
+In this case, `synch/sem1.t` contains:
 
 [source,yaml]
 ----
 ---
 name: "Semaphore Test"
-tags:
-  - sync
-  - semaphore
-depends:
-  - boot
+description:
+  Tests core semaphore logic through cyclic signaling.
+tags: [synch, semaphores, kleaks]
+depends: [boot]
+sys161:
+  cpus: 32
 ---
+khu
 sem1
+khu
 ----
-You'll notice that the `sem1` test also belongs to two groups: `sync` and
-`semaphore`. Groups provide another useful way to run `test161`:
+
+You'll notice that the `sem1` test also belongs to three groups: `synch`,
+`semaphores`, and `kleaks`. Groups provide another useful way to run
+{test161}. Here we've asked {test161} to run all of the tests that are in the
+`synch` group. 
 
 [source,role='noautohighlight']
 ----
-$ test161 run sync
-...
-Test                             Result
-------------------------------   ----------
-sync/rwt3.t                      incorrect
-sync/lt2.t                       incorrect
-sync/rwt4.t                      incorrect
-sync/rwt5.t                      incorrect
-sync/cvt3.t                      incorrect
-sync/lt3.t                       incorrect
-sync/cvt4.t                      incorrect
-sync/rwt2.t                      incorrect
-sync/lt1.t                       incorrect
-sync/rwt1.t                      incorrect
-sync/cvt1.t                      incorrect
-sync/sem1.t                      correct
-sync/cvt2.t                      incorrect
+$ test161 run synch
+Test                             Result                Memory Leaks
+------------------------------   -------------------   ------------
+boot.t                           correct                        ---
+synch/sem1.t                     correct                    0 bytes
+synch/lt3.t                      incorrect                      ---
+synch/lt1.t                      incorrect                  0 bytes
+synch/lt2.t                      incorrect                      ---
+synch/cvt5.t                     skip (synch/lt2.t)             ---
+synch/cvt1.t                     skip (synch/lt2.t)             ---
+synch/cvt4.t                     skip (synch/lt3.t)             ---
+synch/cvt2.t                     skip (synch/lt2.t)             ---
+synch/cvt3.t                     skip (synch/lt2.t)             ---
+synch/rwt3.t                     incorrect                      ---
+synch/rwt2.t                     skip (synch/cvt2.t)            ---
+synch/rwt4.t                     incorrect                      ---
+synch/rwt1.t                     incorrect                  0 bytes
+synch/rwt5.t                     incorrect                      ---
 
-Total Correct  : 1/13
-Total Incorrect: 12/13
+Total Correct  : 2/15
+Total Incorrect: 7/15
+Total Skipped  : 6/15
 ----
 
-Here we've asked `test161` to run all of the tests that are in the `sync`
-group. Note that, unlike the `asst1` target, in this case dependencies were
-not requested and so `cvt{1,2}` were run even though the lock tests failed.
-To respect test dependencies provide `test161` with the `-d` flag.
 
 == Submitting Using `test161`
 
