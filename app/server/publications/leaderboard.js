@@ -4,6 +4,9 @@ Meteor.publish('leaderboards', function({ _id: target_name, type, points }) {
     return;
   }
 
+  const user = Meteor.users.findOne(this.userId) || {};
+  const isStaff = !!((((user || {}).services || {}).auth0 || {}).user_metadata || {}).staff;
+
   if (type !== 'asst') {
     this.ready();
     return;
@@ -93,7 +96,7 @@ Meteor.publish('leaderboards', function({ _id: target_name, type, points }) {
     Submissions.aggregate(pipeline).map((e) => {
       scores.push(e.score);
       if (e.score === points) {
-        if (!filterAggregate(e, target_name, type, e.score)) {
+        if (!filterAggregate(e, target_name, type, e.score, isStaff)) {
           return;
         }
 
