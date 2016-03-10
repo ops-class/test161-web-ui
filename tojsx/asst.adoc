@@ -9,6 +9,7 @@
 :test161: pass:normal[`test161`]
 :readme: pass:normal[https://github.com/ops-class/test161/blob/master/README.adoc[README]]
 :ops-class: pass:normal[https://www.ops-class.org[`ops-class.org`, role="noexternal"]]
+:ops-os161: pass:normal[https://www.ops-class.org/asst/toolchain/#os161[`ops-class.org` OS/161 sources, role="noexternal"]]
 :os161: pass:normal[http://os161.eecs.harvard.edu[OS/161]]
 :system161: pass:normal[http://os161.eecs.harvard.edu[System/161]]
 :os161-link: http://os161.eecs.harvard.edu
