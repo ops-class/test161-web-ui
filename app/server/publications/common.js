@@ -70,7 +70,7 @@ filterAggregate = (e, target_name, type, value, staff) => {
 
   let values = privacyArray.filter(x => x.value === value);
   for (let student of students) {
-    const {email, name, link} = student;
+    const {email, name = 'Unknown', link} = student;
     let tmpEmail = null;
     for (let submission of values) {
       const newEmail = getStudentEmail(student, submission, type, staff);
@@ -85,10 +85,14 @@ filterAggregate = (e, target_name, type, value, staff) => {
           name: appendStaffSuffix({student, userObjects}, ANONYMOUS)
         });
       } else {
-        e.group.push({
-          name: appendStaffSuffix({student, userObjects}, name || tmpEmail),
-          link: link
-        });
+        const member = {
+          link,
+          name: appendStaffSuffix({student, userObjects}, name)
+        }
+        if (staff) {
+          member.email = email;
+        }
+        e.group.push(member);
       }
     } else {
       return null;

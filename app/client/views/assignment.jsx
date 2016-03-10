@@ -12,13 +12,13 @@ const getMyScore = (student, target_name) => {
   return res;
 }
 
-const MemberComponent = ({name, link}) => {
-  if (link) {
-    return (
-      <strong><a href={link} target="_blank">{name}</a></strong>
-    );
-  }
-  return (<strong>{name}</strong>);
+const MemberComponent = ({name, link, email}) => {
+  return (
+    <strong>
+      {link ? <a href={link} target="_blank">{name}</a>
+      : name} {email ? email : null}
+    </strong>
+  );
 }
 
 const GroupComponent = React.createClass({
