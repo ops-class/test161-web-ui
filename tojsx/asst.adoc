@@ -6,7 +6,7 @@
 :asst3: pass:normal[https://www.ops-class.org/asst/3/[ASST3, role="noexternal"]]
 :asst4: ASST4
 :toolchain: pass:normal[https://www.ops-class.org/asst/toolchain/[`ops-class.org` toolchain, role="noexternal"]]
-:test161: pass:normal[link:/test161[`test161`]]
+:test161: pass:normal[`test161`]
 :readme: pass:normal[https://github.com/ops-class/test161/blob/master/README.adoc[README]]
 :ops-class: pass:normal[https://www.ops-class.org[`ops-class.org`, role="noexternal"]]
 :os161: pass:normal[http://os161.eecs.harvard.edu[OS/161]]

@@ -33,3 +33,29 @@ body {
 }
 @media (min-width: 1200px) {
 }
+pre.highlight {
+	font-size: 8px;
+}
+@media (min-width:768px) {
+	pre.highlight {
+		font-size: 10px;
+	}
+}
+@media (min-width: 992px) {
+	.row-md-flex-center {
+		display:flex;
+		align-items:center;
+	}
+	pre.highlight {
+		font-size: 11px;
+	}
+}
+@media (min-width: 1200px) {
+	.row-lg-flex-center {
+		display:flex;
+		align-items:center;
+	}
+	pre.highlight {
+		font-size: 12px;
+	}
+}
