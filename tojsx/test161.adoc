@@ -367,50 +367,46 @@ Total Incorrect: 7/15
 Total Skipped  : 6/15
 ----
 
-
 == Submitting Using `test161`
 
 [.lead]
 Once you are happy with your score on each assignment footnote:[Or with the
-deadline looming...], `test161` allows you to submit your assignments for
+deadline looming...], {test161} allows you to submit your assignments for
 automated grading.
 
-With some important exceptions (see below), remote `test161` grading is
+With some important exceptions (see below), remote {test161} grading is
 identical to the tests that you run in your local environment. As a result,
 the grade or performance marks that you achieve on the remote server should
-line up closely with what you achieve locally.
+line up closely with what you achieve locally.  *This also means that it is
+both unnecessary and discouraged to repeatedly submit assignments using
+{test161}.*
 
-This also means that it is both unnecessary and discouraged to repeatedly
-submit assignments using `test161`. You will notice that the remote output
-from `test161` is different than what you normally see, and that many useful
-messages are disabled. This is because remote automated testing is not
-intended to produce diagnostic output. Iterative `test161` testing should be
-done locally. If you are missing tests required to evaluate your kernel, that
-is because writing them is part of the assignment. So do that, rather than
-bang on the `test161` server.
+You will notice that the remote {test161} output is different than what you
+normally see, and that many useful messages are disabled. This is because
+remote automated testing is _not intended to produce diagnostic output_.
+Iterative {test161} testing should be done locally. If you are missing tests
+required to evaluate your kernel, that is because writing them is part of the
+assignment. So do that, rather than bang on the {test161} server.
 
 === Preparing for Submission
 
-++++
-<div class="embed-responsive embed-responsive-16by9"
-		 style="margin-top:10px; margin-bottom:10px; border:1px solid grey">
-<div class="youtube-container" data-id="wzS-moehW0I"></div>
-</div>
-++++
+To submit you first need to
 
-To submit to https://test161.ops-class.org[`test161.ops-class.org`], you
-first need to retrieve your user token and public key and configure your
-repository to allow `test161` to clone it during remote testing.
+. Create an account on `test161.ops-class.org`
 
-Log in to https://test161.ops-class.org[`test161.ops-class.org`] and click on
-the profile tab. You should see a submit token, which you will need to add to
-your `.test161.conf` file in a minute.
+. Log in and link:/profile[create and retrieve] your user token and public key
+
+. Configure your repository to allow {test161} to clone it during remote testing.
+
+Log in to `test161.ops-class.org` and click on the link:/profile[profile tab].
+You should see a submit token, which you will need to use in a minute.
 
 You should also see a dialog allowing you to create a new public key. The
 reason for this is that `test161` needs access to your Git repository to test
 it but will _not_ test public repositories. So you need to ensure that
 `test161` can clone the OS/161 repository that you are going to submit with
-the public key that is shown on your profile page.
+the public key that is shown on your profile page. {test161} will verify this
+during assignment submission.
 
 How to add this key differs depending on where you host your private OS/161
 Git repository. GitHub allows you to set up
