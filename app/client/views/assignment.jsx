@@ -147,8 +147,7 @@ AssignmentComponent = React.createClass({
         title: {
           text: 'Scores'
         },
-        showLastLabel: true,
-        endOnTick: true,
+        minTickInterval: 5,
         categories: labels
       },
       yAxis: {
