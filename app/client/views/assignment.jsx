@@ -52,7 +52,14 @@ const PerfectScoreComponent = React.createClass({
     this.initTooltip();
   },
   initTooltip() {
-    $(ReactDOM.findDOMNode(this)).find('[data-toggle="tooltip"]').tooltip();
+    $(ReactDOM.findDOMNode(this))
+    .find('[data-toggle="tooltip"]')
+    .tooltip({trigger: 'hover', placement: 'auto'})
+    .bind('touchstart', function() {
+      $(this).tooltip('show');
+    }).bind('touchend', function() {
+      Meteor.setTimeout(() => $(this).tooltip('destroy'), 1024);
+    });
   },
   render() {
     const {leaders} = this.props;
@@ -226,12 +233,12 @@ AssignmentComponent = React.createClass({
                 a perfect score on {title}!
               </span>
             </div>
-            <div className="col-md-8">
+            <div className="col-md-8 col-sm-8">
               <div className="row">
                 <div id={this.state.container}></div>
               </div>
             </div>
-            <div className="col-md-4">
+            <div className="col-md-4 col-sm-4">
               <PerfectScoreComponent {...{leaders}}/>
             </div>
           </div>
