@@ -66,7 +66,9 @@ LeadersComponent = React.createClass({
 							continue to submit after your course's deadline.</strong>
 							{" " }But regardless of your deadlines, your best score is always shown.
             </p>
-            {list}
+            <div className="row">
+              {list}
+            </div>
           </div>
         </div>
         <LeadersSidebarComponent targets={targets}/>
