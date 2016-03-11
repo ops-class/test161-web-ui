@@ -3,8 +3,8 @@ Meteor.methods({
     const userId = this.userId;
     const student = checkEmailToken({email, token, userId});
     const obj = {};
-    if (name) { obj.name = name; }
-    if (link) { obj.link = link; }
+    if (name !== undefined) { obj.name = name; }
+    if (link !== undefined) { obj.link = link; }
     return Students.update(
       {_id: student._id},
       {$set: obj},
