@@ -36,9 +36,9 @@ const GroupComponent = React.createClass({
       if (first) {
         first = false;
       } else {
-        list.push(<span key={index*2}> and </span>);
+        list.push(', ');
       }
-      list.push(<MemberComponent {...member} key={index*2+1}/>);
+      list.push(<MemberComponent {...member} key={index}/>);
     })
     return (<div>{list}</div>);
   }
