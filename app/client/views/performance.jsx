@@ -219,8 +219,8 @@ PerformanceComponent = React.createClass({
     }
     return (
       <div className="row" id={target._id}>
-        <h1>{title}</h1>
         <div className="col-md-12">
+          <h1>{title}</h1>
           <div id={this.state.container}></div>
         </div>
         <PerfectScoreComponent {...{title, leaders}}/>
