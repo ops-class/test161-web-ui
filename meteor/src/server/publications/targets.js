@@ -2,7 +2,7 @@ import {Meteor} from 'meteor/meteor';
 import {Targets} from 'libs/collections';
 
 // Only publish data for the matches we care about. Be careful not to over-publish
-Meteor.publish('targets', function() {
+Meteor.publish('targets', function () {
   if (!this.userId) {
     this.ready();
     return;
@@ -37,11 +37,11 @@ Meteor.publish('targets', function() {
       this.added('targetnames', e._id, e);
     });
     this.ready();
-  }
+  };
 
   const query = Targets.find(selector);
   const handle = query.observeChanges({
-    added: (id) => {
+    added: () => {
       if (!initializing) {
         runAggregation();
       }
@@ -56,7 +56,7 @@ Meteor.publish('targets', function() {
   initializing = false;
   runAggregation();
 
-  this.onStop(function() {
+  this.onStop(function () {
     handle.stop();
   });
 });

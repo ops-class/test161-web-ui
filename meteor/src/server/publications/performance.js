@@ -4,7 +4,7 @@ import {filterAggregate} from './common';
 
 const LIMIT = 10;
 
-Meteor.publish('performance', function({ _id: target_name, type }) {
+Meteor.publish('performance', function ({ _id: target_name, type }) {
   if (!this.userId) {
     this.ready();
     return;
@@ -20,7 +20,7 @@ Meteor.publish('performance', function({ _id: target_name, type }) {
   const localCache = new Set();
 
   const selector = {
-    target_name: target_name,
+    target_name,
     performance: { $gt: 0 }
   };
 

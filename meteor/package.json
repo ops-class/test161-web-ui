@@ -6,7 +6,7 @@
   "main": "src/server.js",
   "browser": "src/client.js",
   "scripts": {
-    "lint": "eslint ./src/libs ./src/client ./src/server --ext .js --ext .jsx",
+    "lint": "eslint ./src --ext .js --ext .jsx",
     "lintfix": "npm run lint -- --fix",
     "testonly": "mocha .scripts/mocha_boot.js src/client/**/tests/**/*.js --compilers js:babel-core/register",
     "test": "npm run lint && npm run testonly",

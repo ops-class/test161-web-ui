@@ -3,7 +3,7 @@ import {checkEmailToken} from './check';
 import {Students} from 'libs/collections';
 
 Meteor.methods({
-  updateProfile: function({email, token}, {name, link}) {
+  updateProfile({email, token}, {name, link}) {
     const userId = this.userId;
     const student = checkEmailToken({email, token, userId});
     const obj = {};
@@ -15,4 +15,4 @@ Meteor.methods({
       { trimStrings: false }
     );
   }
-})
+});

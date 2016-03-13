@@ -1,4 +1,5 @@
 import {Meteor} from 'meteor/meteor';
+import {Random} from 'meteor/random';
 import {
   Students, Outputs, Submissions, Targets, Tests,
   submissionStatus, commandStatus, testStatus,
@@ -7,7 +8,7 @@ import {
 } from 'libs/collections';
 import {randomInt} from 'libs/';
 
-const DEBUG = !!(process.env.TEST161_DEBUG || Meteor.settings.TEST161_DEBUG);
+const DEBUG = Boolean(process.env.TEST161_DEBUG || Meteor.settings.TEST161_DEBUG);
 
 if (DEBUG) {
   const privacy = [{type: 'asst', choice: SHOW}, {type: 'perf', choice: SHOW}];
@@ -16,7 +17,7 @@ if (DEBUG) {
     const walltime = 0.1 * i;
     const simtime = walltime;
     return {line, walltime, simtime};
-  }
+  };
 
   const generateCommand = (i = -1) => {
     const _id = Meteor.uuid();
@@ -28,9 +29,9 @@ if (DEBUG) {
       line: 'command line ' + i,
       walltime: 0.0,
       simtime: 0.0
-    }
+    };
     return {_id, points_avail, points_earned, output, status, input};
-  }
+  };
 
   const generateTest = (index = -1, target = '', num = 2, outputNum = 10) => {
     const _id = Meteor.uuid();
@@ -46,7 +47,7 @@ if (DEBUG) {
       Meteor.setTimeout(() => {
         const command = generateCommand(i);
         commands.push(command);
-        Tests.update(_id, { $set: { commands: commands, result: testStatus[1] } });
+        Tests.update(_id, { $set: { commands, result: testStatus[1] } });
         for (let j = 0; j < outputNum; j++) {
           Meteor.setTimeout(() => {
             command.status = commandStatus[1];
@@ -54,7 +55,7 @@ if (DEBUG) {
             if (command.output.length === outputNum) {
               command.status = commandStatus[2 + randomInt(2)];
             }
-            Tests.update(_id, { $set: {commands: commands } });
+            Tests.update(_id, { $set: {commands} });
             if (commands.length === num && commands[num - 1].output.length === outputNum) {
               Tests.update(_id, { $set: {result: testStatus[2 + randomInt(2)] } });
             }
@@ -63,7 +64,7 @@ if (DEBUG) {
       }, 1000 * (outputNum + 2) * i + noneTime * num);
     }
     return test;
-  }
+  };
 
   const generateMockTest = ({_id}, num = 2) => {
     const submission = Submissions.findOne(_id);
@@ -82,13 +83,13 @@ if (DEBUG) {
       Meteor.setTimeout(() => {
         const test = generateTest(i, _id, num, outputNum);
         tests.push(test._id);
-        Submissions.update(_id, { $set : { tests: tests } });
+        Submissions.update(_id, { $set: { tests } });
       }, 1000 * outputNum * num * i);
     }
     Meteor.setTimeout(() => {
       Submissions.update(_id, { $set: {status: submissionStatus[3] } });
     }, 1000 * outputNum * num * 5);
-  }
+  };
 
   const getRandomSubmission = (index = -1) => {
     if (index === -1 || index >= submissionStatus.length) {
@@ -100,7 +101,7 @@ if (DEBUG) {
     const _id = Meteor.uuid();
     const randomTime = moment().subtract(Math.floor(Math.random() * 160000), 'seconds');
     const submission_time = randomTime.toDate();
-    const users = [USERS_EMAILS[randomInt(USERS_EMAILS.length)]];
+    const users = [ USERS_EMAILS[randomInt(USERS_EMAILS.length)] ];
     if (randomInt(2)) {
       users.push(USERS_EMAILS[randomInt(USERS_EMAILS.length)]);
       if (users[0] === users[1]) {
@@ -118,25 +119,40 @@ if (DEBUG) {
     const max_score = 50;
     const completion_time = moment(randomTime).add(Math.floor(Math.random() * 10000), 'seconds').toDate();
     if (isSubmitted(status)) {
-      return {_id, submission_time, users, repository, commit_id, status, target, max_score, target_name, target_type, target_version, tests};
-    } else if (isFailed(status)) {
-      return {_id, submission_time, users, repository, commit_id, status, target, max_score, target_name, target_type, target_version, tests, completion_time};
-    } else {
-      if (randomInt(2)) {
-        let score = max_score;
-        if (randomInt(3)) {
-          score -= randomInt(max_score);
-        }
-        return {_id, submission_time, users, repository, commit_id, status, target, max_score, target_name, target_type, target_version, tests, completion_time, score};
-      } else {
-        const score = max_score;
-        const performance = Math.floor(Math.random() * 100) / 10;
-        target_name += '-perf';
-        target_type = 'perf';
-        return {_id, submission_time, users, repository, commit_id, status, target, max_score, target_name, target_type, target_version, tests, completion_time, score, performance};
-      }
+      return {
+        _id, submission_time, users, repository, commit_id,
+        status, target, max_score, target_name, target_type,
+        target_version, tests
+      };
     }
-  }
+    if (isFailed(status)) {
+      return {
+        _id, submission_time, users, repository, commit_id,
+        status, target, max_score, target_name, target_type,
+        target_version, tests, completion_time
+      };
+    }
+    if (randomInt(2)) {
+      let score = max_score;
+      if (randomInt(3)) {
+        score -= randomInt(max_score);
+      }
+      return {
+        _id, submission_time, users, repository, commit_id,
+        status, target, max_score, target_name, target_type,
+        target_version, tests, completion_time, score
+      };
+    }
+    const score = max_score;
+    const performance = Math.floor(Math.random() * 100) / 10;
+    target_name += '-perf';
+    target_type = 'perf';
+    return {
+      _id, submission_time, users, repository, commit_id,
+      status, target, max_score, target_name, target_type,
+      target_version, tests, completion_time, score, performance
+    };
+  };
 
   const updateTargetStats = (sub) => {
     const {users, target_name} = sub;
@@ -159,10 +175,10 @@ if (DEBUG) {
         stat = {target_name, target_version, target_type, max_score, total_submissions, high_score};
         target_stats.push(stat);
       }
-      Students.update({email}, { $set: { target_stats }})
+      Students.update({email}, { $set: { target_stats }});
     }
     return;
-  }
+  };
 
   const initSubmissions = (count = 10) => {
     for (let i = 0; i < count; i++) {
@@ -170,7 +186,7 @@ if (DEBUG) {
       Submissions.insert(sub);
       updateTargetStats(sub);
     }
-  }
+  };
 
   const clean = () => {
     Tests.remove({});
@@ -178,7 +194,7 @@ if (DEBUG) {
     Submissions.remove({});
     Students.remove({});
     Meteor.users.remove({});
-  }
+  };
 
   const mock = (score = 0, num = 2) => {
     const submission = Submissions.findOne({score}, {sort: { submission_time: -1 }});
@@ -187,7 +203,7 @@ if (DEBUG) {
       return;
     }
     generateMockTest(submission, num);
-  }
+  };
 
   const generateUsers = (num = 100) => {
     if (Meteor.users.find().count() > 1) {
@@ -200,7 +216,7 @@ if (DEBUG) {
         createdAt: new Date(),
         services: {
           auth0: {
-            email: email,
+            email,
             email_verified: true,
             user_id: 'auth0|' + id,
             name: 'admin@ops-class.org',
@@ -210,7 +226,7 @@ if (DEBUG) {
           },
           resume: { loginTokens: [] }
         }
-      }
+      };
       const userId = Meteor.users.insert(user);
       const _id = Random.id();
       const token = Random.id();
@@ -221,19 +237,19 @@ if (DEBUG) {
       const student = {_id, userId, email, token, name, link, createdAt, target_stats, privacy};
       Students.insert(student);
     }
-  }
+  };
 
   const updateStudents = (selector = {}, choice = SHOW) => {
     const update = {
       $set: {
         privacy: [
-          {type: 'asst', choice: choice},
-          {type: 'perf', choice: choice}
+          {type: 'asst', choice},
+          {type: 'perf', choice}
         ]
       }
     };
     Students.update(selector, update, {multi: true});
-  }
+  };
 
   const mockTargets = () => {
     if (Targets.findOne()) {
@@ -258,10 +274,14 @@ if (DEBUG) {
         const description = `${name} description`;
         const active = 'true';
         const leaderboard = 'true';
-        Targets.insert({_id, name, print_name, description, active, leaderboard, version, type, points, kconfig, userland, file_hash, file_name});
+        Targets.insert({
+          _id, name, print_name, description, active,
+          leaderboard, version, type, points, kconfig,
+          userland, file_hash, file_name
+        });
       }
     }
-  }
+  };
 
   const initItems = (num = 1000) => {
     mockTargets();
@@ -271,7 +291,7 @@ if (DEBUG) {
     if (count < num) {
       initSubmissions(num - count);
     }
-  }
+  };
 
 
   Object.assign(Meteor, {initItems, clean, mock, updateStudents});

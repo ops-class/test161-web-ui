@@ -3,7 +3,7 @@ import {checkEmailToken} from './check';
 import {Students, HIDE, ANONYMOUS} from 'libs/collections';
 
 Meteor.methods({
-  updatePrivacy: function({email, token, type}, newChoice) {
+  updatePrivacy({email, token, type}, newChoice) {
     // Meteor._sleepForMs(1000);
     const userId = this.userId;
     const student = checkEmailToken({email, token, userId});
@@ -20,4 +20,4 @@ Meteor.methods({
       { $set: { privacy } }
     );
   }
-})
+});
