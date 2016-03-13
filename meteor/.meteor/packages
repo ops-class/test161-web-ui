@@ -22,7 +22,6 @@ webpack:css
 webpack:less
 webpack:assets
 
-meteorhacks:flow-router
 kadira:react-layout
 meteorhacks:subs-manager
 aldeed:collection2
@@ -38,3 +37,4 @@ simple:highlight.js
 meteorhacks:aggregate
 templating
 jparker:crypto-md5
+kadira:flow-router

@@ -43,6 +43,7 @@ jparker:crypto-core@0.1.0
 jparker:crypto-md5@0.1.1
 jquery@1.11.4
 jsx@0.2.3
+kadira:flow-router@2.10.1
 kadira:react-layout@1.5.3
 launch-screen@1.0.4
 livedata@1.0.15
@@ -53,7 +54,6 @@ meteor@1.1.10
 meteor-base@1.0.1
 meteorhacks:aggregate@1.3.0
 meteorhacks:collection-utils@1.2.0
-meteorhacks:flow-router@1.19.0
 meteorhacks:subs-manager@1.6.3
 minifiers@1.1.7
 minimongo@1.0.10

@@ -1,4 +1,4 @@
-import {FlowRouter} from 'meteor/meteorhacks:flow-router';
+import {FlowRouter} from 'meteor/kadira:flow-router';
 import {ReactLayout} from 'meteor/kadira:react-layout';
 import MainLayout from './components/main_layout';
 
