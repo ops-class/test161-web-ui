@@ -1,3 +1,4 @@
 import './publications';
-// import 'TodoApp/methods';
 import './methods';
+import './appcache';
+import './ensureindex';
