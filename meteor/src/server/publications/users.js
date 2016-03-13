@@ -1,5 +1,6 @@
 import {Meteor} from 'meteor/meteor';
 import {getUserEmail, findAllStudents} from 'libs/query';
+import {Students} from 'libs/collections';
 
 const generateStudentDoc = (userId) => {
   const email = getUserEmail(userId);

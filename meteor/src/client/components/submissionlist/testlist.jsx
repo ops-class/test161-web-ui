@@ -3,6 +3,8 @@ import ReactMixin from 'react-mixin';
 import {CollapseMixin} from 'client/components/mixins';
 
 import {TestSubs} from 'client/libs';
+import {Tests} from 'libs/collections';
+import {getTestStatusClass, isTestRunning} from 'libs/';
 
 import {LoadingComponent} from 'client/components/loading';
 
@@ -49,9 +51,12 @@ class TestListComponent extends Component {
 
 @ReactMixin.decorate(CollapseMixin)
 class TestComponent extends Component {
-  state = {
-    collapseTarget: '.command-container'
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      collapseTarget: '.command-container'
+    };
+  }
 
   autoCollpase(nextProps) {
     const {result: status} = this.props;

@@ -103,6 +103,7 @@ export {
   Submissions,
   submissionStatus,
   SubmissionSchema,
+  targetNames,
   isCompleted,
   isFailed,
   isSubmitted

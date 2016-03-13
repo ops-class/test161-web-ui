@@ -96,6 +96,13 @@ class PerfectScoreComponent extends Component {
 @ReactMixin.decorate(ReactMeteorData)
 @ReactMixin.decorate(UrlHashMixin)
 class AssignmentComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      container: props.target._id + '-chart'
+    };
+  }
+
   getMeteorData() {
     const {target} = this.props;
     const ready = false;
@@ -117,10 +124,6 @@ class AssignmentComponent extends Component {
     }
     return data;
   }
-
-  state = {
-    container: this.props.target._id + '-chart'
-  };
 
   componentDidMount() {
     this.update();

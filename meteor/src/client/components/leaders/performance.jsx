@@ -72,6 +72,13 @@ const PerfectScoreComponent = React.createClass({
 
 @ReactMixin.decorate(ReactMeteorData)
 class PerformanceComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      container: props.target._id + '-chart'
+    };
+  }
+
   getMeteorData() {
     const {target = {}} = this.props;
     const ready = false;
@@ -101,10 +108,6 @@ class PerformanceComponent extends Component {
   componentDidUpdate() {
     this.update();
   }
-
-  state = {
-    container: this.props.target._id + '-chart'
-  };
 
   update() {
     const {ready, performances} = this.data;
