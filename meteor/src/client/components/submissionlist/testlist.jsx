@@ -1,12 +1,14 @@
 import {Component} from 'react';
 import ReactMixin from 'react-mixin';
 import {CollapseMixin} from 'client/components/mixins';
+import {PointComponent} from 'client/components/points';
 
 import {TestSubs} from 'client/libs';
 import {Tests} from 'libs/collections';
 import {getTestStatusClass, isTestRunning} from 'libs/';
 
 import {LoadingComponent} from 'client/components/loading';
+import {CommandListComponent} from './commandlist';
 
 @ReactMixin.decorate(ReactMeteorData)
 class TestListComponent extends Component {
@@ -49,21 +51,16 @@ class TestListComponent extends Component {
   }
 }
 
-@ReactMixin.decorate(CollapseMixin)
-class TestComponent extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      collapseTarget: '.command-container'
-    };
-  }
-
+const TestComponent = React.createClass({
+  mixins: [CollapseMixin],
+  getInitialState() {
+    return {collapseTarget: '.command-container'};
+  },
   autoCollpase(nextProps) {
     const {result: status} = this.props;
     const nextStatus = nextProps.result;
     return isTestRunning(status) && !isTestRunning(nextStatus);
-  }
-
+  },
   render() {
     const {_id, name, commands, points_avail, points_earned, result} = this.props;
     const {collapse} = this.state;
@@ -102,6 +99,6 @@ class TestComponent extends Component {
       </div>
     );
   }
-}
+});
 
 export default {TestListComponent};

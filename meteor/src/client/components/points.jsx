@@ -1,3 +1,5 @@
+import {Component} from 'react';
+
 const getPointClass = ({points_earned, points_avail}) => {
   const ratio = points_avail ? points_earned / points_avail : 0;
   if (ratio < 0.3) {
