@@ -1,0 +1,9 @@
+{
+  "root": "src",
+  "hotMiddleware": {
+      "reload": true
+  },
+  "devServer": {
+    "host": "localhost"
+  }
+}
