@@ -1,4 +1,3 @@
-import './debug';
 import './leaderboardsettings';
 import './profile';
 import './token';
