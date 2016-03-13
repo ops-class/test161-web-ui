@@ -2,14 +2,14 @@ import {Meteor} from 'meteor/meteor';
 import {Submissions, Students} from 'libs/collections';
 import {filterAggregate} from './common';
 
-Meteor.publish('leaderboards', function({ _id: target_name, type, points }) {
+Meteor.publish('leaderboards', function ({ _id: target_name, type, points }) {
   if (!this.userId) {
     this.ready();
     return;
   }
 
   const user = Meteor.users.findOne(this.userId) || {};
-  const isStaff = !!((((user || {}).services || {}).auth0 || {}).user_metadata || {}).staff;
+  const isStaff = Boolean(((((user || {}).services || {}).auth0 || {}).user_metadata || {}).staff);
 
   if (type !== 'asst') {
     this.ready();
@@ -20,7 +20,7 @@ Meteor.publish('leaderboards', function({ _id: target_name, type, points }) {
 
   let initializing = true;
   const selector = {
-    target_name: target_name,
+    target_name,
     score: { $gt: 0 }
   };
 
@@ -34,48 +34,48 @@ Meteor.publish('leaderboards', function({ _id: target_name, type, points }) {
         target_name: 1,
         score: 1,
         privacyObj: {
-          submission_time: "$submission_time",
-          value: "$score",
-          privacy: "$privacy"
+          submission_time: '$submission_time',
+          value: '$score',
+          privacy: '$privacy'
         }
       }
     },
     {
       $group: {
-        _id: "$users",
-        users: { $first: "$users" },
-        target: { $first: "$target_name" },
-        privacyArray: { $push: "$privacyObj" },
-        score: { $max: "$score" }
+        _id: '$users',
+        users: { $first: '$users' },
+        target: { $first: '$target_name' },
+        privacyArray: { $push: '$privacyObj' },
+        score: { $max: '$score' }
       }
     },
-    { $unwind: "$users" },
+    { $unwind: '$users' },
     {
-      $lookup : {
-        from: "users",
-        localField: "users",
-        foreignField: "services.auth0.email",
-        as: "userObjects"
+      $lookup: {
+        from: 'users',
+        localField: 'users',
+        foreignField: 'services.auth0.email',
+        as: 'userObjects'
       }
     },
-    { $unwind: "$userObjects" },
+    { $unwind: '$userObjects' },
     {
-      $lookup : {
-        from: "students",
-        localField: "users",
-        foreignField: "email",
-        as: "students"
+      $lookup: {
+        from: 'students',
+        localField: 'users',
+        foreignField: 'email',
+        as: 'students'
       }
     },
-    { $unwind: "$students" },
+    { $unwind: '$students' },
     {
       $group: {
-        _id: "$_id",
-        target: { $first: "$target" },
-        privacyArray: { $first: "$privacyArray" },
-        score: { $max: "$score" },
-        userObjects: { $push: "$userObjects" },
-        students: { $push: "$students" }
+        _id: '$_id',
+        target: { $first: '$target' },
+        privacyArray: { $first: '$privacyArray' },
+        score: { $max: '$score' },
+        userObjects: { $push: '$userObjects' },
+        students: { $push: '$students' }
       }
     },
     {
@@ -125,10 +125,10 @@ Meteor.publish('leaderboards', function({ _id: target_name, type, points }) {
     this.changed('leaders', target_name, {scores});
 
     this.ready();
-  }
+  };
 
   const changeHandler = {
-    added: (id) => {
+    added: () => {
       if (!initializing) {
         runAggregation();
       }
@@ -138,7 +138,7 @@ Meteor.publish('leaderboards', function({ _id: target_name, type, points }) {
     error: (err) => {
       throw new Meteor.Error('Uh oh! something went wrong!', err.message);
     }
-  }
+  };
 
   const query = Submissions.find(selector);
   const handle = query.observeChanges(changeHandler);
@@ -157,7 +157,7 @@ Meteor.publish('leaderboards', function({ _id: target_name, type, points }) {
   initializing = false;
   runAggregation();
 
-  this.onStop(function() {
+  this.onStop(function () {
     handle.stop();
     studentHandle.stop();
   });

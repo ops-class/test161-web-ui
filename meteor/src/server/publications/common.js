@@ -2,29 +2,23 @@ import {HIDE, SHOW, ANONYMOUS} from 'libs/collections';
 
 const hash = (name) => {
   return CryptoJS.MD5(name).toString();
-}
+};
 
 const isHide = (privacy, type) => {
   const setting = (privacy || []).find(x => (x || {}).type === type);
   if (!setting) {
-    if (type === 'asst') {
-      return true;
-    } else {
-      return false;
-    }
-  } else {
-    return setting.choice === HIDE;
+    return type === 'asst';
   }
-}
+  return setting.choice === HIDE;
+};
 
 const isAnonymous = (privacy, type) => {
   const setting = (privacy || []).find(x => (x || {}).type === type);
   if (!setting) {
     return true;
-  } else {
-    return setting.choice === ANONYMOUS;
   }
-}
+  return setting.choice === ANONYMOUS;
+};
 
 const getStudentEmail = (student, submission, type, staff) => {
   const {email} = student;
@@ -47,27 +41,25 @@ const getStudentEmail = (student, submission, type, staff) => {
   }
   if (isAnonymous(student.privacy, type)) {
     return ANONYMOUS;
-  } else {
-    return email;
   }
-}
+  return email;
+};
 
 const appendStaffSuffix = ({student, userObjects}, name) => {
   if (isStaff(student, userObjects)) {
     return name + ' (staff)';
-  } else {
-    return name
   }
-}
+  return name;
+};
 
 const isStaff = ({email}, userObjects) => {
   const user = userObjects.find(x => x.services.auth0.email === email);
   return ((((user || {}).services || {}).auth0 || {}).user_metadata || {}).staff;
-}
+};
 
-const filterAggregate = (e, target_name, type, value, staff) => {
+const filterAggregate = (e, targetName, type, value, staff) => {
   const {_id: users, privacyArray = [], students, userObjects = []} = e;
-  e._id = hash(users.join(', ') + target_name);
+  e._id = hash(users.join(', ') + targetName);
   e.group = [];
 
   let values = privacyArray.filter(x => x.value === value);
@@ -90,7 +82,7 @@ const filterAggregate = (e, target_name, type, value, staff) => {
         const member = {
           link,
           name: appendStaffSuffix({student, userObjects}, name)
-        }
+        };
         if (staff) {
           member.email = email;
         }
@@ -104,7 +96,7 @@ const filterAggregate = (e, target_name, type, value, staff) => {
   delete e.students;
   delete e.privacyArray;
   return e;
-}
+};
 
 export default {
   hash,
@@ -113,4 +105,4 @@ export default {
   isStaff,
   getStudentEmail,
   filterAggregate
-}
+};

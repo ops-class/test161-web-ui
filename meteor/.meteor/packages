@@ -38,3 +38,4 @@ meteorhacks:aggregate
 templating
 jparker:crypto-md5
 kadira:flow-router
+reactive-dict

@@ -25,12 +25,12 @@ const getUserEmail = (userId) => {
   const user = Meteor.users.findOne(userId) || {};
   const {email} = (user.services || {}).auth0 || {};
   return email;
-}
+};
 
 const findAllSubmissions = (userId, asst, limit = 10) => {
   const email = getUserEmail(userId);
   const selector = {
-    users: { $in: [email] }
+    users: { $in: [ email ] }
   };
   if (asst) {
     selector.target_name = asst;
@@ -38,30 +38,30 @@ const findAllSubmissions = (userId, asst, limit = 10) => {
   const options = {
     sort: {submission_time: -1},
     fields: submissionFields,
-    limit: limit
+    limit
   };
   return Submissions.find(selector, options);
-}
+};
 
 const findAllTests = (tests) => {
   const selector = { _id: { $in: tests } };
   const options = { fields: testFields };
   return Tests.find(selector, options);
-}
+};
 
 const findAllStudents = (userId) => {
   const email = getUserEmail(userId);
   const selector = {email};
   const options = {};
   return Students.find(selector, options);
-}
+};
 
 const findOneStudent = (userId) => {
   const email = getUserEmail(userId);
   const selector = {email};
   const options = {};
   return Students.findOne(selector, options);
-}
+};
 
 export {
   getUserEmail,
@@ -69,4 +69,4 @@ export {
   findAllTests,
   findAllStudents,
   findOneStudent
-}
+};

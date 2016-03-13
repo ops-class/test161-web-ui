@@ -274,7 +274,7 @@ if (DEBUG) {
   }
 
 
-  Object.assign(Meteor, {initItems, clean, mock});
+  Object.assign(Meteor, {initItems, clean, mock, updateStudents});
 
   Meteor.methods({
     initItems: (num) => {
