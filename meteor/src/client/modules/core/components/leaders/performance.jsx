@@ -4,7 +4,7 @@ import {TargetSubs} from 'client/modules/core/libs';
 import {ButtonToggleMixin} from 'client/modules/core/components/mixins';
 import {LeaderboardSubs} from 'client/modules/core/libs';
 import {Leaders} from 'libs/collections';
-import LoadingComponent from 'client/modules/core/components/loading';
+import {LoadingComponent} from 'client/modules/core/components/loading';
 
 const BINS = 10;
 

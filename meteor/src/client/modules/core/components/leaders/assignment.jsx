@@ -4,7 +4,7 @@ import {TargetSubs} from 'client/modules/core/libs';
 import {UrlHashComponent} from 'client/modules/core/components/mixins';
 import {LeaderboardSubs} from 'client/modules/core/libs';
 import {Leaders} from 'libs/collections';
-import LoadingComponent from 'client/modules/core/components/loading';
+import {LoadingComponent} from 'client/modules/core/components/loading';
 
 const getMyScore = (student, target_name) => {
   let res = -1;

@@ -1,55 +1,7 @@
-import {Component} from 'react';
-import ReactMixin from 'react-mixin';
 import {CollapseComponent} from 'client/modules/core/components/mixins';
 import {PointComponent} from 'client/modules/core/components/points';
-
-import {TestSubs} from 'client/modules/core/libs';
-import {Tests} from 'libs/collections';
+import {CommandListComponent} from 'client/modules/core/components/commandlist';
 import {getTestStatusClass, isTestRunning} from 'libs/';
-
-import LoadingComponent from 'client/modules/core/components/loading';
-import {CommandListComponent} from './commandlist';
-
-@ReactMixin.decorate(ReactMeteorData)
-class TestListComponent extends Component {
-  getMeteorData() {
-    const {tests} = this.props;
-    const ready = false;
-    let data = {ready};
-
-    const handle = TestSubs.subscribe('tests', tests);
-    if (handle.ready()) {
-      let testList = tests.map(_id => Tests.findOne({_id}));
-      data.testList = testList.filter(ele => !!ele);
-      data.ready = true;
-    } else {
-      data = {...this.data};
-    }
-    return data;
-  }
-
-  render() {
-    const {tests} = this.props;
-    const {ready, testList} = this.data;
-    if (!ready) {
-      return (<LoadingComponent />);
-    }
-    let list = (
-      <div className="row test-container text-center">
-        No content!
-        <LoadingComponent />
-      </div>
-    );
-    if (testList.length > 0) {
-      list = testList.map(test => <TestComponent key={test._id} {...test} />);
-    }
-    return (
-      <div className="col-md-12 detail-container">
-        {list}
-      </div>
-    );
-  }
-}
 
 class TestComponent extends CollapseComponent {
   constructor(props) {
@@ -64,7 +16,7 @@ class TestComponent extends CollapseComponent {
   }
 
   render() {
-    const {_id, name, commands, points_avail, points_earned, result} = this.props;
+    const {name, points_avail, points_earned, result} = this.props;
     const {collapse} = this.state;
 
     let content = null;
@@ -103,4 +55,4 @@ class TestComponent extends CollapseComponent {
   }
 }
 
-export default {TestListComponent};
+export default TestComponent;

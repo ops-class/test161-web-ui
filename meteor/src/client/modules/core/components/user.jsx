@@ -6,8 +6,8 @@ import {
 
 import SubmissionListComponent from '../containers/submissionlist';
 
-import IntroComponent from './intro';
-import LoadingComponent from './loading';
+import {IntroComponent} from './intro';
+import {LoadingComponent} from './loading';
 import {ProfileComponent} from './settings';
 import {SummaryComponent} from './submissionlist';
 import {LeadersComponent} from './leaders';
@@ -88,4 +88,4 @@ class SidebarComponent extends Component {
   }
 }
 
-export default UserComponent;
+export default {UserComponent};

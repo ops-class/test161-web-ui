@@ -1,11 +1,11 @@
 import {OnloadComponent} from './mixins';
 
-import NavigationComponent from './navigation';
-import ContentComponent from './content';
+import {NavigationComponent} from './navigation';
+import {ContentComponent} from './content';
 
 import './styles/default.less';
 
-class Layout extends OnloadComponent {
+class MainLayout extends OnloadComponent {
   render() {
     return (
       <div>
@@ -16,4 +16,4 @@ class Layout extends OnloadComponent {
   }
 }
 
-export default Layout;
+export default {MainLayout};

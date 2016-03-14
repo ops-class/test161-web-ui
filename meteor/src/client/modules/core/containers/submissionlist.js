@@ -13,13 +13,15 @@ export const composer = (props, onData) => {
   const ready = false;
   const loading = true;
   let data = {ready, asst, user, loading};
+
   const handle = SubmissionSubs.subscribe('submissions', asst, limit);
+
+  data.submissions = findAllSubmissions(user._id, asst, limit).fetch();
+
   if (handle.ready()) {
-    data.submissions = findAllSubmissions(user._id, asst, limit).fetch();
     data.ready = true;
     data.loading = false;
   } else {
-    data.submissions = findAllSubmissions(user._id, asst, limit).fetch();
     data.ready = data.submissions.length > 0;
     data.loading = true;
   }

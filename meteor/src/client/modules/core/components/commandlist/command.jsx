@@ -1,19 +1,7 @@
-import React from 'react';
 import {CollapseComponent} from 'client/modules/core/components/mixins';
 import {PointComponent} from 'client/modules/core/components/points';
 
 import {isCommandRunning, getCommandStatusClass} from 'libs/';
-
-const CommandListComponent = React.createClass({
-  render() {
-    const list = this.props.commands.map(cmd => <CommandComponent key={cmd._id} {...cmd}/>);
-    return (
-      <div className="col-md-12 col-xs-12 col-sm-12 detail-container">
-        {list}
-      </div>
-    );
-  }
-});
 
 class CommandComponent extends CollapseComponent {
   constructor(props) {
@@ -74,4 +62,4 @@ class CommandComponent extends CollapseComponent {
   }
 }
 
-export default {CommandListComponent};
+export default {CommandComponent};

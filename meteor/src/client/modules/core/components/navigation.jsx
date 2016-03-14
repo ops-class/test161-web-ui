@@ -1,10 +1,12 @@
 import {Component} from 'react';
 import navigation from 'html!./navigation.txt';
 
-export default class Layout extends Component {
+class NavigationComponent extends Component {
   render() {
     return (
       <div dangerouslySetInnerHTML={{__html: navigation}} />
     );
   }
 }
+
+export default {NavigationComponent };

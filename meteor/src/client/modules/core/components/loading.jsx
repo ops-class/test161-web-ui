@@ -21,4 +21,4 @@ class LoadingComponent extends Component {
   }
 }
 
-export default LoadingComponent;
+export default {LoadingComponent};

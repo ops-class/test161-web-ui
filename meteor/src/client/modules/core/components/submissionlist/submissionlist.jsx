@@ -3,12 +3,12 @@ import {Component} from 'react';
 import {Meteor} from 'meteor/meteor';
 import {moment} from 'meteor/momentjs:moment';
 import {CollapseComponent} from 'client/modules/core/components/mixins';
+import {LoadingComponent} from 'client/modules/core/components/loading';
 import {isSubmissionRunning, getSubmissionStatusClass} from 'libs/';
 import {HIDE, SHOW, ANONYMOUS} from 'libs/collections';
 import {getInterval, getDurationString} from 'client/modules/core/libs';
 
-import {TestListComponent} from './testlist';
-import LoadingComponent from 'client/modules/core/components/loading';
+import TestListComponent from 'client/modules/core/containers/testlist';
 
 const touchToHover = (event) => $(event).toggleClass('hover');
 

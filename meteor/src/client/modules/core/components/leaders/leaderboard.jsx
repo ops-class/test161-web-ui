@@ -2,7 +2,7 @@ import {Component} from 'react';
 import ReactMixin from 'react-mixin';
 import {TargetSubs} from 'client/modules/core/libs';
 import {OnloadComponent} from 'client/modules/core/components/mixins';
-import LoadingComponent from 'client/modules/core/components/loading';
+import {LoadingComponent} from 'client/modules/core/components/loading';
 import {TargetNames} from 'libs/collections';
 import {fixedTopHeight} from '../style';
 

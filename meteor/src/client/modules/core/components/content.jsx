@@ -4,7 +4,7 @@ import {Accounts} from 'meteor/accounts-base';
 
 import {login, logout, isStaff} from 'client/modules/core/libs';
 
-import UserComponent from './user';
+import {UserComponent} from './user';
 
 class ActiveLink extends Component {
   render() {
@@ -133,4 +133,4 @@ class ContentComponent extends Component {
   }
 }
 
-export default ContentComponent;
+export default {ContentComponent};
