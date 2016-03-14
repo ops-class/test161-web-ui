@@ -1,7 +1,7 @@
 import {Component} from 'react';
 import ReactMixin from 'react-mixin';
 import {TargetSubs} from 'client/modules/core/libs';
-import {ButtonToggleMixin, UrlHashMixin} from 'client/modules/core/components/mixins';
+import {UrlHashMixin} from 'client/modules/core/components/mixins';
 import {LeaderboardSubs} from 'client/modules/core/libs';
 import {Leaders} from 'libs/collections';
 import LoadingComponent from 'client/modules/core/components/loading';
