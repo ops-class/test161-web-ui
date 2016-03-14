@@ -1,4 +1,5 @@
 import {Component} from 'react';
+import {CommandComponent} from './command';
 
 class CommandListComponent extends Component {
   render() {

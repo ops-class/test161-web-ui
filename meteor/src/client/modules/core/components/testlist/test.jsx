@@ -55,4 +55,4 @@ class TestComponent extends CollapseComponent {
   }
 }
 
-export default TestComponent;
+export default {TestComponent};
