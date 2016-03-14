@@ -108,5 +108,5 @@ webpack:less@1.0.0
 webpack:npmworkaround@1.0.0
 webpack:react@1.1.2
 webpack:reload@1.0.0
-webpack:webpack@1.0.8
+webpack:webpack@1.0.9
 xcv58:auth0-lock@0.3.10
