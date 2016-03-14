@@ -1,15 +1,13 @@
 import React from 'react';
 import {Component} from 'react';
-import ReactDOM from 'react-dom';
-import ReactMixin from 'react-mixin';
+import {moment} from 'meteor/momentjs:moment';
 import {CollapseComponent} from 'client/modules/core/components/mixins';
 import {isSubmissionRunning, getSubmissionStatusClass} from 'libs/';
 import {HIDE, SHOW, ANONYMOUS} from 'libs/collections';
-import {SubmissionSubs, getInterval, getDurationString} from 'client/modules/core/libs';
+import {getInterval, getDurationString} from 'client/modules/core/libs';
 
 import {TestListComponent} from './testlist';
 import LoadingComponent from 'client/modules/core/components/loading';
-import {findAllSubmissions} from 'libs/query';
 
 const touchToHover = (event) => $(event).toggleClass('hover');
 
@@ -237,7 +235,7 @@ const TimeComponent = React.createClass({
           <i className="fa fa-code-fork"></i> {commit_id.substring(0, 7)}
         </div>
       </div>
-    )
+    );
   }
 });
 
