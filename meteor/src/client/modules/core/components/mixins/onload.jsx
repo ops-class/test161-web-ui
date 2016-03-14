@@ -1,6 +1,6 @@
 import {Component} from 'react';
 
-class OnloadMixin extends Component {
+class OnloadComponent extends Component {
   onload() {
     if ((typeof processPage !== 'undefined') && (typeof processPage === 'function')) {
       processPage();
@@ -16,4 +16,4 @@ class OnloadMixin extends Component {
   }
 }
 
-export default {OnloadMixin};
+export default {OnloadComponent};

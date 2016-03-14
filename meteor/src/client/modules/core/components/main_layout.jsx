@@ -1,12 +1,11 @@
-import {Component} from 'react';
-import {OnloadMixin} from './mixins';
+import {OnloadComponent} from './mixins';
 
 import NavigationComponent from './navigation';
 import ContentComponent from './content';
 
-import './styles/default.less'
+import './styles/default.less';
 
-class Layout extends OnloadMixin {
+class Layout extends OnloadComponent {
   render() {
     return (
       <div>

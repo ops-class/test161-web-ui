@@ -1,7 +1,7 @@
 import {Component} from 'react';
 import ReactMixin from 'react-mixin';
 import {TargetSubs} from 'client/modules/core/libs';
-import {OnloadMixin} from 'client/modules/core/components/mixins';
+import {OnloadComponent} from 'client/modules/core/components/mixins';
 import LoadingComponent from 'client/modules/core/components/loading';
 import {TargetNames} from 'libs/collections';
 
@@ -32,7 +32,7 @@ class LeaderboardComponent extends Component {
 }
 
 @ReactMixin.decorate(ReactMeteorData)
-class LeadersComponent extends OnloadMixin {
+class LeadersComponent extends OnloadComponent {
   getMeteorData() {
     const ready = false;
     const loading = true;
