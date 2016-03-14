@@ -43,13 +43,16 @@ $(nav).find("a").each(function () {
 $(nav).find('.active').removeClass('.active');
 $(nav).find('nav').addClass('hidden-xs hidden-sm');
 
-var converter = new HTMLtoJSX({
-	createClass: true,
-	outputClassName: "NavigationComponent"
-});
-var component = converter.convert($.html(nav));
-component = component.replace(/^var /, '', component);
-fs.writeFileSync(path.join(argv._[1], 'views', 'navigation.jsx'), component);
+var content = $.html(nav);
+fs.writeFileSync(path.join(argv._[1], 'navigation.txt'), content);
+// TODO: remove below code if everything is fine, also remove HTMLtoJSX
+// var converter = new HTMLtoJSX({
+// 	createClass: true,
+// 	outputClassName: "NavigationComponent"
+// });
+// var component = converter.convert($.html(nav));
+// component = component.replace(/^var /, '', component);
+// // fs.writeFileSync(path.join(argv._[1], 'views', 'navigation.jsx'), component);
 
 // Documentation
 var file = yaml_front_matter.loadFront(fs.readFileSync('test161.adoc'));
@@ -67,21 +70,23 @@ highlight.doHighlight(file);
 
 var template = handlebars.compile(fs.readFileSync('test161.hbt').toString());
 file.contents = template(file);
-var converter = new HTMLtoJSX({
-	createClass: true,
-	outputClassName: "IntroComponent"
-})
-var component = converter.convert(file.contents);
-component = component.replace(/^var /, '', component);
-
-// Sadness
-component = component.replace(/^(\s*)<a/gm, '$1{ " " }<a', component);
-component = component.replace(/\/a>$/gm, '/a>{ " " }', component);
-component = component.replace(/^(\s*)<code/gm, '$1{ " " }<code', component);
-component = component.replace(/\/code>$/gm, '/code>{ " " }', component);
-component = component.replace(/^(\s*)<strong/gm, '$1{ " " }<strong', component);
-component = component.replace(/\/strong>$/gm, '/strong>{ " " }', component);
-component = component.replace(/^(\s*)<em/gm, '$1{ " " }<em', component);
-component = component.replace(/\/em>$/gm, '/em>{ " " }', component);
-
-fs.writeFileSync(path.join(argv._[1], 'views', 'intro.jsx'), component);
+fs.writeFileSync(path.join(argv._[1], 'intro.txt'), file.contents);
+// TODO: remove below code if everything is fine.
+// var converter = new HTMLtoJSX({
+// 	createClass: true,
+// 	outputClassName: "IntroComponent"
+// })
+// var component = converter.convert(file.contents);
+// component = component.replace(/^var /, '', component);
+//
+// // Sadness
+// component = component.replace(/^(\s*)<a/gm, '$1{ " " }<a', component);
+// component = component.replace(/\/a>$/gm, '/a>{ " " }', component);
+// component = component.replace(/^(\s*)<code/gm, '$1{ " " }<code', component);
+// component = component.replace(/\/code>$/gm, '/code>{ " " }', component);
+// component = component.replace(/^(\s*)<strong/gm, '$1{ " " }<strong', component);
+// component = component.replace(/\/strong>$/gm, '/strong>{ " " }', component);
+// component = component.replace(/^(\s*)<em/gm, '$1{ " " }<em', component);
+// component = component.replace(/\/em>$/gm, '/em>{ " " }', component);
+//
+// fs.writeFileSync(path.join(argv._[1], 'views', 'intro.jsx'), component);
