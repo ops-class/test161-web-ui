@@ -1,4 +1,4 @@
-import {Component} from 'react';
+import React from 'react';
 
 const getPointClass = ({points_earned, points_avail}) => {
   const ratio = points_avail ? points_earned / points_avail : 0;

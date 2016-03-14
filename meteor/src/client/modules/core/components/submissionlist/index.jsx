@@ -1,2 +1,2 @@
-export * from './summary'
-export * from './submissionlist'
+export * from './summary';
+export * from './submissionlist';

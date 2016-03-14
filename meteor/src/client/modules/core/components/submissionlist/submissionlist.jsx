@@ -1,4 +1,6 @@
 import React from 'react';
+import {Component} from 'react';
+import ReactDOM from 'react-dom';
 import ReactMixin from 'react-mixin';
 import {CollapseComponent} from 'client/modules/core/components/mixins';
 import {isSubmissionRunning, getSubmissionStatusClass} from 'libs/';
@@ -9,37 +11,15 @@ import {TestListComponent} from './testlist';
 import LoadingComponent from 'client/modules/core/components/loading';
 import {findAllSubmissions} from 'libs/query';
 
-const touchToHover = (event) => {$(event).toggleClass('hover')}
+const touchToHover = (event) => $(event).toggleClass('hover');
 
-const SubmissionListComponent = React.createClass({
-  mixins: [ReactMeteorData],
-  getMeteorData() {
-    const {params: {path: asst}, user} = this.props;
-    const {limit} = this.state;
-    const ready = false;
-    const loading = true;
-    let data = {ready, asst, user, loading}
-    const handle = SubmissionSubs.subscribe('submissions', asst, limit);
-    if (handle.ready()) {
-      data.submissions = findAllSubmissions(user._id, asst, limit).fetch();
-      data.ready = true;
-      data.loading = false;
-    } else {
-      data = {...this.data};
-      data.loading = true;
-    }
-    return data;
-  },
-  getInitialState() {
-    return {limit: 10};
-  },
-  componentWillReceiveProps(nextProps) {
-    if (this.props.asst !== nextProps.asst) {
-      this.setState({limit: 10});
-    }
-  },
+class SubmissionListComponent extends Component {
   scroll() {
-    const $elem = $(ReactDOM.findDOMNode(this)).find('#load-more');
+    const {data: {loading, submissions}} = this.props;
+    if (loading) {
+      return;
+    }
+    const $elem = $(this.refs.loadMore);
 
     const $window = $(window);
 
@@ -51,37 +31,35 @@ const SubmissionListComponent = React.createClass({
 
     const loadMore = ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
     if (loadMore) {
-      this.increaseLimit();
+      this.props.increaseLimit(submissions.length);
     }
-  },
+  }
+
   componentDidMount() {
-    $(window).scroll(this.scroll);
-  },
+    $(window).scroll(this.scroll.bind(this));
+  }
+
   componentWillUnmount() {
     $(window).unbind('scroll');
-  },
-  increaseLimit() {
-    let {limit} = this.state;
-    const {loading, submissions} = this.data;
-    const num = submissions.length || 0;
-    if (!loading && num === limit) {
-      limit += 10;
-      this.setState({limit});
-    }
-  },
+  }
+
   render() {
-    const {submissions, ready, user, asst, loading} = this.data;
-    const {student} = this.props;
+    const {
+      data: {submissions, ready, loading},
+      student, currentLimit
+    } = this.props;
+
     if (!ready) {
       return (<LoadingComponent />);
     }
+
     const length = submissions.length;
     if (length === 0) {
       return (<div>You haven’t submitted any solutions!</div>);
     }
 
     let noMoreSubmission = null;
-    const {limit} = this.state;
+    const limit = currentLimit();
     if (!loading && length < limit && limit > 10) {
       noMoreSubmission = (
         <div className="alert alert-warning">
@@ -89,19 +67,22 @@ const SubmissionListComponent = React.createClass({
         </div>
       );
     }
+
     const list = submissions.map(submission =>
-      <SubmissionComponent key={submission._id} submission={submission} student={student}/>);
+      <SubmissionComponent key={submission._id}
+        submission={submission}
+        student={student} />);
     return (
       <div className="list-group">
         {list}
-        <div id="load-more">
+        <div ref="loadMore">
           {loading ? <LoadingComponent /> : null}
         </div>
         {noMoreSubmission}
       </div>
     );
   }
-});
+}
 
 const StatusComponent = ({status, score, max_score, performance, target_type}) => {
   let className = 'submission-status toggle text-uppercase hvr-grow-shadow alert ';

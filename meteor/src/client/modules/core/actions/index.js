@@ -1,5 +1,7 @@
 import posts from './posts';
+import submissionlist from './submissionlist';
 
 export default {
-  posts
+  posts,
+  submissionlist
 };

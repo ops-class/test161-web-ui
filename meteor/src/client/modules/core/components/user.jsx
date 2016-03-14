@@ -3,10 +3,12 @@ import {
   pathIsProfile, pathIsIntro, pathIsLeaderboard, isStaff
 } from 'client/modules/core/libs';
 
+import SubmissionListComponent from '../containers/submissionlist';
+
 import IntroComponent from './intro';
 import LoadingComponent from './loading';
 import {ProfileComponent} from './settings';
-import {SubmissionListComponent, SummaryComponent} from './submissionlist';
+import {SummaryComponent} from './submissionlist';
 import {LeadersComponent} from './leaders';
 
 import {mainContentClass} from './style';
