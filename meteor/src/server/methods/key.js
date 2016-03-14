@@ -2,7 +2,9 @@ import {Meteor} from 'meteor/meteor';
 import {checkEmailToken} from './check';
 import {HTTP} from 'meteor/http';
 
+/*eslint-disable */
 const Future = Npm.require('fibers/future');
+/*eslint-enable */
 
 const keygenEndpoint = process.env.KEYGEN_ENDPOINT ||
 Meteor.settings.KEYGEN_ENDPOINT ||

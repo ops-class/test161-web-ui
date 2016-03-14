@@ -1,7 +1,9 @@
 import {HIDE, SHOW, ANONYMOUS} from 'libs/collections';
 
 const hash = (name) => {
+  /*eslint-disable */
   return CryptoJS.MD5(name).toString();
+  /*eslint-enable */
 };
 
 const isHide = (privacy, type) => {

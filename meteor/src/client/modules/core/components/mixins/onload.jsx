@@ -3,7 +3,9 @@ import {Component} from 'react';
 class OnloadComponent extends Component {
   onload() {
     if ((typeof processPage !== 'undefined') && (typeof processPage === 'function')) {
+      /*eslint-disable */
       processPage();
+      /*eslint-enable */
     }
   }
 
