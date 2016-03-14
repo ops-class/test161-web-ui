@@ -34,51 +34,51 @@ Meteor.publish('performance', function ({ _id: target_name, type }) {
         target_name: 1,
         performance: 1,
         privacyObj: {
-          submission_time: "$submission_time",
-          value: "$performance",
-          privacy: "$privacy"
+          submission_time: '$submission_time',
+          value: '$performance',
+          privacy: '$privacy'
         }
       }
     },
     {
       $group: {
-        _id: "$users",
-        users: { $first: "$users" },
-        target: { $first: "$target_name" },
-        performance: { $min: "$performance" },
-        privacyArray: { $push: "$privacyObj" },
-        score: { $max: "$score" }
+        _id: '$users',
+        users: { $first: '$users' },
+        target: { $first: '$target_name' },
+        performance: { $min: '$performance' },
+        privacyArray: { $push: '$privacyObj' },
+        score: { $max: '$score' }
       }
     },
-    { $unwind: "$users" },
+    { $unwind: '$users' },
     {
-      $lookup : {
-        from: "users",
-        localField: "users",
-        foreignField: "services.auth0.email",
-        as: "userObjects"
+      $lookup: {
+        from: 'users',
+        localField: 'users',
+        foreignField: 'services.auth0.email',
+        as: 'userObjects'
       }
     },
-    { $unwind: "$userObjects" },
+    { $unwind: '$userObjects' },
     {
-      $lookup : {
-        from: "students",
-        localField: "users",
-        foreignField: "email",
-        as: "students"
+      $lookup: {
+        from: 'students',
+        localField: 'users',
+        foreignField: 'email',
+        as: 'students'
       }
     },
-    { $unwind: "$students" },
+    { $unwind: '$students' },
     {
       $group: {
-        _id: "$_id",
-        users: { $first: "$users" },
-        target: { $first: "$target" },
-        privacyArray: { $first: "$privacyArray" },
-        performance: { $min: "$performance" },
-        score: { $max: "$score" },
-        userObjects: { $push: "$userObjects" },
-        students: { $push: "$students" }
+        _id: '$_id',
+        users: { $first: '$users' },
+        target: { $first: '$target' },
+        privacyArray: { $first: '$privacyArray' },
+        performance: { $min: '$performance' },
+        score: { $max: '$score' },
+        userObjects: { $push: '$userObjects' },
+        students: { $push: '$students' }
       }
     },
     {
@@ -132,10 +132,10 @@ Meteor.publish('performance', function ({ _id: target_name, type }) {
     this.changed('leaders', target_name, {performances});
 
     this.ready();
-  }
+  };
 
   const changeHandler = {
-    added: (id) => {
+    added: () => {
       if (!initializing) {
         runAggregation();
       }
@@ -145,7 +145,7 @@ Meteor.publish('performance', function ({ _id: target_name, type }) {
     error: (err) => {
       throw new Meteor.Error('Uh oh! something went wrong!', err.message);
     }
-  }
+  };
 
   const query = Submissions.find(selector);
   const handle = query.observeChanges(changeHandler);
@@ -164,7 +164,7 @@ Meteor.publish('performance', function ({ _id: target_name, type }) {
   initializing = false;
   runAggregation();
 
-  this.onStop(function() {
+  this.onStop(function () {
     handle.stop();
     studentHandle.stop();
   });

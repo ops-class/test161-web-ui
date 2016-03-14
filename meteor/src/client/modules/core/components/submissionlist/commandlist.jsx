@@ -1,21 +1,17 @@
-import {Component} from 'react';
-import ReactMixin from 'react-mixin';
+import React from 'react';
 import {CollapseComponent} from 'client/modules/core/components/mixins';
 import {PointComponent} from 'client/modules/core/components/points';
 
-import {TestSubs} from 'client/modules/core/libs';
-import {Tests} from 'libs/collections';
 import {isCommandRunning, getCommandStatusClass} from 'libs/';
 
 const CommandListComponent = React.createClass({
   render() {
-    const {_id, name, commands, points_avail, points_earned} = this.props;
-    const list = commands.map(cmd => <CommandComponent key={cmd._id} {...cmd}/>);
+    const list = this.props.commands.map(cmd => <CommandComponent key={cmd._id} {...cmd}/>);
     return (
       <div className="col-md-12 col-xs-12 col-sm-12 detail-container">
         {list}
       </div>
-    )
+    );
   }
 });
 
@@ -32,7 +28,7 @@ class CommandComponent extends CollapseComponent {
   }
 
   render() {
-    const {_id, input, output, points_avail, points_earned, status} = this.props;
+    const {input, output, points_avail, points_earned, status} = this.props;
     const {collapse} = this.state;
 
     let list = null;

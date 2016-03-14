@@ -1,4 +1,5 @@
 import {Component} from 'react';
+import {FlowRouter} from 'meteor/kadira:flow-router';
 import {
   pathIsProfile, pathIsIntro, pathIsLeaderboard, isStaff
 } from 'client/modules/core/libs';
@@ -69,11 +70,11 @@ class SidebarComponent extends Component {
           </a>
         </li>
       );
-    })
+    });
     const sideStyle = {
-      'paddingTop': '20px',
-      'paddingRight': '10px'
-    }
+      paddingTop: '20px',
+      paddingRight: '10px'
+    };
     return (
       <div id="scrollspy" className="col-md-2 spelling_exception">
         <ul id="side"

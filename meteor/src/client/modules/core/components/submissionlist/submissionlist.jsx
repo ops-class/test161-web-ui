@@ -1,5 +1,6 @@
 import React from 'react';
 import {Component} from 'react';
+import {Meteor} from 'meteor/meteor';
 import {moment} from 'meteor/momentjs:moment';
 import {CollapseComponent} from 'client/modules/core/components/mixins';
 import {isSubmissionRunning, getSubmissionStatusClass} from 'libs/';
@@ -106,26 +107,25 @@ const getPrivacyChoice = (email, {privacy = [], target_type, student}) => {
     return setting.choice;
   }
   if (student.email === email) {
-    let setting = (student.privacy || []).find(x => x.type === target_type);
+    setting = (student.privacy || []).find(x => x.type === target_type);
     if (setting && setting.choice) {
       return setting.choice;
     }
     if (target_type === 'asst') {
       return HIDE;
-    } else {
-      return ANONYMOUS;
     }
-  } else {
-    return 'Global';
+    return ANONYMOUS;
   }
-}
+
+  return 'Global';
+};
 
 const SelectComponent = React.createClass({
   getInitialState() {
     return {processing: false};
   },
   onClick(choice) {
-    const {_id, privacy = [], student: {email, token}} = this.props;
+    const {_id, student: {email, token}} = this.props;
     this.setState({processing: true});
     Meteor.call('updateSubmissionPrivacy', _id, {email, token, choice}, (err, res) => {
       this.setState({processing: false});
@@ -137,7 +137,7 @@ const SelectComponent = React.createClass({
   render() {
     const {user, student: {email}} = this.props;
     const {processing} = this.state;
-    const choice = getPrivacyChoice(user, this.props)
+    const choice = getPrivacyChoice(user, this.props);
     return (
       <div className="col-md-12">
         <span className="target-type">
@@ -149,8 +149,8 @@ const SelectComponent = React.createClass({
           aria-haspopup="true"
           disabled={email !== user}
           aria-expanded="false">
-          {processing ? <span className="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
-          : null} {choice} <span className="caret"></span>
+          {processing ? <span className="glyphicon glyphicon-refresh glyphicon-refresh-animate">
+          </span> : null} {choice} <span className="caret"></span>
         </button>
         <ul className="dropdown-menu pull-right dropdown-menu-test161">
           <li><a onClick={this.onClick.bind(this, HIDE)}>{HIDE}</a></li>
@@ -165,10 +165,9 @@ const SelectComponent = React.createClass({
 
 const InfoComponent = React.createClass({
   render() {
-    const {users, repository, privacy = [], target_name, target_type, student} = this.props;
-    const {email} = student;
+    const {users, repository} = this.props;
 
-    const className="col-md-12 ellipsis";
+    const className = 'col-md-12 ellipsis';
     const list = users.map((user, index) => {
       return (
         <SelectComponent {...this.props} key={`${user}-${index}`} user={user} />
@@ -183,7 +182,7 @@ const InfoComponent = React.createClass({
       </div>
     );
   }
-})
+});
 
 const TimeComponent = React.createClass({
   getInitialState() {
@@ -217,10 +216,8 @@ const TimeComponent = React.createClass({
     let duration = '--:--';
     if (isSubmissionRunning(status)) {
       duration = getDurationString(moment(now).diff(submission));
-    } else {
-      if (completion_time) {
-        duration = getDurationString(moment(completion_time).diff(submission));
-      }
+    } else if (completion_time) {
+      duration = getDurationString(moment(completion_time).diff(submission));
     }
     const className = 'col-md-6 col-sm-12 col-xs-12';
     return (

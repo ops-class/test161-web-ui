@@ -12,7 +12,7 @@ const getPointClass = ({points_earned, points_avail}) => {
     return 'info';
   }
   return 'success';
-}
+};
 
 const PointComponent = ({points_earned, points_avail}) => {
   let className = 'alert ';

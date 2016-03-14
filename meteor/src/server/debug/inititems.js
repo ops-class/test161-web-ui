@@ -1,17 +1,17 @@
 import {Meteor} from 'meteor/meteor';
+import {moment} from 'meteor/momentjs:moment';
 import {Random} from 'meteor/random';
 import {
   Students, Submissions, Targets, Tests,
   submissionStatus, commandStatus, testStatus,
-  targetNames, isCompleted, isFailed, isSubmitted,
-  SHOW, HIDE, ANONYMOUS
+  targetNames, isFailed, isSubmitted, SHOW
 } from 'libs/collections';
 import {randomInt} from 'libs/';
 
 const DEBUG = Boolean(process.env.TEST161_DEBUG || Meteor.settings.TEST161_DEBUG);
 
 if (DEBUG) {
-  const privacy = [{type: 'asst', choice: SHOW}, {type: 'perf', choice: SHOW}];
+  const privacy = [ {type: 'asst', choice: SHOW}, {type: 'perf', choice: SHOW} ];
   const generateOutput = (i = 0) => {
     const line = 'line ' + i;
     const walltime = 0.1 * i;
@@ -91,8 +91,9 @@ if (DEBUG) {
     }, 1000 * outputNum * num * 5);
   };
 
-  const getRandomSubmission = (index = -1) => {
-    if (index === -1 || index >= submissionStatus.length) {
+  const getRandomSubmission = (ind = -1) => {
+    let index = ind;
+    if (ind === -1 || ind >= submissionStatus.length) {
       index = Math.floor(Math.random() * submissionStatus.length);
     }
     const USERS_EMAILS = Meteor.users.find({}).fetch().map((user) => {
@@ -117,7 +118,9 @@ if (DEBUG) {
     let target_type = 'asst';
     const target_version = 1;
     const max_score = 50;
-    const completion_time = moment(randomTime).add(Math.floor(Math.random() * 10000), 'seconds').toDate();
+    const completion_time = moment(randomTime).add(
+      Math.floor(Math.random() * 10000), 'seconds'
+    ).toDate();
     if (isSubmitted(status)) {
       return {
         _id, submission_time, users, repository, commit_id,

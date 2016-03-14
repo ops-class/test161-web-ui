@@ -1,6 +1,5 @@
 import {Meteor} from 'meteor/meteor';
 import {SubsManager} from 'meteor/meteorhacks:subs-manager';
-import {findOneStudent} from 'libs/query';
 
 const UserSubs = new SubsManager();
 const SubmissionSubs = new SubsManager();
@@ -23,7 +22,7 @@ const login = () => {
 
 const isStaff = (user) => {
   return ((((user || {}).services || {}).auth0 || {}).user_metadata || {}).staff;
-}
+};
 
 export {
   UserSubs,
@@ -34,4 +33,4 @@ export {
   logout,
   login,
   isStaff
-}
+};

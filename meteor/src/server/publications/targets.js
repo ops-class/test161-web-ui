@@ -21,12 +21,12 @@ Meteor.publish('targets', function () {
     },
     {
       $group: {
-        _id: "$name",
-        type: { $first: "$type" },
-        points: { $max: "$points" },
-        print_name: { $first: "$print_name" },
+        _id: '$name',
+        type: { $first: '$type' },
+        points: { $max: '$points' },
+        print_name: { $first: '$print_name' },
         version: {
-          $max: "$version"
+          $max: '$version'
         }
       }
     }

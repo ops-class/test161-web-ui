@@ -7,7 +7,7 @@ class NewPost extends React.Component {
       <form className="new-post" onSubmit={this.createPost.bind(this)}>
         <h2>Add New Post</h2>
         {error ? <p style={{color: 'red'}}>{error}</p> : null}
-        
+
         <input ref="titleRef" type="Text" placeholder="Enter your post title." /> <br/>
         <textarea ref="contentRef" placeholder="Enter your post content." /> <br/>
         <button type="submit">Add New</button>

@@ -4,14 +4,12 @@ import {getPointClass} from '../points';
 class SummaryComponent extends Component {
   render() {
     const {student} = this.props;
-    const {email, target_stats = []} = student;
+    const {target_stats = []} = student;
     let scores = target_stats.map(result => {
       let {
         high_score: points_earned,
         max_score: points_avail,
-        target_name: asst,
-        total_submissions,
-        best_submission_id
+        target_name: asst
       } = result;
       if (!points_earned) {
         points_earned = 0;

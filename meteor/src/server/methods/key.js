@@ -1,5 +1,6 @@
 import {Meteor} from 'meteor/meteor';
 import {checkEmailToken} from './check';
+import {HTTP} from 'meteor/http';
 
 const Future = Npm.require('fibers/future');
 
@@ -8,7 +9,7 @@ Meteor.settings.KEYGEN_ENDPOINT ||
 'https://test161.ops-class.org/api-v1/keygen';
 
 Meteor.methods({
-  regeneratePublicKey: function({email, token}) {
+  regeneratePublicKey({email, token}) {
     const userId = this.userId;
     checkEmailToken({email, token, userId});
     this.unblock();
@@ -30,4 +31,4 @@ Meteor.methods({
     });
     return future.wait();
   }
-})
+});
