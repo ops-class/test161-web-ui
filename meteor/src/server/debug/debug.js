@@ -4,10 +4,11 @@ import {Random} from 'meteor/random';
 import {Students} from 'libs/collections';
 
 const DEBUG = Boolean(process.env.TEST161_DEBUG || Meteor.settings.TEST161_DEBUG);
+const TEST161_AUTH0 = Boolean(process.env.TEST161_AUTH0 || Meteor.settings.TEST161_AUTH0);
 
 Meteor.methods({
   isDebug() {
-    return DEBUG;
+    return DEBUG && !TEST161_AUTH0;
   }
 });
 
