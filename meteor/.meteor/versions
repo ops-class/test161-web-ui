@@ -104,6 +104,7 @@ webapp-hashing@1.0.6-beta.12
 webpack:assets@1.0.0
 webpack:core-config@1.0.0
 webpack:css@1.0.1
+webpack:html@1.0.1
 webpack:less@1.0.0
 webpack:npmworkaround@1.0.0
 webpack:react@1.1.2

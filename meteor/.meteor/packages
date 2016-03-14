@@ -40,3 +40,4 @@ kadira:flow-router
 reactive-dict
 standard-minifier-css
 standard-minifier-js
+webpack:html
