@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactMixin from 'react-mixin';
-import {CollapseMixin} from 'client/modules/core/components/mixins';
+import {CollapseComponent} from 'client/modules/core/components/mixins';
 import {isSubmissionRunning, getSubmissionStatusClass} from 'libs/';
 import {HIDE, SHOW, ANONYMOUS} from 'libs/collections';
 import {SubmissionSubs, getInterval, getDurationString} from 'client/modules/core/libs';
@@ -260,11 +260,12 @@ const TimeComponent = React.createClass({
   }
 });
 
-const SubmissionComponent = React.createClass({
-  mixins: [CollapseMixin],
-  getInitialState() {
-    return {collapseTarget: '.submission-details'};
-  },
+class SubmissionComponent extends CollapseComponent {
+  constructor(props) {
+    super(props);
+    Object.assign(this.state, {collapseTarget: '.submission-details'});
+  }
+
   autoCollpase(nextProps) {
     const {submission} = this.props;
     const nextSubmission = nextProps.submission;
@@ -274,7 +275,8 @@ const SubmissionComponent = React.createClass({
     const {status} = submission;
     const nextStatus = nextSubmission.status;
     return isSubmissionRunning(status) && !isSubmissionRunning(nextStatus);
-  },
+  }
+
   render() {
     const {submission, student} = this.props;
     const {status} = submission;
@@ -292,7 +294,8 @@ const SubmissionComponent = React.createClass({
         <div onTouchStart={touchToHover}
           onTouchEnd={touchToHover}
           className="row submission-bar">
-          <div onClick={this.toggleCollapse} className="col-md-2 status-container ellipsis">
+          <div onClick={this.toggleCollapse.bind(this)}
+            className="col-md-2 status-container ellipsis">
             <StatusComponent {...submission} />
           </div>
           <div className="col-md-6">
@@ -306,6 +309,6 @@ const SubmissionComponent = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default {SubmissionListComponent};

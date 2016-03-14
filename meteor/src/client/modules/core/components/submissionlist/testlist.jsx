@@ -1,6 +1,6 @@
 import {Component} from 'react';
 import ReactMixin from 'react-mixin';
-import {CollapseMixin} from 'client/modules/core/components/mixins';
+import {CollapseComponent} from 'client/modules/core/components/mixins';
 import {PointComponent} from 'client/modules/core/components/points';
 
 import {TestSubs} from 'client/modules/core/libs';
@@ -51,16 +51,18 @@ class TestListComponent extends Component {
   }
 }
 
-const TestComponent = React.createClass({
-  mixins: [CollapseMixin],
-  getInitialState() {
-    return {collapseTarget: '.command-container'};
-  },
+class TestComponent extends CollapseComponent {
+  constructor(props) {
+    super(props);
+    Object.assign(this.state, {collapseTarget: '.command-container'});
+  }
+
   autoCollpase(nextProps) {
     const {result: status} = this.props;
     const nextStatus = nextProps.result;
     return isTestRunning(status) && !isTestRunning(nextStatus);
-  },
+  }
+
   render() {
     const {_id, name, commands, points_avail, points_earned, result} = this.props;
     const {collapse} = this.state;
@@ -88,7 +90,7 @@ const TestComponent = React.createClass({
     return (
       <div className={`row test-container ${statusClass}`}>
         <div className="col-md-1 col-xs-1 col-sm-1 toggle-container"
-          onClick={this.toggleCollapse}>
+          onClick={this.toggleCollapse.bind(this)}>
           <i className={toggleClass}></i>
         </div>
         <div className="col-md-9 col-xs-12 col-sm-12 ellipsis">
@@ -99,6 +101,6 @@ const TestComponent = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default {TestListComponent};

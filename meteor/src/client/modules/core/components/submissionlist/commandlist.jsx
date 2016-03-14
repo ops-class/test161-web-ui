@@ -1,6 +1,6 @@
 import {Component} from 'react';
 import ReactMixin from 'react-mixin';
-import {CollapseMixin} from 'client/modules/core/components/mixins';
+import {CollapseComponent} from 'client/modules/core/components/mixins';
 import {PointComponent} from 'client/modules/core/components/points';
 
 import {TestSubs} from 'client/modules/core/libs';
@@ -19,16 +19,18 @@ const CommandListComponent = React.createClass({
   }
 });
 
-const CommandComponent = React.createClass({
-  mixins: [CollapseMixin],
-  getInitialState() {
-    return {collapseTarget: '.output-container'};
-  },
+class CommandComponent extends CollapseComponent {
+  constructor(props) {
+    super(props);
+    Object.assign(this.state, {collapseTarget: '.output-container'});
+  }
+
   autoCollpase(nextProps) {
     const {status} = this.props;
     const nextStatus = nextProps.status;
     return isCommandRunning(status) && !isCommandRunning(nextStatus);
-  },
+  }
+
   render() {
     const {_id, input, output, points_avail, points_earned, status} = this.props;
     const {collapse} = this.state;
@@ -63,7 +65,7 @@ const CommandComponent = React.createClass({
     return (
       <div className={`row command-container ${statusClass}`}>
         <div className="col-md-1 col-xs-1 col-sm-1 toggle-container"
-          onClick={this.toggleCollapse}>
+          onClick={this.toggleCollapse.bind(this)}>
           <i className={toggleClass}></i>
         </div>
         <div className="col-md-8 col-xs-12 col-sm-12 ellipsis">
@@ -74,6 +76,6 @@ const CommandComponent = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default {CommandListComponent};
