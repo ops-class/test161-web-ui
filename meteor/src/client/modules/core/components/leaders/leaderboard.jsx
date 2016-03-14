@@ -32,8 +32,7 @@ class LeaderboardComponent extends Component {
 }
 
 @ReactMixin.decorate(ReactMeteorData)
-@ReactMixin.decorate(OnloadMixin)
-class LeadersComponent extends Component {
+class LeadersComponent extends OnloadMixin {
   getMeteorData() {
     const ready = false;
     const loading = true;
