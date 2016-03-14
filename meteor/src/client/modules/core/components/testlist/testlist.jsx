@@ -1,5 +1,5 @@
 import {Component} from 'react';
-import LoadingComponent from 'client/modules/core/components/loading';
+import {LoadingComponent} from 'client/modules/core/components/loading';
 import TestComponent from './test';
 
 class TestListComponent extends Component {
