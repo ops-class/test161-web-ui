@@ -48,7 +48,7 @@
     "block-scoped-var": 0,
     "brace-style": [2, "1tbs", {"allowSingleLine": true}],
     "callback-return": 2,
-    "camelcase": [2, {"properties": "never"}],
+    "camelcase": 0,
     "comma-dangle": 0,
     "comma-spacing": 0,
     "comma-style": [2, "last"],
