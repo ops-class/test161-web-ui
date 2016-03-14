@@ -1,7 +1,7 @@
 import {Component} from 'react';
 import ReactMixin from 'react-mixin';
 import {TargetSubs} from 'client/modules/core/libs';
-import {UrlHashMixin} from 'client/modules/core/components/mixins';
+import {UrlHashComponent} from 'client/modules/core/components/mixins';
 import {LeaderboardSubs} from 'client/modules/core/libs';
 import {Leaders} from 'libs/collections';
 import LoadingComponent from 'client/modules/core/components/loading';
@@ -94,8 +94,7 @@ class PerfectScoreComponent extends Component {
 }
 
 @ReactMixin.decorate(ReactMeteorData)
-@ReactMixin.decorate(UrlHashMixin)
-class AssignmentComponent extends Component {
+class AssignmentComponent extends UrlHashComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -130,6 +129,7 @@ class AssignmentComponent extends Component {
   }
 
   componentDidUpdate() {
+    super.componentDidUpdate();
     this.update();
   }
 

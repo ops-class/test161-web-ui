@@ -1,7 +1,9 @@
-const fixedTopHeight = 80;
+import {Component} from 'react';
+import {fixedTopHeight} from '../style';
+
 let INITLOAD = true;
 
-const UrlHashMixin = {
+class UrlHashComponent extends Component {
   componentDidUpdate() {
     let target = $(location.hash);
     if (target.length && INITLOAD) {
@@ -10,7 +12,7 @@ const UrlHashMixin = {
       }, 512);
       INITLOAD = false;
     }
-  },
-};
+  }
+}
 
-export default {UrlHashMixin};
+export default {UrlHashComponent};

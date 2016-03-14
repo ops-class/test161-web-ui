@@ -4,6 +4,7 @@ import {TargetSubs} from 'client/modules/core/libs';
 import {OnloadComponent} from 'client/modules/core/components/mixins';
 import LoadingComponent from 'client/modules/core/components/loading';
 import {TargetNames} from 'libs/collections';
+import {fixedTopHeight} from '../style';
 
 import {AssignmentComponent} from './assignment';
 import {PerformanceComponent} from './performance';
