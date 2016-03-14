@@ -1,7 +1,7 @@
 import {Meteor} from 'meteor/meteor';
 import {Random} from 'meteor/random';
 import {
-  Students, Outputs, Submissions, Targets, Tests,
+  Students, Submissions, Targets, Tests,
   submissionStatus, commandStatus, testStatus,
   targetNames, isCompleted, isFailed, isSubmitted,
   SHOW, HIDE, ANONYMOUS
@@ -283,9 +283,9 @@ if (DEBUG) {
     }
   };
 
-  const initItems = (num = 1000) => {
+  const initItems = (num = 1000, user = num / 10) => {
     mockTargets();
-    generateUsers(num / 10);
+    generateUsers(user);
 
     const count = Submissions.find().count();
     if (count < num) {
