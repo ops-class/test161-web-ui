@@ -1,15 +1,11 @@
 import {Component} from 'react';
-import ReactMixin from 'react-mixin';
-import {TargetSubs} from 'client/modules/core/libs';
 import {ButtonToggleMixin} from 'client/modules/core/components/mixins';
-import {LeaderboardSubs} from 'client/modules/core/libs';
-import {Leaders} from 'libs/collections';
 import {LoadingComponent} from 'client/modules/core/components/loading';
 
 const BINS = 10;
 
 const PerfectScoreComponent = React.createClass({
-  mixins: [ButtonToggleMixin],
+  mixins: [ ButtonToggleMixin ],
   getToggleTarget() {
     return this.refs.details;
   },
@@ -70,35 +66,12 @@ const PerfectScoreComponent = React.createClass({
   }
 });
 
-@ReactMixin.decorate(ReactMeteorData)
 class PerformanceComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
       container: props.target._id + '-chart'
     };
-  }
-
-  getMeteorData() {
-    const {target = {}} = this.props;
-    const ready = false;
-    const loading = true;
-    let data = {ready, loading}
-    const handle = LeaderboardSubs.subscribe('performance', target);
-    if (handle.ready()) {
-      const leaders = Leaders.find(
-        { target: target._id },
-        { sort: { performance: 1, submission_time: -1 } }
-      ).fetch();
-      data.leaders = leaders;
-      data.performances = (Leaders.findOne({_id: target._id})||{}).performances;
-      data.ready = true;
-      data.loading = false;
-    } else {
-      data = {...this.data};
-      data.loading = true;
-    }
-    return data;
   }
 
   componentDidMount() {
@@ -110,7 +83,7 @@ class PerformanceComponent extends Component {
   }
 
   update() {
-    const {ready, performances} = this.data;
+    const {ready, performances} = this.props.data;
     if (!ready) {
       return;
     }
@@ -141,7 +114,6 @@ class PerformanceComponent extends Component {
   }
 
   highcharts({labels, counts, total}) {
-    const {target: { _id, type }} = this.props;
     const chartOptions = {
       chart: {
         renderTo: this.state.container,
@@ -190,7 +162,7 @@ class PerformanceComponent extends Component {
         x: -16,
         floating: true,
         borderWidth: 1,
-        backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+        backgroundColor: '#FFFFFF',
         shadow: true
       },
       tooltip: {
@@ -200,11 +172,11 @@ class PerformanceComponent extends Component {
         valuePrefix: '',
         valueSuffix: ' %'
       },
-      series: [{
+      series: [ {
         name: 'Groups',
         showInLegend: false,
         data: counts
-      }]
+      } ]
     };
     // const myScore = getMyScore(this.props.student, _id);
     // if (myScore > -1) {
@@ -225,14 +197,15 @@ class PerformanceComponent extends Component {
   }
 
   render() {
-    const {target = {}} = this.props;
-    const title = target.print_name;
-    const {ready, loading, leaders} = this.data;
+    const {
+      target: {print_name: title, _id},
+      data: {ready, leaders}
+    } = this.props;
     if (!ready) {
       return (<LoadingComponent />);
     }
     return (
-      <div className="row" id={target._id}>
+      <div className="row" id={_id}>
         <div className="col-md-12">
           <h1>{title}</h1>
           <div id={this.state.container}></div>
