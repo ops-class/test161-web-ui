@@ -5,12 +5,12 @@ import {
 } from 'client/modules/core/libs';
 
 import SubmissionListComponent from '../containers/submissionlist';
+import LeadersContainer from '../containers/leaders';
 
 import {IntroComponent} from './intro';
 import {LoadingComponent} from './loading';
 import {ProfileComponent} from './settings';
 import {SummaryComponent} from './submissionlist';
-import {LeadersComponent} from './leaders';
 
 import {mainContentClass} from './style';
 
@@ -31,7 +31,7 @@ class UserComponent extends Component {
       return (<ProfileComponent {...this.props} />);
     }
     if (pathIsLeaderboard(path) && isStaff(user)) {
-      return (<LeadersComponent {...this.props} />);
+      return (<LeadersContainer {...this.props} />);
     }
     return (
       <div className="row">
