@@ -6,8 +6,8 @@ import {
 
 import SubmissionListContainer from '../containers/submissionlist';
 import LeadersContainer from '../containers/leaders';
+import IntroContainer from '../containers/intro';
 
-import {IntroComponent} from './intro';
 import {LoadingComponent} from './loading';
 import {ProfileComponent} from './settings';
 import {SummaryComponent} from './submissionlist';
@@ -17,7 +17,7 @@ import {mainContentClass} from './style';
 const Intro = ({ready}) => (
   <div>
     {!ready ? <LoadingComponent /> : null}
-    <IntroComponent />
+    <IntroContainer />
   </div>
 );
 

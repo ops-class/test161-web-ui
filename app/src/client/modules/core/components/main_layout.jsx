@@ -1,6 +1,6 @@
 import {OnloadComponent} from './mixins';
+import NavigationContainer from '../containers/navigation';
 
-import {NavigationComponent} from './navigation';
 import {ContentComponent} from './content';
 
 import './styles/default.less';
@@ -9,7 +9,7 @@ class MainLayout extends OnloadComponent {
   render() {
     return (
       <div>
-        <NavigationComponent />
+        <NavigationContainer />
         <ContentComponent {...this.props} />
       </div>
     );
