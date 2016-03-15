@@ -10,6 +10,9 @@ Meteor.publish('performance', function ({ _id: target_name, type }) {
     return;
   }
 
+  const user = Meteor.users.findOne(this.userId) || {};
+  const isStaff = Boolean(((((user || {}).services || {}).auth0 || {}).user_metadata || {}).staff);
+
   if (type !== 'perf') {
     this.ready();
     return;
@@ -106,7 +109,7 @@ Meteor.publish('performance', function ({ _id: target_name, type }) {
       performances.push(e.performance);
 
       if (count < LIMIT) {
-        if (!filterAggregate(e, target_name, type, e.performance)) {
+        if (!filterAggregate(e, target_name, type, e.performance, isStaff)) {
           return;
         }
 
