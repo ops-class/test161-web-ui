@@ -13,7 +13,7 @@ echo "Keygen: ${KEYGEN_ENDPOINT}"
 echo "Mongo: ${MONGO_URL} ${MONGO_OPLOG_URL}"
 echo "Debug: $TEST161_DEBUG"
 
-cd meteor
+cd app
 npm install
 MONGO_URL=${MONGO_URL} \
 MONGO_OPLOG_URL=${MONGO_OPLOG_URL} \
