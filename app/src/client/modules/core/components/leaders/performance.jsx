@@ -1,72 +1,10 @@
-import {Component} from 'react';
-import {ButtonToggleMixin} from 'client/modules/core/components/mixins';
+import {UrlHashComponent} from 'client/modules/core/components/mixins';
+import {LeaderListComponent} from './leaderlist';
 import {LoadingComponent} from 'client/modules/core/components/loading';
 
 const BINS = 10;
 
-const PerfectScoreComponent = React.createClass({
-  mixins: [ ButtonToggleMixin ],
-  getToggleTarget() {
-    return this.refs.details;
-  },
-  render() {
-    const {leaders, title} = this.props;
-    const {hide, disabled} = this.state;
-    if (!leaders || leaders.length === 0) {
-      return null;
-    }
-    let anchor = -1, order = 0, count = 1;
-    const list = leaders.map(leader => {
-      const {performance, group, _id} = leader;
-      let notSame = performance > anchor;
-      if (notSame) {
-        anchor = performance;
-        order += count;
-        count = 1;
-      } else {
-        count++;
-      }
-      return (
-        <tr key={_id}>
-          {/*{notSame ? <td>{order}</td> : <td></td>}*/}
-          <td>{order}</td>
-          <td>{group[0].name}</td>
-          <td>{group[1] && group[1].name}</td>
-          <td>{performance}</td>
-        </tr>
-      )
-    })
-    return (
-      <div>
-        <p>
-          Top <b>{leaders.length}</b> groups for {title}!
-        </p>
-        <div className="btn btn-default"
-          disabled={disabled}
-          onClick={this.toggle}>
-          {hide ? 'Show' : 'Hide' } Details
-        </div>
-        <div ref="details" style={{"display": "none"}}>
-          <table className="table table-striped">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Group Member 1</th>
-                <th>Member 2</th>
-                <th>Performance</th>
-              </tr>
-            </thead>
-            <tbody>
-              {list}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    );
-  }
-});
-
-class PerformanceComponent extends Component {
+class PerformanceComponent extends UrlHashComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -92,13 +30,15 @@ class PerformanceComponent extends Component {
     }
     const values = performances;
     const max = values[values.length - 1];
-    const min = values[0];
-    const interval = max / BINS;
-    let labels = [], counts = [], total = values.length;
+    const min = Math.min(0, values[0]);
+    const interval = (max - min) / BINS;
+    let labels = [];
+    let counts = [];
+    let total = values.length;
     for (let i = 0; i <= BINS; i++) {
       const lower = Math.round(i * interval * 100) / 100;
       const upper = Math.round((i + 1) * interval * 100) / 100;
-      labels[i] = `>${lower} <=${upper}`
+      labels[i] = `>${lower} <=${upper}`;
       counts[i] = 0;
     }
     for (let i of values) {
@@ -208,9 +148,21 @@ class PerformanceComponent extends Component {
       <div className="row" id={_id}>
         <div className="col-md-12">
           <h1>{title}</h1>
-          <div id={this.state.container}></div>
+          <div className="alert alert-success text-center" role="alert">
+            <span className="h3">
+              Top <b>{leaders.length}</b> group
+              {leaders.length > 1 ? 's' : null} for {title}!
+            </span>
+          </div>
+          <div className="col-md-8 col-sm-8">
+            <div className="row">
+              <div id={this.state.container}></div>
+            </div>
+          </div>
+          <div className="col-md-4 col-sm-4">
+            <LeaderListComponent {...{leaders}}/>
+          </div>
         </div>
-        <PerfectScoreComponent {...{title, leaders}}/>
       </div>
     );
   }
