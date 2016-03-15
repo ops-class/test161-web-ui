@@ -24,20 +24,11 @@ export const composer = ({context}, onData) => {
     data.ready = data.targets.length > 0;
     data.loading = true;
   }
-  console.log(data);
 
   onData(null, {data});
 };
 
-export const depsMapper = (context, actions) => {
-  const {currentLimit, increaseLimit, clearLimit} = actions.submissionlist;
-  return {
-    currentLimit, increaseLimit, clearLimit,
-    context: () => context
-  };
-};
-
 export default composeAll(
   composeWithTracker(composer),
-  useDeps(depsMapper)
+  useDeps()
 )(LeadersComponent);

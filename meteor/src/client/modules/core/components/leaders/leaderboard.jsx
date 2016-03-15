@@ -1,6 +1,7 @@
 import {Component} from 'react';
-import {AssignmentComponent} from './assignment';
 import {PerformanceComponent} from './performance';
+
+import AssignmentContainer from 'client/modules/core/containers/assignment';
 
 const isAssignment = (type) => type === 'asst';
 
@@ -14,7 +15,7 @@ class LeaderboardComponent extends Component {
     return (
       <div className="col-md-12" >
         { isAssignment(type) ?
-          <AssignmentComponent {...this.props}/> :
+          <AssignmentContainer {...this.props}/> :
           <PerformanceComponent {...this.props}/>
         }
         <hr/>
