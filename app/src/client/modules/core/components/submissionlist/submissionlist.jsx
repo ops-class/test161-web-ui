@@ -26,11 +26,11 @@ class SubmissionListComponent extends Component {
   }
 
   componentDidMount() {
-    $(window).scroll(this.scroll.bind(this));
+    $(window).bind('scroll.loadmore', this.scroll.bind(this));
   }
 
   componentWillUnmount() {
-    $(window).unbind('scroll');
+    $(window).unbind('scroll.loadmore');
   }
 
   render() {

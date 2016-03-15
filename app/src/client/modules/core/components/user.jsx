@@ -4,7 +4,7 @@ import {
   pathIsProfile, pathIsIntro, pathIsLeaderboard, isStaff
 } from 'client/modules/core/libs';
 
-import SubmissionListComponent from '../containers/submissionlist';
+import SubmissionListContainer from '../containers/submissionlist';
 import LeadersContainer from '../containers/leaders';
 
 import {IntroComponent} from './intro';
@@ -38,7 +38,7 @@ class UserComponent extends Component {
         <div className={mainContentClass}>
           <SummaryComponent {...this.props} />
           <div className="row">
-            <SubmissionListComponent {...this.props} />
+            <SubmissionListContainer {...this.props} />
           </div>
         </div>
         <SidebarComponent {...this.props} />
