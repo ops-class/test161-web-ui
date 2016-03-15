@@ -1,9 +1,9 @@
-import {Component} from 'react';
+import {MainComponent} from 'client/modules/core/components/mixins';
 import {LoadingComponent} from 'client/modules/core/components/loading';
 
 import {SubmissionComponent} from './submission';
 
-class SubmissionListComponent extends Component {
+class SubmissionListComponent extends MainComponent {
   scroll() {
     const {data: {loading, submissions}} = this.props;
     if (loading) {
@@ -26,6 +26,7 @@ class SubmissionListComponent extends Component {
   }
 
   componentDidMount() {
+    super.componentDidMount();
     $(window).bind('scroll.loadmore', this.scroll.bind(this));
   }
 

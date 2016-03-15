@@ -1,6 +1,6 @@
-import {Component} from 'react';
+import {MainComponent} from './main';
 
-class OnloadComponent extends Component {
+class OnloadComponent extends MainComponent {
   onload() {
     if ((typeof processPage !== 'undefined') && (typeof processPage === 'function')) {
       /*eslint-disable */
@@ -10,6 +10,7 @@ class OnloadComponent extends Component {
   }
 
   componentDidMount() {
+    super.componentDidMount();
     this.onload();
   }
 

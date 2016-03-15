@@ -1,4 +1,4 @@
-import {Component} from 'react';
+import {MainComponent} from 'client/modules/core/components/mixins';
 import {mainContentClass} from 'client/modules/core/components/style';
 import {isStaff} from 'client/modules/core/libs';
 import {HIDE, SHOW, ANONYMOUS} from 'libs/collections';
@@ -475,7 +475,7 @@ const InformationComponent = React.createClass({
   }
 });
 
-const ProfileComponent = React.createClass({
+class ProfileComponent extends MainComponent {
   render() {
     if (!this.props.student) {
       return <NoProfileComponent />
@@ -495,6 +495,6 @@ const ProfileComponent = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default {ProfileComponent};
