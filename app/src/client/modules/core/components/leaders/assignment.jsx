@@ -2,6 +2,8 @@ import {UrlHashComponent} from 'client/modules/core/components/mixins';
 import {LoadingComponent} from 'client/modules/core/components/loading';
 import {LeaderListComponent} from './leaderlist';
 
+import Highcharts from 'highcharts/highstock';
+
 const getMyScore = (student, target_name) => {
   let res = -1;
   if (!student || !student.target_stats) {
@@ -137,7 +139,7 @@ class AssignmentComponent extends UrlHashComponent {
         data
       });
     }
-    const chart = new Highcharts.Chart(chartOptions);
+    this.chart = new Highcharts.Chart(chartOptions);
   }
 
   render() {

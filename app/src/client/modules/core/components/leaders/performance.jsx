@@ -1,7 +1,8 @@
 import {UrlHashComponent} from 'client/modules/core/components/mixins';
-import {LeaderListComponent} from './leaderlist';
 import {LoadingComponent} from 'client/modules/core/components/loading';
+import {LeaderListComponent} from './leaderlist';
 
+import Highcharts from 'highcharts/highstock';
 const BINS = 10;
 
 class PerformanceComponent extends UrlHashComponent {
@@ -133,7 +134,7 @@ class PerformanceComponent extends UrlHashComponent {
     //     data: data
     //   });
     // }
-    const chart = new Highcharts.Chart(chartOptions);
+    this.chart = new Highcharts.Chart(chartOptions);
   }
 
   render() {

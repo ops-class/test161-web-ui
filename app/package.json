@@ -14,11 +14,12 @@
   },
   "dependencies": {
     "domready": "^1.0.8",
+    "highcharts": "^4.2.3",
     "mantra-core": "^1.2.0",
     "react": "^0.14.6",
     "react-dom": "^0.14.6",
-    "react-mounter": "^1.0.0",
-    "react-mixin": "^3.0.3"
+    "react-mixin": "^3.0.3",
+    "react-mounter": "^1.0.0"
   },
   "devDependencies": {
     "babel": "^6.3.26",
