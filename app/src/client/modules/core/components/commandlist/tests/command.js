@@ -61,4 +61,34 @@ describe('core.components.commandlist.command', () => {
     expect(isCommandRunning.args[2]).to.deep.equal([ status ]);
     expect(isCommandRunning.args[3]).to.deep.equal([ status ]);
   });
+
+  it('toggle button should create output view', () => {
+    const wrapper = mount(<CommandComponent {...getProps()}/>);
+    expect(wrapper.state().collapse).to.equal(true);
+    expect(wrapper.find('.output-container')).to.have.length(0);
+
+    wrapper.find('.toggle-container').simulate('click');
+
+    expect(wrapper.state().collapse).to.equal(false);
+    expect(wrapper.find('.output-container')).to.have.length(1);
+  });
+
+  it('toggle button should toggle output view', function (done) {
+    const props = getProps();
+    props.isCommandRunning.returns(true);
+    const wrapper = mount(<CommandComponent {...props}/>);
+    expect(wrapper.state().collapse).to.equal(true);
+    expect(wrapper.find('.output-container')).to.have.length(1);
+
+    wrapper.find('.toggle-container').simulate('click');
+    expect(wrapper.state().collapse).to.equal(true);
+    expect(wrapper.find('.output-container').html()).to.contain('height: 1px');
+
+    wrapper.find('.toggle-container').simulate('click');
+    expect(wrapper.state().collapse).to.equal(true);
+    setTimeout(() => {
+      expect(wrapper.find('.output-container').html()).to.not.contain('height: 1px');
+      done();
+    }, 1024);
+  });
 });
