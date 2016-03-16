@@ -1,6 +1,6 @@
 = `test161.ops-class.org` Web Interface
 
-image:https://travis-ci.org/xcv58/test161-web-ui.svg?branch=master["Build Status", link="https://travis-ci.org/xcv58/test161-web-ui"]
+image:https://travis-ci.org/ops-class/test161-web-ui.svg?branch=master["Build Status", link="https://travis-ci.org/ops-class/test161-web-ui"]
 
 == Local Test
 
