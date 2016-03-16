@@ -111,3 +111,4 @@ webpack:react@1.1.2
 webpack:reload@1.0.0
 webpack:webpack@1.0.9
 xcv58:auth0-lock@0.3.10
+xcv58:collection-api@0.2.6
