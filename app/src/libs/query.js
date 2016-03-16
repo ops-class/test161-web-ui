@@ -27,6 +27,14 @@ const getUserEmail = (userId) => {
   return email;
 };
 
+const getUserByEmail = (email) => {
+  return Meteor.users.findOne({'services.auth0.email': email});
+};
+
+const isStaff = (user) => {
+  return Boolean(((((user || {}).services || {}).auth0 || {}).user_metadata || {}).staff);
+};
+
 const findAllSubmissions = (userId, asst, limit = 10) => {
   const email = getUserEmail(userId);
   const selector = {
@@ -64,7 +72,9 @@ const findOneStudent = (userId) => {
 };
 
 export {
+  getUserByEmail,
   getUserEmail,
+  isStaff,
   findAllSubmissions,
   findAllTests,
   findAllStudents,
