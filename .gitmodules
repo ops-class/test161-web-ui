@@ -1,4 +1,4 @@
 [submodule "www"]
 	path = www
-	url = git@github.com:ops-class/www.git
+	url = https://github.com/ops-class/www.git
 	branch = master
