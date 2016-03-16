@@ -155,7 +155,7 @@ class AssignmentComponent extends UrlHashComponent {
         <div className="col-md-12">
           <h1>{title}</h1>
           <div className="alert alert-success text-center" role="alert">
-            <span className="h3">
+            <span>
               {leaders.length} group{leaders.length > 1 ? 's' : null} earned
               a perfect score on {title}!
             </span>

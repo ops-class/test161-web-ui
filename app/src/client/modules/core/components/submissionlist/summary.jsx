@@ -19,9 +19,10 @@ class SummaryComponent extends Component {
     const list = scores.map(score => {
       const {points_earned, points_avail, asst} = score;
       const className = getPointClass(score);
+      // TODO: fix this by either add print_name in target_stats or do some query in container
       return (
         <tr key={asst} className={className}>
-          <td>{asst}</td>
+          <td>{asst.toUpperCase()}</td>
           <td>{points_earned}/{points_avail}</td>
         </tr>
       );
