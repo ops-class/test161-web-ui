@@ -1,0 +1,17 @@
+{
+  "name": "test161-rest-client",
+  "version": "0.0.1",
+  "description": "test161 RESTful API client",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./node_modules/babel-cli/bin/babel-node.js index.js"
+  },
+  "author": "Yihong",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.6.5",
+    "babel-preset-es2015": "^6.6.0",
+    "node-rest-client": "^1.8.0"
+  }
+}
