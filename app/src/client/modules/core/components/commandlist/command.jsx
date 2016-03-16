@@ -1,7 +1,5 @@
-import {CollapseComponent} from 'client/modules/core/components/mixins';
-import {PointComponent} from 'client/modules/core/components/points';
-
-import {isCommandRunning, getCommandStatusClass} from 'libs/';
+import {CollapseComponent} from '../mixins';
+import {PointComponent} from '../points';
 
 class CommandComponent extends CollapseComponent {
   constructor(props) {
@@ -10,18 +8,20 @@ class CommandComponent extends CollapseComponent {
   }
 
   autoCollpase(nextProps) {
-    const {status} = this.props;
+    const {status, isCommandRunning} = this.props;
     const nextStatus = nextProps.status;
     return isCommandRunning(status) && !isCommandRunning(nextStatus);
   }
 
   render() {
-    const {input, output, points_avail, points_earned, status} = this.props;
+    const {
+      input, output, points_avail, points_earned,
+      status, statusClass, isCommandRunning
+    } = this.props;
     const {collapse} = this.state;
 
     let list = null;
     let toggleClass = 'toggle fa ';
-    const statusClass = getCommandStatusClass(status);
 
     if (isCommandRunning(status) || !collapse) {
       const content = output.map(line => line.line).join('\n');
@@ -62,4 +62,4 @@ class CommandComponent extends CollapseComponent {
   }
 }
 
-export default {CommandComponent};
+export {CommandComponent};
