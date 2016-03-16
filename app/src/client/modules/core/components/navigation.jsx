@@ -8,4 +8,4 @@ class NavigationComponent extends Component {
   }
 }
 
-export default {NavigationComponent};
+export {NavigationComponent};

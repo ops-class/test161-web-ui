@@ -1,4 +1,4 @@
-import {MainComponent} from 'client/modules/core/components/mixins';
+import {MainComponent} from './mixins';
 
 class IntroComponent extends MainComponent {
   render() {
@@ -8,4 +8,4 @@ class IntroComponent extends MainComponent {
   }
 }
 
-export default {IntroComponent};
+export {IntroComponent};

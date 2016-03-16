@@ -1,20 +1,18 @@
-// const {describe, it} = global;
-// import {expect} from 'chai';
-// import {shallow} from 'enzyme';
-// import Navigation from '../navigation.jsx';
-//
-// describe('core.components.navigation', () => {
-//   it('should contain a link to home', () => {
-//     const el = shallow(<Navigation />);
-//     const homeLink = el.find('a').at(0);
-//     expect(homeLink.text()).to.be.equal('Home');
-//     expect(homeLink.prop('href')).to.be.equal('/');
-//   });
-//
-//   it('should contain a link to create a new post', () => {
-//     const el = shallow(<Navigation />);
-//     const newPostLink = el.find('a').at(1);
-//     expect(newPostLink.text()).to.be.equal('New Post');
-//     expect(newPostLink.prop('href')).to.be.equal('/new-post');
-//   });
-// });
+const {describe, it} = global;
+import {expect} from 'chai';
+import {mount} from 'enzyme';
+import {NavigationComponent} from '../navigation';
+
+describe('core.components.navigation', () => {
+  it('should contain the __html', () => {
+    expect(NavigationComponent).to.not.equal(undefined);
+
+    const text = 'navigation';
+    const __html = `<div>${text}</div>`;
+
+    const wrapper = mount(<NavigationComponent {...{__html}} />);
+
+    expect(wrapper.props().__html).to.equal(__html);
+    expect(wrapper.text()).to.be.equal(text);
+  });
+});
