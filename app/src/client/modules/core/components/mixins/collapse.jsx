@@ -1,5 +1,6 @@
 import {Component} from 'react';
 import ReactDOM from 'react-dom';
+import $ from 'jquery';
 
 class CollapseComponent extends Component {
   constructor(props) {
@@ -42,4 +43,4 @@ class CollapseComponent extends Component {
   }
 }
 
-export default {CollapseComponent};
+export {CollapseComponent};
