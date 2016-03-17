@@ -1,4 +1,4 @@
-import {Submissions} from '../../libs/collections';
+import {Submissions} from '../../../libs/collections';
 
 const queryOneScore = (target_name, deadline, user) => {
   const {email} = user;
@@ -63,14 +63,4 @@ const queryScores = ({target, users, deadline}) => {
   return results;
 };
 
-const queryHiddens = (target) => {
-  console.log('queryHiddens for:', target);
-  return [];
-};
-
-const processActions = (target, users) => {
-  console.log('processActions for:', target, users);
-  return [];
-};
-
-export {queryScores, queryHiddens, processActions};
+export {queryScores};

@@ -94,6 +94,11 @@ const StudentSchema = new SimpleSchema({
     maxCount: 2,
     optional: true
   },
+  hiddens: {
+    type: [ String ],
+    label: 'Hide from leaderboards for targets in this array',
+    optional: true
+  },
   name: {
     type: String,
     label: 'Student name',

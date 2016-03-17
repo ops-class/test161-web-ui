@@ -1,49 +1,8 @@
-import {SimpleSchema} from 'meteor/aldeed:simple-schema';
+import {HiddenRequestSchema, ScoreRequestSchema} from './schema';
 import {Students} from '../../libs/collections';
 import {getUserByEmail, isStaff} from '../../libs/query';
 
-const validDateString = (date) => (new Date(date)) !== 'Invalid Date' && !isNaN(new Date(date));
-
-const checkDateString = function () {
-  if (this.isSet) {
-    const valid = validDateString(this.value);
-    if (!valid) {
-      return 'wrong deadline!';
-    }
-  }
-};
-
-const UserSchema = new SimpleSchema({
-  email: {
-    type: String,
-    label: 'Email address of this user',
-    regEx: SimpleSchema.RegEx.Email
-  },
-  deadline: {
-    type: String,
-    label: 'Deadline for this user',
-    optional: true,
-    custom: checkDateString
-  }
-});
-
-const ScoreRequestSchema = new SimpleSchema({
-  target: {
-    type: String,
-    label: 'Target name'
-  },
-  deadline: {
-    type: String,
-    label: 'Deadline for this target',
-    optional: true,
-    custom: checkDateString
-  },
-  users: {
-    type: [ UserSchema ],
-    label: 'Users',
-    minCount: 1
-  }
-});
+const checkHiddenRequest = (obj) => HiddenRequestSchema.newContext().validate(obj);
 
 const checkScoreRequest = (obj) => ScoreRequestSchema.newContext().validate(obj);
 
@@ -59,4 +18,4 @@ const checkStaffByToken = (token) => {
   return isStaff(user);
 };
 
-export {checkScoreRequest, ScoreRequestSchema, checkStaffByToken};
+export {checkScoreRequest, checkStaffByToken, checkHiddenRequest};

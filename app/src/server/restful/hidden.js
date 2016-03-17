@@ -1,6 +1,6 @@
 import {API} from './api';
 import {queryHiddens, processActions} from './query';
-import {checkScoreRequest, checkStaffByToken} from './utils';
+import {checkHiddenRequest, checkStaffByToken} from './utils';
 
 API.addCollection({find: () => []}, 'hiddens', {
   authenticate: (token) => {
@@ -29,13 +29,12 @@ API.addCollection({find: () => []}, 'hiddens', {
       let statusCode = 201;
       let body = {};
 
-      // TODO: change valid function
-      if (!checkScoreRequest(data)) {
+      if (!checkHiddenRequest(data)) {
         statusCode = 400;
         body = {error: 'Bad Request'};
       } else {
-        const {users, target} = data;
-        body = processActions(target, users);
+        const {target, action, users} = data;
+        body = processActions(target, action, users);
       }
 
       Object.assign(returnObject, {success, statusCode, body});
