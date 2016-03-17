@@ -3,10 +3,7 @@ import {queryScores} from './query';
 import {checkScoreRequest, checkStaffByToken} from './utils';
 
 API.addCollection({}, 'scores', {
-  authenticate: (token, method) => {
-    if (method !== 'POST') {
-      return false;
-    }
+  authenticate: (token) => {
     return checkStaffByToken(token);
   },
   methods: [ 'POST' ],
