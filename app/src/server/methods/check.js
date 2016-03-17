@@ -1,6 +1,6 @@
 import {Meteor} from 'meteor/meteor';
-import {Students} from 'libs/collections';
-import {getUserEmail} from 'libs/query';
+import {Students} from 'lib/collections';
+import {getUserEmail} from 'lib/query';
 
 const checkEmailToken = ({email, token, userId}) => {
   if (!email || !token) {

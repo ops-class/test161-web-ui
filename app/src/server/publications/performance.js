@@ -1,6 +1,6 @@
 import {Meteor} from 'meteor/meteor';
-import {Submissions, Students} from 'libs/collections';
-import {isStaff} from 'libs/';
+import {Submissions, Students} from 'lib/collections';
+import {isStaff} from 'lib/';
 import {filterAggregate} from './common';
 
 const LIMIT = 10;

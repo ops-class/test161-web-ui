@@ -3,7 +3,7 @@ import {StatusComponent} from './status';
 import {TimeComponent} from './time';
 import {InfoComponent} from './info';
 
-import {isSubmissionRunning} from 'libs/';
+import {isSubmissionRunning} from 'lib/';
 
 import TestListContainer from 'client/modules/core/containers/testlist';
 

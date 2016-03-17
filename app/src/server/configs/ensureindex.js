@@ -1,4 +1,4 @@
-import {Submissions, Students} from 'libs/collections';
+import {Submissions, Students} from 'lib/collections';
 
 Submissions._ensureIndex({
   users: 1,

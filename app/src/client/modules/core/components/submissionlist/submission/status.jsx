@@ -1,5 +1,5 @@
 import React from 'react';
-import {getSubmissionStatusClass} from 'libs/';
+import {getSubmissionStatusClass} from 'lib/';
 
 const StatusComponent = ({status, score, max_score, performance, target_type}) => {
   let className = 'submission-status toggle text-uppercase hvr-grow-shadow alert ';

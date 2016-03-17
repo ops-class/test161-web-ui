@@ -1,4 +1,4 @@
-import {Students} from '../../../libs/collections';
+import {Students} from '../../../lib/collections';
 import {actions, hideAction} from '../schema';
 
 const queryHiddens = (target) => {

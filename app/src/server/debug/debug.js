@@ -1,7 +1,7 @@
 import {Meteor} from 'meteor/meteor';
 import {Accounts} from 'meteor/accounts-base';
 import {Random} from 'meteor/random';
-import {Students} from 'libs/collections';
+import {Students} from 'lib/collections';
 
 const DEBUG = Boolean(process.env.TEST161_DEBUG || Meteor.settings.TEST161_DEBUG);
 const TEST161_AUTH0 = Boolean(process.env.TEST161_AUTH0 || Meteor.settings.TEST161_AUTH0);

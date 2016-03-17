@@ -1,6 +1,6 @@
 import {Meteor} from 'meteor/meteor';
 import {checkEmailToken} from './check';
-import {Students, HIDE, ANONYMOUS} from 'libs/collections';
+import {Students, HIDE, ANONYMOUS} from 'lib/collections';
 
 Meteor.methods({
   updatePrivacy({email, token, type}, newChoice) {

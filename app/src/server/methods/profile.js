@@ -1,6 +1,6 @@
 import {Meteor} from 'meteor/meteor';
 import {checkEmailToken} from './check';
-import {Students} from 'libs/collections';
+import {Students} from 'lib/collections';
 
 Meteor.methods({
   updateProfile({email, token}, {name, link}) {

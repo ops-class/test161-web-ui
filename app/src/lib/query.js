@@ -1,5 +1,5 @@
 import {Meteor} from 'meteor/meteor';
-import {Students, Tests, Submissions, SubmissionSchema} from 'libs/collections';
+import {Students, Tests, Submissions, SubmissionSchema} from 'lib/collections';
 
 const submissionFields = Object.assign(
   ...SubmissionSchema._firstLevelSchemaKeys.map(key => ({[key]: 1}))

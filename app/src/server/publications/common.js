@@ -1,5 +1,5 @@
-import {HIDE, SHOW, ANONYMOUS} from 'libs/collections';
-import {isStaff} from 'libs/';
+import {HIDE, SHOW, ANONYMOUS} from 'lib/collections';
+import {isStaff} from 'lib/';
 
 const hash = (name) => {
   /*eslint-disable */

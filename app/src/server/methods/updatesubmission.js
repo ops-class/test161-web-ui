@@ -1,7 +1,7 @@
 import {Meteor} from 'meteor/meteor';
 import {check} from 'meteor/check';
 import {checkEmailToken} from './check';
-import {Submissions, PrivacyChoices} from 'libs/collections';
+import {Submissions, PrivacyChoices} from 'lib/collections';
 
 Meteor.methods({
   updateSubmissionPrivacy(_id, {email, token, choice}) {

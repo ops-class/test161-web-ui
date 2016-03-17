@@ -1,7 +1,7 @@
 import {Meteor} from 'meteor/meteor';
 import {Random} from 'meteor/random';
-import {getUserEmail, findAllStudents} from 'libs/query';
-import {Students} from 'libs/collections';
+import {getUserEmail, findAllStudents} from 'lib/query';
+import {Students} from 'lib/collections';
 
 const generateStudentDoc = (userId) => {
   const email = getUserEmail(userId);

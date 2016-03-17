@@ -1,4 +1,4 @@
-import {submissionStatus, testStatus} from 'libs/collections';
+import {submissionStatus, testStatus} from 'lib/collections';
 
 const randomInt = (range = 100) => Math.floor(Math.random() * range);
 

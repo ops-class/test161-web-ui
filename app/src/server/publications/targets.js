@@ -1,5 +1,5 @@
 import {Meteor} from 'meteor/meteor';
-import {Targets} from 'libs/collections';
+import {Targets} from 'lib/collections';
 
 // Only publish data for the matches we care about. Be careful not to over-publish
 Meteor.publish('targets', function () {

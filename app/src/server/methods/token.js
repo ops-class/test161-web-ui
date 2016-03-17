@@ -1,7 +1,7 @@
 import {Meteor} from 'meteor/meteor';
 import {Random} from 'meteor/random';
 import {checkEmailToken} from './check';
-import {Students} from 'libs/collections';
+import {Students} from 'lib/collections';
 
 Meteor.methods({
   regenerateToken({email, token}) {

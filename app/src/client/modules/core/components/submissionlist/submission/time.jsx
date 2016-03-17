@@ -1,7 +1,7 @@
 import React from 'react';
 import {moment} from 'meteor/momentjs:moment';
-import {getInterval, getDurationString} from 'client/modules/core/libs';
-import {isSubmissionRunning} from 'libs/';
+import {getInterval, getDurationString} from 'client/modules/core/lib';
+import {isSubmissionRunning} from 'lib/';
 
 const TimeComponent = React.createClass({
   getInitialState() {

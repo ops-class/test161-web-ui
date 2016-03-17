@@ -1,7 +1,7 @@
 import {MainComponent} from 'client/modules/core/components/mixins';
 import {mainContentClass} from 'client/modules/core/components/style';
-import {isStaff} from 'libs/';
-import {HIDE, SHOW, ANONYMOUS} from 'libs/collections';
+import {isStaff} from 'lib/';
+import {HIDE, SHOW, ANONYMOUS} from 'lib/collections';
 
 const NoProfileComponent = () => (
   <div className="alert alert-danger">

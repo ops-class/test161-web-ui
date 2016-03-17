@@ -1,6 +1,6 @@
 import React from 'react';
 import {Meteor} from 'meteor/meteor';
-import {HIDE, SHOW, ANONYMOUS} from 'libs/collections';
+import {HIDE, SHOW, ANONYMOUS} from 'lib/collections';
 
 const getPrivacyChoice = (email, {privacy = [], target_type, student}) => {
   let setting = privacy.find(x => x.type === email);

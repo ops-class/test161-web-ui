@@ -1,6 +1,6 @@
 import {Meteor} from 'meteor/meteor';
-import {Submissions, Students} from 'libs/collections';
-import {isStaff} from 'libs/';
+import {Submissions, Students} from 'lib/collections';
+import {isStaff} from 'lib/';
 import {filterAggregate} from './common';
 
 Meteor.publish('leaderboards', function ({ _id: target_name, type, points }) {

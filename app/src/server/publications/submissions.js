@@ -1,5 +1,5 @@
 import {Meteor} from 'meteor/meteor';
-import {findAllSubmissions} from 'libs/query';
+import {findAllSubmissions} from 'lib/query';
 
 Meteor.publish('submissions', function (asst, limit = 10) {
   if (this.userId) {

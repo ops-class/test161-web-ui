@@ -1,4 +1,4 @@
-import {Submissions} from '../../../libs/collections';
+import {Submissions} from '../../../lib/collections';
 
 const queryOneScore = (target_name, deadline, user) => {
   const {email} = user;

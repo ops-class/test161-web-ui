@@ -2,8 +2,8 @@ import {Component} from 'react';
 import {Meteor} from 'meteor/meteor';
 import {Accounts} from 'meteor/accounts-base';
 
-import {login, logout} from 'client/modules/core/libs';
-import {isStaff} from 'libs/';
+import {login, logout} from 'client/modules/core/lib';
+import {isStaff} from 'lib/';
 
 import {UserComponent} from './user';
 

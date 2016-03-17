@@ -1,9 +1,9 @@
 import {Component} from 'react';
 import {FlowRouter} from 'meteor/kadira:flow-router';
-import {isStaff} from 'libs/';
+import {isStaff} from 'lib/';
 import {
   pathIsProfile, pathIsIntro, pathIsLeaderboard
-} from 'client/modules/core/libs';
+} from 'client/modules/core/lib';
 
 import SubmissionListContainer from '../containers/submissionlist';
 import LeadersContainer from '../containers/leaders';

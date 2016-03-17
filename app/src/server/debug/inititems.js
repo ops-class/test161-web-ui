@@ -5,8 +5,8 @@ import {
   Students, Submissions, Targets, Tests,
   submissionStatus, commandStatus, testStatus,
   targetNames, isFailed, isSubmitted, SHOW
-} from 'libs/collections';
-import {randomInt} from 'libs/';
+} from 'lib/collections';
+import {randomInt} from 'lib/';
 
 const DEBUG = Boolean(process.env.TEST161_DEBUG || Meteor.settings.TEST161_DEBUG);
 

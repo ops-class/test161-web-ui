@@ -1,4 +1,4 @@
-import * as Libs from '../libs';
+import * as Libs from '../lib';
 
 export default function (context) {
   Object.assign(context.Libs, Libs);
