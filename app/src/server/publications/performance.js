@@ -85,6 +85,19 @@ Meteor.publish('performance', function ({ _id: target_name, type }) {
       }
     },
     {
+      $match: {
+        students: {
+          $not: {
+            $elemMatch: {
+              hiddens: {
+                $in: [ target_name ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       $project: {
         _id: 1,
         performance: 1,
@@ -159,6 +172,7 @@ Meteor.publish('performance', function ({ _id: target_name, type }) {
       email: 1,
       name: 1,
       link: 1,
+      hiddens: 1,
       privacy: 1
     }
   });

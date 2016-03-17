@@ -79,6 +79,19 @@ Meteor.publish('leaderboards', function ({ _id: target_name, type, points }) {
       }
     },
     {
+      $match: {
+        students: {
+          $not: {
+            $elemMatch: {
+              hiddens: {
+                $in: [ target_name ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       $project: {
         _id: 1,
         target: 1,
@@ -149,6 +162,7 @@ Meteor.publish('leaderboards', function ({ _id: target_name, type, points }) {
       email: 1,
       name: 1,
       link: 1,
+      hiddens: 1,
       privacy: 1
     }
   });
