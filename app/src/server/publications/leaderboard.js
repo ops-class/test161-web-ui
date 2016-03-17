@@ -1,5 +1,6 @@
 import {Meteor} from 'meteor/meteor';
 import {Submissions, Students} from 'libs/collections';
+import {isStaff} from 'libs/';
 import {filterAggregate} from './common';
 
 Meteor.publish('leaderboards', function ({ _id: target_name, type, points }) {
@@ -9,7 +10,7 @@ Meteor.publish('leaderboards', function ({ _id: target_name, type, points }) {
   }
 
   const user = Meteor.users.findOne(this.userId) || {};
-  const isStaff = Boolean(((((user || {}).services || {}).auth0 || {}).user_metadata || {}).staff);
+  const staff = isStaff(user);
 
   if (type !== 'asst') {
     this.ready();
@@ -113,7 +114,7 @@ Meteor.publish('leaderboards', function ({ _id: target_name, type, points }) {
     Submissions.aggregate(pipeline).map((e) => {
       scores.push(e.score);
       if (e.score === points) {
-        if (!filterAggregate(e, target_name, type, e.score, isStaff)) {
+        if (!filterAggregate(e, target_name, type, e.score, staff)) {
           return;
         }
 

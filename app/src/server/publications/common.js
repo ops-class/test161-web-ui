@@ -1,4 +1,5 @@
 import {HIDE, SHOW, ANONYMOUS} from 'libs/collections';
+import {isStaff} from 'libs/';
 
 const hash = (name) => {
   /*eslint-disable */
@@ -48,16 +49,13 @@ const getStudentEmail = (student, submission, type, staff) => {
 };
 
 const appendStaffSuffix = ({student, userObjects}, name) => {
-  if (isStaff(student, userObjects)) {
+  if (isStaff(findUser(student, userObjects))) {
     return name + ' (staff)';
   }
   return name;
 };
 
-const isStaff = ({email}, userObjects) => {
-  const user = userObjects.find(x => x.services.auth0.email === email);
-  return ((((user || {}).services || {}).auth0 || {}).user_metadata || {}).staff;
-};
+const findUser = ({email}, userObjects) => userObjects.find(x => x.services.auth0.email === email);
 
 const filterAggregate = (e, targetName, type, value, staff) => {
   const {_id: users, privacyArray = [], students, userObjects = []} = e;
@@ -104,7 +102,6 @@ export default {
   hash,
   isHide,
   isAnonymous,
-  isStaff,
   getStudentEmail,
   filterAggregate
 };

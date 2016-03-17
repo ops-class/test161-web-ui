@@ -1,5 +1,6 @@
 import {Meteor} from 'meteor/meteor';
 import {Submissions, Students} from 'libs/collections';
+import {isStaff} from 'libs/';
 import {filterAggregate} from './common';
 
 const LIMIT = 10;
@@ -11,7 +12,7 @@ Meteor.publish('performance', function ({ _id: target_name, type }) {
   }
 
   const user = Meteor.users.findOne(this.userId) || {};
-  const isStaff = Boolean(((((user || {}).services || {}).auth0 || {}).user_metadata || {}).staff);
+  const staff = isStaff(user);
 
   if (type !== 'perf') {
     this.ready();
@@ -122,7 +123,7 @@ Meteor.publish('performance', function ({ _id: target_name, type }) {
       performances.push(e.performance);
 
       if (count < LIMIT) {
-        if (!filterAggregate(e, target_name, type, e.performance, isStaff)) {
+        if (!filterAggregate(e, target_name, type, e.performance, staff)) {
           return;
         }
 
