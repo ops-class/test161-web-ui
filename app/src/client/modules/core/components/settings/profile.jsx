@@ -1,6 +1,6 @@
 import {MainComponent} from 'client/modules/core/components/mixins';
 import {mainContentClass} from 'client/modules/core/components/style';
-import {isStaff} from 'client/modules/core/libs';
+import {isStaff} from 'libs/';
 import {HIDE, SHOW, ANONYMOUS} from 'libs/collections';
 
 const NoProfileComponent = () => (

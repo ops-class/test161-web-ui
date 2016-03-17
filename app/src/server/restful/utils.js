@@ -1,6 +1,6 @@
 import {HiddenRequestSchema, ScoreRequestSchema} from './schema';
 import {Students} from '../../libs/collections';
-import {getUserByEmail, isStaff} from '../../libs/query';
+import {getUserByEmail, isStaff} from '../../libs';
 
 const checkHiddenRequest = (obj) => HiddenRequestSchema.newContext().validate(obj);
 

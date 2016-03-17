@@ -20,10 +20,6 @@ const login = () => {
   });
 };
 
-const isStaff = (user) => {
-  return ((((user || {}).services || {}).auth0 || {}).user_metadata || {}).staff;
-};
-
 export {
   UserSubs,
   SubmissionSubs,
@@ -31,6 +27,5 @@ export {
   TargetSubs,
   LeaderboardSubs,
   logout,
-  login,
-  isStaff
+  login
 };
