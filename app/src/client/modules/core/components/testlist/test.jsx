@@ -1,6 +1,6 @@
-import {CollapseComponent} from 'client/modules/core/components/mixins';
-import {PointComponent} from 'client/modules/core/components/points';
-import {CommandListComponent} from 'client/modules/core/components/commandlist';
+import {CollapseComponent} from '../mixins';
+import {PointComponent} from '../points';
+import {CommandListComponent} from '../commandlist';
 import {getTestStatusClass, isTestRunning} from 'lib/';
 
 class TestComponent extends CollapseComponent {
@@ -55,4 +55,4 @@ class TestComponent extends CollapseComponent {
   }
 }
 
-export default {TestComponent};
+export {TestComponent};

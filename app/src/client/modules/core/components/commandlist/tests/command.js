@@ -54,7 +54,7 @@ describe('core.components.commandlist.command', () => {
     expect(wrapper.find('.output-container')).to.have.length(1);
   });
 
-  it('call autoCollapse when componentWillReceiveProps', () => {
+  it('should call autoCollapse when componentWillReceiveProps', () => {
     spy(CommandComponent.prototype, 'autoCollpase');
     wrapper.setProps();
     expect(CommandComponent.prototype.autoCollpase.calledOnce).to.equal(true);
@@ -118,6 +118,6 @@ describe('core.components.commandlist.command', () => {
       expect(wrapper.find('.output-container').html()).to.not.contain('height: 1px');
       expect(wrapper.find('.toggle').hasClass('fa-chevron-down')).to.equal(true);
       done();
-    }, 768);
+    }, 1024);
   });
 });
