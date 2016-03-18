@@ -118,6 +118,6 @@ describe('core.components.commandlist.command', () => {
       expect(wrapper.find('.output-container').html()).to.not.contain('height: 1px');
       expect(wrapper.find('.toggle').hasClass('fa-chevron-down')).to.equal(true);
       done();
-    }, 768);
+    }, 1024);
   });
 });

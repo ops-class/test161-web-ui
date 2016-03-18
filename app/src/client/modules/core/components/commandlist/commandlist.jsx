@@ -13,4 +13,4 @@ class CommandListComponent extends Component {
   }
 }
 
-export default {CommandListComponent};
+export {CommandListComponent};
