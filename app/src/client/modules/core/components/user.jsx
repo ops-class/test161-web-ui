@@ -10,23 +10,20 @@ import LeadersContainer from '../containers/leaders';
 import IntroContainer from '../containers/intro';
 
 import {LoadingComponent} from './loading';
+import {MainLoadingComponent} from './main_loading';
 import {ProfileComponent} from './settings';
 import {SummaryComponent} from './submissionlist';
 
 import {mainContentClass} from './style';
 
-const Intro = ({ready}) => (
-  <div>
-    {!ready ? <LoadingComponent /> : null}
-    <IntroContainer />
-  </div>
-);
-
 class UserComponent extends Component {
   render() {
     const {params: {path}, user} = this.props;
-    if (pathIsIntro(path) || !user) {
-      return (<Intro {...this.props} />);
+    if (!user) {
+      return (<MainLoadingComponent {...this.props} content={<IntroContainer />} />);
+    }
+    if (pathIsIntro(path)) {
+      return (<IntroContainer />);
     }
     if (pathIsProfile(path)) {
       return (<ProfileComponent {...this.props} />);
