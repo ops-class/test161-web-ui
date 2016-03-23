@@ -149,18 +149,16 @@ class PerformanceComponent extends UrlHashComponent {
       <div className="row" id={_id}>
         <div className="col-md-12">
           <h1>{title}</h1>
-          <div className="alert alert-success text-center" role="alert">
-            <span>
-              Top <b>{leaders.length}</b> group
-              {leaders.length > 1 ? 's' : null} for {title}!
-            </span>
-          </div>
-          <div className="col-md-8 col-sm-8">
+          <div className="col-md-7 col-sm-7">
             <div className="row">
               <div id={this.state.container}></div>
             </div>
           </div>
-          <div className="col-md-4 col-sm-4">
+          <div className="col-md-5 col-sm-5">
+            <span>
+              Top <b>{leaders.length}</b> group
+              {leaders.length > 1 ? 's' : null} for {title}!
+            </span>
             <LeaderListComponent {...{leaders}}/>
           </div>
         </div>

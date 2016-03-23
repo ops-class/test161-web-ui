@@ -5,15 +5,30 @@ import {Meteor} from 'meteor/meteor';
 class MemberComponent extends Component {
   render() {
     const {name, link, email} = this.props;
+
+    const dataToggle = email ? 'tooltip' : null;
+    const title = email ? email : null;
+
+    let content = null;
+    if (link) {
+      content = (
+        <a href={link} target="_blank"
+          data-toggle={dataToggle}
+          title={title} >
+          {name}
+        </a>
+      );
+    } else {
+      content = (
+        <span data-toggle={dataToggle}
+          title={title} >
+          {name}
+        </span>
+      );
+    }
     return (
       <strong>
-        {link ?
-          <a href={link} target="_blank"
-          data-toggle={email ? 'tooltip' : null}
-          title={email ? email : null}>{name}</a> :
-          <span data-toggle={email ? 'tooltip' : null}
-            title={email ? email : null}>{name}</span>
-        }
+        {content}
       </strong>
     );
   }
