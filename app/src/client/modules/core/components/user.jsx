@@ -9,7 +9,6 @@ import SubmissionListContainer from '../containers/submissionlist';
 import LeadersContainer from '../containers/leaders';
 import IntroContainer from '../containers/intro';
 
-import {LoadingComponent} from './loading';
 import {MainLoadingComponent} from './main_loading';
 import {ProfileComponent} from './settings';
 import {SummaryComponent} from './submissionlist';
