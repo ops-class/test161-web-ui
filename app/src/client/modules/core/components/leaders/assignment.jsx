@@ -161,8 +161,7 @@ class AssignmentComponent extends UrlHashComponent {
           </div>
           <div className="col-md-5 col-sm-5">
             <span>
-              {leaders.length} group{leaders.length > 1 ? 's' : null} earned
-              a perfect score on {title}!
+              Groups with a perfect score: {leaders.length}
             </span>
             <LeaderListComponent {...{leaders}}/>
           </div>
