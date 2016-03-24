@@ -6,6 +6,8 @@ class OnloadComponent extends MainComponent {
       /*eslint-disable */
       processPage();
       /*eslint-enable */
+    } else {
+      setTimeout(this.onload, 1000);
     }
   }
 
