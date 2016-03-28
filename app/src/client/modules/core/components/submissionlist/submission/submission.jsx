@@ -51,7 +51,7 @@ class SubmissionComponent extends CollapseComponent {
             <InfoComponent {...submission} student={student} />
           </div>
           <div className="col-md-4">
-            <TimeComponent {...submission} />
+            <TimeComponent {...submission} student={student} />
           </div>
         </div>
         {details}

@@ -83,11 +83,6 @@ const SubmissionSchema = new SimpleSchema({
     label: 'Hide from submission list',
     optional: true
   },
-  hideFromLeaderboards: {
-    type: Boolean,
-    label: 'Hide from leaderboards',
-    optional: true
-  },
   score: {
     type: Number,
     label: 'Number',
