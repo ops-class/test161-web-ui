@@ -1,11 +1,11 @@
 import {CollapseComponent} from 'client/modules/core/components/mixins';
 import {StatusComponent} from './status';
-import {TimeComponent} from './time';
 import {InfoComponent} from './info';
 
 import {isSubmissionRunning} from 'lib/';
 
 import TestListContainer from 'client/modules/core/containers/testlist';
+import TimeContainer from 'client/modules/core/containers/time';
 
 const touchToHover = (event) => $(event).toggleClass('hover');
 
@@ -27,7 +27,7 @@ class SubmissionComponent extends CollapseComponent {
   }
 
   render() {
-    const {submission, student} = this.props;
+    const {submission, student, showAll} = this.props;
     const {status} = submission;
     const {collapse} = this.state;
     let details = null;
@@ -51,7 +51,7 @@ class SubmissionComponent extends CollapseComponent {
             <InfoComponent {...submission} student={student} />
           </div>
           <div className="col-md-4">
-            <TimeComponent {...submission} student={student} />
+            <TimeContainer {...submission} student={student} showAll={showAll} />
           </div>
         </div>
         {details}

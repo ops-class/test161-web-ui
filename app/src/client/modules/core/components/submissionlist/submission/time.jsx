@@ -27,8 +27,15 @@ const TimeComponent = React.createClass({
   componentWillUnmount() {
     clearTimeout(this.timer);
   },
+  toggleSubmission() {
+    const {_id, student: {email, token}, toggleSubmission} = this.props;
+    toggleSubmission(_id, {email, token});
+  },
   render() {
-    const {submission_time, completion_time, commit_id, status} = this.props;
+    const {
+      submission_time, completion_time, commit_id, status,
+      hide = false, showAll
+    } = this.props;
     const {now} = this.state;
     const submission = moment(submission_time);
     const time = submission.from(now);
@@ -50,6 +57,13 @@ const TimeComponent = React.createClass({
         <div className={className}>
           <i className="fa fa-code-fork"></i> {commit_id.substring(0, 7)}
         </div>
+        {showAll ? (
+          <div className="col-md-12">
+            <button className="btn btn-default btn-block" onClick={this.toggleSubmission}>
+              {hide ? 'show' : 'hide'}
+            </button>
+          </div>
+        ) : null }
       </div>
     );
   }

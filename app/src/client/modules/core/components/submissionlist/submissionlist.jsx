@@ -36,7 +36,7 @@ class SubmissionListComponent extends MainComponent {
 
   render() {
     const {
-      data: {submissions, ready, loading},
+      data: {submissions, ready, loading, showAll},
       student, currentLimit
     } = this.props;
 
@@ -63,8 +63,7 @@ class SubmissionListComponent extends MainComponent {
       <div className="list-group">
         {submissions.map(submission =>
           <SubmissionComponent key={submission._id}
-          submission={submission}
-          student={student} />)}
+            {...{submission, showAll, student}} />)}
         <div ref="loadMore">
           {loading ? <LoadingComponent /> : null}
         </div>

@@ -35,11 +35,16 @@ const isStaff = (user) => {
   return Boolean(((((user || {}).services || {}).auth0 || {}).user_metadata || {}).staff);
 };
 
-const findAllSubmissions = (userId, asst, limit = 10) => {
+const findAllSubmissions = (userId, asst, limit = 10, showAll = false) => {
   const email = getUserEmail(userId);
   const selector = {
     users: { $in: [ email ] }
   };
+
+  if (!showAll) {
+    selector.hide = { $ne: true };
+  }
+
   if (asst) {
     selector.target_name = asst;
   }

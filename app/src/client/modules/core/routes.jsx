@@ -7,15 +7,15 @@ export default function (injectDeps, {FlowRouter}) {
 
   FlowRouter.route('/', {
     name: 'submissions.list',
-    action(params) {
-      mount(MainLayoutCtx, {params});
+    action(params, queryParams) {
+      mount(MainLayoutCtx, {params, queryParams});
     }
   });
 
   FlowRouter.route('/:path', {
     name: 'main',
-    action(params) {
-      mount(MainLayoutCtx, {params});
+    action(params, queryParams) {
+      mount(MainLayoutCtx, {params, queryParams});
     }
   });
 }
