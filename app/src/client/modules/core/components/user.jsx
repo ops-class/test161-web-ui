@@ -1,6 +1,5 @@
 import {Component} from 'react';
 import {FlowRouter} from 'meteor/kadira:flow-router';
-import {isStaff} from 'lib/';
 import {
   pathIsProfile, pathIsIntro, pathIsLeaderboard
 } from 'client/modules/core/lib';
@@ -27,7 +26,7 @@ class UserComponent extends Component {
     if (pathIsProfile(path)) {
       return (<ProfileComponent {...this.props} />);
     }
-    if (pathIsLeaderboard(path) && isStaff(user)) {
+    if (pathIsLeaderboard(path)) {
       return (<LeadersContainer {...this.props} />);
     }
     return (

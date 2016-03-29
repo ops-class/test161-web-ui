@@ -3,7 +3,6 @@ import {Meteor} from 'meteor/meteor';
 import {Accounts} from 'meteor/accounts-base';
 
 import {login, logout} from 'client/modules/core/lib';
-import {isStaff} from 'lib/';
 
 import {UserComponent} from './user';
 
@@ -74,9 +73,7 @@ class SecondNavComponent extends Component {
     if (user) {
       leftLinks = (
         <ul className="nav navbar-nav left">
-          {isStaff(user) ?
-            <li><ActiveLink link="/leaders" text="leaders" {...{user, path}}/></li> :
-          null}
+          <li><ActiveLink link="/leaders" text="leaders" {...{user, path}}/></li>
           <li><ActiveLink link="/" text="results" {...{user, path}}/></li>
         </ul>
       );

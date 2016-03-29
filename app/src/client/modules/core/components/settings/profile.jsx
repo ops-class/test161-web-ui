@@ -1,6 +1,5 @@
 import {MainComponent} from 'client/modules/core/components/mixins';
 import {mainContentClass} from 'client/modules/core/components/style';
-import {isStaff} from 'lib/';
 import {HIDE, SHOW, ANONYMOUS} from 'lib/collections';
 
 const NoProfileComponent = () => (
@@ -488,8 +487,7 @@ class ProfileComponent extends MainComponent {
             <InformationComponent {...this.props} />
             <TokenComponent {...this.props} />
             <PublicKeyComponent {...this.props} />
-            {isStaff(this.props.user) ?
-              <PrivacyComponent {...this.props} /> : null }
+            <PrivacyComponent {...this.props} />
           </div>
 				</div>
       </div>
