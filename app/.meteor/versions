@@ -44,6 +44,7 @@ jparker:crypto-core@0.1.0
 jparker:crypto-md5@0.1.1
 jquery@1.11.6
 jsx@0.2.4
+kadira:dochead@1.4.0
 kadira:flow-router@2.11.0
 kadira:react-layout@1.5.3
 launch-screen@1.0.8
