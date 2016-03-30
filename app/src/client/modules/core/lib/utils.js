@@ -30,15 +30,18 @@ const getAsstLeaderTitle = ({total = 0, length = 0}) => {
   if (total === 0) {
     return '';
   }
-  if (length === 0) {
-    return '';
+  let scores = (total === 1) ? 'Score' : 'Scores';
+  if (total === length) {
+    return (
+      <h3>{total} Perfect {scores}</h3>
+    );
   }
+  let shown = (length === 0) ? 'None' : length;
   return (
-    <span>
-      Perfect score: <strong>{total}</strong>, showing: <strong>
-        {length}
-      </strong>
-    </span>
+    <div>
+      <h3>{total} Perfect {scores}</h3>
+      <h4>({shown} Shown)</h4>
+    </div>
   );
 };
 

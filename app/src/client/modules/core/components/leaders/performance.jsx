@@ -155,10 +155,7 @@ class PerformanceComponent extends UrlHashComponent {
             </div>
           </div>
           <div className="col-md-5 col-sm-5">
-            <span>
-              Top <b>{leaders.length}</b> group
-              {leaders.length > 1 ? 's' : null} for {title}!
-            </span>
+            <h3>Top {leaders.length}</h3>
             <LeaderListComponent {...{leaders}}/>
           </div>
         </div>
