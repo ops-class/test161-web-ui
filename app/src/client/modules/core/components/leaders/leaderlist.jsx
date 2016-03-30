@@ -93,7 +93,7 @@ class LeaderListComponent extends Component {
     ));
     return (
       <div className="test161-fixed-height-container">
-        <ol>
+        <ol style={{paddingLeft: '24px'}}>
           {list}
         </ol>
       </div>
