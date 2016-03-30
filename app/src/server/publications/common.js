@@ -64,7 +64,7 @@ const filterAggregate = (e, targetName, type, value, staff) => {
 
   let values = privacyArray.filter(x => x.value === value);
   for (let student of students) {
-    const {email, name = 'Unknown', link} = student;
+    const {email, name = email, link} = student;
     let tmpEmail = null;
     for (let submission of values) {
       const newEmail = getStudentEmail(student, submission, type, staff);

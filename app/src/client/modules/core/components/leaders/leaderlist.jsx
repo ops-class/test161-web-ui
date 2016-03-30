@@ -18,6 +18,15 @@ class MemberComponent extends Component {
           {name}
         </a>
       );
+    } else if (title) {
+      content = (
+        <a href={`mailto:${title}`}
+          data-toggle={dataToggle}
+          title={title}
+          target="_top">
+          {name}
+        </a>
+      );
     } else {
       content = (
         <span data-toggle={dataToggle}
