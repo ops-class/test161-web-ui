@@ -4,10 +4,10 @@ import {isStaff} from 'lib/';
 import {filterAggregate} from './common';
 
 Meteor.publish('leaderboards', function ({ _id: target_name, type, points }) {
-  if (!this.userId) {
-    this.ready();
-    return;
-  }
+  // if (!this.userId) {
+  //   this.ready();
+  //   return;
+  // }
 
   const user = Meteor.users.findOne(this.userId) || {};
   const staff = isStaff(user);

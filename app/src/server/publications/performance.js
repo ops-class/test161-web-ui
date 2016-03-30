@@ -6,10 +6,10 @@ import {filterAggregate} from './common';
 const LIMIT = 10;
 
 Meteor.publish('performance', function ({ _id: target_name, type }) {
-  if (!this.userId) {
-    this.ready();
-    return;
-  }
+  // if (!this.userId) {
+  //   this.ready();
+  //   return;
+  // }
 
   const user = Meteor.users.findOne(this.userId) || {};
   const staff = isStaff(user);

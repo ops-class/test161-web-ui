@@ -69,15 +69,12 @@ class LoginOutComponent extends Component {
 class SecondNavComponent extends Component {
   render() {
     const {user, params: {path}} = this.props;
-    let leftLinks = null;
-    if (user) {
-      leftLinks = (
-        <ul className="nav navbar-nav left">
-          <li><ActiveLink link="/leaders" text="leaders" {...{user, path}}/></li>
-          <li><ActiveLink link="/" text="results" {...{user, path}}/></li>
-        </ul>
-      );
-    }
+    let leftLinks = (
+      <ul className="nav navbar-nav left">
+        <li><ActiveLink link="/leaders" text="leaders" {...{user: true, path}}/></li>
+        <li><ActiveLink link="/" text="results" {...{user, path}}/></li>
+      </ul>
+    );
     return (
       <nav className="navbar navbar-default navbar-fixed-top navbar-second-top">
         <a className="logo-fixed hidden-md hidden-lg"href="https://www.ops-class.org/">

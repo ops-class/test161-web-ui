@@ -3,10 +3,10 @@ import {Targets} from 'lib/collections';
 
 // Only publish data for the matches we care about. Be careful not to over-publish
 Meteor.publish('targets', function () {
-  if (!this.userId) {
-    this.ready();
-    return;
-  }
+  // if (!this.userId) {
+  //   this.ready();
+  //   return;
+  // }
 
   let initializing = true;
 

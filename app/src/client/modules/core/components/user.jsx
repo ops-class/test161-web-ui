@@ -17,7 +17,7 @@ import {mainContentClass} from './style';
 class UserComponent extends Component {
   render() {
     const {params: {path}, user} = this.props;
-    if (!user) {
+    if (!user && !pathIsLeaderboard(path)) {
       return (<MainLoadingComponent {...this.props} content={<IntroContainer />} />);
     }
     if (pathIsIntro(path)) {
