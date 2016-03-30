@@ -44,6 +44,7 @@ const getAsstLeaderTitle = ({total = 0, length = 0}) => {
 
 export {
   getAsstLeaderTitle,
+  getGroupString,
   UserSubs,
   SubmissionSubs,
   TestSubs,
