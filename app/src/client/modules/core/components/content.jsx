@@ -8,7 +8,7 @@ import {UserComponent} from './user';
 
 class ActiveLink extends Component {
   render() {
-    const {user, path, link} = this.props;
+    const {user, path = '/', link} = this.props;
     if (!user) {
       return false;
     }
