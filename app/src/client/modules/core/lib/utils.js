@@ -7,6 +7,16 @@ const TestSubs = new SubsManager();
 const TargetSubs = new SubsManager();
 const LeaderboardSubs = new SubsManager();
 
+import Highcharts from 'highcharts/highstock';
+
+Highcharts.setOptions({
+  chart: {
+    style: {
+      fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif'
+    }
+  }
+});
+
 const logout = () => {
   Meteor.logout();
 };

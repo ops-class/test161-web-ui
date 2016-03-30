@@ -61,7 +61,7 @@ class PerformanceComponent extends UrlHashComponent {
         type: 'column'
       },
       title: {
-        text: `Total submissions: ${total}`
+        text: `${total} Submissions`
       },
       xAxis: {
         title: {
