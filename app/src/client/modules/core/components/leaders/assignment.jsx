@@ -145,7 +145,7 @@ class AssignmentComponent extends UrlHashComponent {
   render() {
     const {
       target: {_id, print_name: title, points},
-      data: {ready, leaders, scores},
+      data: {ready, leaders = [], scores = []},
       getAsstLeaderTitle,
     } = this.props;
     if (!ready) {
