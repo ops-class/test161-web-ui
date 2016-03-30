@@ -39,7 +39,7 @@ const getAsstLeaderTitle = ({total = 0, length = 0}) => {
   let shown = (length === 0) ? 'None' : length;
   return (
     <div>
-      <h3>{total} Perfect {scores}</h3>
+      <h3 className="leaders-title">{total} Perfect {scores}</h3>
       <h4>({shown} Shown)</h4>
     </div>
   );
