@@ -81,11 +81,9 @@ const filterAggregate = (e, targetName, type, value, staff) => {
       } else {
         const member = {
           link,
+          email,
           name: appendStaffSuffix({student, userObjects}, name)
         };
-        if (staff) {
-          member.email = email;
-        }
         e.group.push(member);
       }
     } else {
