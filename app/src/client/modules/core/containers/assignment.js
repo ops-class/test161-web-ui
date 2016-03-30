@@ -3,7 +3,7 @@ import {useDeps, composeWithTracker, composeAll} from 'mantra-core';
 
 export const composer = ({context, target}, onData) => {
   const {
-    Collections: {Leaders}, Libs: {LeaderboardSubs}
+    Collections: {Leaders}, Libs: {LeaderboardSubs, getAsstLeaderTitle}
   } = context();
 
   const ready = false;
@@ -25,7 +25,7 @@ export const composer = ({context, target}, onData) => {
     data.loading = true;
   }
 
-  onData(null, {data});
+  onData(null, {data, getAsstLeaderTitle});
 };
 
 export default composeAll(

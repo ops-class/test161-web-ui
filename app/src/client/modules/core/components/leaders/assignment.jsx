@@ -144,12 +144,15 @@ class AssignmentComponent extends UrlHashComponent {
 
   render() {
     const {
-      target: {_id, print_name: title},
-      data: {ready, leaders}
+      target: {_id, print_name: title, points},
+      data: {ready, leaders, scores},
+      getAsstLeaderTitle,
     } = this.props;
     if (!ready) {
       return (<LoadingComponent />);
     }
+    const total = scores.filter(x => x === points).length;
+    const length = leaders.length;
     return (
       <div className="row" id={_id}>
         <div className="col-md-12">
@@ -160,10 +163,8 @@ class AssignmentComponent extends UrlHashComponent {
             </div>
           </div>
           <div className="col-md-5 col-sm-5">
-            <span>
-              Groups with a perfect score: {leaders.length}
-            </span>
-            <LeaderListComponent {...{leaders}}/>
+            {getAsstLeaderTitle({total, length})}
+            <LeaderListComponent {...{leaders, total}}/>
           </div>
         </div>
       </div>

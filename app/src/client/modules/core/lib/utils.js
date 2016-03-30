@@ -20,7 +20,33 @@ const login = () => {
   });
 };
 
+const getGroupString = (len) => {
+  if (len <= 1) {
+    return 'group';
+  }
+  return 'groups';
+};
+
+const getAsstLeaderTitle = ({total = 0, length = 0}) => {
+  if (total === 0) {
+    return '';
+  }
+  if (length === 0) {
+    return '';
+  }
+  return (
+    <span>
+      <strong>
+        {total}
+      </strong> {getGroupString(total)} got a perfect score, <strong>
+        {length}
+      </strong> {getGroupString(length)} {length <= 1 ? 'is' : 'are'} showing!
+    </span>
+  );
+};
+
 export {
+  getAsstLeaderTitle,
   UserSubs,
   SubmissionSubs,
   TestSubs,
