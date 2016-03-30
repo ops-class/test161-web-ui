@@ -1,6 +1,8 @@
 import {Meteor} from 'meteor/meteor';
 import {SubsManager} from 'meteor/meteorhacks:subs-manager';
 
+import {leaderListTitleStyle} from '../components/style';
+
 const UserSubs = new SubsManager();
 const SubmissionSubs = new SubsManager();
 const TestSubs = new SubsManager();
@@ -43,13 +45,13 @@ const getAsstLeaderTitle = ({total = 0, length = 0}) => {
   let scores = (total === 1) ? 'Score' : 'Scores';
   if (total === length) {
     return (
-      <h3>{total} Perfect {scores}</h3>
+      <h3 style={leaderListTitleStyle}>{total} Perfect {scores}</h3>
     );
   }
   let shown = (length === 0) ? 'None' : length;
   return (
     <div>
-      <h3 className="leaders-title">{total} Perfect {scores}</h3>
+      <h3 style={leaderListTitleStyle}>{total} Perfect {scores}</h3>
       <h4>({shown} Shown)</h4>
     </div>
   );
