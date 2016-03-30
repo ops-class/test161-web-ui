@@ -7,7 +7,10 @@ class MemberComponent extends Component {
     const {name, link, email} = this.props;
 
     const dataToggle = email ? 'tooltip' : null;
-    const title = email ? email : null;
+    let title = email ? email : '';
+    if (link) {
+      title += ' ' + link;
+    }
 
     let content = null;
     if (link) {
@@ -18,9 +21,9 @@ class MemberComponent extends Component {
           {name}
         </a>
       );
-    } else if (title) {
+    } else if (email) {
       content = (
-        <a href={`mailto:${title}`}
+        <a href={`mailto:${email}`}
           data-toggle={dataToggle}
           title={title}
           target="_top">
