@@ -36,9 +36,7 @@ class UserComponent extends Component {
       <div className="row">
         <div className={mainContentClass}>
           <SummaryComponent {...this.props} />
-          <div className="row">
-            <SubmissionListContainer {...this.props} />
-          </div>
+          <SubmissionListContainer {...this.props} />
         </div>
         <SidebarComponent {...this.props} />
       </div>

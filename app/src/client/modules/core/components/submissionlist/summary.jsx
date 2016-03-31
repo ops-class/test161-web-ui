@@ -31,19 +31,17 @@ class SummaryComponent extends Component {
       );
     });
     return (
-      <div className="row">
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Assignment</th>
-              <th>Best Score</th>
-            </tr>
-          </thead>
-          <tbody>
-            {list}
-          </tbody>
-        </table>
-      </div>
+      <table className="table">
+        <thead>
+          <tr>
+            <th>Assignment</th>
+            <th>Best Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          {list}
+        </tbody>
+      </table>
     );
   }
 }
