@@ -88,8 +88,8 @@ class LeaderListComponent extends Component {
     if (!leaders || leaders.length === 0) {
       return null;
     }
-    const list = leaders.map((leader, index) => (
-      <li key={index} className="h5"> <GroupComponent {...leader}/> </li>
+    const list = leaders.map(leader => (
+      <li key={leader._id} className="h5"> <GroupComponent {...leader}/> </li>
     ));
     return (
       <div className="test161-fixed-height-container">
