@@ -152,14 +152,15 @@ class AssignmentComponent extends UrlHashComponent {
       return (<LoadingComponent />);
     }
     const total = scores.filter(x => x === points).length;
-    const length = scores.length;
-    const submissionStr = length <= 1 ? 'Submission' : 'Submissions';
+    const length = leaders.length;
+    const submissionsLen = scores.length;
+    const submissionStr = submissionsLen <= 1 ? 'Submission' : 'Submissions';
     return (
       <div className="row" id={_id}>
         <div className="col-md-12">
           <h1>{title}</h1>
           <div className="col-md-7 col-sm-7">
-            <h3 className="text-center">{length} {submissionStr}</h3>
+            <h3 className="text-center">{submissionsLen} {submissionStr}</h3>
             <div className="row">
               <div id={this.state.container}></div>
             </div>
