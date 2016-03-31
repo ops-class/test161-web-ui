@@ -46,7 +46,11 @@ class SubmissionListComponent extends MainComponent {
 
     const length = submissions.length;
     if (length === 0) {
-      return (<div>You haven’t submitted any solutions!</div>);
+      return (
+        <div className="alert alert-warning text-center">
+          You haven’t submitted any solutions!
+        </div>
+      );
     }
 
     let noMoreSubmission = null;

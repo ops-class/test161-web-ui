@@ -5,6 +5,9 @@ class SummaryComponent extends Component {
   render() {
     const {student} = this.props;
     const {target_stats = []} = student;
+    if (target_stats.length === 0) {
+      return null;
+    }
     let scores = target_stats.map(result => {
       let {
         high_score: points_earned,
