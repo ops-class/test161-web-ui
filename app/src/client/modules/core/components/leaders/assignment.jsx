@@ -152,7 +152,7 @@ class AssignmentComponent extends UrlHashComponent {
       return (<LoadingComponent />);
     }
     const total = scores.filter(x => x === points).length;
-    const length = leaders.length;
+    const length = scores.length;
     const submissionStr = length <= 1 ? 'Submission' : 'Submissions';
     return (
       <div className="row" id={_id}>

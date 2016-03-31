@@ -140,18 +140,19 @@ class PerformanceComponent extends UrlHashComponent {
   render() {
     const {
       target: {print_name: title, _id},
-      data: {ready, leaders}
+      data: {ready, leaders = [], performances = []}
     } = this.props;
     if (!ready) {
       return (<LoadingComponent />);
     }
-    const submissionStr = leaders.length <= 1 ? 'Submission' : 'Submissions';
+    const length = performances.length;
+    const submissionStr = length <= 1 ? 'Submission' : 'Submissions';
     return (
       <div className="row" id={_id}>
         <div className="col-md-12">
           <h1>{title}</h1>
           <div className="col-md-7 col-sm-7">
-            <h3 className="text-center">{leaders.length} {submissionStr}</h3>
+            <h3 className="text-center">{length} {submissionStr}</h3>
             <div className="row">
               <div id={this.state.container}></div>
             </div>
