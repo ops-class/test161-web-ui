@@ -1,7 +1,6 @@
 import {UrlHashComponent} from 'client/modules/core/components/mixins';
 import {LoadingComponent} from 'client/modules/core/components/loading';
 import {LeaderListComponent} from './leaderlist';
-import {leaderListTitleStyle} from '../style';
 
 import Highcharts from 'highcharts/highstock';
 const BINS = 10;
@@ -55,14 +54,14 @@ class PerformanceComponent extends UrlHashComponent {
     this.highcharts({labels, counts, total});
   }
 
-  highcharts({labels, counts, total}) {
+  highcharts({labels, counts}) {
     const chartOptions = {
       chart: {
         renderTo: this.state.container,
         type: 'column'
       },
       title: {
-        text: `${total} Submissions`
+        text: ''
       },
       xAxis: {
         title: {
@@ -146,17 +145,19 @@ class PerformanceComponent extends UrlHashComponent {
     if (!ready) {
       return (<LoadingComponent />);
     }
+    const submissionStr = leaders.length <= 1 ? 'Submission' : 'Submissions';
     return (
       <div className="row" id={_id}>
         <div className="col-md-12">
           <h1>{title}</h1>
           <div className="col-md-7 col-sm-7">
+            <h3 className="text-center">{leaders.length} {submissionStr}</h3>
             <div className="row">
               <div id={this.state.container}></div>
             </div>
           </div>
           <div className="col-md-5 col-sm-5">
-            <h3 style={leaderListTitleStyle}>Top {leaders.length}</h3>
+            <h3>Top {leaders.length}</h3>
             <LeaderListComponent {...{leaders}}/>
           </div>
         </div>

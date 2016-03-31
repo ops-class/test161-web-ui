@@ -62,7 +62,7 @@ class AssignmentComponent extends UrlHashComponent {
     this.highcharts({labels, counts, total});
   }
 
-  highcharts({labels, counts, total}) {
+  highcharts({labels, counts}) {
     const {target: { _id }} = this.props;
     const chartOptions = {
       chart: {
@@ -72,7 +72,7 @@ class AssignmentComponent extends UrlHashComponent {
         type: 'column'
       },
       title: {
-        text: `${total} Submissions`
+        text: ''
       },
       xAxis: {
         title: {
@@ -153,11 +153,13 @@ class AssignmentComponent extends UrlHashComponent {
     }
     const total = scores.filter(x => x === points).length;
     const length = leaders.length;
+    const submissionStr = length <= 1 ? 'Submission' : 'Submissions';
     return (
       <div className="row" id={_id}>
         <div className="col-md-12">
           <h1>{title}</h1>
           <div className="col-md-7 col-sm-7">
+            <h3 className="text-center">{length} {submissionStr}</h3>
             <div className="row">
               <div id={this.state.container}></div>
             </div>
