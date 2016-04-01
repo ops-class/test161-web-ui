@@ -14,7 +14,7 @@ export const composer = ({context}, onData) => {
   const handle = TargetSubs.subscribe('targets');
 
   data.targets = TargetNames.find(
-    {}, {sort: {type: -1, _id: 1}}
+    {}, {sort: {type: -1, _id: -1}}
   ).fetch();
 
   if (handle.ready()) {
