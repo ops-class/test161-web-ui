@@ -84,15 +84,23 @@ class LeaderListComponent extends Component {
   }
 
   render() {
-    const {leaders} = this.props;
+    const {total, leaders} = this.props;
     if (!leaders || leaders.length === 0) {
       return null;
     }
+
+    let height = 400;
+    if (total !== leaders.length) {
+      height -= 39;
+    }
+
+    const style = {maxHeight: `${height}px`};
+
     const list = leaders.map(leader => (
       <li key={leader._id} className="h5"> <GroupComponent {...leader}/> </li>
     ));
     return (
-      <div className="test161-fixed-height-container">
+      <div className="test161-fixed-height-container" style={style}>
         <ol style={{paddingLeft: '24px'}}>
           {list}
         </ol>
