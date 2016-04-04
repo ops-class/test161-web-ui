@@ -85,6 +85,7 @@ class AssignmentComponent extends UrlHashComponent {
         title: {
           text: 'Percentage of Submissions'
         },
+        max: Math.max(...counts),
         labels: {
           format: '{value}%'
         }
