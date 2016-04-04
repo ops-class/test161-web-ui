@@ -15,7 +15,7 @@ const post = (baseUrl, data, token) => {
       const {statusCode, statusMessage} = response;
       console.log({statusCode, statusMessage});
       console.log('----------------------------------------------------------------');
-      console.log(data);
+      console.log(JSON.stringify(data, null, 2));
     }
   )
 }
