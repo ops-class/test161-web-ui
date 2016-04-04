@@ -43,12 +43,48 @@ const queryOneScore = (target_name, deadline, user) => {
     },
     { $match: { cmp: { $eq: 0 } } },
     { $sort: { 'submissions.submission_time': -1} },
-    { $limit: 1 }
+    { $limit: 1 },
+    {
+      $lookup: {
+        from: 'submissions',
+        localField: 'submissions._id',
+        foreignField: '_id',
+        as: 'submission'
+      }
+    },
+    { $unwind: '$submission' },
+    { $unwind: '$submission.tests' },
+    {
+      $lookup: {
+        from: 'tests',
+        localField: 'submission.tests',
+        foreignField: '_id',
+        as: 'tests'
+      }
+    },
+    { $unwind: '$tests' },
+    {
+      $project: {
+        _id: 1,
+        submissions: 1,
+        'tests.name': 1,
+        'tests.points_earned': 1,
+        'tests.points_avail': 1,
+      }
+    },
+    {
+      $group: {
+        _id: '$_id',
+        submissions: { $first: '$submissions' },
+        tests: { $push: '$tests' },
+      }
+    },
   ];
 
   const results = Submissions.aggregate(pipeline).map((e) => {
     const {_id, submission_time, score} = e.submissions;
-    return {_id, email, score, submission_time};
+    const {tests} = e;
+    return {_id, email, score, submission_time, tests};
   });
 
   if (results.length === 1) {
