@@ -78,6 +78,11 @@ class AssignmentComponent extends UrlHashComponent {
         title: {
           text: 'Scores'
         },
+        labels: {
+          style: {
+            textOverflow: 'none'
+          }
+        },
         minTickInterval: 5,
         categories: labels
       },

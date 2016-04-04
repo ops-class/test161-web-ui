@@ -67,6 +67,11 @@ class PerformanceComponent extends UrlHashComponent {
         title: {
           text: 'Performance'
         },
+        labels: {
+          style: {
+            textOverflow: 'none'
+          }
+        },
         // labels:{
         //   rotation: -90,
         // },
