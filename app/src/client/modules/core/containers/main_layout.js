@@ -2,8 +2,8 @@ import {MainLayout} from '../components/main_layout.jsx';
 import {useDeps, composeWithTracker, composeAll} from 'mantra-core';
 
 export const composer = ({params, context}, onData) => {
-  const {Meteor, Libs: {UserSubs, findOneStudent}} = context();
-  const data = {params, ready: false};
+  const {Meteor, Libs: {UserSubs, findOneStudent, loadSiteJS}} = context();
+  const data = {params, ready: false, loadSiteJS};
   const handle = UserSubs.subscribe('userData');
   if (handle.ready()) {
     data.user = Meteor.user();
