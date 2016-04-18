@@ -1,7 +1,7 @@
 import {Submissions} from '../../../lib/collections';
 
 const queryOneScore = (target_name, deadline, user) => {
-  const {email} = user;
+  const {email, group_size} = user;
   const time = user.deadline ? new Date(user.deadline) : deadline;
 
   const selector = {
@@ -10,6 +10,10 @@ const queryOneScore = (target_name, deadline, user) => {
     submission_time: {$lte: time},
     score: {$gt: 0}
   };
+
+  if (group_size) {
+    selector.users.$size = group_size;
+  }
 
   const pipeline = [
     { $match: selector },

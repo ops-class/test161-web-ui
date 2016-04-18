@@ -17,6 +17,12 @@ const UserSchema = new SimpleSchema({
     label: 'Email address of this user',
     regEx: SimpleSchema.RegEx.Email
   },
+  group_size: {
+    type: Number,
+    label: 'Only match the submission with specific group size',
+    min: 1,
+    optional: true
+  },
   deadline: {
     type: String,
     label: 'Deadline for this user',
