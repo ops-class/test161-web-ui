@@ -20,6 +20,7 @@ const queryOneScore = (target_name, deadline, user) => {
         score: 1,
         submission: {
           _id: '$_id',
+          users: '$users',
           submission_time: '$submission_time',
           score: '$score'
         }
@@ -82,9 +83,9 @@ const queryOneScore = (target_name, deadline, user) => {
   ];
 
   const results = Submissions.aggregate(pipeline).map((e) => {
-    const {_id, submission_time, score} = e.submissions;
+    const {_id, submission_time, users, score} = e.submissions;
     const {tests} = e;
-    return {_id, email, score, submission_time, tests};
+    return {_id, email, users, score, submission_time, tests};
   });
 
   if (results.length === 1) {
