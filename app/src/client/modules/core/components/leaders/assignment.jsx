@@ -62,7 +62,8 @@ class AssignmentComponent extends UrlHashComponent {
     this.highcharts({labels, counts, total});
   }
 
-  highcharts({labels, counts}) {
+  highcharts({labels = [], counts}) {
+    const interval = Math.floor(labels.length / 10);
     const {target: { _id }} = this.props;
     const chartOptions = {
       chart: {
@@ -83,7 +84,7 @@ class AssignmentComponent extends UrlHashComponent {
             textOverflow: 'none'
           }
         },
-        minTickInterval: 5,
+        minTickInterval: interval,
         categories: labels
       },
       yAxis: {
