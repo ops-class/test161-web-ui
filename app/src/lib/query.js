@@ -18,7 +18,8 @@ const testFields = {
   'commands.points_avail': 1,
   'commands.points_earned': 1,
   points_avail: 1,
-  points_earned: 1
+  points_earned: 1,
+  status: 1,
 };
 
 const getUserEmail = (userId) => {

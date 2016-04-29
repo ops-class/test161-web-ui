@@ -25,6 +25,29 @@ const OutputSchema = new SimpleSchema({
   }
 });
 
+const StatusSchema = new SimpleSchema({
+  status: {
+    type: String,
+    label: 'line'
+  },
+  message: {
+    type: String,
+    label: 'message'
+  },
+  walltime: {
+    type: Number,
+    label: 'Wall time',
+    decimal: true,
+    min: 0
+  },
+  simtime: {
+    type: Number,
+    label: 'Wall time',
+    decimal: true,
+    min: 0
+  }
+});
+
 const CommandSchema = new SimpleSchema({
   _id: {
     type: String,
@@ -80,6 +103,10 @@ const TestSchema = new SimpleSchema({
   points_earned: {
     type: Number,
     label: 'Earned points'
+  },
+  status: {
+    type: [ StatusSchema ],
+    optional: true,
   }
 });
 
