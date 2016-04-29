@@ -7,7 +7,9 @@ class CommandListComponent extends Component {
 
     let statusContent = null;
     if (status.length > 0) {
-      const statusArray = status.map(x => ({line: x.status + ' ' + x.message}));
+      const statusArray = status.map(x => ({
+        line: x.status + (x.message ? ': ' + x.message : '')
+      }));
       const statusCommand = {
         input: { line: 'status' },
         output: statusArray,
