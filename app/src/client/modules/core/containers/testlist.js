@@ -4,7 +4,7 @@ import {useDeps, composeWithTracker, composeAll} from 'mantra-core';
 export const composer = ({context, tests}, onData) => {
   const {
     Collections: {Tests},
-    Libs: {TestSubs}
+    Libs: {TestSubs, compareTest}
   } = context();
 
   const ready = false;
@@ -12,8 +12,9 @@ export const composer = ({context, tests}, onData) => {
 
   const handle = TestSubs.subscribe('tests', tests);
 
-  let testList = tests.map(_id => Tests.findOne({_id}));
-  data.testList = testList.filter(ele => Boolean(ele));
+  data.testList = tests.map(_id => Tests.findOne({_id}))
+  .filter(ele => Boolean(ele))
+  .sort(compareTest);
 
   if (handle.ready()) {
     data.ready = true;
