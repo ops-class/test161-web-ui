@@ -20,14 +20,16 @@ Meteor.publish('targets', function () {
       $match: selector
     },
     {
+      $sort: { name: 1, version: -1 }
+    },
+    {
       $group: {
         _id: '$name',
         type: { $first: '$type' },
-        points: { $max: '$points' },
+        points: { $first: '$points' },
         print_name: { $first: '$print_name' },
-        version: {
-          $max: '$version'
-        }
+        description: { $first: '$description' },
+        version: { $first: '$version' },
       }
     }
   ];

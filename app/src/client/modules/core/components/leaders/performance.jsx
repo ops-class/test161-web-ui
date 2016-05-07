@@ -145,7 +145,7 @@ class PerformanceComponent extends UrlHashComponent {
 
   render() {
     const {
-      target: {print_name: title, _id},
+      target: {print_name: title, description, _id},
       data: {ready, leaders = [], performances = []}
     } = this.props;
     if (!ready) {
@@ -157,6 +157,7 @@ class PerformanceComponent extends UrlHashComponent {
       <div className="row" id={_id}>
         <div className="col-md-12">
           <h1>{title}</h1>
+          <p>{description}</p>
           <div className="col-md-7 col-sm-7">
             <h3 className="text-center">{length} {submissionStr}</h3>
             <div className="row">
