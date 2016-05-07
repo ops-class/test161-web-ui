@@ -43,9 +43,7 @@ id-map@1.0.7
 jparker:crypto-core@0.1.0
 jparker:crypto-md5@0.1.1
 jquery@1.11.8
-jsx@0.2.4
 kadira:flow-router@2.12.1
-kadira:react-layout@1.5.3
 launch-screen@1.0.11
 livedata@1.0.18
 localstorage@1.0.9
@@ -75,11 +73,6 @@ promise@0.6.7
 raix:eventemitter@0.1.3
 random@1.0.9
 rate-limit@1.0.4
-react@0.14.3
-react-meteor-data@0.2.9
-react-runtime@0.14.3
-react-runtime-dev@0.14.3
-react-runtime-prod@0.14.3
 reactive-dict@1.1.7
 reactive-var@1.0.9
 reload@1.1.8
@@ -93,7 +86,6 @@ standard-minifier-css@1.0.6
 standard-minifier-js@1.0.6
 templating@1.1.9
 templating-tools@1.0.4
-tmeasday:check-npm-versions@0.2.0
 tracker@1.0.13
 ui@1.0.11
 underscore@1.0.8

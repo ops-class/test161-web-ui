@@ -11,16 +11,12 @@ tracker                 # Meteor's client-side reactive programming library
 
 es5-shim                # ECMAScript 5 compatibility for older browsers.
 
-react-runtime@=0.14.3
-react-meteor-data
-
 webpack:webpack
 webpack:react
 webpack:css
 webpack:less
 webpack:assets
 
-kadira:react-layout
 meteorhacks:subs-manager
 aldeed:collection2
 accounts-base
