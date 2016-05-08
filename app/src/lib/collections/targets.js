@@ -23,6 +23,12 @@ const TargetSchema = new SimpleSchema({
     type: String,
     label: 'Target description',
   },
+  link: {
+    type: String,
+    label: 'Target link',
+    regEx: SimpleSchema.RegEx.Url,
+    optional: true
+  },
   active: {
     type: String,
     label: 'Targer is active',
