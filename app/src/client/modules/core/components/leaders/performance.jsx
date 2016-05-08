@@ -159,7 +159,9 @@ class PerformanceComponent extends UrlHashComponent {
       <div className="row" id={_id}>
         <div className="col-md-12">
           <h1><a href={link} target="_blank">{title}</a></h1>
-          <p>{description}</p>
+          <p>
+            {description} <a href={link} target="_blank">Read More</a>
+          </p>
           <div className="col-md-7 col-sm-7">
             <h3 className="text-center">{length} {submissionStr}</h3>
             <div className="row">
