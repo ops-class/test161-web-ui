@@ -153,7 +153,7 @@ class AssignmentComponent extends UrlHashComponent {
     const {
       target: {_id, print_name: title, description, points},
       data: {ready, leaders = [], scores = []},
-      getAsstLeaderTitle,
+      getAsstLeaderTitle, getTargetLink
     } = this.props;
     if (!ready) {
       return (<LoadingComponent />);
@@ -162,10 +162,11 @@ class AssignmentComponent extends UrlHashComponent {
     const length = leaders.length;
     const submissionsLen = scores.length;
     const submissionStr = submissionsLen <= 1 ? 'Submission' : 'Submissions';
+    const link = getTargetLink(this.props.target);
     return (
       <div className="row" id={_id}>
         <div className="col-md-12">
-          <h1>{title}</h1>
+          <h1><a href={link} target="_blank">{title}</a></h1>
           <p>{description}</p>
           <div className="col-md-7 col-sm-7">
             <h3 className="text-center">{submissionsLen} {submissionStr}</h3>
