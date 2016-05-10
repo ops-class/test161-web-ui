@@ -72,9 +72,12 @@ const queryOneScore = (target_name, deadline, user) => {
       $project: {
         _id: 1,
         submissions: 1,
-        'tests.name': 1,
-        'tests.points_earned': 1,
-        'tests.points_avail': 1,
+        tests: {
+          name: '$tests.name',
+          id: '$tests.dependencyid',
+          points_earned: '$tests.points_earned',
+          points_avail: '$tests.points_avail',
+        },
       }
     },
     {

@@ -87,6 +87,10 @@ const TestSchema = new SimpleSchema({
     type: String,
     label: 'Name'
   },
+  dependencyid: {
+    type: String,
+    label: 'Test id'
+  },
   result: {
     type: String,
     label: 'Status',
