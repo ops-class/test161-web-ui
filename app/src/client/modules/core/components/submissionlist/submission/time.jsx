@@ -1,4 +1,6 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+import {Meteor} from 'meteor/meteor';
 import {moment} from 'meteor/momentjs:moment';
 import {getInterval, getDurationString} from 'client/modules/core/lib';
 import {isSubmissionRunning} from 'lib/';
@@ -9,7 +11,24 @@ const TimeComponent = React.createClass({
   },
   componentDidMount() {
     this.updateDate();
+    this.initTooltip();
   },
+
+  componentDidUpdate() {
+    this.initTooltip();
+  },
+
+  initTooltip() {
+    $(ReactDOM.findDOMNode(this))
+    .find('[data-toggle="tooltip"]')
+    .tooltip({trigger: 'hover', placement: 'auto'})
+    .bind('touchstart', function () {
+      $(this).tooltip('show');
+    }).bind('touchend', function () {
+      Meteor.setTimeout(() => $(this).tooltip('destroy'), 1024);
+    });
+  },
+
   updateDate() {
     const {submission_time, status} = this.props;
     const submission = moment(submission_time);
@@ -49,7 +68,10 @@ const TimeComponent = React.createClass({
     return (
       <div className="row">
         <div className="col-md-12 col-xs-12">
-          <i className="fa fa-calendar"></i> {time}
+          <div data-toggle="tooltip"
+            title={submission.toString()}>
+            <i className="fa fa-calendar"></i> {time}
+          </div>
         </div>
         <div className={className}>
           <i className="fa fa-clock-o"></i> {duration}
