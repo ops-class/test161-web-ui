@@ -17,9 +17,9 @@ API.addCollection({}, 'scores', {
         statusCode = 400;
         body = {error: 'Bad Request'};
       } else {
-        const {target, deadline, users} = data;
+        const {target, version, deadline, users} = data;
         let time = deadline ? new Date(deadline) : new Date();
-        body = queryScores({target, users, deadline: time});
+        body = queryScores({target, version, users, deadline: time});
       }
 
       Object.assign(returnObject, {success, statusCode, body});

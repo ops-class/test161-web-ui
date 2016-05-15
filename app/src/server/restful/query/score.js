@@ -1,6 +1,6 @@
 import {Submissions} from '../../../lib/collections';
 
-const queryOneScore = (target_name, deadline, user) => {
+const queryOneScore = ({target: target_name, version: target_version}, deadline, user) => {
   const {email, group_size} = user;
   const time = user.deadline ? new Date(user.deadline) : deadline;
 
@@ -10,6 +10,10 @@ const queryOneScore = (target_name, deadline, user) => {
     submission_time: {$lte: time},
     score: {$gt: 0}
   };
+
+  if (target_version) {
+    selector.target_version = target_version;
+  }
 
   if (group_size) {
     selector.users.$size = group_size;
@@ -102,8 +106,8 @@ const queryOneScore = (target_name, deadline, user) => {
   return {email};
 };
 
-const queryScores = ({target, users, deadline}) => {
-  const results = users.map(user => queryOneScore(target, deadline, user));
+const queryScores = ({target, version, users, deadline}) => {
+  const results = users.map(user => queryOneScore({target, version}, deadline, user));
   return results;
 };
 

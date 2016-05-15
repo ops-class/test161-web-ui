@@ -36,6 +36,12 @@ const ScoreRequestSchema = new SimpleSchema({
     type: String,
     label: 'Target name'
   },
+  version: {
+    type: Number,
+    label: 'Target version',
+    min: 1,
+    optional: true
+  },
   deadline: {
     type: String,
     label: 'Deadline for this target',
