@@ -64,6 +64,7 @@ usage:
     test161 list (targets|tags|tests) [-remote | -r]
 
     test161 config [-debug] [(add-user|del-user|change-token)] &lt;username&gt; &lt;token&gt;
+    test161 config test161dir &lt;dir&gt;
 
     test161 version
 
@@ -250,14 +251,14 @@ only performed when using certain targets.</p>
 correctly but earned no points. That is because the kernel booted but this was
 not worth any points for <a href="https://www.ops-class.org/asst/1/" class="noexternal">ASST1</a>, and working semaphores are provided as part
 of the base <a href="https://www.ops-class.org/asst/toolchain/#os161" class="noexternal"><code>ops-class.org</code> OS/161 sources</a>. However, if the kernel had not booted the rest of the
-tests would have been skipped, and if semaphores were broken many tests would
+tests would have been skipped, and if semaphores were broken, many tests would
 also have been skipped. In this case, both the <code>boot</code> and semaphore tests were
 run because they were specified as a <em>dependency</em> by other tests that were
 included as part of the <a href="https://www.ops-class.org/asst/1/" class="noexternal">ASST1</a> target. <code>test161</code> can automatically run test
 dependencies when appropriate.</p>
 </div>
 <div class="paragraph">
-<p>For the next 15 tests above <code>test161</code> reports that they either failed
+<p>For the next 15 tests above, <code>test161</code> reports that they either failed
 (<code>incorrect</code>) or were skipped (<code>skip</code>). This is unsurprising given that the
 <a href="https://www.ops-class.org/asst/toolchain/#os161" class="noexternal"><code>ops-class.org</code> OS/161 sources</a> do not include working locks, condition variables, or
 reader-writer locks. As you complete portions of each assignment your score
@@ -280,7 +281,7 @@ the <a href="https://www.ops-class.org/asst/toolchain/#os161" class="noexternal"
 <div class="sect2">
 <a class="anchor" id="_running_single_code_test161_code_tests"></a><h3>2.3. Running Single <code>test161</code> Tests</h3>
 <div class="paragraph">
-<p>In our example above <code>test161</code> was used to run a <em>target</em>, which configures a
+<p>In our example above, <code>test161</code> was used to run a <em>target</em>, which configures a
 set of tests to be run and maps test results to point values. If you are
 curious, look at the <code>asst1.tt</code> file located in the <code>targets</code> subdirectory of
 your <code>test161</code> configuration directory.</p>
@@ -397,6 +398,212 @@ synch/rwt5.t                     incorrect                      ---
 Total Correct  : 2/15
 Total Incorrect: 7/15
 Total Skipped  : 6/15</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<a class="anchor" id="_listing_available_tests"></a><h3>2.5. Listing Available Tests</h3>
+<div class="paragraph">
+<p>The <code>test161 list</code> sub-command can be used to list available tests, tags, and
+and targets. The following command lists all available <code>test161</code> tests along
+with their descriptions:</p>
+</div>
+<div class="listingblock noautohighlight">
+<div class="content">
+<pre class="highlight"><code>$ test161 list tests
+
+Test ID                               Name                Description
+-----------------------------------   -----------------   -------------------------------------
+boot.t                                Kernel Boot         Tests whether your kernel will boot.
+coremap/coremap-loose.t               Coremap Test        Allocates and frees all physical
+                                      (Loose Bounds)      memory multiple times checking that
+                                                          the amount allocated is within a
+                                                          reasonable bound.
+coremap/coremap-tight.t               Coremap Test        Allocates and frees all physical
+                                      (Tight Bounds)      memory multiple times checking that
+                                                          the amount allocated is within a
+                                                          reasonable bound.
+coremap/km1.t                         Basic kmalloc       Tests the kernel subpage allocator by
+                                      Test                allocating a large number of objects
+                                                          and freeing them somewhat later.
+
+# ... lots of output omitted ...</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following command outputs the <em>tags</em>&#x2009;&#x2014;&#x2009;or named groups of tests&#x2009;&#x2014;&#x2009;along
+with the tests that share that tag:</p>
+</div>
+<div class="listingblock noautohighlight">
+<div class="content">
+<pre class="highlight"><code>$ test161 list tags
+
+badcall
+     stability/badcall/badcall-close.t
+     stability/badcall/badcall-dup2.t
+     stability/badcall/badcall-execv.t
+     stability/badcall/badcall-lseek.t
+     stability/badcall/badcall-open.t
+     stability/badcall/badcall-read.t
+     stability/badcall/badcall-waitpid.t
+     stability/badcall/badcall-write.t
+boot
+     boot.t
+console
+     syscalls/consoletest.t
+coremap
+     coremap/coremap-loose.t
+     coremap/coremap-tight.t
+     coremap/km1.t
+     coremap/km2.t
+     coremap/km3.t
+     coremap/km4.t
+     coremap/not-dumbvm.t
+crash
+     stability/crash/crash-allS.t
+cvs
+     synch/cvt1.t
+     synch/cvt2.t
+     synch/cvt3.t
+     synch/cvt4.t
+     synch/cvt5.t
+
+...</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Executing <code>test161 run &lt;tag&gt;</code> for any of the tags listed will run all tests
+listed below the tag.</p>
+</div>
+</div>
+<div class="sect2">
+<a class="anchor" id="_more_code_test161_run_code_options"></a><h3>2.6. More <code>test161 run</code> Options</h3>
+<div class="paragraph">
+<p>In the previous sections, we used <code>test161 run</code> for its primary function,
+namely to run tests. However, <code>test161</code> run supports some useful command
+line options as well.</p>
+</div>
+<div class="paragraph">
+<p>(For more information, run <code>test161</code> help or read the
+<a href="https://github.com/ops-class/test161#usage" target="_blank" class="external">Usage</a> section from the <code>test161</code>
+Github <a href="https://github.com/ops-class/test161/blob/master/README.adoc" target="_blank" class="external">README</a>).</p>
+</div>
+<div class="sect3">
+<a class="anchor" id="__code_test161_code_explain"></a><h4>2.6.1. <code>test161</code> Explain</h4>
+<div class="paragraph">
+<p>Often times, students want to know what a test is testing for. Additionally,
+they may want to configure <code>sys161</code> the same way the target does in order to
+debug an issue discovered while running a target. For this, the <code>-explain (-x)</code>
+option was created:</p>
+</div>
+<div class="listingblock noautohighlight">
+<div class="content">
+<pre class="highlight"><code>$ test161 run -explain synch/lt1.t
+
+boot.t                         (dependency)
+synch/sem1.t                   (dependency)
+
+synch/lt1.t
+------------------------------------------------------------
+Name        : Lock Test 1
+Description : Tests core lock functionality through modifications to shared state.
+
+test161 Monitor Conf:
+  Progress Timeout : 10
+  Command Timeout  : 60
+  Window           : 400
+  Kernel Min       : disabled
+  Kernel Max       : 1
+  User Min         : disabled
+  User Max         : 1
+
+sys161 Conf:
+0 serial
+1	emufs
+28	random seed=3540
+29	timer
+30	trace
+31	mainboard ramsize=1M cpus=32
+
+Dependencies:
+     boot.t
+     synch/sem1.t
+Commands:
+    Cmd Line    : boot
+      Panics    : no
+      Times Out : no
+      Timeout   : 60
+      Points    : 0
+    Cmd Line    : khu
+      Panics    : no
+      Times Out : no
+      Timeout   : 60
+      Points    : 0
+    Cmd Line    : lt1
+      Panics    : no
+      Times Out : no
+      Timeout   : 60
+      Points    : 0
+      Output    :
+            Text     : lt1: SUCCESS
+            Trusted  : true
+            KeyID    : lt1
+    Cmd Line    : khu
+      Panics    : no
+      Times Out : no
+      Timeout   : 60
+      Points    : 0
+    Cmd Line    : q
+      Panics    : no
+      Times Out : no
+      Timeout   : 60
+      Points    : 0</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>There are a couple things to note here. First, the exact <code>sys161</code> configuration
+used for the test is provided. If your test passes in the simulator but not
+with <code>test161</code>, there is a good chance there is a configuration discrepancy.
+However, the random seed will be different each time you run this, so it
+does not need to be part of your <code>sys161</code> configuration. Second, each command
+along with its expected output is listed under <em>Commands:</em>. For the <code>boot</code> and
+<code>khu</code> commands, there are no expected output lines, but they are expected not to
+panic. For <code>lt1</code>, <code>test161</code> is expecting to see <code>lt1: SUCCESS</code>, in addition to
+not panicking. <strong>If you ever want to know what the test <em>should</em> be outputting,
+use the <code>-explain</code> option</strong>.</p>
+</div>
+</div>
+<div class="sect3">
+<a class="anchor" id="_dry_runs"></a><h4>2.6.2. Dry Runs</h4>
+<div class="paragraph">
+<p>To see what will be run with <code>test161 run</code> without actually running it, add the
+<code>-d</code> flag. For example, the following is useful to see what is run for the asst1
+target, with point values, without actually running the tests:</p>
+</div>
+<div class="listingblock noautohighlight">
+<div class="content">
+<pre class="highlight"><code>$ test161 run -d asst1
+
+Test ID                          Test Name                Points
+------------------------------   ----------------   ------------
+boot.t                           Kernel Boot        (dependency)
+synch/sem1.t                     Semaphore Test     (dependency)
+synch/lt2.t                      Lock Test 2                   1
+synch/lt3.t                      Lock Test 3                   1
+synch/lt1.t                      Lock Test 1                   8
+synch/cvt2.t                     CV Test 2                     3
+synch/cvt3.t                     CV Test 3                     1
+synch/cvt5.t                     CV Test 5                     1
+synch/cvt1.t                     CV Test 1                     4
+synch/cvt4.t                     CV Test 4                     1
+synch/rwt1.t                     RW Lock Test 1                5
+synchprobs/sp1.t                 Whalemating Test             10
+synch/rwt3.t                     RW Lock Test 3                1
+synch/rwt2.t                     RW Lock Test 2                2
+synch/rwt5.t                     RW Lock Test 5                1
+synch/rwt4.t                     RW Lock Test 4                1
+synchprobs/sp2.t                 Stoplight Test               10</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -614,6 +821,16 @@ locally or remotely:</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
+<p>If you are having trouble submitting, use <code>test161 submit -debug -verify &lt;target&gt;</code>.
+The <code>-verify</code> flag checks that your assignment can be submitted without
+actually submitting it. The <code>-debug</code> flag shows you the commands it is running
+to check your repository status.</p>
+</li>
+<li>
+<p>Run <code>test161 config</code> to make sure things are configured how you think they
+are.</p>
+</li>
+<li>
 <p>Try <a href="/test161/#install">updating your copy of <code>test161</code></a>. This is always
 safe to do.</p>
 </li>
@@ -721,7 +938,7 @@ test group, and configures <code>sys161</code> to run the test with 32 cores.</p
 <p>We will eventually provide more detail about test configuration options on
 the <a href="https://github.com/ops-class/test161" target="_blank" class="external">GitHub page</a>, but for now you can
 get a sense for the options by reading other test files and looking at the
-<a href="https://github.com/ops-class/test161#default-settings" target="_blank" class="external"><code>test161</code> defaults</a>.
+<a href="https://github.com/ops-class/test161#configuration-options" target="_blank" class="external"><code>test161</code> defaults</a>.
 About the only commonly useful option not used by <code>sem1.t</code> is a <code>ram</code> option
 for <code>sys161</code>.</p>
 </div>
@@ -731,7 +948,7 @@ for <code>sys161</code>.</p>
 <div class="paragraph">
 <p>After the front matter comes the test itself. <code>test161</code> tests can be
 considered series of inputs to the <code>sys161</code> simulator, plus a bit of
-<a href="https://github.com/ops-class/test161#testfile-syntactic-sugar" target="_blank" class="external">syntactic
+<a href="https://github.com/ops-class/test161#test-file-syntactic-sugar" target="_blank" class="external">syntactic
 sugar</a>. For example, in this case note that we did not need to explicitly
 shut the kernel down: <code>sem1</code> expands automatically to <code>sem1; q</code>.</p>
 </div>
@@ -853,7 +1070,7 @@ which <code>test161</code> monitors separately. So they are omitted from the <co
 <div class="paragraph">
 <p>The commands file can also indicate more about the expected output. For
 example, the entry above for <code>lt2</code> indicates that it should panic on success
-and print <code>lt2: Should panic</code> before panicking.</p>
+and print <code>lt2: Should panic&#x2026;&#x200B;</code> before panicking.</p>
 </div>
 </div>
 <div class="sect2">
@@ -919,6 +1136,8 @@ for tests and commands that support partial credit.</p>
 							<li class="h6"><a href="#_test_status">2.2. Test Status</a></li>
 							<li class="h6"><a href="#_running_single_code_test161_code_tests">2.3. Running Single test161 Tests</a></li>
 							<li class="h6"><a href="#_running_groups_of_tests">2.4. Running Groups of Tests</a></li>
+							<li class="h6"><a href="#_listing_available_tests">2.5. Listing Available Tests</a></li>
+							<li class="h6"><a href="#_more_code_test161_run_code_options">2.6. More test161 run Options</a></li>
 						</ul>
 					</li>
 					<li class="h5"><a href="#_submitting_using_code_test161_code">3. Submitting Using test161</a>
