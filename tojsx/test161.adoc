@@ -18,7 +18,7 @@ to test your assignments locally and submit them for remote evaluation.
 Below we run through how to install, configure, run, and use {test161}. While
 the specific testing target will change from assignment to assignment, we use
 {asst1} below as an example. Note that this tutorial duplicates some
-information from the `test161` {readme} located on the project's
+information from the {test161} {readme} located on the project's
 https://github.com/ops-class/test161[GitHub page].
 
 [[install]]
@@ -62,6 +62,7 @@ usage:
     test161 list (targets|tags|tests) [-remote | -r]
 
     test161 config [-debug] [(add-user|del-user|change-token)] <username> <token>
+    test161 config test161dir <dir>
 
     test161 version
 
@@ -112,7 +113,7 @@ rm -rf test161/.git
 == Running {test161} Targets
 
 [.lead]
-`test161` is a very flexible tool and can rapidly run one or many tests and
+{test161} is a very flexible tool and can rapidly run one or many tests and
 evaluate their output. In this section we show you how to obtain and run
 {test161} targets.
 
@@ -230,13 +231,13 @@ In the example above, the output shows that the `boot` and `sem1` tests ran
 correctly but earned no points. That is because the kernel booted but this was
 not worth any points for {asst1}, and working semaphores are provided as part
 of the base {ops-os161}. However, if the kernel had not booted the rest of the
-tests would have been skipped, and if semaphores were broken many tests would
+tests would have been skipped, and if semaphores were broken, many tests would
 also have been skipped. In this case, both the `boot` and semaphore tests were
 run because they were specified as a _dependency_ by other tests that were
 included as part of the {asst1} target. {test161} can automatically run test
 dependencies when appropriate.
 
-For the next 15 tests above {test161} reports that they either failed
+For the next 15 tests above, {test161} reports that they either failed
 (`incorrect`) or were skipped (`skip`). This is unsurprising given that the
 {ops-os161} do not include working locks, condition variables, or
 reader-writer locks. As you complete portions of each assignment your score
@@ -255,7 +256,7 @@ the {ops-os161} don't leak memory!
 
 === Running Single {test161} Tests
 
-In our example above {test161} was used to run a _target_, which configures a
+In our example above, {test161} was used to run a _target_, which configures a
 set of tests to be run and maps test results to point values. If you are
 curious, look at the `asst1.tt` file located in the `targets` subdirectory of
 your {test161} configuration directory.
@@ -366,6 +367,201 @@ synch/rwt5.t                     incorrect                      ---
 Total Correct  : 2/15
 Total Incorrect: 7/15
 Total Skipped  : 6/15
+----
+
+=== Listing Available Tests
+
+The `test161 list` sub-command can be used to list available tests, tags, and
+and targets. The following command lists all available `test161` tests along
+with their descriptions:
+
+[source,role='noautohighlight']
+----
+$ test161 list tests
+
+Test ID                               Name                Description
+-----------------------------------   -----------------   -------------------------------------
+boot.t                                Kernel Boot         Tests whether your kernel will boot.
+coremap/coremap-loose.t               Coremap Test        Allocates and frees all physical
+                                      (Loose Bounds)      memory multiple times checking that
+                                                          the amount allocated is within a
+                                                          reasonable bound.
+coremap/coremap-tight.t               Coremap Test        Allocates and frees all physical
+                                      (Tight Bounds)      memory multiple times checking that
+                                                          the amount allocated is within a
+                                                          reasonable bound.
+coremap/km1.t                         Basic kmalloc       Tests the kernel subpage allocator by
+                                      Test                allocating a large number of objects
+                                                          and freeing them somewhat later.
+
+# ... lots of output omitted ...
+
+----
+
+The following command outputs the _tags_ -- or named groups of tests -- along
+with the tests that share that tag:
+
+[source,role='noautohighlight']
+----
+$ test161 list tags
+
+badcall
+     stability/badcall/badcall-close.t
+     stability/badcall/badcall-dup2.t
+     stability/badcall/badcall-execv.t
+     stability/badcall/badcall-lseek.t
+     stability/badcall/badcall-open.t
+     stability/badcall/badcall-read.t
+     stability/badcall/badcall-waitpid.t
+     stability/badcall/badcall-write.t
+boot
+     boot.t
+console
+     syscalls/consoletest.t
+coremap
+     coremap/coremap-loose.t
+     coremap/coremap-tight.t
+     coremap/km1.t
+     coremap/km2.t
+     coremap/km3.t
+     coremap/km4.t
+     coremap/not-dumbvm.t
+crash
+     stability/crash/crash-allS.t
+cvs
+     synch/cvt1.t
+     synch/cvt2.t
+     synch/cvt3.t
+     synch/cvt4.t
+     synch/cvt5.t
+
+...
+----
+
+Executing `test161 run <tag>` for any of the tags listed will run all tests
+listed below the tag.
+
+=== More `test161 run` Options
+
+In the previous sections, we used `test161 run` for its primary function,
+namely to run tests. However, `test161` run supports some useful command
+line options as well.
+
+(For more information, run `test161` help or read the
+https://github.com/ops-class/test161#usage[Usage] section from the `test161`
+Github https://github.com/ops-class/test161/blob/master/README.adoc[README]).
+
+==== `test161` Explain
+
+Often times, students want to know what a test is testing for. Additionally,
+they may want to configure `sys161` the same way the target does in order to
+debug an issue discovered while running a target. For this, the `-explain (-x)`
+option was created:
+
+[source,role='noautohighlight']
+----
+$ test161 run -explain synch/lt1.t
+
+boot.t                         (dependency)
+synch/sem1.t                   (dependency)
+
+synch/lt1.t
+------------------------------------------------------------
+Name        : Lock Test 1
+Description : Tests core lock functionality through modifications to shared state.
+
+test161 Monitor Conf:
+  Progress Timeout : 10
+  Command Timeout  : 60
+  Window           : 400
+  Kernel Min       : disabled
+  Kernel Max       : 1
+  User Min         : disabled
+  User Max         : 1
+
+sys161 Conf:
+0 serial
+1	emufs
+28	random seed=3540
+29	timer
+30	trace
+31	mainboard ramsize=1M cpus=32
+
+Dependencies:
+     boot.t
+     synch/sem1.t
+Commands:
+    Cmd Line    : boot
+      Panics    : no
+      Times Out : no
+      Timeout   : 60
+      Points    : 0
+    Cmd Line    : khu
+      Panics    : no
+      Times Out : no
+      Timeout   : 60
+      Points    : 0
+    Cmd Line    : lt1
+      Panics    : no
+      Times Out : no
+      Timeout   : 60
+      Points    : 0
+      Output    :
+            Text     : lt1: SUCCESS
+            Trusted  : true
+            KeyID    : lt1
+    Cmd Line    : khu
+      Panics    : no
+      Times Out : no
+      Timeout   : 60
+      Points    : 0
+    Cmd Line    : q
+      Panics    : no
+      Times Out : no
+      Timeout   : 60
+      Points    : 0
+----
+
+There are a couple things to note here. First, the exact `sys161` configuration
+used for the test is provided. If your test passes in the simulator but not
+with {test161}, there is a good chance there is a configuration discrepancy.
+However, the random seed will be different each time you run this, so it
+does not need to be part of your `sys161` configuration. Second, each command
+along with its expected output is listed under _Commands:_. For the `boot` and
+`khu` commands, there are no expected output lines, but they are expected not to
+panic. For `lt1`, {test161} is expecting to see `lt1: SUCCESS`, in addition to
+not panicking. *If you ever want to know what the test _should_ be outputting,
+use the `-explain` option*.
+
+==== Dry Runs
+
+To see what will be run with `test161 run` without actually running it, add the
+`-d` flag. For example, the following is useful to see what is run for the asst1
+target, with point values, without actually running the tests:
+
+[source,role='noautohighlight']
+----
+$ test161 run -d asst1
+
+Test ID                          Test Name                Points
+------------------------------   ----------------   ------------
+boot.t                           Kernel Boot        (dependency)
+synch/sem1.t                     Semaphore Test     (dependency)
+synch/lt2.t                      Lock Test 2                   1
+synch/lt3.t                      Lock Test 3                   1
+synch/lt1.t                      Lock Test 1                   8
+synch/cvt2.t                     CV Test 2                     3
+synch/cvt3.t                     CV Test 3                     1
+synch/cvt5.t                     CV Test 5                     1
+synch/cvt1.t                     CV Test 1                     4
+synch/cvt4.t                     CV Test 4                     1
+synch/rwt1.t                     RW Lock Test 1                5
+synchprobs/sp1.t                 Whalemating Test             10
+synch/rwt3.t                     RW Lock Test 3                1
+synch/rwt2.t                     RW Lock Test 2                2
+synch/rwt5.t                     RW Lock Test 5                1
+synch/rwt4.t                     RW Lock Test 4                1
+synchprobs/sp2.t                 Stoplight Test               10
 ----
 
 == Submitting Using `test161`
@@ -535,6 +731,14 @@ Congrats! You submitted your assignment.
 Here is a list of things to try if your submission is not succeeding, either
 locally or remotely:
 
+. If you are having trouble submitting, use `test161 submit -debug -verify <target>`.
+The `-verify` flag checks that your assignment can be submitted without
+actually submitting it. The `-debug` flag shows you the commands it is running
+to check your repository status.
+
+. Run `test161 config` to make sure things are configured how you think they
+are.
+
 . Try link:/test161/#install[updating your copy of `test161`]. This is always
 safe to do.
 
@@ -621,7 +825,7 @@ test group, and configures `sys161` to run the test with 32 cores.
 We will eventually provide more detail about test configuration options on
 the https://github.com/ops-class/test161[GitHub page], but for now you can
 get a sense for the options by reading other test files and looking at the
-https://github.com/ops-class/test161#default-settings[`test161` defaults].
+https://github.com/ops-class/test161#configuration-options[`test161` defaults].
 About the only commonly useful option not used by `sem1.t` is a `ram` option
 for `sys161`.
 
@@ -629,7 +833,7 @@ for `sys161`.
 
 After the front matter comes the test itself. `test161` tests can be
 considered series of inputs to the `sys161` simulator, plus a bit of
-https://github.com/ops-class/test161#testfile-syntactic-sugar[syntactic
+https://github.com/ops-class/test161#test-file-syntactic-sugar[syntactic
 sugar]. For example, in this case note that we did not need to explicitly
 shut the kernel down: `sem1` expands automatically to `sem1; q`.
 
@@ -738,7 +942,7 @@ which `test161` monitors separately. So they are omitted from the `.tc` file.
 
 The commands file can also indicate more about the expected output. For
 example, the entry above for `lt2` indicates that it should panic on success
-and print `lt2: Should panic` before panicking.
+and print `lt2: Should panic...` before panicking.
 
 === Targets
 
