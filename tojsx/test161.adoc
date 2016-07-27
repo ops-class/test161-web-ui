@@ -981,6 +981,7 @@ configuration. We will also eventually distribute performance targets
 allowing you to race your OS/161 kernel against other students.
 
 // TODO: Partial credit.
+//       SDH - this is supported but not actually used by ops-class tests
 
 After the configuration each target includes a lists of tests to run,
 identified using the single-test format described above. It also maps test
