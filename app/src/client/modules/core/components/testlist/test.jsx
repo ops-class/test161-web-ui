@@ -35,9 +35,9 @@ class TestComponent extends CollapseComponent {
     // appear in both lists. But, the points might only apply to 2.1. Since the test is
     // shared between submissions, we would see the points in both places without explicitly
     // checking.
-    var do_points = true
-    if (target_name && sub_target_name != target_name && target_name.length > 0) {
-        do_points = false
+    var do_points = true;
+    if (target_name && sub_target_name !== target_name && target_name.length > 0) {
+      do_points = false;
     }
 
     let points = null;

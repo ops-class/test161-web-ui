@@ -18,7 +18,8 @@ class TestListComponent extends Component {
     );
 
     if (testList.length > 0) {
-      list = testList.map(test => <TestComponent key={test._id} {...test} sub_target_name={target_name} />);
+      list = testList.map(test =>
+        <TestComponent key={test._id} {...test} sub_target_name={target_name} />);
     }
 
     return (
