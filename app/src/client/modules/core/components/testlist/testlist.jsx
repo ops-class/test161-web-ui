@@ -4,7 +4,7 @@ import {TestComponent} from './test';
 
 class TestListComponent extends Component {
   render() {
-    const {data: {ready, testList}} = this.props;
+    const {data: {ready, testList}, target_name} = this.props;
 
     if (!ready) {
       return (<LoadingComponent />);
@@ -18,7 +18,7 @@ class TestListComponent extends Component {
     );
 
     if (testList.length > 0) {
-      list = testList.map(test => <TestComponent key={test._id} {...test} />);
+      list = testList.map(test => <TestComponent key={test._id} {...test} sub_target_name={target_name} />);
     }
 
     return (

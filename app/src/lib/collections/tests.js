@@ -111,6 +111,10 @@ const TestSchema = new SimpleSchema({
   status: {
     type: [ StatusSchema ],
     optional: true,
+  },
+  target_name: {
+    type: String,
+    optional: true,
   }
 });
 

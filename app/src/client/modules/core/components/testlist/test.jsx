@@ -16,7 +16,7 @@ class TestComponent extends CollapseComponent {
   }
 
   render() {
-    const {name, points_avail, points_earned, result} = this.props;
+    const {name, points_avail, points_earned, result, target_name, sub_target_name} = this.props;
     const {collapse} = this.state;
 
     let content = null;
@@ -30,8 +30,18 @@ class TestComponent extends CollapseComponent {
       toggleClass += 'fa-chevron-right';
     }
 
+    // SDH 2/2017 - Filter out any tests that were not scored because of this target.
+    // For example, we might have common dependencies between 2.1 and 2.2 so the tests
+    // appear in both lists. But, the points might only apply to 2.1. Since the test is
+    // shared between submissions, we would see the points in both places without explicitly
+    // checking.
+    var do_points = true
+    if (target_name && sub_target_name != target_name && target_name.length > 0) {
+        do_points = false
+    }
+
     let points = null;
-    if (points_avail) {
+    if (points_avail && do_points) {
       points = (
         <div className="col-md-2 col-xs-12 col-sm-12 ellipsis text-right">
           <PointComponent {...{points_earned, points_avail}} />
