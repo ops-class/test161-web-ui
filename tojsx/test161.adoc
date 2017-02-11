@@ -25,12 +25,12 @@ https://github.com/ops-class/test161[GitHub page].
 === Installation
 
 {test161} is distributed as part of the {toolchain}, which is packaged for
-Ubuntu Linux 14.04 "Trusty". Install and upgrade it from the
+Ubuntu Linux 14.04 "Trusty" and 16.04 "Xenial". Install and upgrade it from the
 https://www.ops-class.org/asst/toolchain/#ppa[`ops-class.org` PPA, role="noexternal"]:
 
 [source,bash]
 ----
-sudo add-apt-repository ppa:geoffrey-challen/os161-toolchain
+sudo add-apt-repository ppa:ops-class/os161-toolchain
 sudo apt-get update
 sudo apt-get install os161-toolchain
 # sudo apt-get install test161 # If you don't want the entire toolchain
