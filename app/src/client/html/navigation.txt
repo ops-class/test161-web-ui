@@ -1,66 +1,72 @@
 <div class="container">
-			<nav class="navbar navbar-default navbar-fixed-top hidden-xs hidden-sm">
-				<a class="logo-fixed" href="https://www.ops-class.org/"><img src="/img/logos/ops-class.jpg" alt="ops-class.org logo"></a>
-				<div class="container">
-					<div class="navbar-header">
-						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+				<nav class="navbar navbar-default navbar-fixed-top hidden-xs hidden-sm">
+						<a class="logo-fixed" href="https://www.ops-class.org/"><img src="/img/logos/ops-class.jpg" alt="ops-class.org logo"></a>
+						<div class="container">
+								<div class="navbar-header">
+										<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
 							<span class="sr-only">Toggle navigation</span>
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>
-					</div>
-					<div id="navbar" class="navbar-collapse collapse">
-						<div class="row">
-							<div class="col-sm-6">
-								<ul class="nav navbar-nav left">
-									<li><a id="menu-slides" title="Lecture slides, notes, and videos." href="https://www.ops-class.org/slides/">lectures</a>
-									</li>
-									<li>
-									<a id="menu-exams" title="Exams to test your knowledge of OS concepts." href="https://www.ops-class.org/exams/">exams</a>
-									</li>
-									<li class="dropdown">
-										<a href="#" class="dropdown-toggle" id="menu-courses" title="Courses that have used ops-class.org" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">courses</a>
-										<ul class="dropdown-menu">
-											<li><a href="https://www.ops-class.org/courses/buffalo/CSE421_Spring2016">UB CSE 421/521 Spring 2016</a></li>
-											<li role="separator" class="divider"></li>
-											<li>
-											<a href="https://www.ops-class.org/courses/buffalo/CSE421_Spring2015">UB CSE 421/521 Spring 2015</a>
-											</li>
-											<li>
-											<a href="https://www.ops-class.org/courses/buffalo/CSE421_Spring2014">UB CSE 421/521 Spring 2014</a>
-											</li>
-											<li>
-											<a href="https://www.ops-class.org/courses/buffalo/CSE421_Spring2013">UB CSE 421/521 Spring 2013</a>
-											</li>
-											<li>
-											<a href="https://www.ops-class.org/courses/buffalo/CSE421_Spring2012">UB CSE 421/521 Spring 2012</a>
-											</li>
-										</ul>
-									</li>
-								</ul>
-							</div>
-							<div class="col-sm-6">
-								<ul class="nav navbar-nav right">
-									<li class="dropdown">
-										<a href="#" class="dropdown-toggle" id="menu-asst" title="Hack the kernel! OS/161-based operating system assignments." data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">assignments</a>
-										<ul class="dropdown-menu">
-											<li><a href="https://www.ops-class.org/asst/overview/">Overview</a></li>
-											<li role="separator" class="divider"></li>
-											<li><a href="https://www.ops-class.org/asst/0/">ASST0</a></li>
-											<li><a href="https://www.ops-class.org/asst/1/">ASST1</a></li>
-											<li><a href="https://www.ops-class.org/asst/2/">ASST2</a></li>
-											<li><a href="https://www.ops-class.org/asst/3/">ASST3</a></li>
-											<li role="separator" class="divider"></li>
-											<li><a href="https://www.ops-class.org/asst/toolchain/">Toolchain</a></li>
-										</ul>
-									</li>
-									<li><a id="menu-discuss" title="Discourse-based course discussion forum." href="https://discourse.ops-class.org" target="_blank" class="external">discuss</a></li>
-									<li><a id="menu-test161" class="noexternal" title="test161 online testing tool." href="https://test161.ops-class.org">test</a></li>
-								</ul>
-							</div>
+								</div>
+								<div id="navbar" class="navbar-collapse collapse">
+										<div class="row">
+												<div class="col-sm-6">
+														<ul class="nav navbar-nav left">
+																<li><a id="menu-slides" title="Lecture slides, notes, and videos." href="https://www.ops-class.org/slides/">lectures</a>
+																</li>
+																<li>
+																		<a id="menu-exams" title="Exams to test your knowledge of OS concepts." href="https://www.ops-class.org/exams/">exams</a>
+																</li>
+																<li class="dropdown">
+																		<a href="#" class="dropdown-toggle" id="menu-courses" title="Courses that have used ops-class.org" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">courses</a>
+																		<ul class="dropdown-menu">
+																				<li><a href="https://www.ops-class.org/courses/buffalo/CSE421_Spring2017">UB CSE 421/521 Spring 2017</a></li>
+																				<li role="separator" class="divider"></li>
+																				<li>
+																				</li>
+																				<li>
+																						<a href="https://www.ops-class.org/courses/buffalo/CSE421_Spring2016">UB CSE 421/521 Spring 2016</a>
+																				</li>
+																				<li>
+																						<a href="https://www.ops-class.org/courses/buffalo/CSE421_Spring2015">UB CSE 421/521 Spring 2015</a>
+																				</li>
+																				<li>
+																						<a href="https://www.ops-class.org/courses/buffalo/CSE421_Spring2014">UB CSE 421/521 Spring 2014</a>
+																				</li>
+																				<li>
+																						<a href="https://www.ops-class.org/courses/buffalo/CSE421_Spring2013">UB CSE 421/521 Spring 2013</a>
+																				</li>
+																				<li>
+																						<a href="https://www.ops-class.org/courses/buffalo/CSE421_Spring2012">UB CSE 421/521 Spring 2012</a>
+																				</li>
+																		</ul>
+																</li>
+														</ul>
+												</div>
+												<div class="col-sm-6">
+														<ul class="nav navbar-nav right">
+																<li class="dropdown">
+																		<a href="#" class="dropdown-toggle" id="menu-asst" title="Hack the kernel! OS/161-based operating system assignments." data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">assignments</a>
+																				<ul class="dropdown-menu">
+																						<li><a href="https://www.ops-class.org/asst/setup/">Setup</a></li>
+																						<li><a href="https://www.ops-class.org/asst/0/">ASST0</a></li>
+																						<li><a href="https://www.ops-class.org/asst/1/">ASST1</a></li>
+																						<li><a href="https://www.ops-class.org/asst/2/">ASST2</a></li>
+																						<li><a href="https://www.ops-class.org/asst/3/">ASST3</a></li>
+																						<li role="separator" class="divider"></li>
+																						<li><a href="https://www.ops-class.org/asst/overview/">Overview</a></li>
+																						<li><a href="https://www.ops-class.org/asst/repos/">Repositories</a></li>
+																						<li><a href="https://www.ops-class.org/man/">OS/161 man Pages</a></li>
+																				</ul>
+																</li>
+																<li><a id="menu-discuss" title="Discourse-based course discussion forum." href="https://discourse.ops-class.org" target="_blank" class="external">discuss</a></li>
+																<li><a id="menu-test161" class="noexternal" title="test161 online testing tool." href="https://test161.ops-class.org">test</a></li>
+														</ul>
+												</div>
+										</div>
+								</div>
 						</div>
-					</div>
-				</div>
-			</nav>
+				</nav>
 		</div>
