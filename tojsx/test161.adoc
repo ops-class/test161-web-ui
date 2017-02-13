@@ -987,3 +987,20 @@ After the configuration each target includes a lists of tests to run,
 identified using the single-test format described above. It also maps test
 success output to points, and includes flexible ways to give partial credit
 for tests and commands that support partial credit.
+
+== Related Videos
+
+++++
+
+<div class="embed-responsive embed-responsive-16by9" style="margin-top:10px; margin-bottom:10px;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/YAxKgdDtZEM" frameborder="0" allowfullscreen></iframe>
+</div>
+
+<div class="embed-responsive embed-responsive-16by9" style="margin-top:10px; margin-bottom:10px;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/IBjDPchxHNM" frameborder="0" allowfullscreen></iframe>
+</div>
+
+<div class="embed-responsive embed-responsive-16by9" style="margin-top:10px; margin-bottom:10px;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/FqxHxYaXf-M" frameborder="0" allowfullscreen></iframe>
+</div>
+++++

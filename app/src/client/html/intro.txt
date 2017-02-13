@@ -1119,6 +1119,22 @@ for tests and commands that support partial credit.</p>
 </div>
 </div>
 </div>
+<div class="sect1">
+<a class="anchor" id="_related_videos"></a><h2>5. Related Videos</h2>
+<div class="sectionbody">
+<div class="embed-responsive embed-responsive-16by9 hidden-print" style="margin-top:10px; margin-bottom:10px;">
+<iframe width="560" height="315" src="//www.youtube.com/embed/YAxKgdDtZEM" frameborder="0" allowfullscreen></iframe>
+</div>
+
+<div class="embed-responsive embed-responsive-16by9 hidden-print" style="margin-top:10px; margin-bottom:10px;">
+<iframe width="560" height="315" src="//www.youtube.com/embed/IBjDPchxHNM" frameborder="0" allowfullscreen></iframe>
+</div>
+
+<div class="embed-responsive embed-responsive-16by9 hidden-print" style="margin-top:10px; margin-bottom:10px;">
+<iframe width="560" height="315" src="//www.youtube.com/embed/FqxHxYaXf-M" frameborder="0" allowfullscreen></iframe>
+</div>
+</div>
+</div>
 
 			</div>
 			<div id="scrollspy" class="col-md-2 spelling_exception">
@@ -1157,6 +1173,8 @@ for tests and commands that support partial credit.</p>
 							<li class="h6"><a href="#_commands">4.3. Commands</a></li>
 							<li class="h6"><a href="#_targets">4.4. Targets</a></li>
 						</ul>
+					</li>
+					<li class="h5"><a href="#_related_videos">5. Related Videos</a>
 					</li>
 				</ul>
 			</div>
