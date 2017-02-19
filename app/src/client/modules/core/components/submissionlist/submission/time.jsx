@@ -53,7 +53,7 @@ const TimeComponent = React.createClass({
   render() {
     const {
       submission_time, completion_time, commit_id, status,
-      hide = false, showAll
+      hide = false, showAll, target_name
     } = this.props;
     const {now} = this.state;
     const submission = moment(submission_time);
@@ -79,6 +79,10 @@ const TimeComponent = React.createClass({
         <div className={className}>
           <i className="fa fa-code-fork"></i> {commit_id.substring(0, 7)}
         </div>
+        <div className={className}>
+          {target_name.toUpperCase()}
+        </div>
+
         {showAll ? (
           <div className="col-md-12">
             <button className="btn btn-default btn-block" onClick={this.toggleSubmission}>
